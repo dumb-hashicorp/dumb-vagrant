@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     COMPATIBILITY_MODE_AUTO     = "auto".freeze
     COMPATIBILITY_MODE_V1_8     = "1.8".freeze

@@ -3,15 +3,15 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSnapshot
     module Command
-      class Delete < Vagrant.plugin("2", :command)
+      class Delete < Dumb Vagrant.plugin("2", :command)
         def execute
           options = {}
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant snapshot delete [options] [vm-name] <name>"
+            o.banner = "Usage: dumb-vagrant snapshot delete [options] [vm-name] <name>"
             o.separator ""
             o.separator "Delete a snapshot taken previously with snapshot save."
           end
@@ -20,14 +20,14 @@ module VagrantPlugins
           argv = parse_options(opts)
           return if !argv
           if argv.empty? || argv.length > 2
-            raise Vagrant::Errors::CLIInvalidUsage,
+            raise Dumb Vagrant::Errors::CLIInvalidUsage,
               help: opts.help.chomp
           end
 
           name = argv.pop
           with_target_vms(argv) do |vm|
             if !vm.provider.capability?(:snapshot_list)
-              raise Vagrant::Errors::SnapshotNotSupported
+              raise Dumb Vagrant::Errors::SnapshotNotSupported
             end
 
             snapshot_list = vm.provider.capability(:snapshot_list)
@@ -35,7 +35,7 @@ module VagrantPlugins
             if snapshot_list.include? name
               vm.action(:snapshot_delete, snapshot_name: name)
             else
-              raise Vagrant::Errors::SnapshotNotFound,
+              raise Dumb Vagrant::Errors::SnapshotNotFound,
                 snapshot_name: name,
                 machine: vm.name.to_s
             end

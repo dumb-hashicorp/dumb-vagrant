@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class MessageAlreadyRunning
@@ -10,7 +10,7 @@ module VagrantPlugins
         end
 
         def call(env)
-          env[:ui].info I18n.t("vagrant.commands.common.vm_already_running")
+          env[:ui].info I18n.t("dumb-vagrant.commands.common.vm_already_running")
           @app.call(env)
         end
       end

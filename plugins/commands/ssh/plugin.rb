@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSSH
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "ssh command"
       description <<-DESC
       The `ssh` command allows you to SSH in to your running virtual machine.

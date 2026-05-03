@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       # This middleware checks that the VM is created, and raises an exception
@@ -13,7 +13,7 @@ module VagrantPlugins
 
         def call(env)
           if env[:machine].state.id == :not_created
-            raise Vagrant::Errors::VMNotCreatedError
+            raise Dumb Vagrant::Errors::VMNotCreatedError
           end
 
           @app.call(env)

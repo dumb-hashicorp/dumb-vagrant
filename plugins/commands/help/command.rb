@@ -3,9 +3,9 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandHelp
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
         "shows the help for a subcommand"
       end

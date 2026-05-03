@@ -12,15 +12,15 @@ RSpec::Matchers.define :an_existing_directory do
   match{ |actual| File.directory?(actual) }
 end
 
-describe VagrantPlugins::CommandPackage::Command do
+describe Dumb VagrantPlugins::CommandPackage::Command do
   include_context "unit"
 
   let(:argv)     { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:package_command) { described_class.new(argv, iso_env) }
@@ -57,7 +57,7 @@ describe VagrantPlugins::CommandPackage::Command do
         let(:argv){ ['undefined'] }
 
         it "raises machine not found error" do
-          expect{ package_command.execute }.to raise_error(Vagrant::Errors::MachineNotFound)
+          expect{ package_command.execute }.to raise_error(Dumb Vagrant::Errors::MachineNotFound)
         end
       end
 
@@ -90,7 +90,7 @@ describe VagrantPlugins::CommandPackage::Command do
         let(:argv){ ['--base'] }
 
         it "shows help" do
-          expect{ package_command.execute }.to raise_error(Vagrant::Errors::CLIInvalidOptions)
+          expect{ package_command.execute }.to raise_error(Dumb Vagrant::Errors::CLIInvalidOptions)
         end
       end
 
@@ -104,7 +104,7 @@ describe VagrantPlugins::CommandPackage::Command do
         end
 
         it "provides a machine data directory" do
-          expect(Vagrant::Machine).to receive(:new).with(
+          expect(Dumb Vagrant::Machine).to receive(:new).with(
             'machine-id', :virtualbox, anything, nil, anything, anything, an_existing_directory,
             anything, anything, anything, anything).and_return(double("vm", name: "machine-id"))
           allow(package_command).to receive(:package_vm)
@@ -119,7 +119,7 @@ describe VagrantPlugins::CommandPackage::Command do
       let(:options) { {output: "test.box"} }
       let(:expected_options) { {"package.output"=>"test.box"} }
       let(:machine) { double("machine") }
-      let(:tmp_dir) { "/home/user/.vagrant.d/tmp/vagrant-package" }
+      let(:tmp_dir) { "/home/user/.dumb-vagrant.d/tmp/dumb-vagrant-package" }
       let(:env) { {"export.temp_dir"=>tmp_dir} }
 
       it "ensures that the package tmp dir is cleaned up" do

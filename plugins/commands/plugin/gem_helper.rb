@@ -7,18 +7,18 @@ require "rubygems/gem_runner"
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     # This class provides methods to help with calling out to the
     # `gem` command but using the RubyGems API.
     class GemHelper
       def initialize(gem_home)
         @gem_home = gem_home.to_s
-        @logger   = Log4r::Logger.new("vagrant::plugins::plugincommand::gemhelper")
+        @logger   = Log4r::Logger.new("dumb-vagrant::plugins::plugincommand::gemhelper")
       end
 
       # This will yield the given block with the proper ENV setup so
-      # that RubyGems only sees the gems in the Vagrant-managed gem
+      # that RubyGems only sees the gems in the Dumb Vagrant-managed gem
       # path.
       def with_environment
         old_gem_home = ENV["GEM_HOME"]
@@ -46,7 +46,7 @@ module VagrantPlugins
         # Clear the sources so that installation uses custom sources
         old_sources = Gem.sources
         Gem.sources = Gem.default_sources
-        Vagrant::Bundler::DEFAULT_GEM_SOURCES.each do |source|
+        Dumb Vagrant::Bundler::DEFAULT_GEM_SOURCES.each do |source|
           if !Gem.sources.include?(source)
             Gem.sources << source
           end

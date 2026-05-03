@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/counter"
+require "dumb-vagrant/util/counter"
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Config
       # This is the config base for Chef provisioners that need a full Chef
@@ -107,7 +107,7 @@ module VagrantPlugins
           if @custom_config_path
             expanded = File.expand_path(@custom_config_path, machine.env.root_path)
             if !File.file?(expanded)
-              errors << I18n.t("vagrant.config.chef.custom_config_path_missing")
+              errors << I18n.t("dumb-vagrant.config.chef.custom_config_path_missing")
             end
           end
 

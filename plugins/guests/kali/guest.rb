@@ -3,9 +3,9 @@
 
 require_relative '../linux/guest'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestKali
-    class Guest < VagrantPlugins::GuestLinux::Guest
+    class Guest < Dumb VagrantPlugins::GuestLinux::Guest
       # Name used for guest detection
       GUEST_DETECTION_NAME = "kali".freeze
     end

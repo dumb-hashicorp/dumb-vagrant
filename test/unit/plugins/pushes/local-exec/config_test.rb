@@ -3,13 +3,13 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/pushes/local-exec/config")
+require Dumb Vagrant.source_root.join("plugins/pushes/local-exec/config")
 
-describe VagrantPlugins::LocalExecPush::Config do
+describe Dumb VagrantPlugins::LocalExecPush::Config do
   include_context "unit"
 
   before(:all) do
-    I18n.load_path << Vagrant.source_root.join("plugins/pushes/local-exec/locales/en.yml")
+    I18n.load_path << Dumb Vagrant.source_root.join("plugins/pushes/local-exec/locales/en.yml")
     I18n.reload!
   end
 

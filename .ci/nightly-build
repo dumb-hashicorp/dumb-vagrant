@@ -18,4 +18,4 @@ if [ -z "${full_sha}" ]; then
 fi
 
 info "Triggering nightly build %s (%s)" "${tag}" "${full_sha}"
-github_repository_dispatch "vagrant-builders" "nightlies" "commit_id=${full_sha}"
+github_repository_dispatch "dumb-vagrant-builders" "nightlies" "commit_id=${full_sha}"

@@ -24,7 +24,7 @@ popd
 # Move to the root
 pushd "${root}"
 
-info "Generating Vagrant license files"
+info "Generating Dumb Vagrant license files"
 
 version="$(< ./version.txt)" ||
     failure "Unable to read version file"

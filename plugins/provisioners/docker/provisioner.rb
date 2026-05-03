@@ -6,19 +6,19 @@ require_relative "../container/provisioner"
 require_relative "client"
 require_relative "installer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvisioner
-    class DockerError < Vagrant::Errors::VagrantError
-      error_namespace("vagrant.provisioners.docker")
+    class DockerError < Dumb Vagrant::Errors::Dumb VagrantError
+      error_namespace("dumb-vagrant.provisioners.docker")
     end
 
-    class Provisioner < VagrantPlugins::ContainerProvisioner::Provisioner
+    class Provisioner < Dumb VagrantPlugins::ContainerProvisioner::Provisioner
       def initialize(machine, config, installer = nil, client = nil)
         super(machine, config)
 
         @installer = installer || Installer.new(@machine)
         @client    = client    || Client.new(@machine)
-        @logger = Log4r::Logger.new("vagrant::provisioners::docker")
+        @logger = Log4r::Logger.new("dumb-vagrant::provisioners::docker")
       end
 
       def provision
@@ -39,17 +39,17 @@ module VagrantPlugins
         raise DockerError, :not_running if !@client.daemon_running?
 
         if config.images.any?
-          @machine.ui.info(I18n.t("vagrant.docker_pulling_images"))
+          @machine.ui.info(I18n.t("dumb-vagrant.docker_pulling_images"))
           @client.pull_images(*config.images)
         end
 
         if config.build_images.any?
-          @machine.ui.info(I18n.t("vagrant.docker_building_images"))
+          @machine.ui.info(I18n.t("dumb-vagrant.docker_building_images"))
           @client.build_images(config.build_images)
         end
 
         if config.containers.any?
-          @machine.ui.info(I18n.t("vagrant.docker_starting_containers"))
+          @machine.ui.info(I18n.t("dumb-vagrant.docker_starting_containers"))
           @client.run(config.containers)
         end
       end

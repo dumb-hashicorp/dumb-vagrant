@@ -2,16 +2,16 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require_relative "../../../../base"
-require Vagrant.source_root.join("plugins/providers/hyperv/cap/configure_disks")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/cap/configure_disks")
 
-describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
+describe Dumb VagrantPlugins::HyperV::Cap::ConfigureDisks do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:driver) { double("driver") }
@@ -29,7 +29,7 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
 
   let(:defined_disks) do
     [
-      double("disk", name: "vagrant_primary", size: "5GB", primary: true, type: :disk),
+      double("disk", name: "dumb-vagrant_primary", size: "5GB", primary: true, type: :disk),
       double("disk", name: "disk-0", size: "5GB", primary: false, type: :disk),
       double("disk", name: "disk-1", size: "5GB", primary: false, type: :disk),
       double("disk", name: "disk-2", size: "5GB", primary: false, type: :disk)
@@ -42,20 +42,20 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
     [
       {
         "UUID"=>"12345",
-        "Path"=>"C:/Users/vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
+        "Path"=>"C:/Users/dumb-vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
         "ControllerLocation"=>0,
         "ControllerNumber"=>0
       },
       {
         "UUID"=>"67890",
         "Name"=>"disk-0",
-        "Path"=>"C:/Users/vagrant/disks/disk-0.vhdx",
+        "Path"=>"C:/Users/dumb-vagrant/disks/disk-0.vhdx",
         "ControllerLocation"=>1,
         "ControllerNumber"=>0
       },
       {
         "UUID"=>"324bbb53-d5ad-45f8-9bfa-1f2468b199a8",
-        "Path"=>"C:/Users/vagrant/disks/disk-1.vhdx",
+        "Path"=>"C:/Users/dumb-vagrant/disks/disk-1.vhdx",
         "Name"=>"disk-1",
         "ControllerLocation"=>2,
         "ControllerNumber"=>0
@@ -68,7 +68,7 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
       {
         "UUID"=>"1234",
         "Name"=>"disk",
-        "Path"=> "C:/Users/vagrant/storage.vhdx"
+        "Path"=> "C:/Users/dumb-vagrant/storage.vhdx"
       }
     end
 
@@ -125,20 +125,20 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
         [
           {
             "UUID"=>"12345",
-            "Path"=>"C:/Users/vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
             "ControllerLocation"=>1,
             "ControllerNumber"=>0
           },
           {
             "UUID"=>"67890",
             "Name"=>"disk-0",
-            "Path"=>"C:/Users/vagrant/disks/disk-0.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/disk-0.vhdx",
             "ControllerLocation"=>2,
             "ControllerNumber"=>0
           },
           {
             "UUID"=>"324bbb53-d5ad-45f8-9bfa-1f2468b199a8",
-            "Path"=>"C:/Users/vagrant/disks/disk-1.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/disk-1.vhdx",
             "Name"=>"disk-1",
             "ControllerLocation"=>3,
             "ControllerNumber"=>0
@@ -158,19 +158,19 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
             {
               "UUID"=>"67890",
               "Name"=>"disk-0",
-              "Path"=>"C:/Users/vagrant/disks/disk-0.vhdx",
+              "Path"=>"C:/Users/dumb-vagrant/disks/disk-0.vhdx",
               "ControllerLocation"=>2,
               "ControllerNumber"=>0
             },
             {
               "UUID"=>"12345",
-              "Path"=>"C:/Users/vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
+              "Path"=>"C:/Users/dumb-vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
               "ControllerLocation"=>1,
               "ControllerNumber"=>0
             },
             {
               "UUID"=>"324bbb53-d5ad-45f8-9bfa-1f2468b199a8",
-              "Path"=>"C:/Users/vagrant/disks/disk-1.vhdx",
+              "Path"=>"C:/Users/dumb-vagrant/disks/disk-1.vhdx",
               "Name"=>"disk-1",
               "ControllerLocation"=>3,
               "ControllerNumber"=>0
@@ -293,7 +293,7 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
         [
           {
             "UUID"=>"12345",
-            "Path"=>"C:/Users/vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
             "ControllerLocation"=>0,
             "ControllerNumber"=>0
           }
@@ -303,8 +303,8 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
       let(:disk_meta) do
         {
           "UUID" => "12345",
-          "Name" => "vagrant_primary",
-          "Path" => "C:/Users/vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx"
+          "Name" => "dumb-vagrant_primary",
+          "Path" => "C:/Users/dumb-vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx"
         }
       end
 
@@ -320,20 +320,20 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
       let(:all_disks) do
         [
           {"UUID"=>"12345",
-           "Path"=>"C:/Users/vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
+           "Path"=>"C:/Users/dumb-vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
            "ControllerLocation"=>0,
            "ControllerNumber"=>0
           },
           {
             "UUID"=>"67890",
             "Name"=>"disk-0",
-            "Path"=>"C:/Users/vagrant/disks/disk-0.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/disk-0.vhdx",
             "ControllerLocation"=>1,
             "ControllerNumber"=>0
           },
           {
             "UUID"=>"324bbb53-d5ad-45f8-9bfa-1f2468b199a8",
-            "Path"=>"C:/Users/vagrant/disks/disk-1.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/disk-1.vhdx",
             "Name"=>"disk-1",
             "ControllerLocation"=>2,
             "ControllerNumber"=>0
@@ -360,20 +360,20 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
         [
           {
             "UUID"=>"12345",
-            "Path"=>"C:/Users/vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
             "ControllerLocation"=>0,
             "ControllerNumber"=>0
           },
           {
             "UUID"=>"67890",
             "Name"=>"disk-0",
-            "Path"=>"C:/Users/vagrant/disks/disk-0.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/disk-0.vhdx",
             "ControllerLocation"=>1,
             "ControllerNumber"=>0
           },
           {
             "UUID"=>"324bbb53-d5ad-45f8-9bfa-1f2468b199a8",
-            "Path"=>"C:/Users/vagrant/disks/disk-1.vhdx",
+            "Path"=>"C:/Users/dumb-vagrant/disks/disk-1.vhdx",
             "Name"=>"disk-1",
             "ControllerLocation"=>2,
             "ControllerNumber"=>0
@@ -415,7 +415,7 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
       [
         {
           "UUID" => "12345",
-          "Path" => "C:/Users/vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
+          "Path" => "C:/Users/dumb-vagrant/disks/ubuntu-18.04-amd64-disk001.vhdx",
           "ControllerLocation" => 0,
           "ControllerNumber" => 0
         }
@@ -425,7 +425,7 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
     let(:disk_small) do
       {
         "UUID" => "67890",
-        "Path" => "C:/Users/vagrant/disks/small_disk.vhd",
+        "Path" => "C:/Users/dumb-vagrant/disks/small_disk.vhd",
         "Size" => 1073741824.0,
         "ControllerLocation" => 1,
         "ControllerNumber" => 0
@@ -459,14 +459,14 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
       )
     end
 
-    let(:disk_file) { "C:/Users/vagrant/disks/Virtual Hard Disks/disk-0.vhdx" }
+    let(:disk_file) { "C:/Users/dumb-vagrant/disks/Virtual Hard Disks/disk-0.vhdx" }
 
-    let(:data_dir) { Pathname.new("C:/Users/vagrant/disks") }
+    let(:data_dir) { Pathname.new("C:/Users/dumb-vagrant/disks") }
 
     let(:disk) do
       {
         "DiskIdentifier" => "12345",
-        "Path" => "C:/Users/vagrant/disks/Virtual Hard Disks/disk-0.vhdx",
+        "Path" => "C:/Users/dumb-vagrant/disks/Virtual Hard Disks/disk-0.vhdx",
         "ControllerLocation" => 1,
         "ControllerNumber" => 0
       }
@@ -517,13 +517,13 @@ describe VagrantPlugins::HyperV::Cap::ConfigureDisks do
     let(:disk) do
       {
         "DiskIdentifier" => "12345",
-        "Path" => "C:/Users/vagrant/disks/disk-0.vhdx",
+        "Path" => "C:/Users/dumb-vagrant/disks/disk-0.vhdx",
         "ControllerLocation" => 1,
         "ControllerNumber" => 0
       }
     end
 
-    let(:disk_file) { "C:/Users/vagrant/disks/disk-0.vhdx" }
+    let(:disk_file) { "C:/Users/dumb-vagrant/disks/disk-0.vhdx" }
 
     it "resizes the disk" do
       expect(driver).to receive(:get_disk).with(disk_file).and_return(disk)
@@ -540,7 +540,7 @@ val =<<-EOF
     "IsTemplate":  false,
     "Drives":  [
                    {
-                       "Path":  "C:\\Users\\vagrant\\project\\.vagrant\\machines\\default\\hyperv\\Virtual Hard Disks\\ubuntu-18.04-amd64.vhdx",
+                       "Path":  "C:\\Users\\dumb-vagrant\\project\\.dumb-vagrant\\machines\\default\\hyperv\\Virtual Hard Disks\\ubuntu-18.04-amd64.vhdx",
                        "DiskNumber":  null,
                        "MaximumIOPS":  0,
                        "MinimumIOPS":  0,
@@ -566,7 +566,7 @@ val =<<-EOF
                    },
                    {
                        "DvdMediaType":  1,
-                       "Path":  "C:\\Users\\Vagrant\\deb2.iso",
+                       "Path":  "C:\\Users\\Dumb Vagrant\\deb2.iso",
                        "ControllerLocation":  2,
                        "ControllerNumber":  0,
                        "ControllerType":  1,

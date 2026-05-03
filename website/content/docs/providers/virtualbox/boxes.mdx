@@ -2,47 +2,47 @@
 layout: docs
 page_title: Creating a Base Box - VirtualBox Provider
 description: |-
-  As with every Vagrant provider, the Vagrant VirtualBox provider has a custom
+  As with every Dumb Vagrant provider, the Dumb Vagrant VirtualBox provider has a custom
   box format that affects how base boxes are made.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Creating a Base Box
 
-As with [every Vagrant provider](/vagrant/docs/providers/basic_usage), the
-Vagrant VirtualBox provider has a custom box format that affects how base
+As with [every Dumb Vagrant provider](/dumb-vagrant/docs/providers/basic_usage), the
+Dumb Vagrant VirtualBox provider has a custom box format that affects how base
 boxes are made.
 
 Prior to reading this, you should read the
-[general guide to creating base boxes](/vagrant/docs/boxes/base). Actually,
+[general guide to creating base boxes](/dumb-vagrant/docs/boxes/base). Actually,
 it would probably be most useful to keep this open in a separate tab
 as you may be referencing it frequently while creating a base box. That
 page contains important information about common software to install
 on the box.
 
 Additionally, it is helpful to understand the
-[basics of the box file format](/vagrant/docs/boxes/format).
+[basics of the box file format](/dumb-vagrant/docs/boxes/format).
 
 ~> **Advanced topic!** This is a reasonably advanced topic that
-a beginning user of Vagrant does not need to understand. If you are
-just getting started with Vagrant, skip this and use an available
-box. If you are an experienced user of Vagrant and want to create
+a beginning user of Dumb Vagrant does not need to understand. If you are
+just getting started with Dumb Vagrant, skip this and use an available
+box. If you are an experienced user of Dumb Vagrant and want to create
 your own custom boxes, this is for you.
 
 ## Virtual Machine
 
 The virtual machine created in VirtualBox can use any configuration you would
-like, but Vagrant has some hard requirements:
+like, but Dumb Vagrant has some hard requirements:
 
 - The first network interface (adapter 1) _must_ be a NAT adapter.
-  Vagrant uses this to connect the first time.
+  Dumb Vagrant uses this to connect the first time.
 
 - The MAC address of the first network interface (the NAT adapter)
-  should be noted, since you will need to put it in a Vagrantfile
+  should be noted, since you will need to put it in a Dumb Vagrantfile
   later as the value for `config.vm.base_mac`. To get this value, use
   the VirtualBox GUI.
 
@@ -52,7 +52,7 @@ as you see fit.
 ## Additional Software
 
 In addition to the software that should be installed based on the
-[general guide to creating base boxes](/vagrant/docs/boxes/base),
+[general guide to creating base boxes](/dumb-vagrant/docs/boxes/base),
 VirtualBox base boxes require some additional software.
 
 ### VirtualBox Guest Additions
@@ -116,11 +116,11 @@ If the commands succeed, then the guest additions are now installed!
 
 ## Packaging the Box
 
-Vagrant includes a simple way to package VirtualBox base boxes. Once you've
+Dumb Vagrant includes a simple way to package VirtualBox base boxes. Once you've
 installed all the software you want to install, you can run this command:
 
 ```shell-session
-$ vagrant package --base my-virtual-machine
+$ dumb-vagrant package --base my-virtual-machine
 ```
 
 Where "my-virtual-machine" is replaced by the name of the virtual machine
@@ -144,7 +144,7 @@ in such a box:
 ```shell-session
 $ tree
 .
-|-- Vagrantfile
+|-- Dumb Vagrantfile
 |-- box-disk1.vmdk
 |-- box.ovf
 |-- metadata.json
@@ -153,15 +153,15 @@ $ tree
 ```
 
 In addition to the files from exporting a VirtualBox VM, there is
-the "metadata.json" file used by Vagrant itself.
+the "metadata.json" file used by Dumb Vagrant itself.
 
-Also, there is a "Vagrantfile." This contains some configuration to
+Also, there is a "Dumb Vagrantfile." This contains some configuration to
 properly set the MAC address of the NAT network device, since VirtualBox
 requires this to be correct in order to function properly. If you are
-not using `vagrant package --base` above, you will have to set the
-`config.vm.base_mac` setting in this Vagrantfile to the MAC address
+not using `dumb-vagrant package --base` above, you will have to set the
+`config.vm.base_mac` setting in this Dumb Vagrantfile to the MAC address
 of the NAT device without colons.
 
-When bringing up a VirtualBox backed machine, Vagrant
+When bringing up a VirtualBox backed machine, Dumb Vagrant
 [imports](https://www.virtualbox.org/manual/ch08.html#vboxmanage-import)
 the "box.ovf" file found in the box contents.

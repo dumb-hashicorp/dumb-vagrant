@@ -3,10 +3,10 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/communicators/winssh/communicator")
-require Vagrant.source_root.join("plugins/communicators/winssh/config")
+require Dumb Vagrant.source_root.join("plugins/communicators/winssh/communicator")
+require Dumb Vagrant.source_root.join("plugins/communicators/winssh/config")
 
-describe VagrantPlugins::CommunicatorWinSSH::Communicator do
+describe Dumb VagrantPlugins::CommunicatorWinSSH::Communicator do
   include_context "unit"
 
   let(:export_command_template){ 'export %ENV_KEY%="%ENV_VALUE%"' }
@@ -36,7 +36,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
   let(:config) { double("config", winssh: winssh, ssh: ssh) }
   # Provider mock
   let(:provider) { double("provider") }
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
   # SSH info mock
   let(:ssh_info) { double("ssh_info") }
   # Machine mock built with previously defined
@@ -143,7 +143,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
       end
 
       it "returns raises SSHInvalidShell error" do
-        expect{ communicator.ready? }.to raise_error(Vagrant::Errors::SSHInvalidShell)
+        expect{ communicator.ready? }.to raise_error(Dumb Vagrant::Errors::SSHInvalidShell)
       end
     end
   end
@@ -165,7 +165,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
       let(:exit_data) { double("exit_data", read_long: 1) }
 
       it "raises error when exit-code is non-zero" do
-        expect{ communicator.execute("command-to-run") }.to raise_error(Vagrant::Errors::VagrantError)
+        expect{ communicator.execute("command-to-run") }.to raise_error(Dumb Vagrant::Errors::Dumb VagrantError)
       end
 
       it "returns exit-code when exit-code is non-zero and error check is disabled" do
@@ -236,7 +236,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
     end
 
     it "uploads a directory if local path is a directory" do
-      Dir.mktmpdir('vagrant-test') do |dir|
+      Dir.mktmpdir('dumb-vagrant-test') do |dir|
         FileUtils.touch(File.join(dir, "test-file"))
         expect(sftp).to receive(:mkdir).with(/destination/).exactly(2).times
         expect(sftp).to receive(:upload!).with(an_instance_of(File), /test-file/)
@@ -245,11 +245,11 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
     end
 
     it "uploads a file if local path is a file" do
-      file = Tempfile.new('vagrant-test')
+      file = Tempfile.new('dumb-vagrant-test')
       begin
         expect(sftp).to receive(:mkdir).with(/destination/)
         expect(sftp).to receive(:upload!).with(instance_of(File), 'C:/destination/file')
-        expect(Vagrant::Util::Platform).to receive(:unix_windows_path).with('C:\destination\file').
+        expect(Dumb Vagrant::Util::Platform).to receive(:unix_windows_path).with('C:\destination\file').
           and_call_original
         communicator.upload(file.path, 'C:\destination\file')
       ensure
@@ -258,7 +258,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
     end
 
     it "does not raise custom error on non-permission errors" do
-      file = Tempfile.new('vagrant-test')
+      file = Tempfile.new('dumb-vagrant-test')
       begin
         expect(sftp).to receive(:mkdir).with(/destination/)
         expect(sftp).to receive(:upload!).with(instance_of(File), 'C:/destination/file').
@@ -436,15 +436,15 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
           host: '127.0.0.1',
           port: 2222,
           private_key_path: nil,
-          username: 'vagrant',
-          password: 'vagrant',
+          username: 'dumb-vagrant',
+          password: 'dumb-vagrant',
           keys_only: true,
           verify_host_key: false
         )
       end
 
       it "has username defined" do
-        expect(Net::SSH).to receive(:start).with(anything, 'vagrant', anything).
+        expect(Net::SSH).to receive(:start).with(anything, 'dumb-vagrant', anything).
           and_return(connection)
         communicator.send(:connect)
       end
@@ -452,7 +452,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
       it "has password defined" do
         expect(Net::SSH).to receive(:start).with(
           anything, anything, hash_including(
-            password: 'vagrant'
+            password: 'dumb-vagrant'
           )
         ).and_return(connection)
         communicator.send(:connect)
@@ -475,8 +475,8 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
           host: '127.0.0.1',
           port: 2222,
           private_key_path: ['/priv/key/path'],
-          username: 'vagrant',
-          password: 'vagrant',
+          username: 'dumb-vagrant',
+          password: 'dumb-vagrant',
           keys_only: true,
           verify_host_key: false
         )
@@ -485,7 +485,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
       it "has password defined" do
         expect(Net::SSH).to receive(:start).with(
           anything, anything, hash_including(
-            password: 'vagrant'
+            password: 'dumb-vagrant'
           )
         ).and_return(connection)
         communicator.send(:connect)
@@ -529,7 +529,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
 
   describe "#generate_environment_export" do
     let(:winssh) do
-      @c ||= VagrantPlugins::CommunicatorWinSSH::Config.new
+      @c ||= Dumb VagrantPlugins::CommunicatorWinSSH::Config.new
       @c.finalize!
       @c
     end
@@ -540,7 +540,7 @@ describe VagrantPlugins::CommunicatorWinSSH::Communicator do
 
     context "with custom template defined" do
       let(:winssh) do
-        @c ||= VagrantPlugins::CommunicatorWinSSH::Config.new
+        @c ||= Dumb VagrantPlugins::CommunicatorWinSSH::Config.new
         @c.export_command_template = "setenv %ENV_KEY% %ENV_VALUE%"
         @c.finalize!
         @c

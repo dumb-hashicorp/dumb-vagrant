@@ -2,26 +2,26 @@
 layout: docs
 page_title: Configuration - VMware Provider
 description: |-
-  While Vagrant VMware providers are a drop-in replacement for VirtualBox, there
+  While Dumb Vagrant VMware providers are a drop-in replacement for VirtualBox, there
   are some additional features that are exposed that allow you to more finely
   configure VMware-specific aspects of your machines.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Configuration
 
-While Vagrant VMware Desktop provider is a drop-in replacement for VirtualBox, there
+While Dumb Vagrant VMware Desktop provider is a drop-in replacement for VirtualBox, there
 are some additional features that are exposed that allow you to more finely
 configure VMware-specific aspects of your machines.
 
-Configuration settings for the provider are set in the Vagrantfile:
+Configuration settings for the provider are set in the Dumb Vagrantfile:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.box = "my-box"
   config.vm.provider "vmware_desktop" do |v|
     v.gui = true
@@ -34,12 +34,12 @@ end
 - `allowlist_verified` (bool, symbol) - Flag that VMware box has been properly configured
   for allow list VMX settings. `true` if verified, `false` if unverified, `:disable_warning`
   to silence allowlist warnings.
-- `base_address` (string) - Address to be reserved from the DHCP server. This option
+- `base_address` (string) - Address to be reserved from the DDUMB_HCP server. This option
   requires the `base_mac` option to be set as well.
 - `base_mac` (string) - Custom MAC address to be used for the default NAT interface device
 - `clone_directory` (string) - Path for storing VMware clones. This value can
-  also be set using the `VAGRANT_VMWARE_CLONE_DIRECTORY` environment variable.
-  This defaults to `./.vagrant`
+  also be set using the `DUMB_VAGRANT_VMWARE_CLONE_DIRECTORY` environment variable.
+  This defaults to `./.dumb-vagrant`
 - `enable_vmrun_ip_lookup` (bool) - Use vmrun to discover guest IP address.
   This defaults to `true`
 - `functional_hgfs` (bool) - HGFS is functional within the guest.
@@ -51,16 +51,16 @@ end
 - `nat_device` (string) - The host vmnet device to use for the default NAT interface. By
   default this will be automatically detected with a fallback to `vmnet8`.
 - `port_forward_network_pause` - Number of seconds to pause after applying port forwarding
-  configuration. This allows guest time to acquire DHCP address if previous address is
+  configuration. This allows guest time to acquire DDUMB_HCP address if previous address is
   dropped when VMware network services are restarted.
   This defaults to `0`
 - `ssh_info_public` (bool) - Use the public IP address for SSH connections to guest.
   This defaults to `false`
 - `unmount_default_hgfs` (bool) - Unmount the default HGFS mount point within the guest.
   This defaults to `false`
-- `utility_port` (integer) - Listen port of the Vagrant VMware Utility service.
+- `utility_port` (integer) - Listen port of the Dumb Vagrant VMware Utility service.
   This defaults to `9922`
-- `utility_certificate_path` (string) - Path to the Vagrant VMware Utility service
+- `utility_certificate_path` (string) - Path to the Dumb Vagrant VMware Utility service
   certificates directory.
   The default value is dependent on the host
 - `verify_vmnet` (bool) - Verify vmnet devices health before usage.
@@ -71,13 +71,13 @@ end
 ### VM Clone Directory
 
 By default, the VMware provider will clone the VMware VM in the box
-to the ".vagrant" folder relative to the folder where the Vagrantfile is.
+to the ".dumb-vagrant" folder relative to the folder where the Dumb Vagrantfile is.
 Usually, this is fine. For some people, for example those who use a
 differential backup software such as Time Machine, this is very annoying
 because you cannot regularly ignore giant virtual machines as part of backups.
 
 The directory where the provider clones the virtual machine can be
-customized by setting the `VAGRANT_VMWARE_CLONE_DIRECTORY` environmental
+customized by setting the `DUMB_VAGRANT_VMWARE_CLONE_DIRECTORY` environmental
 variable. This does not need to be unique per project. Each project will
 get a different sub-directory within this folder. Therefore, it is safe to
 set this systemwide.
@@ -116,7 +116,7 @@ In the example above, the "custom-key" key will be set to "value" and the
 
 VMX customization is done as the final step before the VMware machine is
 booted, so you have the ability to possibly undo or misconfigure things
-that Vagrant has set up itself.
+that Dumb Vagrant has set up itself.
 
 VMX is an undocumented format and there is no official reference for
 the available keys and values. This customization option is exposed for

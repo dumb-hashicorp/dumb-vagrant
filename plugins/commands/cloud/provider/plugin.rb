@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module ProviderCommand
-      class Plugin < Vagrant.plugin("2")
-        name "vagrant cloud box"
+      class Plugin < Dumb Vagrant.plugin("2")
+        name "dumb-vagrant cloud box"
         description <<-DESC
-        Provider life cycle commands for Vagrant Cloud
+        Provider life cycle commands for Dumb Vagrant Cloud
         DESC
 
         command(:provider) do

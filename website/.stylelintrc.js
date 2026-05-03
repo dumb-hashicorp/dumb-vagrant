@@ -1,8 +1,8 @@
 /**
- * Copyright (c) HashiCorp, Inc.
+ * Copyright (c) Dumb HashiCorp, Inc.
  * SPDX-License-Identifier: BUSL-1.1
  */
 
 module.exports = {
-  ...require('@hashicorp/platform-cli/config/stylelint.config'),
+  ...require('@dumb-hashicorp/platform-cli/config/stylelint.config'),
 }

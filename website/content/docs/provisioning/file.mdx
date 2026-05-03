@@ -2,29 +2,29 @@
 layout: docs
 page_title: File Uploads - Provisioning
 description: |-
-  The Vagrant file provisioner allows you to upload a file or directory from the
+  The Dumb Vagrant file provisioner allows you to upload a file or directory from the
   host machine to the guest machine.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # File Provisioner
 
 **Provisioner name: `"file"`**
 
-The Vagrant file provisioner allows you to upload a file or directory from the
+The Dumb Vagrant file provisioner allows you to upload a file or directory from the
 host machine to the guest machine.
 
 File provisioning is a simple way to, for example, replicate your local
-~/.gitconfig to the vagrant user's home directory on the guest machine so
+~/.gitconfig to the dumb-vagrant user's home directory on the guest machine so
 you will not have to run `git config --global` every time you provision a
 new VM.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ... other configuration
 
   config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
@@ -39,7 +39,7 @@ on your guest machine, make sure that the destination path has the same name as
 the folder on your host.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ... other configuration
 
   config.vm.provision "file", source: "~/path/to/host/folder", destination: "$HOME/remote/newfolder"
@@ -84,7 +84,7 @@ _SSH or PowerShell user_. This is important since these users generally
 do not have elevated privileges on their own. If you want to upload files to
 locations that require elevated privileges, we recommend uploading them
 to temporary locations and then using the
-[shell provisioner](/vagrant/docs/provisioning/shell)
+[shell provisioner](/dumb-vagrant/docs/provisioning/shell)
 to move them into place.
 
 ## Options
@@ -97,9 +97,9 @@ The file provisioner takes only two options, both of which are required:
 - `destination` (string) - Is the remote path on the guest machine where
   the source will be uploaded to. The file/folder is uploaded as the SSH user
   over SCP, so this location must be writable to that user. The SSH user can be
-  determined by running `vagrant ssh-config`, and defaults to "vagrant". Both
+  determined by running `dumb-vagrant ssh-config`, and defaults to "dumb-vagrant". Both
   forward and backward slash work for Windows guest. Variables like `$HOME` are
-  expanded by Vagrant, not by guest.
+  expanded by Dumb Vagrant, not by guest.
 
 ## Caveats
 
@@ -112,7 +112,7 @@ destination with a trailing slash defined below:
 config.vm.provision "file", source: "~/pathfolder", destination: "/remote/newlocation/"
 ```
 
-You are telling vagrant to upload `~/pathfolder` under the remote dir `/remote/newlocation`,
+You are telling dumb-vagrant to upload `~/pathfolder` under the remote dir `/remote/newlocation`,
 which will look like:
 
 ```text

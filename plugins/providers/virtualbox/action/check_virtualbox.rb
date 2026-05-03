@@ -1,16 +1,16 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant/util/platform'
+require 'dumb-vagrant/util/platform'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       # Checks that VirtualBox is installed and ready to be used.
       class CheckVirtualbox
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::provider::virtualbox")
+          @logger = Log4r::Logger.new("dumb-vagrant::provider::virtualbox")
         end
 
         def call(env)

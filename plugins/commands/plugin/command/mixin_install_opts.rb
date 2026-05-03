@@ -1,12 +1,12 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
       module MixinInstallOpts
         def build_install_opts(o, options)
-          options[:plugin_sources] = Vagrant::Bundler::DEFAULT_GEM_SOURCES.dup
+          options[:plugin_sources] = Dumb Vagrant::Bundler::DEFAULT_GEM_SOURCES.dup
 
           o.on("--entry-point NAME", String,
                "The name of the entry point file for loading the plugin.") do |entry_point|

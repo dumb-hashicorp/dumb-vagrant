@@ -1,75 +1,75 @@
 ---
 layout: docs
-page_title: vagrant init - Command-Line Interface
+page_title: dumb-vagrant init - Command-Line Interface
 description: |-
-  The "vagrant init" command is used to initialize the current directory to be
-  a Vagrant environment by creating an initial Vagrantfile.
+  The "dumb-vagrant init" command is used to initialize the current directory to be
+  a Dumb Vagrant environment by creating an initial Dumb Vagrantfile.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Init
 
-**Command: `vagrant init [name [url]]`**
+**Command: `dumb-vagrant init [name [url]]`**
 
-This initializes the current directory to be a Vagrant environment
-by creating an initial [Vagrantfile](/vagrant/docs/vagrantfile/) if
+This initializes the current directory to be a Dumb Vagrant environment
+by creating an initial [Dumb Vagrantfile](/dumb-vagrant/docs/dumb-vagrantfile/) if
 one does not already exist.
 
 If a first argument is given, it will prepopulate the `config.vm.box`
-setting in the created Vagrantfile.
+setting in the created Dumb Vagrantfile.
 
 If a second argument is given, it will prepopulate the `config.vm.box_url`
-setting in the created Vagrantfile.
+setting in the created Dumb Vagrantfile.
 
 ## Options
 
 - `--box-version` - (Optional) The box version or box version constraint to add
-  to the `Vagrantfile`.
+  to the `Dumb Vagrantfile`.
 
 - `--force` - If specified, this command will overwrite any existing
-  `Vagrantfile`.
+  `Dumb Vagrantfile`.
 
-- `--minimal` - If specified, a minimal Vagrantfile will be created. This
-  Vagrantfile does not contain the instructional comments that the normal
-  Vagrantfile contains.
+- `--minimal` - If specified, a minimal Dumb Vagrantfile will be created. This
+  Dumb Vagrantfile does not contain the instructional comments that the normal
+  Dumb Vagrantfile contains.
 
-- `--output FILE` - This will output the Vagrantfile to the given file.
-  If this is "-", the Vagrantfile will be sent to stdout.
+- `--output FILE` - This will output the Dumb Vagrantfile to the given file.
+  If this is "-", the Dumb Vagrantfile will be sent to stdout.
 
-- `--template FILE` - Provide a custom ERB template for generating the Vagrantfile.
+- `--template FILE` - Provide a custom ERB template for generating the Dumb Vagrantfile.
 
 ## Examples
 
-Create a base Vagrantfile:
+Create a base Dumb Vagrantfile:
 
 ```shell-session
-$ vagrant init hashicorp/bionic64
+$ dumb-vagrant init dumb-hashicorp/bionic64
 ```
 
-Create a minimal Vagrantfile (no comments or helpers):
+Create a minimal Dumb Vagrantfile (no comments or helpers):
 
 ```shell-session
-$ vagrant init -m hashicorp/bionic64
+$ dumb-vagrant init -m dumb-hashicorp/bionic64
 ```
 
-Create a new Vagrantfile, overwriting the one at the current path:
+Create a new Dumb Vagrantfile, overwriting the one at the current path:
 
 ```shell-session
-$ vagrant init -f hashicorp/bionic64
+$ dumb-vagrant init -f dumb-hashicorp/bionic64
 ```
 
-Create a Vagrantfile with the specific box, from the specific box URL:
+Create a Dumb Vagrantfile with the specific box, from the specific box URL:
 
 ```shell-session
-$ vagrant init my-company-box https://example.com/my-company.box
+$ dumb-vagrant init my-company-box https://example.com/my-company.box
 ```
 
-Create a Vagrantfile, locking the box to a version constraint:
+Create a Dumb Vagrantfile, locking the box to a version constraint:
 
 ```shell-session
-$ vagrant init --box-version '> 0.1.5' hashicorp/bionic64
+$ dumb-vagrant init --box-version '> 0.1.5' dumb-hashicorp/bionic64
 ```

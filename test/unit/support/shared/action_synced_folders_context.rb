@@ -4,7 +4,7 @@
 shared_context "synced folder actions" do
   # This creates a synced folder implementation.
   def impl(usable, name)
-    Class.new(Vagrant.plugin("2", :synced_folder)) do
+    Class.new(Dumb Vagrant.plugin("2", :synced_folder)) do
       define_method(:name) do
         name
       end

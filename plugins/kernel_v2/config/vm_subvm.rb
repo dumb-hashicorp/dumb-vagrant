@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/stacked_proc_runner"
+require "dumb-vagrant/util/stacked_proc_runner"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
     # Represents a single sub-VM in a multi-VM environment.
-    class VagrantConfigSubVM
-      include Vagrant::Util::StackedProcRunner
+    class Dumb VagrantConfigSubVM
+      include Dumb Vagrant::Util::StackedProcRunner
 
       # Returns an array of the configuration procs in [version, proc]
       # format.

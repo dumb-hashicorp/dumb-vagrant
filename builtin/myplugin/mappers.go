@@ -4,7 +4,7 @@
 package myplugin
 
 import (
-	pb "github.com/hashicorp/vagrant/builtin/myplugin/proto"
+	pb "github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/proto"
 	"github.com/mitchellh/mapstructure"
 	"google.golang.org/protobuf/types/known/structpb"
 )

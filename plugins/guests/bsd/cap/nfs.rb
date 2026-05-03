@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "shellwords"
-require "vagrant/util/retryable"
+require "dumb-vagrant/util/retryable"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestBSD
     module Cap
       class NFS
-        extend Vagrant::Util::Retryable
+        extend Dumb Vagrant::Util::Retryable
 
         # Mount the given NFS folder.
         def self.mount_nfs_folder(machine, ip, folders)
@@ -36,9 +36,9 @@ module VagrantPlugins
             command = "/sbin/mount -t nfs -o '#{mount_opts}' #{ip}:#{host_path} #{guest_path}"
 
             # Run the command, raising a specific error.
-            retryable(on: Vagrant::Errors::NFSMountFailed, tries: 3, sleep: 5) do
+            retryable(on: Dumb Vagrant::Errors::NFSMountFailed, tries: 3, sleep: 5) do
               machine.communicate.sudo(command,
-                error_class: Vagrant::Errors::NFSMountFailed,
+                error_class: Dumb Vagrant::Errors::NFSMountFailed,
                 shell: "sh",
               )
             end

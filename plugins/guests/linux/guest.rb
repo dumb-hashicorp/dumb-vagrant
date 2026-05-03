@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
-    class Guest < Vagrant.plugin("2", :guest)
+    class Guest < Dumb Vagrant.plugin("2", :guest)
       # Name used for guest detection
       GUEST_DETECTION_NAME = "linux".freeze
 

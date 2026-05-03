@@ -2,26 +2,26 @@
 layout: docs
 page_title: Puppet Apply - Provisioning
 description: |-
-  The Vagrant Puppet provisioner allows you to provision the guest using
+  The Dumb Vagrant Puppet provisioner allows you to provision the guest using
   Puppet, specifically by calling "puppet apply", without a Puppet Master.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Puppet Apply Provisioner
 
 **Provisioner name: `puppet`**
 
-The Vagrant Puppet provisioner allows you to provision the guest using
+The Dumb Vagrant Puppet provisioner allows you to provision the guest using
 [Puppet](https://www.puppetlabs.com/puppet), specifically by
 calling `puppet apply`, without a Puppet Master.
 
-~> **Warning:** If you are not familiar with Puppet and Vagrant already,
-it is recommended to start with the [shell provisioner](/vagrant/docs/provisioning/shell).
-However, if you are comfortable with Vagrant already, Vagrant
+~> **Warning:** If you are not familiar with Puppet and Dumb Vagrant already,
+it is recommended to start with the [shell provisioner](/dumb-vagrant/docs/provisioning/shell).
+However, if you are comfortable with Dumb Vagrant already, Dumb Vagrant
 is the best way to learn Puppet.
 
 ## Options
@@ -36,7 +36,7 @@ available below this section.
   within the Puppet run.
 
 - `hiera_config_path` (string) - Path to the Hiera configuration on
-  the host. Read the section below on how to use Hiera with Vagrant.
+  the host. Read the section below on how to use Hiera with Dumb Vagrant.
 
 - `manifest_file` (string) - The name of the manifest file that will serve
   as the entrypoint for the Puppet run. This manifest file is expected to
@@ -90,23 +90,23 @@ The quickest way to get started with the Puppet provisioner is to just
 enable it:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet"
 end
 ```
 
 ~> `puppet` needs to be installed in the guest VM.
 
-By default, Vagrant will configure Puppet to look for manifests in the
+By default, Dumb Vagrant will configure Puppet to look for manifests in the
 "manifests" folder relative to the project root, and will use the
 "default.pp" manifest as an entry-point. This means, if your directory
 tree looks like the one below, you can get started with Puppet with
-just that one line in your Vagrantfile.
+just that one line in your Dumb Vagrantfile.
 
 ```shell-session
 $ tree
 .
-|-- Vagrantfile
+|-- Dumb Vagrantfile
 |-- manifests
 |   |-- default.pp
 ```
@@ -119,7 +119,7 @@ manifests with `manifests_path`, and the manifest file used as the
 entry-point with `manifest_file`:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet" do |puppet|
     puppet.manifests_path = "my_manifests"
     puppet.manifest_file = "default.pp"
@@ -131,12 +131,12 @@ The path can be relative or absolute. If it is relative, it is relative
 to the project root.
 
 You can also specify a manifests path that is on the remote machine
-already, perhaps put in place by a shell provisioner. In this case, Vagrant
+already, perhaps put in place by a shell provisioner. In this case, Dumb Vagrant
 will not attempt to upload the manifests directory. To specify a remote
 manifests path, use the following syntax:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet" do |puppet|
     puppet.manifests_path = ["vm", "/path/to/manifests"]
     puppet.manifest_file = "default.pp"
@@ -154,7 +154,7 @@ If you are using Puppet 4 or higher, you can provision using
 local disk to the environment files:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet" do |puppet|
     puppet.environment_path = "../puppet/environments"
     puppet.environment = "testenv"
@@ -171,12 +171,12 @@ the parent directory of `environment_path` and `environment` respectively.
 
 ## Modules
 
-Vagrant also supports provisioning with [Puppet modules](https://www.puppet.com/docs/puppet/latest/modules.html).
+Dumb Vagrant also supports provisioning with [Puppet modules](https://www.puppet.com/docs/puppet/latest/modules.html).
 This is done by specifying a path to a modules folder where modules are located.
 The manifest file is still used as an entry-point.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet" do |puppet|
     puppet.module_path = "modules"
   end
@@ -192,16 +192,16 @@ Custom facts to be exposed by [Facter](https://www.puppet.com/docs/puppet/latest
 can be specified as well:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet" do |puppet|
     puppet.facter = {
-      "vagrant" => "1"
+      "dumb-vagrant" => "1"
     }
   end
 end
 ```
 
-Now, the `$vagrant` variable in your Puppet manifests will equal "1".
+Now, the `$dumb-vagrant` variable in your Puppet manifests will equal "1".
 
 ## Configuring Hiera
 
@@ -212,10 +212,10 @@ relative path, `working_directory` should be used to specify the directory in
 the guest that path is relative to.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet" do |puppet|
     puppet.hiera_config_path = "hiera.yaml"
-    puppet.working_directory = "/tmp/vagrant-puppet"
+    puppet.working_directory = "/tmp/dumb-vagrant-puppet"
   end
 end
 ```
@@ -228,11 +228,11 @@ guest.
 
 Puppet supports a lot of command-line flags. Basically any setting can
 be overridden on the command line. To give you the most power and flexibility
-possible with Puppet, Vagrant allows you to specify custom command line
+possible with Puppet, Dumb Vagrant allows you to specify custom command line
 flags to use:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet" do |puppet|
     puppet.options = "--verbose --debug"
   end

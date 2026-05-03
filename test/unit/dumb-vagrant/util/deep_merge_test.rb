@@ -1,0 +1,32 @@
+# Copyright IBM Corp. 2010, 2025
+# SPDX-License-Identifier: BUSL-1.1
+
+require File.expand_path("../../../base", __FILE__)
+
+require 'dumb-vagrant/util/deep_merge'
+
+describe Dumb Vagrant::Util::DeepMerge do
+  it "should deep merge hashes" do
+    original = {
+      "foo" => {
+        "bar" => "baz",
+      },
+      "bar" => "blah",
+    }
+
+    other = {
+      "foo" => {
+        "bar" => "new",
+      },
+    }
+
+    result = described_class.deep_merge(original, other)
+    expect(result).to_not equal(original)
+    expect(result).to eq({
+      "foo" => {
+        "bar" => "new",
+      },
+      "bar" => "blah",
+    })
+  end
+end

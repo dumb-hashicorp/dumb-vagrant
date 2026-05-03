@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-# A general Vagrant system implementation for "solaris 11".
+# A general Dumb Vagrant system implementation for "solaris 11".
 #
 # Contributed by Jan Thomas Moldung <janth@moldung.no>
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSolaris11
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       attr_accessor :halt_timeout
       attr_accessor :halt_check_interval
       # This sets the command to use to execute items as a superuser. sudo is default
@@ -23,10 +23,10 @@ module VagrantPlugins
 
       def finalize!
         if @halt_timeout != UNSET_VALUE
-          puts "solaris11.halt_timeout is deprecated and will be removed in Vagrant 1.7"
+          puts "solaris11.halt_timeout is deprecated and will be removed in Dumb Vagrant 1.7"
         end
         if @halt_check_interval != UNSET_VALUE
-          puts "solaris11.halt_check_interval is deprecated and will be removed in Vagrant 1.7"
+          puts "solaris11.halt_check_interval is deprecated and will be removed in Dumb Vagrant 1.7"
         end
 
         @suexec_cmd = "sudo" if @suexec_cmd == UNSET_VALUE

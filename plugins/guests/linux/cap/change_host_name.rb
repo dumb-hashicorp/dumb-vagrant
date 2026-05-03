@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant/util/guest_hosts'
+require 'dumb-vagrant/util/guest_hosts'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       module ChangeHostName
@@ -37,11 +37,11 @@ module VagrantPlugins
         end
 
         def self.extended(klass)
-          klass.extend(Vagrant::Util::GuestHosts::Linux)
+          klass.extend(Dumb Vagrant::Util::GuestHosts::Linux)
           klass.extend(Methods)
         end
 
-        extend Vagrant::Util::GuestHosts::Linux
+        extend Dumb Vagrant::Util::GuestHosts::Linux
         extend Methods
       end
     end

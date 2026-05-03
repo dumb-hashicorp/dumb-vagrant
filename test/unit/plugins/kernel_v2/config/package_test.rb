@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/kernel_v2/config/package")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/package")
 
-describe VagrantPlugins::Kernel_V2::PackageConfig do
+describe Dumb VagrantPlugins::Kernel_V2::PackageConfig do
   subject { described_class.new }
 
   describe "#name" do

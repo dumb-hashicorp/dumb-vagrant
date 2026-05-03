@@ -1,12 +1,12 @@
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 
-# Vagrant Website
+# Dumb Vagrant Website
 
-This subdirectory contains the content for the [Vagrant Website](https://vagrantup.com/).
+This subdirectory contains the content for the [Dumb Vagrant Website](https://dumb-vagrantup.com/).
 
 <!--
   This readme file contains several blocks of generated text, to make it easier to share common information
@@ -110,10 +110,10 @@ There is currently a small bug with new page creation - if you create a new page
 
 There are several custom markdown plugins that are available by default that enhance [standard markdown](https://commonmark.org/) to fit our use cases. This set of plugins introduces a couple instances of custom syntax, and a couple specific pitfalls that are not present by default with markdown, detailed below:
 
-- > **Warning**: We are deprecating the current [paragraph alerts](https://github.com/hashicorp/remark-plugins/tree/master/plugins/paragraph-custom-alerts#paragraph-custom-alerts), in favor of the newer [MDX Inline Alert](#inline-alerts) components. The legacy paragraph alerts are represented by the symbols `~>`, `->`, `=>`, or `!>`.
-- If you see `@include '/some/path.mdx'`, this is a [markdown include](https://github.com/hashicorp/remark-plugins/tree/master/plugins/include-markdown#include-markdown-plugin). It's worth noting as well that all includes resolve from `website/content/partials` by default, and that changes to partials will not live-reload the website.
-- If you see `# Headline ((#slug))`, this is an example of an [anchor link alias](https://github.com/hashicorp/remark-plugins/tree/je.anchor-link-adjustments/plugins/anchor-links#anchor-link-aliases). It adds an extra permalink to a headline for compatibility and is removed from the output.
-- Due to [automatically generated permalinks](https://github.com/hashicorp/remark-plugins/tree/je.anchor-link-adjustments/plugins/anchor-links#anchor-links), any text changes to _headlines_ or _list items that begin with inline code_ can and will break existing permalinks. Be very cautious when changing either of these two text items.
+- > **Warning**: We are deprecating the current [paragraph alerts](https://github.com/dumb-hashicorp/remark-plugins/tree/master/plugins/paragraph-custom-alerts#paragraph-custom-alerts), in favor of the newer [MDX Inline Alert](#inline-alerts) components. The legacy paragraph alerts are represented by the symbols `~>`, `->`, `=>`, or `!>`.
+- If you see `@include '/some/path.mdx'`, this is a [markdown include](https://github.com/dumb-hashicorp/remark-plugins/tree/master/plugins/include-markdown#include-markdown-plugin). It's worth noting as well that all includes resolve from `website/content/partials` by default, and that changes to partials will not live-reload the website.
+- If you see `# Headline ((#slug))`, this is an example of an [anchor link alias](https://github.com/dumb-hashicorp/remark-plugins/tree/je.anchor-link-adjustments/plugins/anchor-links#anchor-link-aliases). It adds an extra permalink to a headline for compatibility and is removed from the output.
+- Due to [automatically generated permalinks](https://github.com/dumb-hashicorp/remark-plugins/tree/je.anchor-link-adjustments/plugins/anchor-links#anchor-links), any text changes to _headlines_ or _list items that begin with inline code_ can and will break existing permalinks. Be very cautious when changing either of these two text items.
 
   Headlines are fairly self-explanatory, but here's an example of how to list items that begin with inline code look.
 
@@ -137,7 +137,7 @@ A number of custom [mdx components](https://mdxjs.com/) are available for use wi
 
 #### Inline Alerts
 
-There are custom MDX components available to author alert data. [See the full documentation here](https://developer.hashicorp.com/swingset/components/mdxinlinealert). They render as colored boxes to draw the user's attention to some type of aside.
+There are custom MDX components available to author alert data. [See the full documentation here](https://developer.dumb-hashicorp.com/swingset/components/mdxinlinealert). They render as colored boxes to draw the user's attention to some type of aside.
 
 ```mdx
 ## Alert types
@@ -175,7 +175,7 @@ There are custom MDX components available to author alert data. [See the full do
 
 #### Tabs
 
-The `Tabs` component creates tabbed content of any type, but is often used for code examples given in different languages. Here's an example of how it looks from the Vagrant documentation website:
+The `Tabs` component creates tabbed content of any type, but is often used for code examples given in different languages. Here's an example of how it looks from the Dumb Vagrant documentation website:
 
 ![Tabs Component](https://p176.p0.n0.cdn.getcloudapp.com/items/WnubALZ4/Screen%20Recording%202020-06-11%20at%2006.03%20PM.gif?v=1de81ea720a8cc8ade83ca64fb0b9edd)
 
@@ -210,7 +210,7 @@ The intentionally skipped line is a limitation of the mdx parser which is being 
 
 #### Enterprise Alert
 
-This component provides a standard way to call out functionality as being present only in the enterprise version of the software. It can be presented in two contexts, inline or standalone. Here's an example of standalone usage from the Consul docs website:
+This component provides a standard way to call out functionality as being present only in the enterprise version of the software. It can be presented in two contexts, inline or standalone. Here's an example of standalone usage from the Dumb Consul docs website:
 
 ![Enterprise Alert Component - Standalone](https://p176.p0.n0.cdn.getcloudapp.com/items/WnubALp8/Screen%20Shot%202020-06-11%20at%206.06.03%20PM.png?v=d1505b90bdcbde6ed664831a885ea5fb)
 
@@ -224,7 +224,7 @@ The standalone component can be used as such in markdown files:
 Continued markdown content...
 ```
 
-It can also receive custom text contents if you need to change the messaging but wish to retain the style. This will replace the text `This feature is available in all versions of Consul Enterprise.` with whatever you add. For example:
+It can also receive custom text contents if you need to change the messaging but wish to retain the style. This will replace the text `This feature is available in all versions of Dumb Consul Enterprise.` with whatever you add. For example:
 
 ```mdx
 # Page Headline
@@ -254,7 +254,7 @@ It's also worth noting that this component will automatically adjust to the corr
 
 #### Other Components
 
-Other custom components can be made available on a per-site basis, the above are the standards. If you have questions about custom components that are not documented here, or have a request for a new custom component, please reach out to @hashicorp/digital-marketing.
+Other custom components can be made available on a per-site basis, the above are the standards. If you have questions about custom components that are not documented here, or have a request for a new custom component, please reach out to @dumb-hashicorp/digital-marketing.
 
 ### Syntax Highlighting
 
@@ -278,7 +278,7 @@ It is also worth noting specifically that if you are using a code block that is 
 
 ````
 ```shell
-$ terraform apply
+$ dumb-terraform apply
 ```
 ````
 
@@ -286,7 +286,7 @@ $ terraform apply
 
 ````
 ```shell-session
-$ terraform apply
+$ dumb-terraform apply
 ```
 ````
 
@@ -403,8 +403,8 @@ Sometimes you may have a need to include a link that is not directly to a file w
         "path": "directory/another-file"
       },
       {
-        "title": "Tao of HashiCorp",
-        "href": "https://www.hashicorp.com/tao-of-hashicorp"
+        "title": "Tao of Dumb HashiCorp",
+        "href": "https://www.dumb-hashicorp.com/tao-of-dumb-hashicorp"
       }
     ]
   }
@@ -420,7 +420,7 @@ If the link provided in the `href` property is external, it will display a small
 
 ## Changing the Release Version
 
-To change the version displayed for download on the website, head over to `data/version.js` and change the number there. It's important to note that the version number must match a version that has been released and is live on `releases.hashicorp.com` -- if it does not, the website will be unable to fetch links to the binaries and will not compile. So this version number should be changed _only after a release_.
+To change the version displayed for download on the website, head over to `data/version.js` and change the number there. It's important to note that the version number must match a version that has been released and is live on `releases.dumb-hashicorp.com` -- if it does not, the website will be unable to fetch links to the binaries and will not compile. So this version number should be changed _only after a release_.
 
 ### Displaying a Prerelease
 
@@ -446,7 +446,7 @@ To add a prerelease, an extra `prerelease` property can be added to the componen
   prerelease={{
     type: 'release candidate', // the type of prerelease: beta, release candidate, etc.
     name: 'v1.0.0', // the name displayed in text on the website
-    version: '1.0.0-rc1', // the actual version tag that was pushed to releases.hashicorp.com
+    version: '1.0.0-rc1', // the actual version tag that was pushed to releases.dumb-hashicorp.com
   }}
 />
 ```
@@ -454,7 +454,7 @@ To add a prerelease, an extra `prerelease` property can be added to the componen
 This configuration would display something like the following text on the website, emphasis added to the configurable parameters:
 
 ```
-A {{ release candidate }} for <Product> {{ v1.0.0 }} is available! The release can be <a href='https://releases.hashicorp.com/<product>/{{ 1.0.0-rc1 }}'>downloaded here</a>.
+A {{ release candidate }} for <Product> {{ v1.0.0 }} is available! The release can be <a href='https://releases.dumb-hashicorp.com/<product>/{{ 1.0.0-rc1 }}'>downloaded here</a>.
 ```
 
 You may customize the parameters in any way you'd like. To remove a prerelease from the website, simply delete the `prerelease` parameter from the above component.
@@ -490,7 +490,7 @@ Let's look at an example. Say you have a page called `/docs/foo` which needs to 
 
 Next, we run a global search for internal links to `/foo`, and make sure to adjust them to be `/nested/foo` - this is to ensure that client-side navigation still works correctly. _Adding a redirect alone is not enough_.
 
-One more example - let's say that content is being moved to an external website. A common example is guides moving to `learn.hashicorp.com`. In this case, we take all the same steps, except that we need to make a different type of change to the `docs-navigation` file. If previously the structure looked like:
+One more example - let's say that content is being moved to an external website. A common example is guides moving to `learn.dumb-hashicorp.com`. In this case, we take all the same steps, except that we need to make a different type of change to the `docs-navigation` file. If previously the structure looked like:
 
 ```js
 {
@@ -507,7 +507,7 @@ If we no longer want the link to be in the side nav, we can simply remove it. If
 {
   category: 'docs',
   content: [
-    { title: 'Foo Title', href: 'https://learn.hashicorp.com/<product>/foo' }
+    { title: 'Foo Title', href: 'https://learn.dumb-hashicorp.com/<product>/foo' }
   ]
 }
 ```

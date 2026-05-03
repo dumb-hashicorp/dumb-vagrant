@@ -3,14 +3,14 @@
 
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestALT
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
-        extend Vagrant::Util::GuestInspection::Linux
+        include Dumb Vagrant::Util
+        extend Dumb Vagrant::Util::GuestInspection::Linux
 
         def self.configure_networks(machine, networks)
           comm = machine.communicate
@@ -48,7 +48,7 @@ module VagrantPlugins
                                       end
 
             if extra_opts[:nm_controlled] == "yes" && !nmcli_installed
-              raise Vagrant::Errors::NetworkManagerNotInstalled, device: network[:device]
+              raise Dumb Vagrant::Errors::NetworkManagerNotInstalled, device: network[:device]
             end
 
             # Render a new configuration
@@ -64,11 +64,11 @@ module VagrantPlugins
             options_entry = TemplateRenderer.render("guests/alt/network_#{network[:type]}", options: template_options)
 
             # Upload the new configuration
-            options_remote_path = "/tmp/vagrant-network-entry-#{network[:device]}-#{Time.now.to_i}-#{i}"
-            ipv4_address_remote_path = "/tmp/vagrant-network-ipv4-address-entry-#{network[:device]}-#{Time.now.to_i}-#{i}"
-            ipv4_route_remote_path = "/tmp/vagrant-network-ipv4-route-entry-#{network[:device]}-#{Time.now.to_i}-#{i}"
+            options_remote_path = "/tmp/dumb-vagrant-network-entry-#{network[:device]}-#{Time.now.to_i}-#{i}"
+            ipv4_address_remote_path = "/tmp/dumb-vagrant-network-ipv4-address-entry-#{network[:device]}-#{Time.now.to_i}-#{i}"
+            ipv4_route_remote_path = "/tmp/dumb-vagrant-network-ipv4-route-entry-#{network[:device]}-#{Time.now.to_i}-#{i}"
 
-            Tempfile.open("vagrant-alt-configure-networks") do |f|
+            Tempfile.open("dumb-vagrant-alt-configure-networks") do |f|
               f.binmode
               f.write(options_entry)
               f.fsync
@@ -83,7 +83,7 @@ module VagrantPlugins
               ipv4_address_entry = TemplateRenderer.render("guests/alt/network_ipv4address", options: template_options)
 
               # Upload the new ipv4address configuration
-              Tempfile.open("vagrant-alt-configure-ipv4-address") do |f|
+              Tempfile.open("dumb-vagrant-alt-configure-ipv4-address") do |f|
                 f.binmode
                 f.write(ipv4_address_entry)
                 f.fsync
@@ -94,7 +94,7 @@ module VagrantPlugins
               ipv4_route_entry = TemplateRenderer.render("guests/alt/network_ipv4route", options: template_options)
 
               # Upload the new ipv4route configuration
-              Tempfile.open("vagrant-alt-configure-ipv4-route") do |f|
+              Tempfile.open("dumb-vagrant-alt-configure-ipv4-route") do |f|
                 f.binmode
                 f.write(ipv4_route_entry)
                 f.fsync

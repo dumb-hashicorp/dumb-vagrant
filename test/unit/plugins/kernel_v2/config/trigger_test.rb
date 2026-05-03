@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/kernel_v2/config/trigger")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/trigger")
 
-describe VagrantPlugins::Kernel_V2::TriggerConfig do
+describe Dumb VagrantPlugins::Kernel_V2::TriggerConfig do
   include_context "unit"
 
   subject { described_class.new }
@@ -48,14 +48,14 @@ describe VagrantPlugins::Kernel_V2::TriggerConfig do
       subject.before(:up, hash_block)
       bf_trigger = subject.instance_variable_get(:@_before_triggers)
       expect(bf_trigger.size).to eq(1)
-      expect(bf_trigger.first).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger)
+      expect(bf_trigger.first).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger)
     end
 
     it "creates a trigger with the array syntax" do
       subject.before([:up], hash_block)
       bf_trigger = subject.instance_variable_get(:@_before_triggers)
       expect(bf_trigger.size).to eq(1)
-      expect(bf_trigger.first).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger)
+      expect(bf_trigger.first).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger)
     end
 
     it "creates a trigger with the block syntax" do
@@ -64,14 +64,14 @@ describe VagrantPlugins::Kernel_V2::TriggerConfig do
       end
       bf_trigger = subject.instance_variable_get(:@_before_triggers)
       expect(bf_trigger.size).to eq(1)
-      expect(bf_trigger.first).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger)
+      expect(bf_trigger.first).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger)
     end
 
     it "creates multiple triggers with the splat syntax" do
       subject.before(splat, hash_block)
       bf_trigger = subject.instance_variable_get(:@_before_triggers)
       expect(bf_trigger.size).to eq(3)
-      bf_trigger.map { |t| expect(t).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger) }
+      bf_trigger.map { |t| expect(t).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger) }
     end
 
     it "creates multiple triggers with the block syntax" do
@@ -80,14 +80,14 @@ describe VagrantPlugins::Kernel_V2::TriggerConfig do
       end
       bf_trigger = subject.instance_variable_get(:@_before_triggers)
       expect(bf_trigger.size).to eq(3)
-      bf_trigger.map { |t| expect(t).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger) }
+      bf_trigger.map { |t| expect(t).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger) }
     end
 
     it "creates multiple triggers with the array syntax" do
       subject.before(arr, hash_block)
       bf_trigger = subject.instance_variable_get(:@_before_triggers)
       expect(bf_trigger.size).to eq(3)
-      bf_trigger.map { |t| expect(t).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger) }
+      bf_trigger.map { |t| expect(t).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger) }
     end
   end
 
@@ -96,14 +96,14 @@ describe VagrantPlugins::Kernel_V2::TriggerConfig do
       subject.after(:up, hash_block)
       af_trigger = subject.instance_variable_get(:@_after_triggers)
       expect(af_trigger.size).to eq(1)
-      expect(af_trigger.first).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger)
+      expect(af_trigger.first).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger)
     end
 
     it "creates a trigger with the array syntax" do
       subject.after([:up], hash_block)
       af_trigger = subject.instance_variable_get(:@_after_triggers)
       expect(af_trigger.size).to eq(1)
-      expect(af_trigger.first).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger)
+      expect(af_trigger.first).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger)
     end
 
     it "creates a trigger with the block syntax" do
@@ -112,14 +112,14 @@ describe VagrantPlugins::Kernel_V2::TriggerConfig do
       end
       af_trigger = subject.instance_variable_get(:@_after_triggers)
       expect(af_trigger.size).to eq(1)
-      expect(af_trigger.first).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger)
+      expect(af_trigger.first).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger)
     end
 
     it "creates multiple triggers with the splat syntax" do
       subject.after(splat, hash_block)
       af_trigger = subject.instance_variable_get(:@_after_triggers)
       expect(af_trigger.size).to eq(3)
-      af_trigger.map { |t| expect(t).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger) }
+      af_trigger.map { |t| expect(t).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger) }
     end
 
     it "creates multiple triggers with the block syntax" do
@@ -128,14 +128,14 @@ describe VagrantPlugins::Kernel_V2::TriggerConfig do
       end
       af_trigger = subject.instance_variable_get(:@_after_triggers)
       expect(af_trigger.size).to eq(3)
-      af_trigger.map { |t| expect(t).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger) }
+      af_trigger.map { |t| expect(t).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger) }
     end
 
     it "creates multiple triggers with the array syntax" do
       subject.after(arr, hash_block)
       af_trigger = subject.instance_variable_get(:@_after_triggers)
       expect(af_trigger.size).to eq(3)
-      af_trigger.map { |t| expect(t).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger) }
+      af_trigger.map { |t| expect(t).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger) }
     end
   end
 
@@ -143,16 +143,16 @@ describe VagrantPlugins::Kernel_V2::TriggerConfig do
     let(:command) { :up }
     let(:hash_block) { {info: "hi", run: {inline: "echo 'hi'"}} }
 
-    it "returns a new VagrantConfigTrigger object if given a hash" do
+    it "returns a new Dumb VagrantConfigTrigger object if given a hash" do
       trigger = subject.create_trigger(command, hash_block)
-      expect(trigger).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger)
+      expect(trigger).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger)
     end
 
-    it "returns a new VagrantConfigTrigger object if given a block" do
+    it "returns a new Dumb VagrantConfigTrigger object if given a block" do
       block = Proc.new { |b| b.info = "test"}
 
       trigger = subject.create_trigger(command, block)
-      expect(trigger).to be_a(VagrantPlugins::Kernel_V2::VagrantConfigTrigger)
+      expect(trigger).to be_a(Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger)
     end
   end
 

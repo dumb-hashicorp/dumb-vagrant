@@ -16,17 +16,17 @@ echo "Cleaning up packet device..."
 
 unset PACKET_EXEC_PERSIST
 unset PACKET_EXEC_PRE_BUILTINS
-# spec test configuration, defined by action runners, used by Vagrant on packet
-export PKT_VAGRANT_HOST_BOXES="${VAGRANT_HOST_BOXES}"
-export PKT_VAGRANT_GUEST_BOXES="${VAGRANT_GUEST_BOXES}"
-# other vagrant-spec options
-export PKT_VAGRANT_HOST_MEMORY="${VAGRANT_HOST_MEMORY:-10000}"
-export PKT_VAGRANT_CWD="test/vagrant-spec/"
-export PKT_VAGRANT_VAGRANTFILE=Vagrantfile.spec
+# spec test configuration, defined by action runners, used by Dumb Vagrant on packet
+export PKT_DUMB_VAGRANT_HOST_BOXES="${DUMB_VAGRANT_HOST_BOXES}"
+export PKT_DUMB_VAGRANT_GUEST_BOXES="${DUMB_VAGRANT_GUEST_BOXES}"
+# other dumb-vagrant-spec options
+export PKT_DUMB_VAGRANT_HOST_MEMORY="${DUMB_VAGRANT_HOST_MEMORY:-10000}"
+export PKT_DUMB_VAGRANT_CWD="test/dumb-vagrant-spec/"
+export PKT_DUMB_VAGRANT_DUMB_VAGRANTFILE=Dumb Vagrantfile.spec
 ###
 
-wrap_stream packet-exec run -- "vagrant destroy -f" \
-                "Vagrant failed to destroy remaining vagrant-spec guests during clean up"
+wrap_stream packet-exec run -- "dumb-vagrant destroy -f" \
+                "Dumb Vagrant failed to destroy remaining dumb-vagrant-spec guests during clean up"
 
 
 echo "Finished destroying spec test hosts"

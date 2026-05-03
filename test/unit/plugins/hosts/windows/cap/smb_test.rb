@@ -5,12 +5,12 @@ require_relative "../../../../base"
 
 require_relative "../../../../../../plugins/hosts/windows/cap/smb"
 
-describe VagrantPlugins::HostWindows::Cap::SMB do
-  let(:subject){ VagrantPlugins::HostWindows::Cap::SMB }
-  let(:machine){ double(:machine, env: double(:machine_env, ui: Vagrant::UI::Silent.new)) }
+describe Dumb VagrantPlugins::HostWindows::Cap::SMB do
+  let(:subject){ Dumb VagrantPlugins::HostWindows::Cap::SMB }
+  let(:machine){ double(:machine, env: double(:machine_env, ui: Dumb Vagrant::UI::Silent.new)) }
   let(:env){ double(:env) }
   let(:options){ {} }
-  let(:result){ Vagrant::Util::Subprocess::Result }
+  let(:result){ Dumb Vagrant::Util::Subprocess::Result }
   let(:powershell_version){ "3" }
   let(:smblist){ <<-EOF
 Name        : vgt-CUSTOM_ID-1
@@ -23,7 +23,7 @@ Description : vgt-CUSTOM_ID-2
 
 Name        : my-share
 Path        : /my/path
-Description : Not Vagrant Owned
+Description : Not Dumb Vagrant Owned
 
 Name        : scoped-share
 Scope       : *
@@ -56,15 +56,15 @@ Remark     vgt-CUSTOM_ID-2
   let(:netshare_my){ <<-EOF
 Share name my-share
 Path       /my/path
-Remark     Not Vagrant Owned
+Remark     Not Dumb Vagrant Owned
     EOF
   }
 
 
   before do
     allow(subject).to receive(:machine_id).and_return("CUSTOM_ID")
-    allow(Vagrant::Util::PowerShell).to receive(:version).and_return(powershell_version)
-    allow(Vagrant::Util::PowerShell).to receive(:execute_cmd).and_return("")
+    allow(Dumb Vagrant::Util::PowerShell).to receive(:version).and_return(powershell_version)
+    allow(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).and_return("")
     allow(subject).to receive(:sleep)
   end
 
@@ -94,13 +94,13 @@ Remark     Not Vagrant Owned
 
   describe ".smb_cleanup" do
     before do
-      allow(Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/Get-SmbShare/).
+      allow(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/Get-SmbShare/).
         and_return(smblist)
-      allow(Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share/).and_return(netsharelist)
-      allow(Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share vgt-CUSTOM_ID-1/).and_return(netshare1)
-      allow(Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share vgt-CUSTOM_ID-2/).and_return(netshare2)
-      allow(Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share my/).and_return(netshare_my)
-      allow(Vagrant::Util::PowerShell).to receive(:execute).and_return(result.new(0, "", ""))
+      allow(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share/).and_return(netsharelist)
+      allow(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share vgt-CUSTOM_ID-1/).and_return(netshare1)
+      allow(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share vgt-CUSTOM_ID-2/).and_return(netshare2)
+      allow(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share my/).and_return(netshare_my)
+      allow(Dumb Vagrant::Util::PowerShell).to receive(:execute).and_return(result.new(0, "", ""))
     end
     after{ subject.smb_cleanup(env, machine, options) }
 
@@ -110,7 +110,7 @@ Remark     Not Vagrant Owned
     end
 
     it "should remove owned shares" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute) do |*args|
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |*args|
         expect(args).to include("vgt-CUSTOM_ID-1")
         expect(args).to include("vgt-CUSTOM_ID-2")
         result.new(0, "", "")
@@ -118,24 +118,24 @@ Remark     Not Vagrant Owned
     end
 
     it "should not remove owned shares" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute) do |*args|
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |*args|
         expect(args).not_to include("my-share")
         result.new(0, "", "")
       end
     end
 
     it "should remove all shares in single call" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute).with(any_args, sudo: true).once
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute).with(any_args, sudo: true).once
     end
 
     context "when no shares are defined" do
       before do
-        expect(Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/Get-SmbShare/).
+        expect(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/Get-SmbShare/).
           and_return("")
       end
 
       it "should not attempt to remove shares" do
-        expect(Vagrant::Util::PowerShell).not_to receive(:execute).with(any_args, sudo: true)
+        expect(Dumb Vagrant::Util::PowerShell).not_to receive(:execute).with(any_args, sudo: true)
       end
 
       it "should not warn user" do
@@ -145,15 +145,15 @@ Remark     Not Vagrant Owned
 
     context "when Get-SmbShare is not available" do
       before do
-        expect(Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/Get-SmbShare/).and_return(nil)
+        expect(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/Get-SmbShare/).and_return(nil)
       end
 
       it "should fetch list using net.exe" do
-        expect(Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share/).and_return("")
+        expect(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).with(/net share/).and_return("")
       end
 
       it "should remove owned shares" do
-        expect(Vagrant::Util::PowerShell).to receive(:execute) do |*args|
+        expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |*args|
           expect(args).to include("vgt-CUSTOM_ID-1")
           expect(args).to include("vgt-CUSTOM_ID-2")
           result.new(0, "", "")
@@ -161,7 +161,7 @@ Remark     Not Vagrant Owned
       end
 
       it "should not remove owned shares" do
-        expect(Vagrant::Util::PowerShell).to receive(:execute) do |*args|
+        expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |*args|
           expect(args).not_to include("my-share")
           result.new(0, "", "")
         end
@@ -173,7 +173,7 @@ Remark     Not Vagrant Owned
     let(:folders){ {"/first/path" => {hostpath: "/host/1"}, "/second/path" => {hostpath: "/host/2", smb_id: "ID1"}} }
     let(:options){ {} }
 
-    before{ allow(Vagrant::Util::PowerShell).to receive(:execute).and_return(result.new(0, "", "")) }
+    before{ allow(Dumb Vagrant::Util::PowerShell).to receive(:execute).and_return(result.new(0, "", "")) }
 
     it "should add ID when not defined" do
       subject.smb_prepare(env, machine, folders, options)
@@ -192,7 +192,7 @@ Remark     Not Vagrant Owned
     end
 
     it "should add all shares in single call" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute).with(any_args, sudo: true).once
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute).with(any_args, sudo: true).once
       subject.smb_prepare(env, machine, folders, options)
     end
 
@@ -214,7 +214,7 @@ Remark     Not Vagrant Owned
         it "should raise an error" do
           expect{
             subject.smb_prepare(env, machine, folders, options)
-          }.to raise_error(VagrantPlugins::SyncedFolderSMB::Errors::SMBNameError)
+          }.to raise_error(Dumb VagrantPlugins::SyncedFolderSMB::Errors::SMBNameError)
         end
       end
     end
@@ -223,7 +223,7 @@ Remark     Not Vagrant Owned
       after{ subject.smb_prepare(env, machine, {}, options) }
 
       it "should not attempt to add shares" do
-        expect(Vagrant::Util::PowerShell).not_to receive(:execute).with(any_args, sudo: true)
+        expect(Dumb Vagrant::Util::PowerShell).not_to receive(:execute).with(any_args, sudo: true)
       end
 
       it "should not warn user" do
@@ -239,13 +239,13 @@ Remark     Not Vagrant Owned
       after{ subject.smb_prepare(env, machine, folders, options) }
 
       it "should execute multiple powershell commands" do
-        expect(Vagrant::Util::PowerShell).to receive(:execute).twice.with(any_args, sudo: true)
+        expect(Dumb Vagrant::Util::PowerShell).to receive(:execute).twice.with(any_args, sudo: true)
       end
     end
   end
 
   describe ".get_smbshares" do
-    before { expect(Vagrant::Util::PowerShell).to receive(:execute_cmd).and_return(smblist) }
+    before { expect(Dumb Vagrant::Util::PowerShell).to receive(:execute_cmd).and_return(smblist) }
 
     it "should return a Hash of share information" do
       expect(subject.get_smbshares).to be_a(Hash)

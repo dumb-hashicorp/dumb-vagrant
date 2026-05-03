@@ -9,12 +9,12 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
   describe "#use_host_only_nets?" do
     context "when platform is darwin" do
       before do
-        allow(Vagrant::Util::Platform).to receive(:darwin?).and_return(true)
+        allow(Dumb Vagrant::Util::Platform).to receive(:darwin?).and_return(true)
       end
 
       context "when virtualbox version is less than 7" do
         before do
-          allow_any_instance_of(VagrantPlugins::ProviderVirtualBox::Driver::Meta).
+          allow_any_instance_of(Dumb VagrantPlugins::ProviderVirtualBox::Driver::Meta).
             to receive(:version).and_return("6.0.28")
         end
 
@@ -25,7 +25,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
 
       context "when virtualbox version is greater than 7" do
         before do
-          allow_any_instance_of(VagrantPlugins::ProviderVirtualBox::Driver::Meta).
+          allow_any_instance_of(Dumb VagrantPlugins::ProviderVirtualBox::Driver::Meta).
             to receive(:version).and_return("7.0.2")
         end
 
@@ -36,7 +36,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
 
       context "when virtualbox version is equal to 7" do
         before do
-          allow_any_instance_of(VagrantPlugins::ProviderVirtualBox::Driver::Meta).
+          allow_any_instance_of(Dumb VagrantPlugins::ProviderVirtualBox::Driver::Meta).
             to receive(:version).and_return("7.0.0")
         end
 
@@ -48,12 +48,12 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
 
     context "when platform is not darwin" do
       before do
-        allow(Vagrant::Util::Platform).to receive(:darwin?).and_return(false)
+        allow(Dumb Vagrant::Util::Platform).to receive(:darwin?).and_return(false)
       end
 
       context "when virtualbox version is less than 7" do
         before do
-          allow_any_instance_of(VagrantPlugins::ProviderVirtualBox::Driver::Meta).
+          allow_any_instance_of(Dumb VagrantPlugins::ProviderVirtualBox::Driver::Meta).
             to receive(:version).and_return("6.0.28")
         end
 
@@ -64,7 +64,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
 
       context "when virtualbox version is greater than 7" do
         before do
-          allow_any_instance_of(VagrantPlugins::ProviderVirtualBox::Driver::Meta).
+          allow_any_instance_of(Dumb VagrantPlugins::ProviderVirtualBox::Driver::Meta).
             to receive(:version).and_return("7.0.2")
         end
 
@@ -75,7 +75,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
 
       context "when virtualbox version is equal to 7" do
         before do
-          allow_any_instance_of(VagrantPlugins::ProviderVirtualBox::Driver::Meta).
+          allow_any_instance_of(Dumb VagrantPlugins::ProviderVirtualBox::Driver::Meta).
             to receive(:version).and_return("7.0.0")
         end
 
@@ -200,7 +200,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
         before do
           expect(subject).
             to receive(:read_host_only_networks).
-                 and_return([{name: "vagrantnet-vbox-1"}])
+                 and_return([{name: "dumb-vagrantnet-vbox-1"}])
 
         end
 
@@ -212,7 +212,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
           it "should delete the network" do
             expect(subject).
               to receive(:execute).
-                   with("hostonlynet", "remove", "--name", "vagrantnet-vbox-1", any_args)
+                   with("hostonlynet", "remove", "--name", "dumb-vagrantnet-vbox-1", any_args)
             subject.delete_unused_host_only_networks
           end
         end
@@ -226,7 +226,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
             expect(subject).
               to receive(:execute).
                    with("showvminfo", "VM_ID", any_args).
-                   and_return(%(hostonly-network="vagrantnet-vbox-1"))
+                   and_return(%(hostonly-network="dumb-vagrantnet-vbox-1"))
           end
 
           it "should not delete the network" do
@@ -346,21 +346,21 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
         end
       end
 
-      context "when dhcp information is included" do
+      context "when ddumb-hcp information is included" do
         let(:options) {
           {
-            type: :dhcp,
-            dhcp_lower: "127.0.0.1",
-            dhcp_upper: "127.0.1.200",
+            type: :ddumb-hcp,
+            ddumb-hcp_lower: "127.0.0.1",
+            ddumb-hcp_upper: "127.0.1.200",
             netmask: "255.255.240.0"
           }
         }
 
-        it "should set DHCP range" do
+        it "should set DDUMB_HCP range" do
           expect(subject).
             to receive(:execute).
                  with("hostonlynet", "add", "--name", anything, "--netmask", options[:netmask],
-                     "--lower-ip", options[:dhcp_lower], "--upper-ip", options[:dhcp_upper],
+                     "--lower-ip", options[:ddumb-hcp_lower], "--upper-ip", options[:ddumb-hcp_upper],
                      any_args)
           subject.create_host_only_network(options)
         end
@@ -395,18 +395,18 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
     end
   end
 
-  describe "#remove_dhcp_server" do
-    let(:dhcp_name) { double(:dhcp_name) }
+  describe "#remove_ddumb-hcp_server" do
+    let(:ddumb-hcp_name) { double(:ddumb-hcp_name) }
 
     context "when hostonlynets are disabled" do
       before do
         allow(subject).to receive(:use_host_only_nets?).and_return(false)
       end
 
-      it "should remove the dhcp server" do
-        expect(subject).to receive(:execute).with("dhcpserver", "remove", "--netname",
-                                                  dhcp_name, any_args)
-        subject.remove_dhcp_server(dhcp_name)
+      it "should remove the ddumb-hcp server" do
+        expect(subject).to receive(:execute).with("ddumb-hcpserver", "remove", "--netname",
+                                                  ddumb-hcp_name, any_args)
+        subject.remove_ddumb-hcp_server(ddumb-hcp_name)
       end
     end
 
@@ -417,19 +417,19 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
 
       it "should do nothing" do
         expect(subject).not_to receive(:execute)
-        subject.remove_dhcp_server(dhcp_name)
+        subject.remove_ddumb-hcp_server(ddumb-hcp_name)
       end
     end
   end
 
-  describe "#create_dhcp_server" do
+  describe "#create_ddumb-hcp_server" do
     let(:network) { double("network") }
     let(:options) {
       {
-        dhcp_ip: "127.0.0.1",
+        ddumb-hcp_ip: "127.0.0.1",
         netmask: "255.255.255.0",
-        dhcp_lower: "127.0.0.2",
-        dhcp_upper: "127.0.0.200"
+        ddumb-hcp_lower: "127.0.0.2",
+        ddumb-hcp_upper: "127.0.0.200"
       }
     }
 
@@ -438,11 +438,11 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
         allow(subject).to receive(:use_host_only_nets?).and_return(false)
       end
 
-      it "should create a dhcp server" do
-        expect(subject).to receive(:execute).with("dhcpserver", "add", "--ifname", network,
-                                                 "--ip", options[:dhcp_ip], any_args)
+      it "should create a ddumb-hcp server" do
+        expect(subject).to receive(:execute).with("ddumb-hcpserver", "add", "--ifname", network,
+                                                 "--ip", options[:ddumb-hcp_ip], any_args)
 
-        subject.create_dhcp_server(network, options)
+        subject.create_ddumb-hcp_server(network, options)
       end
     end
 
@@ -453,7 +453,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
 
       it "should do nothing" do
         expect(subject).not_to receive(:execute)
-        subject.create_dhcp_server(network, options)
+        subject.create_ddumb-hcp_server(network, options)
       end
     end
   end
@@ -503,13 +503,13 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
         expect(result.first[:ip]).to eq(IPAddr.new(result.first[:lowerip]).succ.to_s)
       end
 
-      context "when dhcp range is set" do
+      context "when ddumb-hcp range is set" do
         before do
           allow(subject).to receive(:execute).with("list", "hostonlynets", any_args).
                               and_return(VBOX_RANGE_HOSTONLYNETS)
         end
 
-        it "should assign the address as the first in the dhcp range" do
+        it "should assign the address as the first in the ddumb-hcp range" do
           result = subject.read_host_only_interfaces
           expect(result.first[:ip]).to eq(result.first[:lowerip])
         end
@@ -529,10 +529,10 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
 
     it "should return expected network information" do
       result = subject.send(:read_host_only_networks)
-      expect(result.first[:name]).to eq("vagrantnet-vbox1")
+      expect(result.first[:name]).to eq("dumb-vagrantnet-vbox1")
       expect(result.first[:lowerip]).to eq("192.168.61.0")
       expect(result.first[:networkmask]).to eq("255.255.255.0")
-      expect(result.last[:name]).to eq("vagrantnet-vbox2")
+      expect(result.last[:name]).to eq("dumb-vagrantnet-vbox2")
       expect(result.last[:lowerip]).to eq("192.168.22.0")
       expect(result.last[:networkmask]).to eq("255.255.255.0")
     end
@@ -598,7 +598,7 @@ shared_examples "a version 7.x virtualbox driver" do |opts|
           v[:type] == :hostonly
         }
         expect(hostonly).to be
-        expect(hostonly[:hostonly]).to eq("vagrantnet-vbox1")
+        expect(hostonly[:hostonly]).to eq("dumb-vagrantnet-vbox1")
       end
     end
   end
@@ -606,7 +606,7 @@ end
 
 VBOX_VMCONFIG_FILE=%(<?xml version="1.0"?>
 <VirtualBox xmlns="http://www.virtualbox.org/" version="1.19-linux">
-  <Machine uuid="{623842dc-0947-4143-aa4e-7d180c5eb348}" name="vagrant-test_default_1665781960041_56631" OSType="Ubuntu_64" snapshotFolder="Snapshots">
+  <Machine uuid="{623842dc-0947-4143-aa4e-7d180c5eb348}" name="dumb-vagrant-test_default_1665781960041_56631" OSType="Ubuntu_64" snapshotFolder="Snapshots">
     <Snapshot uuid="{467622d6-f25b-4aaa-94dd-e3e949efca0f}" name="Snapshot 1" timeStamp="2023-01-12T18:28:25Z">
       <Hardware>
         <Network>
@@ -650,7 +650,7 @@ VBOX_VMCONFIG_FILE=%(<?xml version="1.0"?>
 
 VBOX_BRIDGEDIFS=%(Name:            en1: Wi-Fi (AirPort)
 GUID:            00000000-0000-0000-0000-000000000001
-DHCP:            Disabled
+DDUMB_HCP:            Disabled
 IPAddress:       10.0.0.49
 NetworkMask:     255.255.255.0
 IPV6Address:
@@ -663,7 +663,7 @@ VBoxNetworkName: HostInterfaceNetworking-en1
 
 Name:            en0: Ethernet
 GUID:            00000000-0000-0000-0000-000000000002
-DHCP:            Disabled
+DDUMB_HCP:            Disabled
 IPAddress:       0.0.0.0
 NetworkMask:     0.0.0.0
 IPV6Address:
@@ -676,7 +676,7 @@ VBoxNetworkName: HostInterfaceNetworking-en0
 
 Name:            bridge100
 GUID:            00000000-0000-0000-0000-000000000003
-DHCP:            Disabled
+DDUMB_HCP:            Disabled
 IPAddress:       192.168.61.1
 NetworkMask:     255.255.255.0
 IPV6Address:
@@ -689,7 +689,7 @@ VBoxNetworkName: HostInterfaceNetworking-bridge100
 
 Name:            en2: Thunderbolt 1
 GUID:            00000000-0000-0000-0000-000000000004
-DHCP:            Disabled
+DDUMB_HCP:            Disabled
 IPAddress:       0.0.0.0
 NetworkMask:     0.0.0.0
 IPV6Address:
@@ -702,7 +702,7 @@ VBoxNetworkName: HostInterfaceNetworking-en2
 
 Name:            bridge101
 GUID:            00000000-0000-0000-0000-000000000005
-DHCP:            Disabled
+DDUMB_HCP:            Disabled
 IPAddress:       192.168.22.1
 NetworkMask:     255.255.255.0
 IPV6Address:
@@ -713,41 +713,41 @@ Wireless:        No
 Status:          Up
 VBoxNetworkName: HostInterfaceNetworking-bridge101)
 
-VBOX_HOSTONLYNETS=%(Name:            vagrantnet-vbox1
+VBOX_HOSTONLYNETS=%(Name:            dumb-vagrantnet-vbox1
 GUID:            10000000-0000-0000-0000-000000000000
 
 State:           Enabled
 NetworkMask:     255.255.255.0
 LowerIP:         192.168.61.0
 UpperIP:         192.168.61.0
-VBoxNetworkName: hostonly-vagrantnet-vbox1
+VBoxNetworkName: hostonly-dumb-vagrantnet-vbox1
 
-Name:            vagrantnet-vbox2
+Name:            dumb-vagrantnet-vbox2
 GUID:            20000000-0000-0000-0000-000000000000
 
 State:           Enabled
 NetworkMask:     255.255.255.0
 LowerIP:         192.168.22.0
 UpperIP:         192.168.22.0
-VBoxNetworkName: hostonly-vagrantnet-vbox2)
+VBoxNetworkName: hostonly-dumb-vagrantnet-vbox2)
 
-VBOX_RANGE_HOSTONLYNETS=%(Name:            vagrantnet-vbox1
+VBOX_RANGE_HOSTONLYNETS=%(Name:            dumb-vagrantnet-vbox1
 GUID:            10000000-0000-0000-0000-000000000000
 
 State:           Enabled
 NetworkMask:     255.255.255.0
 LowerIP:         192.168.61.10
 UpperIP:         192.168.61.100
-VBoxNetworkName: hostonly-vagrantnet-vbox1
+VBoxNetworkName: hostonly-dumb-vagrantnet-vbox1
 
-Name:            vagrantnet-vbox2
+Name:            dumb-vagrantnet-vbox2
 GUID:            20000000-0000-0000-0000-000000000000
 
 State:           Enabled
 NetworkMask:     255.255.255.0
 LowerIP:         192.168.22.0
 UpperIP:         192.168.22.0
-VBoxNetworkName: hostonly-vagrantnet-vbox2)
+VBoxNetworkName: hostonly-dumb-vagrantnet-vbox2)
 
 VBOX_GUEST_HOSTONLYVNETS_INFO=%(
 natnet1="nat"
@@ -762,7 +762,7 @@ sockRcv="64"
 tcpWndSnd="64"
 tcpWndRcv="64"
 Forwarding(0)="ssh,tcp,127.0.0.1,2222,,22"
-hostonly-network2="vagrantnet-vbox1"
+hostonly-network2="dumb-vagrantnet-vbox1"
 macaddress2="080027FBC15B"
 cableconnected2="on"
 nic2="hostonlynetwork"

@@ -3,16 +3,16 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandStatus
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
-        "outputs status of the vagrant machine"
+        "outputs status of the dumb-vagrant machine"
       end
 
       def execute
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant status [name|id]"
+          o.banner = "Usage: dumb-vagrant status [name|id]"
         end
 
         # Parse the options
@@ -43,10 +43,10 @@ module VagrantPlugins
         if results.length == 1
           message = state.long_description
         else
-          message = I18n.t("vagrant.commands.status.listing")
+          message = I18n.t("dumb-vagrant.commands.status.listing")
         end
 
-        @env.ui.info(I18n.t("vagrant.commands.status.output",
+        @env.ui.info(I18n.t("dumb-vagrant.commands.status.output",
                             states: results.join("\n"),
                             message: message),
                      prefix: false)

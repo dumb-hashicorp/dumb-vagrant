@@ -3,20 +3,20 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module ProviderCommand
       module Command
-        class Delete < Vagrant.plugin("2", :command)
+        class Delete < Dumb Vagrant.plugin("2", :command)
           include Util
 
           def execute
             options = {}
 
             opts = OptionParser.new do |o|
-              o.banner = "Usage: vagrant cloud provider delete [options] organization/box-name provider-name version [architecture]"
+              o.banner = "Usage: dumb-vagrant cloud provider delete [options] organization/box-name provider-name version [architecture]"
               o.separator ""
-              o.separator "Deletes a provider entry on Vagrant Cloud"
+              o.separator "Deletes a provider entry on Dumb Vagrant Cloud"
               o.separator ""
               o.separator "Options:"
               o.separator ""
@@ -29,7 +29,7 @@ module VagrantPlugins
             argv = parse_options(opts)
             return if !argv
             if argv.count < 3 || argv.count > 4
-              raise Vagrant::Errors::CLIInvalidUsage,
+              raise Dumb Vagrant::Errors::CLIInvalidUsage,
                 help: opts.help.chomp
             end
 
@@ -39,7 +39,7 @@ module VagrantPlugins
             architecture = argv[3]
 
             @client = client_login(@env)
-            account = VagrantCloud::Account.new(
+            account = Dumb VagrantCloud::Account.new(
               custom_server: api_server_url,
               access_token: @client.token
             )
@@ -86,7 +86,7 @@ module VagrantPlugins
           # @param [String] version Box version
           # @param [String] provider Provider name
           # @param [String] architecture Architecture of guest
-          # @param [VagrantCloud::Account] account VagrantCloud account
+          # @param [Dumb VagrantCloud::Account] account Dumb VagrantCloud account
           # @param [Hash] options Currently unused
           # @return [Integer]
           def delete_provider(org, box, version, provider, architecture, account, options={})
@@ -96,7 +96,7 @@ module VagrantPlugins
                 architecture: architecture, provider: provider, org: org, box_name: box, version: version))
               0
             end
-          rescue VagrantCloud::Error => e
+          rescue Dumb VagrantCloud::Error => e
             @env.ui.error(I18n.t("cloud_command.errors.provider.delete_fail",
               architecture: architecture, provider: provider, org: org, box_name: box, version: version))
             @env.ui.error(e)

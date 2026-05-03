@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Command
-      class Run < Vagrant.plugin("2", :command)
+      class Run < Dumb Vagrant.plugin("2", :command)
         def self.synopsis
           "run a one-off command in the context of a container"
         end
@@ -16,7 +16,7 @@ module VagrantPlugins
           options[:rm] = true
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant docker-run [command...]"
+            o.banner = "Usage: dumb-vagrant docker-run [command...]"
             o.separator ""
             o.separator "Options:"
             o.separator ""

@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-# A general Vagrant system implementation for "solaris 11".
+# A general Dumb Vagrant system implementation for "solaris 11".
 #
 # Contributed by Jan Thomas Moldung <janth@moldung.no>
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSolaris11
     module Cap
       class ConfigureNetworks
@@ -24,7 +24,7 @@ module VagrantPlugins
                 machine.communicate.execute("#{su_cmd} ipadm delete-addr #{device}/v4")
               end
               machine.communicate.execute("#{su_cmd} ipadm create-addr -T static -a #{network[:ip]}/#{cidr} #{device}/v4")
-            elsif network[:type].to_sym == :dhcp
+            elsif network[:type].to_sym == :ddumb-hcp
               if machine.communicate.test("ipadm show-if -o all | grep #{device} | tr -s ' ' | cut -d ' ' -f 6  | grep '4\|6'")
                 machine.communicate.execute("#{su_cmd} ipadm create-addr -T addrconf #{device}/v4")
               end

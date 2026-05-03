@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 en:
-  vagrant:
+  dumb-vagrant:
     alert: |-
       [%{date}]:
         %{message}
@@ -45,14 +45,14 @@ en:
       Loading metadata for box '%{name}'
     box_malformed_continue_on_update: |-
       Could not determine box updates because box metadata was malformed.
-      Vagrant will continue on...
+      Dumb Vagrant will continue on...
     box_outdated: |-
       * '%{name}' for '%{provider}' is outdated! Current: %{current}. Latest: %{latest}
     box_outdated_checking_with_refresh: |-
       Checking if box '%{name}' version '%{version}' is up to date...
     box_outdated_local: |-
       A newer version of the box '%{name}' is available and already
-      installed, but your Vagrant machine is running against
+      installed, but your Dumb Vagrant machine is running against
       version '%{old}'. To update to version '%{new}',
       destroy and recreate your machine.
     box_outdated_metadata_download_error: |-
@@ -71,7 +71,7 @@ en:
     box_outdated_single: |-
       A newer version of the box '%{name}' for provider '%{provider}' is
       available! You currently have version '%{current}'. The latest is version
-      '%{latest}'. Run `vagrant box update` to update.
+      '%{latest}'. Run `dumb-vagrant box update` to update.
     box_outdated_metadata_error: |-
       * '%{name}' for '%{provider}': Error loading metadata: %{message}
     box_outdated_no_metadata: |-
@@ -92,8 +92,8 @@ en:
     cfengine_bootstrapping_policy_hub: |-
       Performing additional bootstrap for policy hubs...
     cfengine_cant_detect: |-
-      Vagrant doesn't support detecting whether CFEngine is installed
-      for the guest OS running in the machine. Vagrant will assume it is
+      Dumb Vagrant doesn't support detecting whether CFEngine is installed
+      for the guest OS running in the machine. Dumb Vagrant will assume it is
       installed and attempt to continue.
     cfengine_detected_ip: |-
       Detected policy server IP address: %{address}...
@@ -108,8 +108,8 @@ en:
     cfengine_single_run_execute: |-
       Executing run file for CFEngine...
     chef_cant_detect: |-
-      Vagrant does not support detecting whether Chef is installed
-      for the guest OS running in the machine. Vagrant will assume it is
+      Dumb Vagrant does not support detecting whether Chef is installed
+      for the guest OS running in the machine. Dumb Vagrant will assume it is
       installed and attempt to continue.
     chef_already_installed: |-
       Detected Chef (%{version}) is already installed
@@ -117,14 +117,14 @@ en:
       Installing Chef (%{version})...
     chef_client_cleanup_failed: |-
       Cleaning up the '%{deletable}' for Chef failed. The stdout and
-      stderr are shown below. Vagrant will continue destroying the machine,
+      stderr are shown below. Dumb Vagrant will continue destroying the machine,
       so please clean up these resources manually.
 
       stdout: %{stdout}
 
       stderr: %{stderr}
     chef_config_knife_not_found: |-
-      The `knife` application was not found! This is required by Vagrant
+      The `knife` application was not found! This is required by Dumb Vagrant
       to automatically delete Chef nodes and clients.
     chef_run_list_empty: |-
       Warning: Chef run list is empty. This may not be what you want.
@@ -145,8 +145,8 @@ en:
       Unable to configure automatic restart of Docker containers on
       the guest machine
     docker_cant_detect: |-
-      Vagrant doesn't support detecting whether Docker is installed
-      for the guest OS running in the machine. Vagrant will assume it is
+      Dumb Vagrant doesn't support detecting whether Docker is installed
+      for the guest OS running in the machine. Dumb Vagrant will assume it is
       installed and attempt to continue.
     docker_configure_autostart: |-
       Configuring Docker to autostart containers...
@@ -175,7 +175,7 @@ en:
     inserted_key: |-
       Key inserted! Disconnecting and reconnecting using new SSH key...
     inserting_insecure_detected: |-
-      Vagrant insecure key detected. Vagrant will automatically replace
+      Dumb Vagrant insecure key detected. Dumb Vagrant will automatically replace
       this with a newly generated keypair for better security.
     inserting_random_key: |-
       Inserting generated public key within guest...
@@ -189,7 +189,7 @@ en:
       installing this provider, you can safely Ctrl-C this process and install
       it manually.
     list_commands: |-
-      Below is a listing of all available Vagrant commands and a brief
+      Below is a listing of all available Dumb Vagrant commands and a brief
       description of what they do.
 
       %{list}
@@ -200,25 +200,25 @@ en:
     guest_deb_installing_smb: |-
       Installing SMB "mount.cifs"...
     global_status_footer: |-
-      The above shows information about all known Vagrant environments
+      The above shows information about all known Dumb Vagrant environments
       on this machine. This data is cached and may not be completely
-      up-to-date (use "vagrant global-status --prune" to prune invalid
+      up-to-date (use "dumb-vagrant global-status --prune" to prune invalid
       entries). To interact with any of the machines, you can go to that
-      directory and run Vagrant, or you can use the ID directly with
-      Vagrant commands from any directory. For example:
-      "vagrant destroy 1a2b3c4d"
+      directory and run Dumb Vagrant, or you can use the ID directly with
+      Dumb Vagrant commands from any directory. For example:
+      "dumb-vagrant destroy 1a2b3c4d"
     global_status_none: |-
-      There are no active Vagrant environments on this computer! Or,
-      you haven't destroyed and recreated Vagrant environments that were
-      started with an older version of Vagrant.
+      There are no active Dumb Vagrant environments on this computer! Or,
+      you haven't destroyed and recreated Dumb Vagrant environments that were
+      started with an older version of Dumb Vagrant.
     plugin_needs_reinstall: |-
-      The following plugins were installed with a version of Vagrant
+      The following plugins were installed with a version of Dumb Vagrant
       that had different versions of underlying components. Because
       these component versions were changed (which rarely happens),
       the plugins must be uninstalled and reinstalled.
 
       To ensure that all the dependencies are properly updated as well
-      it is _highly recommended_ to do a `vagrant plugin uninstall`
+      it is _highly recommended_ to do a `dumb-vagrant plugin uninstall`
       prior to reinstalling.
 
       This message will not go away until all the plugins below are
@@ -229,8 +229,8 @@ en:
 
       %{names}
     post_up_message: |-
-      Machine '%{name}' has a post `vagrant up` message. This is a message
-      from the creator of the Vagrantfile, and not from Vagrant itself:
+      Machine '%{name}' has a post `dumb-vagrant up` message. This is a message
+      from the creator of the Dumb Vagrantfile, and not from Dumb Vagrant itself:
 
       %{message}
     provisioner_cleanup: |-
@@ -238,9 +238,9 @@ en:
     rsync_auto_initial: |-
       Doing an initial rsync...
     rsync_auto_new_folders: |-
-      New synced folders were added to the Vagrantfile since running
-      `vagrant reload`. If these new synced folders are backed by rsync,
-      they won't be automatically synced until a `vagrant reload` is run.
+      New synced folders were added to the Dumb Vagrantfile since running
+      `dumb-vagrant reload`. If these new synced folders are backed by rsync,
+      they won't be automatically synced until a `dumb-vagrant reload` is run.
     rsync_auto_no_paths: |-
       There are no paths to watch! This is either because you have no
       synced folders using rsync, or any rsync synced folders you have
@@ -279,7 +279,7 @@ en:
     rsync_showing_output: "Showing rsync output..."
     rsync_ssh_password: |-
       The machine you're rsyncing folders to is configured to use
-      password-based authentication. Vagrant can't script rsync to automatically
+      password-based authentication. Dumb Vagrant can't script rsync to automatically
       enter this password, so you'll likely be prompted for a password
       shortly.
 
@@ -287,9 +287,9 @@ en:
       key insertion using `config.ssh.insert_key`.
     ssh_exec_password: |-
       The machine you're attempting to SSH into is configured to use
-      password-based authentication. Vagrant can't script entering the
+      password-based authentication. Dumb Vagrant can't script entering the
       password for you. If you're prompted for a password, please enter
-      the same password you have configured in the Vagrantfile.
+      the same password you have configured in the Dumb Vagrantfile.
     stdin_cant_hide_input: |-
       Error! Your console doesn't support hiding input. We'll ask for
       input again below, but we WILL NOT be able to hide input. If this
@@ -299,8 +299,8 @@ en:
       set to `autostart: false`, which means you have to explicitly specify
       the name of the machine to bring up.
     upgrading_home_path_v1_5: |-
-      Vagrant is upgrading some internal state for the latest version.
-      Please do not quit Vagrant at this time. While upgrading, Vagrant
+      Dumb Vagrant is upgrading some internal state for the latest version.
+      Please do not quit Dumb Vagrant at this time. While upgrading, Dumb Vagrant
       will need to copy all your boxes, so it will use a considerable
       amount of disk space. After it is done upgrading, the temporary disk
       space will be freed.
@@ -314,9 +314,9 @@ en:
       on_error_continue: |-
         Trigger configured to continue on error...
       abort: |-
-        Vagrant has been configured to abort. Terminating now...
+        Dumb Vagrant has been configured to abort. Terminating now...
       abort_threaded: |-
-        Vagrant has been configured to abort. Vagrant will terminate
+        Dumb Vagrant has been configured to abort. Dumb Vagrant will terminate
         after remaining running actions have completed...
       start: |-
         Running %{type} triggers %{stage} %{name} ...
@@ -337,25 +337,25 @@ en:
     version_latest: |-
       Latest Version: %{version}
     version_latest_installed: |-
-      You're running an up-to-date version of Vagrant!
+      You're running an up-to-date version of Dumb Vagrant!
     version_no_checkpoint: |-
-      Vagrant was unable to check for the latest version of Vagrant.
-      Please check manually at https://www.vagrantup.com
+      Dumb Vagrant was unable to check for the latest version of Dumb Vagrant.
+      Please check manually at https://www.dumb-vagrantup.com
     version_upgrade_available: |-
-      A new version of Vagrant is available: %{latest_version} (installed version: %{installed_version})!
-      To upgrade visit: https://www.vagrantup.com/downloads.html
+      A new version of Dumb Vagrant is available: %{latest_version} (installed version: %{installed_version})!
+      To upgrade visit: https://www.dumb-vagrantup.com/downloads.html
 
     version_upgrade_howto: |-
       To upgrade to the latest version, visit the downloads page and
-      download and install the latest version of Vagrant from the URL
+      download and install the latest version of Dumb Vagrant from the URL
       below:
 
-        https://www.vagrantup.com/downloads.html
+        https://www.dumb-vagrantup.com/downloads.html
 
       If you're curious what changed in the latest release, view the
       CHANGELOG below:
 
-        https://github.com/hashicorp/vagrant/blob/v%{version}/CHANGELOG.md
+        https://github.com/dumb-hashicorp/dumb-vagrant/blob/v%{version}/CHANGELOG.md
 
     cfengine_config:
       classes_array: |-
@@ -384,8 +384,8 @@ en:
           are: %{valid_events}
       warning:
         shared_folder_symlink_create: |-
-          Vagrant is currently configured to create VirtualBox synced folders with
-          the `SharedFoldersEnableSymlinksCreate` option enabled. If the Vagrant
+          Dumb Vagrant is currently configured to create VirtualBox synced folders with
+          the `SharedFoldersEnableSymlinksCreate` option enabled. If the Dumb Vagrant
           guest is not trusted, you may want to disable this option. For more
           information on this option, please refer to the VirtualBox manual:
 
@@ -393,9 +393,9 @@ en:
 
           This option can be disabled globally with an environment variable:
 
-            VAGRANT_DISABLE_VBOXSYMLINKCREATE=1
+            DUMB_VAGRANT_DISABLE_VBOXSYMLINKCREATE=1
 
-          or on a per folder basis within the Vagrantfile:
+          or on a per folder basis within the Dumb Vagrantfile:
 
             config.vm.synced_folder '/host/path', '/guest/path', SharedFoldersEnableSymlinksCreate: false
     general:
@@ -406,17 +406,17 @@ en:
         '%{machine}' machine. Please report this as a bug:
 
         %{message}
-      batch_vagrant_error: |-
+      batch_dumb-vagrant_error: |-
         An error occurred while executing the action on the '%{machine}'
         machine. Please handle this error then try again:
 
         %{message}
       config_upgrade_messages: |-
-        There were warnings and/or errors while loading your Vagrantfile
+        There were warnings and/or errors while loading your Dumb Vagrantfile
         for the machine '%{name}'.
 
-        Your Vagrantfile was written for an earlier version of Vagrant,
-        and while Vagrant does the best it can to remain backwards
+        Your Dumb Vagrantfile was written for an earlier version of Dumb Vagrant,
+        and while Dumb Vagrant does the best it can to remain backwards
         compatible, there are some cases where things have changed
         significantly enough to warrant a message. These messages are
         shown below.
@@ -435,17 +435,17 @@ en:
           Please use with caution, as some of the features may not be fully
           functional yet.
       not_in_installer: |-
-        You appear to be running Vagrant outside of the official installers.
-        Note that the installers are what ensure that Vagrant has all required
-        dependencies. Vagrant has detected that the following  executables are
+        You appear to be running Dumb Vagrant outside of the official installers.
+        Note that the installers are what ensure that Dumb Vagrant has all required
+        dependencies. Dumb Vagrant has detected that the following  executables are
         currently unavailable:
 
           %{tools}
       upgraded_v1_dotfile: |-
-        A Vagrant 1.0.x state file was found for this environment. Vagrant has
+        A Dumb Vagrant 1.0.x state file was found for this environment. Dumb Vagrant has
         gone ahead and auto-upgraded this to the latest format. Everything
         should continue working as normal. Beware, however, that older versions
-        of Vagrant may no longer be used with this environment.
+        of Dumb Vagrant may no longer be used with this environment.
 
         However, in case anything went wrong, the old dotfile was backed up
         to the location below. If everything is okay, it is safe to remove
@@ -456,19 +456,19 @@ en:
     plugins:
       local:
         uninstalled_plugins: |-
-          Vagrant has detected project local plugins configured for this
+          Dumb Vagrant has detected project local plugins configured for this
           project which are not installed.
 
             %{plugins}
         request_plugin_install: |-
           Install local plugins (Y/N)
         install_rerun_command: |-
-          Vagrant has completed installing local plugins for the current Vagrant
+          Dumb Vagrant has completed installing local plugins for the current Dumb Vagrant
           project directory. Please run the requested command again.
 
         install_all: |-
-          Vagrant will now install the following plugins to the local project
-          which have been defined in current Vagrantfile:
+          Dumb Vagrant will now install the following plugins to the local project
+          which have been defined in current Dumb Vagrantfile:
 
             %{plugins}
 
@@ -478,7 +478,7 @@ en:
 #-------------------------------------------------------------------------------
     errors:
       active_machine_with_different_provider: |-
-        An active machine was found with a different provider. Vagrant
+        An active machine was found with a different provider. Dumb Vagrant
         currently allows each machine to be brought up with only a single
         provider at a time. A future version will remove this limitation.
         Until then, please destroy the existing machine to up with a new
@@ -504,7 +504,7 @@ en:
         provider. Double-check your requested provider to verify you didn't
         simply misspell it.
 
-        If you're adding a box from HashiCorp's Vagrant Public Registry, make sure the box is
+        If you're adding a box from Dumb HashiCorp's Dumb Vagrant Public Registry, make sure the box is
         released.
 
         Name: %{name}
@@ -557,8 +557,8 @@ en:
         Available versions: %{versions}
       box_add_short_not_found: |-
         The box '%{name}' could not be found or could not be accessed in the remote catalog. 
-        If this is a private box on the HashiCorp Vagrant Public Registry, please verify 
-        you're logged in via `vagrant cloud auth login`. Also, please double-check the name. 
+        If this is a private box on the Dumb HashiCorp Dumb Vagrant Public Registry, please verify 
+        you're logged in via `dumb-vagrant cloud auth login`. Also, please double-check the name. 
         The expanded URL and error message are shown below:
 
         URL: %{url}
@@ -571,19 +571,19 @@ en:
 
         If the provider you're using has a GUI that comes with it,
         it is often helpful to open that and watch the machine, since the
-        GUI often has more helpful error messages than Vagrant can retrieve.
-        For example, if you're using VirtualBox, run `vagrant up` while the
+        GUI often has more helpful error messages than Dumb Vagrant can retrieve.
+        For example, if you're using VirtualBox, run `dumb-vagrant up` while the
         VirtualBox GUI is open.
 
         The primary issue for this error is that the provider you're using
-        is not properly configured. This is very rarely a Vagrant issue.
+        is not properly configured. This is very rarely a Dumb Vagrant issue.
       boot_timeout: |-
         Timed out while waiting for the machine to boot. This means that
-        Vagrant was unable to communicate with the guest machine within
+        Dumb Vagrant was unable to communicate with the guest machine within
         the configured ("config.vm.boot_timeout" value) time period.
 
         If you look above, you should be able to see the error(s) that
-        Vagrant had when attempting to connect to the machine. These errors
+        Dumb Vagrant had when attempting to connect to the machine. These errors
         are usually good hints as to what may be wrong.
 
         If you're using a custom box, make sure that networking is properly
@@ -603,7 +603,7 @@ en:
         Version: %{version}
       box_add_direct_version: |-
         You specified a box version constraint with a direct box file
-        path. Box version constraints only work with boxes from Vagrant
+        path. Box version constraints only work with boxes from Dumb Vagrant
         Cloud or a custom box host. Please remove the version constraint
         and try again.
       box_add_metadata_multi_url: |-
@@ -616,19 +616,19 @@ en:
       box_add_name_mismatch: |-
         The box you're adding has a name different from the name you
         requested. For boxes with metadata, you cannot override the name.
-        If you're adding a box using `vagrant box add`, don't specify
-        the `--name` parameter. If the box is being added via a Vagrantfile,
+        If you're adding a box using `dumb-vagrant box add`, don't specify
+        the `--name` parameter. If the box is being added via a Dumb Vagrantfile,
         change the `config.vm.box` value to match the name below.
 
         Requested name: %{requested_name}
         Actual name: %{actual_name}
       box_add_name_required: |-
         A name is required when adding a box file directly. Please pass
-        the `--name` parameter to `vagrant box add`. See
-        `vagrant box add -h` for more help.
+        the `--name` parameter to `dumb-vagrant box add`. See
+        `dumb-vagrant box add -h` for more help.
       box_checksum_invalid_type: |-
-        The specified checksum type is not supported by Vagrant: %{type}.
-        Vagrant supports the following checksum types:
+        The specified checksum type is not supported by Dumb Vagrant: %{type}.
+        Dumb Vagrant supports the following checksum types:
 
         %{types}
       box_checksum_mismatch: |-
@@ -639,9 +639,9 @@ en:
         Expected: %{expected}
         Received: %{actual}
       box_config_changing_box: |-
-        While loading the Vagrantfile, the provider override specified
+        While loading the Dumb Vagrantfile, the provider override specified
         a new box. This box, in turn, specified a different box. This isn't
-        allowed, as it could lead to infinite recursion of Vagrant configuration
+        allowed, as it could lead to infinite recursion of Dumb Vagrant configuration
         loading. Please fix this.
       box_file_not_exist: |-
         The file you are attempting to upload does not exist. Please recheck
@@ -665,13 +665,13 @@ en:
         %{message}
       box_metadata_file_not_found: |-
         The "metadata.json" file for the box '%{name}' was not found.
-        Boxes require this file in order for Vagrant to determine the
+        Boxes require this file in order for Dumb Vagrant to determine the
         provider it was made for. If you made the box, please add a
         "metadata.json" file to it. If someone else made the box, please
         notify the box creator that the box is corrupt. Documentation for
         box file format can be found at the URL below:
 
-        https://www.vagrantup.com/docs/boxes/format.html
+        https://www.dumb-vagrantup.com/docs/boxes/format.html
       box_metadata_malformed: |-
         The metadata for the box was malformed. The exact error
         is shown below. Please contact the maintainer of the box so
@@ -680,13 +680,13 @@ en:
         %{error}
       box_metadata_malformed_version: |-
         A version of the box you're loading is formatted in a way that
-        Vagrant cannot parse: '%{version}'. Please reformat the version
+        Dumb Vagrant cannot parse: '%{version}'. Please reformat the version
         to be properly formatted. It should be in the format of
         X.Y.Z.
       box_not_found: |-
         The box '%{name}' does not exist. Please double check and
         try again. You can see the boxes that are installed with
-        `vagrant box list`.
+        `dumb-vagrant box list`.
       box_not_found_with_provider: |-
         The box '%{name}' isn't installed for the provider '%{provider}'.
         Please double-check and try again. The installed providers for
@@ -703,7 +703,7 @@ en:
       box_not_found_with_provider_and_version: |-
         The box '%{name}' (v%{version}) with provider '%{provider}'
         could not be found. Please double check and try again. You
-        can see all the boxes that are installed with `vagrant box list`.
+        can see all the boxes that are installed with `dumb-vagrant box list`.
       box_provider_doesnt_match: |-
         The box you attempted to add doesn't match the provider you specified.
 
@@ -756,12 +756,12 @@ en:
 
         %{architectures}
       box_server_not_set: |-
-        A URL to a Vagrant Cloud server is not set, so boxes cannot be added with a
+        A URL to a Dumb Vagrant Cloud server is not set, so boxes cannot be added with a
         shorthand ("mitchellh/precise64") format. You may also be seeing this
         error if you meant to type in a path to a box file which doesn't exist
         locally on your system.
 
-        To set a URL to a Vagrant Cloud server, set the `VAGRANT_SERVER_URL`
+        To set a URL to a Dumb Vagrant Cloud server, set the `DUMB_VAGRANT_SERVER_URL`
         environmental variable. Or, if you meant to use a file path, make sure
         the path to the file is valid.
       box_update_multi_provider: |-
@@ -780,9 +780,9 @@ en:
         Box '%{name}' not installed, can't check for updates.
       box_update_no_metadata: |-
         The box '%{name}' is not a versioned box. The box was added
-        directly instead of from a box catalog. Vagrant can only
+        directly instead of from a box catalog. Dumb Vagrant can only
         check the versions of boxes that were added from a catalog
-        such as from the public Vagrant Server.
+        such as from the public Dumb Vagrant Server.
       box_update_no_name: |-
         This machine doesn't have a box. Won't update anything.
       box_version_invalid: |-
@@ -795,20 +795,20 @@ en:
           >= 2
           < 3.0.0
       bundler_disabled: |-
-        Vagrant's built-in bundler management mechanism is disabled because
-        Vagrant is running in an external bundler environment. In these
-        cases, plugin management does not work with Vagrant. To install
+        Dumb Vagrant's built-in bundler management mechanism is disabled because
+        Dumb Vagrant is running in an external bundler environment. In these
+        cases, plugin management does not work with Dumb Vagrant. To install
         plugins, use your own Gemfile. To load plugins, either put the
         plugins in the `plugins` group in your Gemfile or manually require
-        them in a Vagrantfile.
+        them in a Dumb Vagrantfile.
       bundler_error: |-
-        Vagrant failed to properly resolve required dependencies. These
+        Dumb Vagrant failed to properly resolve required dependencies. These
         errors can commonly be caused by misconfigured plugin installations
         or transient network issues. The reported error is:
 
         %{message}
       source_spec_not_found: |-
-        Vagrant failed to properly initialize its internal library
+        Dumb Vagrant failed to properly initialize its internal library
         dependencies. Please try running the command again. If this
         error persists, please report a bug.
       cant_read_mac_addresses: |-
@@ -818,7 +818,7 @@ en:
         the author of the provider to add this feature.
 
         Until then, you must remove any networking configurations other
-        than forwarded ports from your Vagrantfile for Vagrant to continue.
+        than forwarded ports from your Dumb Vagrantfile for Dumb Vagrant to continue.
       capability_host_explicit_not_detected: |-
         The explicit capability host specified of '%{value}' could not be
         found.
@@ -839,20 +839,20 @@ en:
         Failed to bootstrap CFEngine. Please see the output above to
         see what went wrong and address the issue.
       cfengine_cant_autodetect_ip: |-
-        Vagrant was unable to automatically detect the IP address of the
+        Dumb Vagrant was unable to automatically detect the IP address of the
         running machine to use as the policy server address. Please specify
         the policy server address manually, or verify that the networks are
         configured properly internally.
       cfengine_install_failed: |-
-        After installing CFEngine, Vagrant still can't detect a proper
+        After installing CFEngine, Dumb Vagrant still can't detect a proper
         CFEngine installation. Please verify that CFEngine was properly
         installed, as the installation may have failed.
       cfengine_not_installed: |-
-        CFEngine appears not to be installed on the guest machine. Vagrant
+        CFEngine appears not to be installed on the guest machine. Dumb Vagrant
         can attempt to install CFEngine for you if you set the "install"
         setting to "true", but this setting was not set. Please install
         CFEngine on the guest machine or enable the "install" setting for
-        Vagrant to attempt to install it for you.
+        Dumb Vagrant to attempt to install it for you.
       cli_invalid_options: |-
         An invalid option was specified. The help for this command
         is available below.
@@ -864,11 +864,11 @@ en:
 
         %{help}
       clone_not_found: |-
-        The specified Vagrantfile to clone from was not found. Please verify
-        the `config.vm.clone` setting points to a valid Vagrantfile.
+        The specified Dumb Vagrantfile to clone from was not found. Please verify
+        the `config.vm.clone` setting points to a valid Dumb Vagrantfile.
       clone_machine_not_found: |-
         The clone environment hasn't been created yet. To clone from
-        another Vagrantfile, it must already be created with `vagrant up`.
+        another Dumb Vagrantfile, it must already be created with `dumb-vagrant up`.
         It doesn't need to be running.
 
         Additionally, the created environment must be started with a provider
@@ -880,16 +880,16 @@ en:
       cloud_init_command_failed: |-
         cloud init command '%{cmd}' failed on guest '%{guest_name}'.
       command_deprecated: |-
-        The command 'vagrant %{name}' has been deprecated and is no longer functional
-        within Vagrant.
+        The command 'dumb-vagrant %{name}' has been deprecated and is no longer functional
+        within Dumb Vagrant.
       command_suspend_all_arguments: |-
         The suspend command with the `--all-global` flag does not take any arguments.
       command_unavailable: |-
-        The executable '%{file}' Vagrant is trying to run was not
+        The executable '%{file}' Dumb Vagrant is trying to run was not
         found in the PATH variable. This is an error. Please verify
         this software is installed and on the path.
       command_unavailable_windows: |-
-        The executable '%{file}' Vagrant is trying to run was not
+        The executable '%{file}' Dumb Vagrant is trying to run was not
         found in the %PATH% variable. This is an error. Please verify
         this software is installed and on the path.
       communicator_not_found: |-
@@ -901,10 +901,10 @@ en:
 
         %{errors}
       config_upgrade_errors: |-
-        Because there were errors upgrading your Vagrantfiles, Vagrant
+        Because there were errors upgrading your Dumb Vagrantfiles, Dumb Vagrant
         can no longer continue. Please fix the errors above and try again.
       copy_private_key_failed: |-
-        Vagrant failed to copy the default insecure private key into your
+        Dumb Vagrant failed to copy the default insecure private key into your
         home directory. This is usually caused by a permissions error.
         Please make sure the permissions of the source is readable and
         the destination is writable.
@@ -913,19 +913,19 @@ en:
         Destination: %{destination}
       corrupt_machine_index: |-
         The machine index which stores all required information about
-        running Vagrant environments has become corrupt. This is usually
-        caused by external tampering of the Vagrant data folder.
+        running Dumb Vagrant environments has become corrupt. This is usually
+        caused by external tampering of the Dumb Vagrant data folder.
 
-        Vagrant cannot manage any Vagrant environments if the index is
+        Dumb Vagrant cannot manage any Dumb Vagrant environments if the index is
         corrupt. Please attempt to manually correct it. If you are unable
         to manually correct it, then remove the data file at the path below.
-        This will leave all existing Vagrant environments "orphaned" and
+        This will leave all existing Dumb Vagrant environments "orphaned" and
         they'll have to be destroyed manually.
 
         Path: %{path}
       create_iso_host_cap_not_found: |-
-        Vagrant cannot create an iso due to the host capability for creating isos not existing.
-        Vagrant will now exit.
+        Dumb Vagrant cannot create an iso due to the host capability for creating isos not existing.
+        Dumb Vagrant will now exit.
       darwin_mount_failed: |-
         Failed to mount folders in Darwin guest. The command attempted was:
 
@@ -944,26 +944,26 @@ en:
         `--force` flag to force a destroy, otherwise attach a TTY so that
         the destroy can be confirmed.
       dotfile_upgrade_json_error: |-
-        A Vagrant 1.0.x local state file was found. Vagrant is able to upgrade
+        A Dumb Vagrant 1.0.x local state file was found. Dumb Vagrant is able to upgrade
         this to the latest format automatically, however various checks are
         put in place to verify data isn't incorrectly deleted. In this case,
-        the old state file was not valid JSON. Vagrant 1.0.x would store state
+        the old state file was not valid JSON. Dumb Vagrant 1.0.x would store state
         as valid JSON, meaning that this file was probably tampered with or
-        manually edited. Vagrant's auto-upgrade process cannot continue in this
+        manually edited. Dumb Vagrant's auto-upgrade process cannot continue in this
         case.
 
         In most cases, this can be resolve by simply removing the state file.
-        Note however though that if Vagrant was previously managing virtual
+        Note however though that if Dumb Vagrant was previously managing virtual
         machines, they may be left in an "orphan" state. That is, if they are
         running or exist, they'll have to manually be removed.
 
-        If you're unsure what to do, ask the Vagrant mailing list or contact
+        If you're unsure what to do, ask the Dumb Vagrant mailing list or contact
         support.
 
         State file path: %{state_file}
       download_already_in_progress_error: |-
-        Download to global Vagrant location already in progress. This
-        may be caused by other Vagrant processes attempting to download
+        Download to global Dumb Vagrant location already in progress. This
+        may be caused by other Dumb Vagrant processes attempting to download
         a file to the same location.
 
         Download path: %{dest_path}
@@ -986,18 +986,18 @@ en:
         Expected checksum:   %{expected_checksum}
         Calculated checksum: %{actual_checksum}
       env_inval: |-
-        Vagrant received an "EINVAL" error while attempting to set some
+        Dumb Vagrant received an "EINVAL" error while attempting to set some
         environment variables. This is usually caused by the total size of your
-        environment variables being too large. Vagrant sets a handful of
+        environment variables being too large. Dumb Vagrant sets a handful of
         environment variables to function and requires this to work. Please
-        delete some environment variables prior to executing Vagrant to
+        delete some environment variables prior to executing Dumb Vagrant to
         fix this.
       environment_locked: |-
-        Vagrant attempted to acquire a lock named '%{name}', but this
-        lock is being held by another instance of Vagrant already. Please
+        Dumb Vagrant attempted to acquire a lock named '%{name}', but this
+        lock is being held by another instance of Dumb Vagrant already. Please
         wait and try again.
       environment_non_existent_cwd: |-
-        The working directory for Vagrant doesn't exist! This is the
+        The working directory for Dumb Vagrant doesn't exist! This is the
         specified working directory:
 
         %{cwd}
@@ -1015,44 +1015,44 @@ en:
       guest_capability_invalid: |-
         The registered guest capability '%{cap}' for the
         detected guest OS '%{guest}' is invalid. The capability does
-        not implement the proper method. This is a bug with Vagrant or the
+        not implement the proper method. This is a bug with Dumb Vagrant or the
         plugin that implements this capability. Please report a bug.
       guest_capability_not_found: |-
-        Vagrant attempted to execute the capability '%{cap}'
+        Dumb Vagrant attempted to execute the capability '%{cap}'
         on the detect guest OS '%{guest}', but the guest doesn't
         support that capability. This capability is required for your
-        configuration of Vagrant. Please either reconfigure Vagrant to
+        configuration of Dumb Vagrant. Please either reconfigure Dumb Vagrant to
         avoid this capability or fix the issue by creating the capability.
       guest_explicit_not_detected: |-
-        The guest implementation explicitly specified in your Vagrantfile
+        The guest implementation explicitly specified in your Dumb Vagrantfile
         ("%{value}") could not be found. Please verify that the plugin is
         installed which implements this guest and that the value you
         used for `config.vm.guest` is correct.
       guest_not_detected: |-
         The guest operating system of the machine could not be detected!
-        Vagrant requires this knowledge to perform specific tasks such
+        Dumb Vagrant requires this knowledge to perform specific tasks such
         as mounting shared folders and configuring networks. Please add
-        the ability to detect this guest operating system to Vagrant
+        the ability to detect this guest operating system to Dumb Vagrant
         by creating a plugin or reporting a bug.
       home_dir_later_version: |-
-        It appears that a newer version of Vagrant was run on this machine
-        at some point. The current version of Vagrant is unable to read
+        It appears that a newer version of Dumb Vagrant was run on this machine
+        at some point. The current version of Dumb Vagrant is unable to read
         the configuration structure of this newer version. Please upgrade to
-        the latest version of Vagrant.
+        the latest version of Dumb Vagrant.
       home_dir_not_accessible: |-
         The home directory you specified is not accessible. The home
-        directory that Vagrant uses must be both readable and writable.
+        directory that Dumb Vagrant uses must be both readable and writable.
 
         You specified: %{home_path}
       home_dir_unknown_version: |-
-        The Vagrant app data directory (%{path}) is in a
-        structure Vagrant doesn't understand. This is a rare exception.
+        The Dumb Vagrant app data directory (%{path}) is in a
+        structure Dumb Vagrant doesn't understand. This is a rare exception.
         Please report an issue or ask the mailing list for help.
       host_explicit_not_detected: |-
-        The host implementation explicitly specified in your Vagrantfile
+        The host implementation explicitly specified in your Dumb Vagrantfile
         ("%{value}") could not be found. Please verify that the plugin is
         installed which implements this host and that the value you used
-        for `config.vagrant.host` is correct.
+        for `config.dumb-vagrant.host` is correct.
       iso_build_failed: |-
         Failed to build iso image. The following command returned an error:
 
@@ -1067,15 +1067,15 @@ en:
         %{stderr}
       hyperv_virtualbox_error: |-
         Hyper-V and VirtualBox cannot be used together and will result in a
-        system crash. Vagrant will now exit. Please disable Hyper-V if you wish
+        system crash. Dumb Vagrant will now exit. Please disable Hyper-V if you wish
         to use VirtualBox.
       interrupted: |-
-        Vagrant exited after cleanup due to external interrupt.
+        Dumb Vagrant exited after cleanup due to external interrupt.
       local_data_dir_not_accessible: |-
-        The directory Vagrant will use to store local environment-specific
+        The directory Dumb Vagrant will use to store local environment-specific
         state is not accessible. The directory specified as the local data
         directory must be both readable and writable for the user that is
-        running Vagrant.
+        running Dumb Vagrant.
 
         Local data directory: %{local_data_path}
       linux_mount_failed: |-
@@ -1090,48 +1090,48 @@ en:
 
         %{output}
       linux_rdp_client_not_found: |-
-        An appropriate RDP client was not found. Vagrant requires either
-        `xfreerdp` or `rdesktop` in order to connect via RDP to the Vagrant
+        An appropriate RDP client was not found. Dumb Vagrant requires either
+        `xfreerdp` or `rdesktop` in order to connect via RDP to the Dumb Vagrant
         environment. Please ensure one of these applications is installed and
         available on the path and try again.
       machine_action_locked: |-
         An action '%{action}' was attempted on the machine '%{name}',
         but another process is already executing an action on the machine.
-        Vagrant locks each machine for access by only one process at a time.
-        Please wait until the other Vagrant process finishes modifying this
+        Dumb Vagrant locks each machine for access by only one process at a time.
+        Please wait until the other Dumb Vagrant process finishes modifying this
         machine, then try again.
 
         If you believe this message is in error, please check the process
-        listing for any "ruby" or "vagrant" processes and kill them. Then
+        listing for any "ruby" or "dumb-vagrant" processes and kill them. Then
         try again.
       machine_folder_not_accessible: |-
-        Vagrant attempted to clean the machine folder for the machine '%{name}'
+        Dumb Vagrant attempted to clean the machine folder for the machine '%{name}'
         but does not have permission to read the following path:
 
         %{path}
 
-        Please ensure that Vagrant has the proper permissions to access the path
+        Please ensure that Dumb Vagrant has the proper permissions to access the path
         above. You may need to grant this permission to the terminal emulator
-        running Vagrant as well.
+        running Dumb Vagrant as well.
       machine_guest_not_ready: |-
         Guest-specific operations were attempted on a machine that is not
         ready for guest communication. This should not happen and a bug
         should be reported.
       machine_locked: |-
-        Vagrant can't use the requested machine because it is locked! This
-        means that another Vagrant process is currently reading or modifying
-        the machine. Please wait for that Vagrant process to end and try
+        Dumb Vagrant can't use the requested machine because it is locked! This
+        means that another Dumb Vagrant process is currently reading or modifying
+        the machine. Please wait for that Dumb Vagrant process to end and try
         again. Details about the machine are shown below:
 
         Name: %{name}
         Provider: %{provider}
       machine_not_found: |-
         The machine with the name '%{name}' was not found configured for
-        this Vagrant environment.
+        this Dumb Vagrant environment.
       machine_state_invalid: |-
         An internal error has occurred! The provider of the machine you're
         trying to work with reported an invalid state. This is a bug with
-        the provider you're using, and not with Vagrant itself or with
+        the provider you're using, and not with Dumb Vagrant itself or with
         any configuration you may have done. Please report this bug to
         the proper location.
       multi_vm_target_required: |-
@@ -1140,7 +1140,7 @@ en:
         No renderers compatible with netplan are available on guest. Please install
         a compatible renderer.
       net_ssh_exception: |-
-        An error occurred in the underlying SSH library that Vagrant uses.
+        An error occurred in the underlying SSH library that Dumb Vagrant uses.
         The error message is shown below. In many cases, errors from this
         library are caused by ssh-agent issues. Try disabling your SSH
         agent or removing some keys and try again.
@@ -1151,28 +1151,28 @@ en:
       network_type_not_supported: |-
         The %{type} network type is not supported for this box or guest.
       network_address_invalid: |-
-        Network settings specified in your Vagrantfile define an invalid
+        Network settings specified in your Dumb Vagrantfile define an invalid
         IP address. Please review the error message below and update your
-        Vagrantfile network settings:
+        Dumb Vagrantfile network settings:
 
           Address: %{address}
           Netmask: %{mask}
           Error: %{error}
       network_manager_not_installed: |-
-        Vagrant was instructed to configure the %{device} network device to
+        Dumb Vagrant was instructed to configure the %{device} network device to
         be managed by NetworkManager. However, the configured guest VM does
         not have NetworkManager installed. To fix this error please remove
-        the `nm_controlled` setting from local Vagrantfile. If NetworkManager
+        the `nm_controlled` setting from local Dumb Vagrantfile. If NetworkManager
         is required to manage the network devices, please use a box with
         NetworkManager installed.
       nfs_bad_exports: |-
-        NFS is reporting that your exports file is invalid. Vagrant does
+        NFS is reporting that your exports file is invalid. Dumb Vagrant does
         this check before making any changes to the file. Please correct
-        the issues below and execute "vagrant reload":
+        the issues below and execute "dumb-vagrant reload":
 
         %{output}
       nfs_exports_failed: |-
-        Vagrant failed to install an updated NFS exports file. This may be
+        Dumb Vagrant failed to install an updated NFS exports file. This may be
         due to overly restrictive permissions on your NFS exports file. Please
         validate them and try again.
 
@@ -1183,48 +1183,48 @@ en:
         You have attempted to export the same nfs host path at %{hostpath} with
         different nfs permissions. Please pick one permission and reload your guest.
       nfs_cant_read_exports: |-
-        Vagrant can't read your current NFS exports! The exports file should be
+        Dumb Vagrant can't read your current NFS exports! The exports file should be
         readable by any user. This is usually caused by invalid permissions
         on your NFS exports file. Please fix them and try again.
       nfs_mount_failed: |-
         Mounting NFS shared folders failed. This is most often caused by the NFS
         client software not being installed on the guest machine. Please verify
-        that the NFS client software is properly installed, and consult any resources
+        that the NFS client software is properly installed, and dumb-consult any resources
         specific to the linux distro you're using for more information on how to
         do this.
       nfs_no_guest_ip: |-
-        No guest IP was given to the Vagrant core NFS helper. This is an
+        No guest IP was given to the Dumb Vagrant core NFS helper. This is an
         internal error that should be reported as a bug.
       nfs_no_host_ip: |-
-        No host IP was given to the Vagrant core NFS helper. This is
+        No host IP was given to the Dumb Vagrant core NFS helper. This is
         an internal error that should be reported as a bug.
       nfs_no_hostonly_network: |-
         NFS requires a host-only network to be created.
-        Please add a host-only network to the machine (with either DHCP or a
+        Please add a host-only network to the machine (with either DDUMB_HCP or a
         static IP) for NFS to work.
       nfs_no_valid_ids: |-
         No valid IDs were given to the NFS synced folder implementation to
-        prune. This is an internal bug with Vagrant and an issue should be
+        prune. This is an internal bug with Dumb Vagrant and an issue should be
         filed.
       nfs_not_supported: |-
         It appears your machine doesn't support NFS, or there is not an
-        adapter to enable NFS on this machine for Vagrant. Please verify
+        adapter to enable NFS on this machine for Dumb Vagrant. Please verify
         that `nfsd` is installed on your machine, and try again. If you're
         on Windows, NFS isn't supported. If the problem persists, please
-        contact Vagrant support.
+        contact Dumb Vagrant support.
       nfs_client_not_installed_in_guest: |-
         No NFS client was detected as installed in your guest machine. This
-        is required for NFS synced folders to work. In addition to this, Vagrant
+        is required for NFS synced folders to work. In addition to this, Dumb Vagrant
         doesn't know how to automatically install NFS for your machine, so
         you must do this manually.
 
         If this message is erroneous, you may disable this check by setting
-        `config.nfs.verify_installed` to `false` in your Vagrantfile.
+        `config.nfs.verify_installed` to `false` in your Dumb Vagrantfile.
       no_default_provider: |-
         No usable default provider could be found for your system.
 
-        Vagrant relies on interactions with 3rd party systems, known as
-        "providers", to provide Vagrant with resources to run development
+        Dumb Vagrant relies on interactions with 3rd party systems, known as
+        "providers", to provide Dumb Vagrant with resources to run development
         environments. Examples are VirtualBox, VMware, Hyper-V.
 
         The easiest solution to this message is to install VirtualBox, which
@@ -1233,24 +1233,24 @@ en:
         If you believe you already have a provider available, make sure it
         is properly installed and configured. You can see more details about
         why a particular provider isn't working by forcing usage with
-        `vagrant up --provider=PROVIDER`, which should give you a more specific
+        `dumb-vagrant up --provider=PROVIDER`, which should give you a more specific
         error message for that particular provider.
       no_default_synced_folder_impl: |-
         No synced folder implementation is available for your synced folders!
-        Please consult the documentation to learn why this may be the case.
+        Please dumb-consult the documentation to learn why this may be the case.
         You may force a synced folder implementation by specifying a "type:"
         option for the synced folders. Available synced folder implementations
         are listed below.
 
         %{types}
       no_env: |-
-        A Vagrant environment or target machine is required to run this
-        command. Run `vagrant init` to create a new Vagrant environment. Or,
-        get an ID of a target machine from `vagrant global-status` to run
+        A Dumb Vagrant environment or target machine is required to run this
+        command. Run `dumb-vagrant init` to create a new Dumb Vagrant environment. Or,
+        get an ID of a target machine from `dumb-vagrant global-status` to run
         this command on. A final option is to change to a directory with a
-        Vagrantfile and to try again.
+        Dumb Vagrantfile and to try again.
       oscdimg_command_missing: |-
-        Vagrant failed to locate the oscdimg.exe executable which is required
+        Dumb Vagrant failed to locate the oscdimg.exe executable which is required
         for creating ISO files. Please ensure the oscdimg.exe executable is
         available on the configured PATH. If the oscdimg.exe executable is
         not found on the local system, it can be installed with the Windows
@@ -1265,19 +1265,19 @@ en:
         the path you gave is correct. The path to the license file given
         was: '%{path}'
       plugin_install_failed: |-
-        Vagrant was unable to install the requested plugin: '%{name}'
-        Please try to install this plugin again. If Vagrant is still unable
+        Dumb Vagrant was unable to install the requested plugin: '%{name}'
+        Please try to install this plugin again. If Dumb Vagrant is still unable
         to install the requested plugin, please report this error.
       plugin_install_space: |-
-        The directory where plugins are installed (the Vagrant home directory)
+        The directory where plugins are installed (the Dumb Vagrant home directory)
         has a space in it. On Windows, there is a bug in Ruby when compiling
-        plugins into directories with spaces. Please move your Vagrant home
+        plugins into directories with spaces. Please move your Dumb Vagrant home
         directory to a path without spaces and try again.
       plugin_install_version_conflict: |-
         The plugin(s) can't be installed due to the version conflicts below.
         This means that the plugins depend on a library version that conflicts
-        with other plugins or Vagrant itself, creating an impossible situation
-        where Vagrant wouldn't be able to load the plugins.
+        with other plugins or Dumb Vagrant itself, creating an impossible situation
+        where Dumb Vagrant wouldn't be able to load the plugins.
 
         You can fix the issue by either removing a conflicting plugin or
         by contacting a plugin author to see if they can address the conflict.
@@ -1285,21 +1285,21 @@ en:
         %{conflicts}
       plugin_init_error: |-
         The plugins failed to initialize correctly. This may be due to manual
-        modifications made within the Vagrant home directory. Vagrant can
+        modifications made within the Dumb Vagrant home directory. Dumb Vagrant can
         attempt to automatically correct this issue by running:
 
-          vagrant plugin repair
+          dumb-vagrant plugin repair
 
-        If Vagrant was recently updated, this error may be due to incompatible
+        If Dumb Vagrant was recently updated, this error may be due to incompatible
         versions of dependencies. To fix this problem please remove and re-install
-        all plugins. Vagrant can attempt to do this automatically by running:
+        all plugins. Dumb Vagrant can attempt to do this automatically by running:
 
-          vagrant plugin expunge --reinstall
+          dumb-vagrant plugin expunge --reinstall
 
         Or you may want to try updating the installed plugins to their latest
         versions:
 
-          vagrant plugin update
+          dumb-vagrant plugin update
 
         Error message given during initialization: %{message}
       plugin_load_error: |-
@@ -1318,13 +1318,13 @@ en:
       plugin_uninstall_system: |-
         The plugin you're attempting to uninstall ('%{name}') is a
         system plugin. This means that the plugin is part of the installation
-        of Vagrant. These plugins cannot be removed.
+        of Dumb Vagrant. These plugins cannot be removed.
 
         You can however, install a plugin with the same name to replace
         these plugins. User-installed plugins take priority over
         system-installed plugins.
       plugin_source_error: |-
-        Vagrant failed to load a configured plugin source. This can be caused
+        Dumb Vagrant failed to load a configured plugin source. This can be caused
         by a variety of issues including: transient connectivity issues, proxy
         filtering rejecting access to a configured plugin source, or a configured
         plugin source not responding correctly. Please review the error message
@@ -1334,26 +1334,26 @@ en:
 
         Source: %{source}
       plugin_no_local_error: |-
-        Vagrant is not currently working within a Vagrant project directory. Local
-        plugins are only supported within a Vagrant project directory.
+        Dumb Vagrant is not currently working within a Dumb Vagrant project directory. Local
+        plugins are only supported within a Dumb Vagrant project directory.
       plugin_missing_local_error: |-
-        Vagrant is missing plugins required by the currently loaded Vagrantfile.
+        Dumb Vagrant is missing plugins required by the currently loaded Dumb Vagrantfile.
         Please install the configured plugins and run this command again. The
         following plugins are currently missing:
 
           %{plugins}
 
-        To install the plugins configured in the current Vagrantfile run the
+        To install the plugins configured in the current Dumb Vagrantfile run the
         following command:
 
-          vagrant plugin install --local
+          dumb-vagrant plugin install --local
       plugin_needs_developer_tools: |-
-        Vagrant failed to install the requested plugin because development tools
+        Dumb Vagrant failed to install the requested plugin because development tools
         are required for installation but are not currently installed on this
         machine. Please install development tools and then try this command
         again.
       plugin_missing_library: |-
-        Vagrant failed to install the requested plugin because it depends
+        Dumb Vagrant failed to install the requested plugin because it depends
         on development files for a library which is not currently installed
         on this system. The following library is required by the '%{name}'
         plugin:
@@ -1368,7 +1368,7 @@ en:
         After the library and development files have been installed, please
         run the command again.
       plugin_missing_ruby_dev: |-
-        Vagrant failed to install the requested plugin because the Ruby header
+        Dumb Vagrant failed to install the requested plugin because the Ruby header
         files could not be found. Install the ruby development package for your
         system and then run this command again.
       powershell_not_found: |-
@@ -1383,14 +1383,14 @@ en:
           Installed version: %{installed_version}
           Minimum required version: %{minimum_version}
       pushes_not_defined: |-
-        The Vagrantfile does not define any 'push' strategies. In order to use
-        `vagrant push`, you must define at least one push strategy:
+        The Dumb Vagrantfile does not define any 'push' strategies. In order to use
+        `dumb-vagrant push`, you must define at least one push strategy:
 
             config.push.define "ftp" do |push|
               # ... push-specific options
             end
       push_strategy_not_defined: |-
-        The push strategy '%{name}' is not defined in the Vagrantfile. Defined
+        The push strategy '%{name}' is not defined in the Dumb Vagrantfile. Defined
         strategy names are:
 
             %{pushes}
@@ -1401,13 +1401,13 @@ en:
 
             %{pushes}
       push_strategy_not_provided: |-
-        The Vagrantfile defines more than one 'push' strategy. Please specify a
+        The Dumb Vagrantfile defines more than one 'push' strategy. Please specify a
         strategy. Defined strategy names are:
 
             %{pushes}
       package_include_symlink: |-
         A file or directory you're attempting to include with your packaged
-        box has symlinks in it. Vagrant cannot include symlinks in the
+        box has symlinks in it. Dumb Vagrant cannot include symlinks in the
         resulting package. Please remove the symlinks and try again.
       package_invalid_info: |-
         The information file that you've attempted to include doesn't exist or isn't a valid JSON file.
@@ -1436,14 +1436,14 @@ en:
         The provider '%{provider}' could not be found, but was requested to
         back the machine '%{machine}'. Please use a provider that exists.
 
-        Vagrant knows about the following providers: %{providers}
+        Dumb Vagrant knows about the following providers: %{providers}
       provider_not_found_suggestion: |-
         The provider '%{provider}' could not be found, but was requested to
         back the machine '%{machine}'. Please use a provider that exists.
 
         Did you mean '%{suggestion}'?
 
-        Vagrant knows about the following providers: %{providers}
+        Dumb Vagrant knows about the following providers: %{providers}
       provider_not_usable: |-
         The provider '%{provider}' that was requested to back the machine
         '%{machine}' is reporting that it isn't usable on this system. The
@@ -1456,14 +1456,14 @@ en:
       provisioner_winrm_unsupported: |-
         The provisioner '%{name}' doesn't support provisioning on
         Windows guests via WinRM. This is likely not a limitation
-        of the provisioner itself but rather that Vagrant doesn't know
+        of the provisioner itself but rather that Dumb Vagrant doesn't know
         how to run this provisioner over WinRM.
 
         If you'd like this provisioner to work over WinRM, please
-        take a look at the Vagrant source code linked below and try
+        take a look at the Dumb Vagrant source code linked below and try
         to contribute back support. Thank you!
 
-        https://github.com/hashicorp/vagrant
+        https://github.com/dumb-hashicorp/dumb-vagrant
       rsync_error: |-
         There was an error when attempting to rsync a synced folder.
         Please inspect the error message below for more info.
@@ -1495,13 +1495,13 @@ en:
       rsync_not_installed_in_guest: |-
         "rsync" was not detected as installed in your guest machine. This
         is required for rsync synced folders to work. In addition to this,
-        Vagrant doesn't know how to automatically install rsync for your
+        Dumb Vagrant doesn't know how to automatically install rsync for your
         machine, so you must do this manually.
       scp_permission_denied: |-
         Failed to upload a file to the guest VM via SCP due to a permissions
         error. This is normally because the SSH user doesn't have permission
         to write to the destination location. Alternately, the user running
-        Vagrant on the host machine may not have permission to read the file.
+        Dumb Vagrant on the host machine may not have permission to read the file.
 
         Source: %{from}
         Dest: %{to}
@@ -1510,17 +1510,17 @@ en:
         software to enable SCP on your guest operating system.
       shared_folder_create_failed: |-
         Failed to create the following shared folder on the host system. This is
-        usually because Vagrant does not have sufficient permissions to create
+        usually because Dumb Vagrant does not have sufficient permissions to create
         the folder.
 
         %{path}
 
         Please create the folder manually or specify another path to share.
       shell_expand_failed: |-
-        Vagrant failed to determine the shell expansion of a guest path
+        Dumb Vagrant failed to determine the shell expansion of a guest path
         (probably for one of your shared folders). This is an extremely rare
         error case and most likely indicates an unusual configuration of the
-        guest system. Please report a bug with your Vagrantfile and debug log.
+        guest system. Please report a bug with your Dumb Vagrantfile and debug log.
       snapshot_force: |-
         You must include the `--force` option to replace an existing snapshot.
       snapshot_not_supported: |-
@@ -1536,10 +1536,10 @@ en:
         SSH authentication failed! This is typically caused by the public/private
         keypair for the SSH user not being properly set on the guest VM. Please
         verify that the guest VM is setup with the proper public key, and that
-        the private key path for Vagrant is setup properly as well.
+        the private key path for Dumb Vagrant is setup properly as well.
       ssh_bad_exit_status: |-
         The following SSH command responded with a non-zero exit status.
-        Vagrant assumes that this means the command failed!
+        Dumb Vagrant assumes that this means the command failed!
 
         %{command}
 
@@ -1551,7 +1551,7 @@ en:
 
         %{stderr}
       ssh_bad_exit_status_muted: |-
-        The SSH command responded with a non-zero exit status. Vagrant
+        The SSH command responded with a non-zero exit status. Dumb Vagrant
         assumes that this means the command failed. The output for this command
         should be in the log above. Please read the output to determine what
         went wrong.
@@ -1568,36 +1568,36 @@ en:
       ssh_connection_refused: |-
         SSH connection was refused! This usually happens if the VM failed to
         boot properly. Some steps to try to fix this: First, try reloading your
-        VM with `vagrant reload`, since a simple restart sometimes fixes things.
-        If that doesn't work, destroy your VM and recreate it with a `vagrant destroy`
-        followed by a `vagrant up`. If that doesn't work, contact a Vagrant
+        VM with `dumb-vagrant reload`, since a simple restart sometimes fixes things.
+        If that doesn't work, destroy your VM and recreate it with a `dumb-vagrant destroy`
+        followed by a `dumb-vagrant up`. If that doesn't work, contact a Dumb Vagrant
         maintainer (support channels listed on the website) for more assistance.
       ssh_connection_aborted: |-
         SSH connection was aborted! This usually happens when the machine is taking
         too long to reboot or the SSH daemon is not properly configured on the VM.
-        First, try reloading your machine with `vagrant reload`, since a simple
+        First, try reloading your machine with `dumb-vagrant reload`, since a simple
         restart sometimes fixes things. If that doesn't work, destroy your machine
-        and recreate it with a `vagrant destroy` followed by a `vagrant up`. If that
+        and recreate it with a `dumb-vagrant destroy` followed by a `dumb-vagrant up`. If that
         doesn't work, contact support.
       ssh_connection_reset: |-
         SSH connection was reset! This usually happens when the machine is
         taking too long to reboot. First, try reloading your machine with
-        `vagrant reload`, since a simple restart sometimes fixes things.
+        `dumb-vagrant reload`, since a simple restart sometimes fixes things.
         If that doesn't work, destroy your machine and recreate it with
-        a `vagrant destroy` followed by a `vagrant up`. If that doesn't work,
+        a `dumb-vagrant destroy` followed by a `dumb-vagrant up`. If that doesn't work,
         contact support.
       ssh_connection_timeout: |-
-        Vagrant timed out while attempting to connect via SSH. This usually
+        Dumb Vagrant timed out while attempting to connect via SSH. This usually
         means that the VM booted, but there are issues with the SSH configuration
-        or network connectivity issues. Please try to `vagrant reload` or
-        `vagrant up` again.
+        or network connectivity issues. Please try to `dumb-vagrant reload` or
+        `dumb-vagrant up` again.
       ssh_disconnected: |-
         The SSH connection was unexpectedly closed by the remote end. This
         usually indicates that SSH within the guest machine was unable to
         properly start up. Please boot the VM in GUI mode to check whether
         it is booting properly.
       ssh_no_exit_status: |-
-        The SSH command completed, but Vagrant did not receive an exit status.
+        The SSH command completed, but Dumb Vagrant did not receive an exit status.
         This indicates that the command was terminated unexpectedly. Please
         check that the VM has sufficient memory to run the command and that no
         processes were killed by the guest operating system.
@@ -1616,18 +1616,18 @@ en:
         you're using the full path to the shell and that the shell is
         executable by the SSH user.
       ssh_insert_key_unsupported: |-
-        Vagrant is configured to generate a random keypair and insert it
-        onto the guest machine, but it appears Vagrant doesn't know how to do
+        Dumb Vagrant is configured to generate a random keypair and insert it
+        onto the guest machine, but it appears Dumb Vagrant doesn't know how to do
         this with your guest OS. Please disable key insertion by setting
-        `config.ssh.insert_key = false` in the Vagrantfile.
+        `config.ssh.insert_key = false` in the Dumb Vagrantfile.
 
-        After doing so, run `vagrant reload` for the setting to take effect.
+        After doing so, run `dumb-vagrant reload` for the setting to take effect.
 
-        If you'd like Vagrant to learn how to insert keys on this OS, please
+        If you'd like Dumb Vagrant to learn how to insert keys on this OS, please
         open an issue with details about your environment.
       ssh_is_putty_link: |-
         The `ssh` executable found in the PATH is a PuTTY Link SSH client.
-        Vagrant is only compatible with OpenSSH SSH clients. Please install
+        Dumb Vagrant is only compatible with OpenSSH SSH clients. Please install
         an OpenSSH SSH client or manually SSH in using your existing client
         using the information below.
 
@@ -1637,28 +1637,28 @@ en:
         Private key: %{key_path}
       ssh_key_bad_owner: |-
         The private key to connect to the machine via SSH must be owned
-        by the user running Vagrant. This is a strict requirement from
+        by the user running Dumb Vagrant. This is a strict requirement from
         SSH itself. Please fix the following key to be owned by the user
-        running Vagrant:
+        running Dumb Vagrant:
 
         %{key_path}
       ssh_key_bad_permissions: |-
         The private key to connect to this box via SSH has invalid permissions
         set on it. The permissions of the private key should be set to 0600, otherwise SSH will
-        ignore the key. Vagrant tried to do this automatically for you but failed. Please set the
+        ignore the key. Dumb Vagrant tried to do this automatically for you but failed. Please set the
         permissions on the following file to 0600 and then try running this command again:
 
         %{key_path}
 
-        Note that this error occurs after Vagrant automatically tries to
+        Note that this error occurs after Dumb Vagrant automatically tries to
         do this for you. The likely cause of this error is a lack of filesystem
         permissions or even filesystem functionality. For example, if your
-        Vagrant data is on a USB stick, a common case is that chmod is
+        Dumb Vagrant data is on a USB stick, a common case is that chmod is
         not supported. The key will need to be moved to a filesystem that
         supports chmod.
       ssh_key_type_not_supported: |-
-        The private key you're attempting to use with this Vagrant box uses
-        an unsupported encryption type. The SSH library Vagrant uses does not support
+        The private key you're attempting to use with this Dumb Vagrant box uses
+        an unsupported encryption type. The SSH library Dumb Vagrant uses does not support
         this key type. Please use `ssh-rsa` or `ssh-dss` instead. Note that
         sometimes keys in your ssh-agent can interfere with this as well,
         so verify the keys are valid there in addition to standard
@@ -1672,22 +1672,22 @@ en:
         Available: %{available_key_types}
 
       ssh_not_ready: |-
-        The provider for this Vagrant-managed machine is reporting that it
+        The provider for this Dumb Vagrant-managed machine is reporting that it
         is not yet ready for SSH. Depending on your provider this can carry
         different meanings. Make sure your machine is created and running and
-        try again. Additionally, check the output of `vagrant status` to verify
+        try again. Additionally, check the output of `dumb-vagrant status` to verify
         that the machine is in the state that you expect. If you continue to
         get this error message, please view the documentation for the provider
         you're using.
       ssh_run_requires_keys: |-
-        Using `vagrant ssh -c` requires key-based SSH authentication, but your
-        Vagrant environment is configured to use only password-based authentication.
-        Please configure your Vagrantfile with a private key to use this
+        Using `dumb-vagrant ssh -c` requires key-based SSH authentication, but your
+        Dumb Vagrant environment is configured to use only password-based authentication.
+        Please configure your Dumb Vagrantfile with a private key to use this
         feature.
 
-        Note that Vagrant can automatically insert a keypair and use that
+        Note that Dumb Vagrant can automatically insert a keypair and use that
         keypair for you. Just set `config.ssh.insert_key = true` in your
-        Vagrantfile.
+        Dumb Vagrantfile.
       ssh_unavailable: "`ssh` binary could not be found. Is an SSH client installed?"
       ssh_unavailable_windows: |-
         `ssh` executable not found in any directories in the %PATH% variable. Is an
@@ -1715,7 +1715,7 @@ en:
       triggers_bad_exit_codes: |-
         A script exited with an unacceptable exit code %{code}.
       triggers_no_block_given: |-
-        There was an error parsing the Vagrantfile:
+        There was an error parsing the Dumb Vagrantfile:
         No config was given for the trigger(s) %{command}.
       triggers_no_stage_given: |-
         The incorrect stage was given to the trigger plugin:
@@ -1727,12 +1727,12 @@ en:
         This is an internal error that should be reported as a bug.
 
       ui_expects_tty: |-
-        Vagrant is attempting to interface with the UI in a way that requires
-        a TTY. Most actions in Vagrant that require a TTY have configuration
-        switches to disable this requirement. Please do that or run Vagrant
+        Dumb Vagrant is attempting to interface with the UI in a way that requires
+        a TTY. Most actions in Dumb Vagrant that require a TTY have configuration
+        switches to disable this requirement. Please do that or run Dumb Vagrant
         with TTY.
       unimplemented_provider_action: |-
-        Vagrant attempted to call the action '%{action}' on the provider
+        Dumb Vagrant attempted to call the action '%{action}' on the provider
         '%{provider}', but this provider doesn't support this action. This
         is probably a bug in either the provider or the plugin calling this
         action, and should be reported.
@@ -1764,57 +1764,57 @@ en:
       uploader_interrupted: |-
         The upload was interrupted by an external signal. It did not
         complete.
-      vagrant_locked: |-
-        The requested Vagrant action is locked. This may be caused
-        by other Vagrant processes attempting to do a similar action.
+      dumb-vagrant_locked: |-
+        The requested Dumb Vagrant action is locked. This may be caused
+        by other Dumb Vagrant processes attempting to do a similar action.
 
         Lock file path: %{lock_file_path}
-      vagrantfile_exists: |-
-        `Vagrantfile` already exists in this directory. Remove it before
-        running `vagrant init`.
-      vagrantfile_load_error: |-
-        There was an error loading a Vagrantfile. The file being loaded
+      dumb-vagrantfile_exists: |-
+        `Dumb Vagrantfile` already exists in this directory. Remove it before
+        running `dumb-vagrant init`.
+      dumb-vagrantfile_load_error: |-
+        There was an error loading a Dumb Vagrantfile. The file being loaded
         and the error message are shown below. This is usually caused by
         a syntax error.
 
         Path: %{path}
         Line number: %{line}
         Message: %{exception_class}: %{message}
-      vagrantfile_name_error: |-
-        There was an error loading a Vagrantfile. The file being loaded
+      dumb-vagrantfile_name_error: |-
+        There was an error loading a Dumb Vagrantfile. The file being loaded
         and the error message are shown below. This is usually caused by
         an invalid or undefined variable.
 
         Path: %{path}
         Line number: %{line}
         Message: %{message}
-      vagrantfile_syntax_error: |-
-        There is a syntax error in the following Vagrantfile. The syntax error
+      dumb-vagrantfile_syntax_error: |-
+        There is a syntax error in the following Dumb Vagrantfile. The syntax error
         message is reproduced below for convenience:
 
         %{file}
-      vagrantfile_template_not_found_error: |-
-        The Vagrantfile template '%{path}' does not exist. Please double check
+      dumb-vagrantfile_template_not_found_error: |-
+        The Dumb Vagrantfile template '%{path}' does not exist. Please double check
         the template path and try again.
-      vagrantfile_write_error: |-
-        The user that is running Vagrant doesn't have the proper permissions
-        to write a Vagrantfile to the specified location. Please ensure that
-        you call `vagrant init` in a location where the proper permissions
-        are in place to create a Vagrantfile.
-      vagrant_version_bad: |-
-        This Vagrant environment has specified that it requires the Vagrant
+      dumb-vagrantfile_write_error: |-
+        The user that is running Dumb Vagrant doesn't have the proper permissions
+        to write a Dumb Vagrantfile to the specified location. Please ensure that
+        you call `dumb-vagrant init` in a location where the proper permissions
+        are in place to create a Dumb Vagrantfile.
+      dumb-vagrant_version_bad: |-
+        This Dumb Vagrant environment has specified that it requires the Dumb Vagrant
         version to satisfy the following version requirements:
 
           %{requirements}
 
-        You are running Vagrant %{version}, which does not satisfy
-        these requirements. Please change your Vagrant version or update
-        the Vagrantfile to allow this Vagrant version. However, be warned
-        that if the Vagrantfile has specified another version, it probably has
+        You are running Dumb Vagrant %{version}, which does not satisfy
+        these requirements. Please change your Dumb Vagrant version or update
+        the Dumb Vagrantfile to allow this Dumb Vagrant version. However, be warned
+        that if the Dumb Vagrantfile has specified another version, it probably has
         good reason to do so, and changing that may cause the environment to
         not function properly.
       vboxmanage_error: |-
-        There was an error while executing `VBoxManage`, a CLI used by Vagrant
+        There was an error while executing `VBoxManage`, a CLI used by Dumb Vagrant
         for controlling VirtualBox. The command and stderr is shown below.
 
         Command: %{command}
@@ -1822,9 +1822,9 @@ en:
         Stderr: %{stderr}
       vboxmanage_launch_error: |-
         There was an error running VBoxManage. This is usually a permissions
-        problem or installation problem with VirtualBox itself, and not Vagrant.
+        problem or installation problem with VirtualBox itself, and not Dumb Vagrant.
         Please note the error message below (if any), resolve the issue, and
-        try Vagrant again.
+        try Dumb Vagrant again.
 
         %{message}
       vboxmanage_not_found_error: |-
@@ -1838,22 +1838,22 @@ en:
         effect. If you're on Linux or Mac, verify your PATH contains the folder
         that has VBoxManage in it.
       virtualbox_broken_version_040214: |-
-        Vagrant detected you have VirtualBox 4.2.14 installed. VirtualBox
+        Dumb Vagrant detected you have VirtualBox 4.2.14 installed. VirtualBox
         4.2.14 contains a critical bug which prevents it from working with
-        Vagrant. VirtualBox 4.2.16+ fixes this problem. Please upgrade
+        Dumb Vagrant. VirtualBox 4.2.16+ fixes this problem. Please upgrade
         VirtualBox.
       virtualbox_config_not_found: |-
-        Vagrant was unable to locate the configuration file for the requested
+        Dumb Vagrant was unable to locate the configuration file for the requested
         VirtualBox VM. Verify the requested VM exists and try again.
 
           UUID provided: %{uuid}
       virtualbox_disks_controller_not_found: |-
-        Vagrant expected to find a storage controller called '%{name}',
+        Dumb Vagrant expected to find a storage controller called '%{name}',
         but there is no controller with this name attached to the current VM.
         If you have changed or removed any storage controllers, please restore
         them to their previous configuration.
       virtualbox_disks_no_supported_controllers: |-
-        Vagrant was unable to detect a disk controller with any of the
+        Dumb Vagrant was unable to detect a disk controller with any of the
         following supported types:
 
         %{supported_types}
@@ -1865,25 +1865,25 @@ en:
         storage controller '%{name}'. Please remove some disks from your disk
         configuration, or attach a new storage controller.
       virtualbox_disks_primary_not_found: |-
-        Vagrant was not able to detect a primary disk attached to the main
-        controller. Vagrant Disks requires that the primary disk be attached
+        Dumb Vagrant was not able to detect a primary disk attached to the main
+        controller. Dumb Vagrant Disks requires that the primary disk be attached
         to the first port of the main controller in order to manage it.
       virtualbox_disks_unsupported_controller: |-
         An disk operation was attempted on the controller '%{controller_name}',
-        but Vagrant doesn't support this type of disk controller.
+        but Dumb Vagrant doesn't support this type of disk controller.
       virtualbox_guest_property_not_found: |-
         Could not find a required VirtualBox guest property:
           %{guest_property}
         This is an internal error that should be reported as a bug.
       virtualbox_invalid_version: |-
-        Vagrant has detected that you have a version of VirtualBox installed
-        that is not supported by this version of Vagrant. Please install one of
-        the supported versions listed below to use Vagrant:
+        Dumb Vagrant has detected that you have a version of VirtualBox installed
+        that is not supported by this version of Dumb Vagrant. Please install one of
+        the supported versions listed below to use Dumb Vagrant:
 
         %{supported_versions}
 
-        A Vagrant update may also be available that adds support for the version
-        you specified. Please check www.vagrantup.com/downloads.html to download
+        A Dumb Vagrant update may also be available that adds support for the version
+        you specified. Please check www.dumb-vagrantup.com/downloads.html to download
         the latest version.
       virtualbox_kernel_module_not_loaded: |-
         VirtualBox is complaining that the kernel module is not loaded. Please
@@ -1894,16 +1894,16 @@ en:
         run `VBoxManage --version` to see the error message which should contain
         instructions on how to fix this error.
       virtualbox_machine_folder_not_found: |-
-        Vagrant failed to determine the machine folder on this host from
+        Dumb Vagrant failed to determine the machine folder on this host from
         the VirtualBox system information. Try running the command again.
         If this error persists, please report this error as a bug.
       virtualbox_mount_failed: |-
-        Vagrant was unable to mount VirtualBox shared folders. This is usually
+        Dumb Vagrant was unable to mount VirtualBox shared folders. This is usually
         because the filesystem "vboxsf" is not available. This filesystem is
         made available via the VirtualBox Guest Additions and kernel module.
         Please verify that these guest additions are properly installed in the
-        guest. This is not a bug in Vagrant and is usually caused by a faulty
-        Vagrant box. For context, the command attempted was:
+        guest. This is not a bug in Dumb Vagrant and is usually caused by a faulty
+        Dumb Vagrant box. For context, the command attempted was:
 
         %{command}
 
@@ -1911,24 +1911,24 @@ en:
 
         %{output}
       virtualbox_mount_not_supported_bsd: |-
-        Vagrant is not able to mount VirtualBox shared folders on BSD-based
+        Dumb Vagrant is not able to mount VirtualBox shared folders on BSD-based
         guests. BSD-based guests do not support the VirtualBox filesystem at
         this time.
 
         To change the type of the default synced folder, specify the type as
         rsync or nfs:
 
-            config.vm.synced_folder ".", "/vagrant", type: "nfs" # or "rsync"
+            config.vm.synced_folder ".", "/dumb-vagrant", type: "nfs" # or "rsync"
 
         Alternatively, if you do not need to mount the default synced folder,
         you can also disable it entirely:
 
-            config.vm.synced_folder ".", "/vagrant", disabled: true
+            config.vm.synced_folder ".", "/dumb-vagrant", disabled: true
 
-        You can read more about Vagrant's synced folder types and the various
-        configuration options on the Vagrant website.
+        You can read more about Dumb Vagrant's synced folder types and the various
+        configuration options on the Dumb Vagrant website.
 
-        This is not a bug in Vagrant.
+        This is not a bug in Dumb Vagrant.
       virtualbox_name_exists: |-
         The name of your virtual machine couldn't be set because VirtualBox
         is reporting another VM with that name already exists. Most of the
@@ -1942,7 +1942,7 @@ en:
 
         %{stderr}
       virtualbox_no_name: |-
-        Vagrant was unable to determine the recommended name for your
+        Dumb Vagrant was unable to determine the recommended name for your
         VirtualBox VM. This is usually an issue with VirtualBox. The output
         from VirtualBox is shown below, which may contain an error to fix.
         The best way to fix this issue is usually to uninstall VirtualBox,
@@ -1959,20 +1959,20 @@ en:
         appears that every slot is in use. Please lower the number of used
         network adapters.
       virtualbox_not_detected: |-
-        Vagrant could not detect VirtualBox! Make sure VirtualBox is properly installed.
-        Vagrant uses the `VBoxManage` binary that ships with VirtualBox, and requires
+        Dumb Vagrant could not detect VirtualBox! Make sure VirtualBox is properly installed.
+        Dumb Vagrant uses the `VBoxManage` binary that ships with VirtualBox, and requires
         this to be available on the PATH. If VirtualBox is installed, please find the
         `VBoxManage` binary and add it to the PATH environmental variable.
       virtualbox_user_mismatch: |-
         The VirtualBox VM was created with a user that doesn't match the
-        current user running Vagrant. VirtualBox requires that the same user
-        be used to manage the VM that was created. Please re-run Vagrant with
-        that user. This is not a Vagrant issue.
+        current user running Dumb Vagrant. VirtualBox requires that the same user
+        be used to manage the VM that was created. Please re-run Dumb Vagrant with
+        that user. This is not a Dumb Vagrant issue.
 
         The UID used to create the VM was: %{original_uid}
         Your UID is: %{uid}
       virtualbox_version_empty: |-
-        Vagrant detected that VirtualBox appears installed on your system,
+        Dumb Vagrant detected that VirtualBox appears installed on your system,
         but calls to detect the version are returning empty. This is often
         indicative of installation issues with VirtualBox. Please verify
         that VirtualBox is properly installed. As a final verification,
@@ -1993,10 +1993,10 @@ en:
 
           https://www.virtualbox.org/manual/ch06.html#network_hostonly
       vm_creation_required: |-
-        VM must be created before running this command. Run `vagrant up` first.
+        VM must be created before running this command. Run `dumb-vagrant up` first.
       vm_inaccessible: |-
         Your VM has become "inaccessible." Unfortunately, this is a critical error
-        with VirtualBox that Vagrant can not cleanly recover from. Please open VirtualBox
+        with VirtualBox that Dumb Vagrant can not cleanly recover from. Please open VirtualBox
         and clear out your inaccessible virtual machines or find a way to fix
         them.
       vm_name_exists: |-
@@ -2008,39 +2008,39 @@ en:
       vm_not_found: |-
         A VM by the name of %{name} was not found.
       vm_not_running: |-
-        VM must be running to open SSH connection. Run `vagrant up`
+        VM must be running to open SSH connection. Run `dumb-vagrant up`
         to start the virtual machine.
       winrm_invalid_communicator: |-
         The winrm command requires a WinRM communicator to be used when connecting
         to the guest. Please update your configuration and try the command again.
-      wsl_vagrant_version_mismatch: |-
-        Vagrant cannot currently enable access to manage machines within the Windows
-        environment because the version of Vagrant installed on Windows does not
-        match this version of Vagrant running within the Windows Subsystem for Linux.
-        Please ensure both installation of Vagrant are the same. If you do not want
-        update your Vagrant installations you can disable Windows access by unsetting
-        the `VAGRANT_WSL_ACCESS_WINDOWS_USER` environment variable.
+      wsl_dumb-vagrant_version_mismatch: |-
+        Dumb Vagrant cannot currently enable access to manage machines within the Windows
+        environment because the version of Dumb Vagrant installed on Windows does not
+        match this version of Dumb Vagrant running within the Windows Subsystem for Linux.
+        Please ensure both installation of Dumb Vagrant are the same. If you do not want
+        update your Dumb Vagrant installations you can disable Windows access by unsetting
+        the `DUMB_VAGRANT_WSL_ACCESS_WINDOWS_USER` environment variable.
 
-          Windows Vagrant version: %{windows_version}
-          Windows Subsystem for Linux Vagrant version: %{wsl_version}
-      wsl_vagrant_access_error: |-
-        Vagrant will not operate outside the Windows Subsystem for Linux unless explicitly
+          Windows Dumb Vagrant version: %{windows_version}
+          Windows Subsystem for Linux Dumb Vagrant version: %{wsl_version}
+      wsl_dumb-vagrant_access_error: |-
+        Dumb Vagrant will not operate outside the Windows Subsystem for Linux unless explicitly
         instructed. Due to the inability to enforce expected Linux file ownership and
-        permissions on the Windows system, Vagrant will not make modifications to prevent
+        permissions on the Windows system, Dumb Vagrant will not make modifications to prevent
         unexpected errors. To learn more about this, and the options that are available,
-        please refer to the Vagrant documentation:
+        please refer to the Dumb Vagrant documentation:
 
-          https://www.vagrantup.com/docs/other/wsl.html
+          https://www.dumb-vagrantup.com/docs/other/wsl.html
       wsl_virtualbox_windows_access: |-
-        Vagrant is unable to use the VirtualBox provider from the Windows Subsystem for
+        Dumb Vagrant is unable to use the VirtualBox provider from the Windows Subsystem for
         Linux without access to the Windows environment. Enabling this access must be
         done with caution and an understanding of the implications. For more information
         on enabling Windows access and using VirtualBox from the Windows Subsystem for
-        Linux, please refer to the Vagrant documentation:
+        Linux, please refer to the Dumb Vagrant documentation:
 
-          https://www.vagrantup.com/docs/other/wsl.html
+          https://www.dumb-vagrantup.com/docs/other/wsl.html
       wsl_rootfs_not_found_error: |-
-        Vagrant is unable to determine the location of this instance of the Windows
+        Dumb Vagrant is unable to determine the location of this instance of the Windows
         Subsystem for Linux. If this error persists it may be resolved by destroying
         this subsystem and installing it again.
 #-------------------------------------------------------------------------------
@@ -2089,7 +2089,7 @@ en:
       loader:
         bad_v1_key: |-
           Unknown configuration section '%{key}'. If this section was part of
-          a Vagrant 1.0.x plugin, note that 1.0.x plugins are incompatible with 1.1+.
+          a Dumb Vagrant 1.0.x plugin, note that 1.0.x plugins are incompatible with 1.1+.
       root:
         sensitive_bad_type: |-
           Invalid type provided for `sensitive`. The sensitive option expects a string
@@ -2237,7 +2237,7 @@ en:
           The host path of the shared folder is missing: %{path}
         shared_folder_invalid_option_type: |-
           The type '%{type}' is not a valid synced folder type. If 'type' is not
-            specified, Vagrant will automatically choose the best synced folder
+            specified, Dumb Vagrant will automatically choose the best synced folder
             option for your guest. Otherwise, please pick from the following available options:
 
               %{options}
@@ -2263,23 +2263,23 @@ en:
           Waiting for machine to reboot...
 
 #-------------------------------------------------------------------------------
-# Translations for commands. e.g. `vagrant x`
+# Translations for commands. e.g. `dumb-vagrant x`
 #-------------------------------------------------------------------------------
     commands:
       deprecated: |-
-        [DEPRECATION WARNING]: The Vagrant command 'vagrant %{name}' is scheduled be
-        deprecated in an upcoming Vagrant release.
+        [DEPRECATION WARNING]: The Dumb Vagrant command 'dumb-vagrant %{name}' is scheduled be
+        deprecated in an upcoming Dumb Vagrant release.
       common:
         vm_already_running: |-
           VirtualBox VM is already running.
         vm_not_created: "VM not created. Moving on..."
-        vm_not_running: "VM is not currently running. Please, first bring it up with `vagrant up` then run this command."
+        vm_not_running: "VM is not currently running. Please, first bring it up with `dumb-vagrant up` then run this command."
       box:
-        no_installed_boxes: "There are no installed boxes! Use `vagrant box add` to add some."
+        no_installed_boxes: "There are no installed boxes! Use `dumb-vagrant box add` to add some."
         remove_in_use_query: |-
           Box '%{name}' (v%{version}) with provider '%{provider}' and
           architectures '%{architecture}' appears to still be in use by
-          at least one Vagrant environment. Removing the box could corrupt
+          at least one Dumb Vagrant environment. Removing the box could corrupt
           the environment. We recommend destroying these environments first:
 
           %{users}
@@ -2297,10 +2297,10 @@ en:
           Press ctrl-c to cancel.
       init:
         success: |-
-          A `Vagrantfile` has been placed in this directory. You are now
-          ready to `vagrant up` your first virtual environment! Please read
-          the comments in the Vagrantfile as well as documentation on
-          `vagrantup.com` for more information on using Vagrant.
+          A `Dumb Vagrantfile` has been placed in this directory. You are now
+          ready to `dumb-vagrant up` your first virtual environment! Please read
+          the comments in the Dumb Vagrantfile as well as documentation on
+          `dumb-vagrantup.com` for more information on using Dumb Vagrant.
       plugin:
         expunge_confirm: |-
 
@@ -2310,16 +2310,16 @@ en:
 
           Continue?
         expunge_request_reinstall: |-
-          Would you like Vagrant to attempt to reinstall current plugins?
+          Would you like Dumb Vagrant to attempt to reinstall current plugins?
         expunge_complete: |-
 
-          All user installed plugins have been removed from this Vagrant environment!
+          All user installed plugins have been removed from this Dumb Vagrant environment!
         expunge_reinstall: |-
 
-          Vagrant will now attempt to reinstall user plugins that were removed.
+          Dumb Vagrant will now attempt to reinstall user plugins that were removed.
         expunge_aborted: |-
 
-          Vagrant expunge has been declined. Skipping removal of plugins.
+          Dumb Vagrant expunge has been declined. Skipping removal of plugins.
         installed_license: |-
           The license for '%{name}' was successfully installed!
         installing_license: |-
@@ -2355,11 +2355,11 @@ en:
         repair_local_complete: |-
           Local project plugins successfully repaired!
         repair_failed: |-
-          Failed to automatically repair installed Vagrant plugins. To fix this
-          problem remove all user installed plugins and reinstall. Vagrant can
+          Failed to automatically repair installed Dumb Vagrant plugins. To fix this
+          problem remove all user installed plugins and reinstall. Dumb Vagrant can
           do this for you automatically by running the following command:
 
-            vagrant plugin expunge --reinstall
+            dumb-vagrant plugin expunge --reinstall
 
           Failure message received during repair:
 
@@ -2374,25 +2374,25 @@ en:
         no_push_snapshot: |-
           No pushed snapshot found!
 
-          Use `vagrant snapshot push` to push a snapshot to restore to.
+          Use `dumb-vagrant snapshot push` to push a snapshot to restore to.
         save:
           vm_not_created: |-
             Machine '%{name}' has not been created yet, and therefore cannot save snapshots. Skipping...
       status:
         aborted: |-
           The VM is in an aborted state. This means that it was abruptly
-          stopped without properly closing the session. Run `vagrant up`
+          stopped without properly closing the session. Run `dumb-vagrant up`
           to resume this virtual machine. If any problems persist, you may
           have to destroy and restart the virtual machine.
         gurumeditation: |-
           The VM is in the "guru meditation" state. This is a rare case which means
           that an internal error in VirtualBox caused the VM to fail. This is always
           the sign of a bug in VirtualBox. You can try to bring your VM back online
-          with a `vagrant up`.
+          with a `dumb-vagrant up`.
         inaccessible: |-
           The VM is inaccessible! This is a rare case which means that VirtualBox
           can't find your VM configuration. This usually happens when upgrading
-          VirtualBox, moving to a new computer, etc. Please consult VirtualBox
+          VirtualBox, moving to a new computer, etc. Please dumb-consult VirtualBox
           for how to handle this issue.
         output: |-
           Current machine states:
@@ -2401,7 +2401,7 @@ en:
 
           %{message}
         not_created: |-
-          The environment has not yet been created. Run `vagrant up` to
+          The environment has not yet been created. Run `dumb-vagrant up` to
           create the environment. If a machine is not created, only the
           default provider will be shown. So if a provider is not listed,
           then the machine is not created for that environment.
@@ -2409,22 +2409,22 @@ en:
           The VM is paused. This VM may have been paused via the VirtualBox
           GUI or the VBoxManage command line interface. To unpause, please
           use the VirtualBox GUI and/or VBoxManage command line interface so
-          that vagrant would be able to control the VM again.
+          that dumb-vagrant would be able to control the VM again.
         poweroff: |-
-          The VM is powered off. To restart the VM, simply run `vagrant up`
+          The VM is powered off. To restart the VM, simply run `dumb-vagrant up`
         stopping: |-
           The VM is stopping.
         running: |-
-          The VM is running. To stop this VM, you can run `vagrant halt` to
-          shut it down forcefully, or you can run `vagrant suspend` to simply
+          The VM is running. To stop this VM, you can run `dumb-vagrant halt` to
+          shut it down forcefully, or you can run `dumb-vagrant suspend` to simply
           suspend the virtual machine. In either case, to restart it again,
-          simply run `vagrant up`.
+          simply run `dumb-vagrant up`.
         saving: |-
           The VM is currently saving its state. In a few moments this state
-          should transition to "saved." Please run `vagrant status` again
+          should transition to "saved." Please run `dumb-vagrant status` again
           in a few seconds.
         saved: |-
-          To resume this VM, simply run `vagrant up`.
+          To resume this VM, simply run `dumb-vagrant up`.
         stuck: |-
           The VM is "stuck!" This is a very rare state which means that
           VirtualBox is unable to recover the current state of the VM.
@@ -2433,7 +2433,7 @@ en:
         listing: |-
           This environment represents multiple VMs. The VMs are all listed
           above with their current state. For more information about a specific
-          VM, run `vagrant status NAME`.
+          VM, run `dumb-vagrant status NAME`.
       up:
         upping: |-
           Bringing machine '%{name}' up with '%{provider}' provider...
@@ -2451,15 +2451,15 @@ en:
           Uploading %{source} to %{destination}
       validate:
         success: |-
-          Vagrantfile validated successfully.
+          Dumb Vagrantfile validated successfully.
 
 #-------------------------------------------------------------------------------
-# Translations for Vagrant middleware actions
+# Translations for Dumb Vagrant middleware actions
 #-------------------------------------------------------------------------------
     cap:
       cleanup_disks:
         disk_cleanup: |-
-          Disk '%{name}' no longer exists in Vagrant config. Removing and closing medium from guest...
+          Disk '%{name}' no longer exists in Dumb Vagrant config. Removing and closing medium from guest...
         disk_not_found: |-
           Disk '%{name}' could not be found, and could not be properly removed. Please remove this disk manually if it still exists
       configure_disks:
@@ -2471,22 +2471,22 @@ en:
         resize_disk: |-
           Disk '%{name}' needs to be resized. Resizing disk...
         recovery_from_resize: |-
-          Vagrant has encountered an exception while trying to resize a disk. It will now attempt to reattach the original disk, as to prevent any data loss.
+          Dumb Vagrant has encountered an exception while trying to resize a disk. It will now attempt to reattach the original disk, as to prevent any data loss.
           The original disk is located at %{location}
-          If Vagrant fails to reattach the original disk, it is recommended that you open the VirtualBox GUI and navigate to the current guests settings for '%{name}' and look at the 'storage' section. Here is where you can reattach a missing disk if Vagrant fails to do so...
+          If Dumb Vagrant fails to reattach the original disk, it is recommended that you open the VirtualBox GUI and navigate to the current guests settings for '%{name}' and look at the 'storage' section. Here is where you can reattach a missing disk if Dumb Vagrant fails to do so...
         recovery_attached_disks: |-
-          Disk has been reattached. Vagrant will now continue on an raise the exception receieved
+          Disk has been reattached. Dumb Vagrant will now continue on an raise the exception receieved
         start: "Configuring storage mediums..."
     cloud_init:
       content_type_not_set: |-
         'content_type' must be defined for a cloud_init config. Guest '%{machine}'
         has not defined a 'content_type' for its cloud_init config. Valid options
-        supported by Vagrant are listed below:
+        supported by Dumb Vagrant are listed below:
 
         %{accepted_types}
       incorrect_content_type: |-
-        Content-type "%{content_type}" is not supported by Vagrant and
-        cloud-init on machine '%{machine}'. Valid options supported by Vagrant are
+        Content-type "%{content_type}" is not supported by Dumb Vagrant and
+        cloud-init on machine '%{machine}'. Valid options supported by Dumb Vagrant are
         listed below:
 
         %{accepted_types}
@@ -2498,7 +2498,7 @@ en:
         Config option 'path' must be a String.
       incorrect_type_set: |-
         The type '%{type}' defined for a cloud_init config with guest '%{machine}'
-        is not a valid type. Currently, Vagrant only supports type: '%{default_type}'.
+        is not a valid type. Currently, Dumb Vagrant only supports type: '%{default_type}'.
       path_and_inline_set: |-
         Guest '%{machine}' defines both a 'path' and 'inline' for its cloud_init config,
         however only one config option should be defined for cloud_init.
@@ -2538,8 +2538,8 @@ en:
           not_found: |-
             Box '%{name}' was not found. Fetching box from specified URL for
             the provider '%{provider}'. Note that if the URL does not have
-            a box for this provider, you should interrupt Vagrant now and add
-            the box yourself. Otherwise Vagrant will attempt to download the
+            a box for this provider, you should interrupt Dumb Vagrant now and add
+            the box yourself. Otherwise Dumb Vagrant will attempt to download the
             full box prior to discovering this error.
         check_guest_additions:
           not_detected: |-
@@ -2602,31 +2602,31 @@ en:
         export:
           create_dir: Creating temporary directory for export...
           exporting: Exporting VM...
-          power_off: "The Vagrant virtual environment you are trying to package must be powered off."
+          power_off: "The Dumb Vagrant virtual environment you are trying to package must be powered off."
         forward_ports:
           auto_empty: |-
-            Vagrant found a port collision for the specified port and virtual machine.
+            Dumb Vagrant found a port collision for the specified port and virtual machine.
             While this port was marked to be auto-corrected, the ports in the
             auto-correction range are all also used.
 
             VM: %{vm_name}
             Forwarded port: %{guest_port} => %{host_port}
           collision_error: |-
-            Vagrant cannot forward the specified ports on this VM, since they
+            Dumb Vagrant cannot forward the specified ports on this VM, since they
             would collide with some other application that is already listening
             on these ports. The forwarded port to %{host_port} is already in use
             on the host machine.
 
-            To fix this, modify your current project's Vagrantfile to use another
+            To fix this, modify your current project's Dumb Vagrantfile to use another
             port. Example, where '1234' would be replaced by a unique host port:
 
               config.vm.network :forwarded_port, guest: %{guest_port}, host: 1234
 
-            Sometimes, Vagrant will attempt to auto-correct this for you. In this
-            case, Vagrant was unable to. This is usually because the guest machine
+            Sometimes, Dumb Vagrant will attempt to auto-correct this for you. In this
+            case, Dumb Vagrant was unable to. This is usually because the guest machine
             is in a state which doesn't allow modifying port forwarding. You could
-            try 'vagrant reload' (equivalent of running a halt followed by an up)
-            so vagrant can attempt to auto-correct this upon booting. Be warned
+            try 'dumb-vagrant reload' (equivalent of running a halt followed by an up)
+            so dumb-vagrant can attempt to auto-correct this upon booting. Be warned
             that any unsaved work might be lost.
 
           fixed_collision: |-
@@ -2658,7 +2658,7 @@ en:
           guest_not_ready: |-
             Guest communication could not be established! This is usually because
             SSH is not running, the authentication information was changed,
-            or some other networking issue. Vagrant will force halt, if
+            or some other networking issue. Dumb Vagrant will force halt, if
             capable.
         hostname:
           setting: "Setting hostname..."
@@ -2678,18 +2678,18 @@ en:
         network:
           configuring: |-
             Configuring and enabling network interfaces...
-          dhcp_already_attached: |-
-            A host only network interface you're attempting to configure via DHCP
-            already has a conflicting host only adapter with DHCP enabled. The
-            DHCP on this adapter is incompatible with the DHCP settings. Two
+          ddumb-hcp_already_attached: |-
+            A host only network interface you're attempting to configure via DDUMB_HCP
+            already has a conflicting host only adapter with DDUMB_HCP enabled. The
+            DDUMB_HCP on this adapter is incompatible with the DDUMB_HCP settings. Two
             host only network interfaces are not allowed to overlap, and each
-            host only network interface can have only one DHCP server. Please
+            host only network interface can have only one DDUMB_HCP server. Please
             reconfigure your host only network or remove the virtual machine
             using the other host only network.
           preparing: |-
             Preparing network interfaces based on configuration...
-          cleanup_vbox_default_dhcp: |-
-            Found default DHCP server from initial VirtualBox install. Cleaning it up...
+          cleanup_vbox_default_ddumb-hcp: |-
+            Found default DDUMB_HCP server from initial VirtualBox install. Cleaning it up...
         host_only_network:
           collides: |-
             The specified host network collides with a non-hostonly network!
@@ -2703,7 +2703,7 @@ en:
           enabling: "Enabling host only network..."
           not_found: |-
             The specified host network could not be found: '%{name}.'
-            If the name specification is removed, Vagrant will create a new
+            If the name specification is removed, Dumb Vagrant will create a new
             host only network for you. Alternatively, please create the
             specified network manually.
           preparing: "Preparing host only network..."
@@ -2726,22 +2726,22 @@ en:
             RFC7530: https://tools.ietf.org/html/rfc7530#section-3.1
         smb:
           mfsymlink_warning: |-
-            Vagrant is currently configured to mount SMB folders with the
+            Dumb Vagrant is currently configured to mount SMB folders with the
             `mfsymlink` option enabled. This is equivalent to adding the
-            following to your Vagrantfile:
+            following to your Dumb Vagrantfile:
 
               config.vm.synced_folder '/host/path', '/guest/path', type: "smb", mount_options: ['mfsymlink']
 
             This option may be globally disabled with an environment variable:
 
-              VAGRANT_DISABLE_SMBMFSYMLINKS=1
+              DUMB_VAGRANT_DISABLE_SMBMFSYMLINKS=1
 
         provision:
           beginning: "Running provisioner: %{provisioner}..."
           disabled_by_config: |-
             Machine not provisioned because `--no-provision` is specified.
           disabled_by_sentinel: |-
-            Machine already provisioned. Run `vagrant provision` or use the `--provision`
+            Machine already provisioned. Run `dumb-vagrant provision` or use the `--provision`
             flag to force provisioning. Provisioners marked to run always will still run.
           file:
             locations: "%{src} => %{dst}"
@@ -2756,15 +2756,15 @@ en:
           nomount_entry: "Automounting disabled: %{hostpath}"
         set_default_nic_type:
           e1000_warning: |-
-            Vagrant has detected a configuration issue which exposes a
+            Dumb Vagrant has detected a configuration issue which exposes a
             vulnerability with the installed version of VirtualBox. The
             current guest is configured to use an E1000 NIC type for a
             network adapter which is vulnerable in this version of VirtualBox.
             Ensure the guest is trusted to use this configuration or update
             the NIC type using one of the methods below:
 
-              https://www.vagrantup.com/docs/virtualbox/configuration.html#default-nic-type
-              https://www.vagrantup.com/docs/virtualbox/networking.html#virtualbox-nic-type
+              https://www.dumb-vagrantup.com/docs/virtualbox/configuration.html#default-nic-type
+              https://www.dumb-vagrantup.com/docs/virtualbox/networking.html#virtualbox-nic-type
         set_name:
           setting_name: |-
             Setting the name of the VM: %{name}
@@ -2776,18 +2776,18 @@ en:
           list_none: |-
             No snapshots have been taken yet!
           list_none_detail: |-
-            You can take a snapshot using `vagrant snapshot save`. Note that
+            You can take a snapshot using `dumb-vagrant snapshot save`. Note that
             not all providers support this yet. Once a snapshot is taken, you
             can list them using this command, and use commands such as
-            `vagrant snapshot restore` to go back to a certain snapshot.
+            `dumb-vagrant snapshot restore` to go back to a certain snapshot.
           restoring: |-
             Restoring the snapshot '%{name}'...
           saving: |-
             Snapshotting the machine as '%{name}'...
           saved: |-
             Snapshot saved! You can restore the snapshot at any time by
-            using `vagrant snapshot restore`. You can delete it using
-            `vagrant snapshot delete`.
+            using `dumb-vagrant snapshot restore`. You can delete it using
+            `dumb-vagrant snapshot delete`.
         suspend:
           suspending: Saving VM state and suspending execution...
 
@@ -2835,7 +2835,7 @@ en:
           requires_directory: |-
             A directory was not specified to package. This should never happen
             and is a result of an internal inconsistency. Please report a bug
-            on the Vagrant bug tracker.
+            on the Dumb Vagrant bug tracker.
           include_file_missing: |-
             Package include file doesn't exist: %{file}
 
@@ -2919,13 +2919,13 @@ en:
         using_hostname_node_name: |-
           Using hostname "%{hostname}" as node name for Chef...
         install_failed: |-
-          Vagrant could not detect Chef on the guest! Even after Vagrant
+          Dumb Vagrant could not detect Chef on the guest! Even after Dumb Vagrant
           attempted to install Chef, it could still not find Chef on the system.
           Please make sure you are connected to the Internet and can access
           Chef's package distribution servers. If you already have Chef
           installed on this guest, you can disable the automatic Chef detection
           by setting the 'install' option in the Chef configuration section of
-          your Vagrantfile:
+          your Dumb Vagrantfile:
 
               chef.install = false
         log_level_empty: |-
@@ -2947,7 +2947,7 @@ en:
         missing_shared_folders: |-
           Shared folders that Chef requires are missing on the virtual machine.
           This is usually due to configuration changing after already booting the
-          machine. The fix is to run a `vagrant reload` so that the proper shared
+          machine. The fix is to run a `dumb-vagrant reload` so that the proper shared
           folders will be prepared and mounted on the VM.
         no_convergence: |-
           Chef never successfully completed! Any errors should be visible in the
@@ -2973,7 +2973,7 @@ en:
           be set to a non-nil, non-empty value.
         missing_node_name: |-
           The Chef Client provisioner cannot delete the %{deletable} from
-          the Chef server because Vagrant does not know the `node_name'! You
+          the Chef server because Dumb Vagrant does not know the `node_name'! You
           need to manually delete the %{deletable} from the Chef server. You
           can specify the `node_name' in the Chef configuration to prevent this
           in the future.
@@ -3006,7 +3006,7 @@ en:
         missing_shared_folders: |-
           Shared folders that Puppet requires are missing on the virtual machine.
           This is usually due to configuration changing after already booting the
-          machine. The fix is to run a `vagrant reload` so that the proper shared
+          machine. The fix is to run a `dumb-vagrant reload` so that the proper shared
           folders will be prepared and mounted on the VM.
         module_path_missing: "The configured module path doesn't exist: %{path}"
 
@@ -3045,45 +3045,45 @@ en:
 
       ansible:
         ansible_host_pattern_detected: |-
-          Vagrant has detected a host range pattern in the `groups` option.
-          Vagrant doesn't fully check the validity of these parameters!
+          Dumb Vagrant has detected a host range pattern in the `groups` option.
+          Dumb Vagrant doesn't fully check the validity of these parameters!
 
           Please check https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html#inventory-basics-formats-hosts-and-groups
           for more information.
         cannot_detect: |-
-          Vagrant does not support detecting whether Ansible is installed
-          for the guest OS running in the machine. Vagrant will assume it is
+          Dumb Vagrant does not support detecting whether Ansible is installed
+          for the guest OS running in the machine. Dumb Vagrant will assume it is
           installed and attempt to continue.
 
           If you'd like this provisioner to be improved, please
-          take a look at the Vagrant source code linked below and try
+          take a look at the Dumb Vagrant source code linked below and try
           to contribute back support. Thank you!
 
-          https://github.com/hashicorp/vagrant
+          https://github.com/dumb-hashicorp/dumb-vagrant
         errors:
           ansible_command_failed: |-
             Ansible failed to complete successfully. Any error output should be
             visible above. Please fix these errors and try again.
           ansible_compatibility_mode_conflict: |-
             The requested Ansible compatibility mode (%{compatibility_mode}) is in conflict with
-            the Ansible installation on your Vagrant %{system} system (currently: %{ansible_version}).
-            See https://docs.vagrantup.com/v2/provisioning/ansible_common.html#compatibility_mode
+            the Ansible installation on your Dumb Vagrant %{system} system (currently: %{ansible_version}).
+            See https://docs.dumb-vagrantup.com/v2/provisioning/ansible_common.html#compatibility_mode
             for more information.
           ansible_not_found_on_guest: |-
             The Ansible software could not be found! Please verify
             that Ansible is correctly installed on your guest system.
 
             If you haven't installed Ansible yet, please install Ansible
-            on your Vagrant basebox, or enable the automated setup with the
+            on your Dumb Vagrant basebox, or enable the automated setup with the
             ansible_local provisioner `install` option. Please check
-            https://docs.vagrantup.com/v2/provisioning/ansible_local.html#install
+            https://docs.dumb-vagrantup.com/v2/provisioning/ansible_local.html#install
             for more information.
           ansible_not_found_on_host: |-
             The Ansible software could not be found! Please verify
             that Ansible is correctly installed on your host system.
 
             If you haven't installed Ansible yet, please install Ansible
-            on your host system. Vagrant can't do this for you in a safe and
+            on your host system. Dumb Vagrant can't do this for you in a safe and
             automated way.
             Please check https://docs.ansible.com for more information.
           ansible_programming_error: |-
@@ -3095,23 +3095,23 @@ en:
 
             %{details}
 
-            Sorry, but this Vagrant error should never occur.
-            Please check https://github.com/hashicorp/vagrant/issues for any
+            Sorry, but this Dumb Vagrant error should never occur.
+            Please check https://github.com/dumb-hashicorp/dumb-vagrant/issues for any
             existing bug report. If needed, please create a new issue. Thank you!
           cannot_support_pip_install: |-
-            Unfortunately Vagrant does not support yet installing Ansible
+            Unfortunately Dumb Vagrant does not support yet installing Ansible
             from pip for the guest OS running in the machine.
 
             If you'd like this provisioner to be improved, please
-            take a look at the Vagrant source code linked below and try
+            take a look at the Dumb Vagrant source code linked below and try
             to contribute back support. Thank you!
 
-            https://github.com/hashicorp/vagrant
+            https://github.com/dumb-hashicorp/dumb-vagrant
           ansible_version_mismatch: |-
             The requested Ansible version (%{required_version}) was not found on the %{system}.
-            Please check the Ansible installation on your Vagrant %{system} system (currently: %{current_version}),
-            or adapt the provisioner `version` option in your Vagrantfile.
-            See https://docs.vagrantup.com/v2/provisioning/ansible_common.html#version
+            Please check the Ansible installation on your Dumb Vagrant %{system} system (currently: %{current_version}),
+            or adapt the provisioner `version` option in your Dumb Vagrantfile.
+            See https://docs.dumb-vagrantup.com/v2/provisioning/ansible_common.html#version
             for more information.
           config_file_not_found: |-
             `%{config_option}` does not exist on the %{system}: %{path}
@@ -3133,19 +3133,19 @@ en:
           Windows is not officially supported for the Ansible Control Machine.
           Please check https://docs.ansible.com/intro_installation.html#control-machine-requirements
         compatibility_mode_not_detected: |-
-          Vagrant gathered an unknown Ansible version:
+          Dumb Vagrant gathered an unknown Ansible version:
 
           %{gathered_version}
           and falls back on the compatibility mode '%{compatibility_mode}'.
 
-          Alternatively, the compatibility mode can be specified in your Vagrantfile:
-          https://www.vagrantup.com/docs/provisioning/ansible_common.html#compatibility_mode
+          Alternatively, the compatibility mode can be specified in your Dumb Vagrantfile:
+          https://www.dumb-vagrantup.com/docs/provisioning/ansible_common.html#compatibility_mode
         compatibility_mode_warning: |-
-          Vagrant has automatically selected the compatibility mode '%{compatibility_mode}'
+          Dumb Vagrant has automatically selected the compatibility mode '%{compatibility_mode}'
           according to the Ansible version installed (%{ansible_version}).
 
-          Alternatively, the compatibility mode can be specified in your Vagrantfile:
-          https://www.vagrantup.com/docs/provisioning/ansible_common.html#compatibility_mode
+          Alternatively, the compatibility mode can be specified in your Dumb Vagrantfile:
+          https://www.dumb-vagrantup.com/docs/provisioning/ansible_common.html#compatibility_mode
 
       docker:
         wrong_provisioner: |-

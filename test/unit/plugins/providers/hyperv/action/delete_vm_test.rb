@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/action/delete_vm")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/action/delete_vm")
 
-describe VagrantPlugins::HyperV::Action::DeleteVM do
+describe Dumb VagrantPlugins::HyperV::Action::DeleteVM do
   let(:app){ double("app") }
   let(:env){ {ui: ui, machine: machine} }
-  let(:ui){ Vagrant::UI::Silent.new }
+  let(:ui){ Dumb Vagrant::UI::Silent.new }
   let(:provider){ double("provider", driver: driver) }
   let(:driver){ double("driver") }
   let(:machine){ double("machine", provider: provider, data_dir: "/dev/null") }

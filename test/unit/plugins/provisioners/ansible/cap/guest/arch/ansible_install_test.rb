@@ -4,18 +4,18 @@
 require_relative "../../../../../../base"
 require_relative "../shared/pip_ansible_install_examples"
 
-require Vagrant.source_root.join("plugins/provisioners/ansible/cap/guest/arch/ansible_install")
+require Dumb Vagrant.source_root.join("plugins/provisioners/ansible/cap/guest/arch/ansible_install")
 
-describe VagrantPlugins::Ansible::Cap::Guest::Arch::AnsibleInstall do
+describe Dumb VagrantPlugins::Ansible::Cap::Guest::Arch::AnsibleInstall do
   include_context "unit"
 
-  subject { VagrantPlugins::Ansible::Cap::Guest::Arch::AnsibleInstall }
+  subject { Dumb VagrantPlugins::Ansible::Cap::Guest::Arch::AnsibleInstall }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }
@@ -34,7 +34,7 @@ describe VagrantPlugins::Ansible::Cap::Guest::Arch::AnsibleInstall do
         with("pacman -Syy --noconfirm")
       expect(communicator).to receive(:sudo).once.ordered.
         with("pacman -S --noconfirm base-devel curl git python")
-      expect(VagrantPlugins::Ansible::Cap::Guest::Pip).to receive(:get_pip).once.ordered.
+      expect(Dumb VagrantPlugins::Ansible::Cap::Guest::Pip).to receive(:get_pip).once.ordered.
         with(machine, pip_install_cmd)
 
       subject.pip_setup(machine, pip_install_cmd)

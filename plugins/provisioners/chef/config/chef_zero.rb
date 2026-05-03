@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/presence"
+require "dumb-vagrant/util/presence"
 
 require_relative "chef_solo"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Config
       class ChefZero < BaseRunner
-        include Vagrant::Util::Presence
+        include Dumb Vagrant::Util::Presence
 
         # The path on disk where Chef cookbooks are stored.
         # Default is "cookbooks".
@@ -77,22 +77,22 @@ module VagrantPlugins
           errors = validate_base(machine)
 
           if !present?(Array(cookbooks_path))
-            errors << I18n.t("vagrant.config.chef.cookbooks_path_empty")
+            errors << I18n.t("dumb-vagrant.config.chef.cookbooks_path_empty")
           end
 
           if !present?(Array(nodes_path))
-            errors << I18n.t("vagrant.config.chef.nodes_path_empty")
+            errors << I18n.t("dumb-vagrant.config.chef.nodes_path_empty")
           else
             missing_paths = Array.new
             nodes_path.each { |dir| missing_paths << dir[1] if !File.exist? dir[1] }
             # If it exists at least one path on disk it's ok for Chef provisioning
             if missing_paths.size == nodes_path.size
-              errors << I18n.t("vagrant.config.chef.nodes_path_missing", path: missing_paths.to_s)
+              errors << I18n.t("dumb-vagrant.config.chef.nodes_path_missing", path: missing_paths.to_s)
             end
           end
 
           if environment && environments_path.empty?
-            errors << I18n.t("vagrant.config.chef.environment_path_required")
+            errors << I18n.t("dumb-vagrant.config.chef.environment_path_required")
           end
 
           environments_path.each do |type, raw_path|
@@ -100,7 +100,7 @@ module VagrantPlugins
 
             path = Pathname.new(raw_path).expand_path(machine.env.root_path)
             if !path.directory?
-              errors << I18n.t("vagrant.config.chef.environment_path_missing",
+              errors << I18n.t("dumb-vagrant.config.chef.environment_path_missing",
                 path: raw_path.to_s
               )
             end

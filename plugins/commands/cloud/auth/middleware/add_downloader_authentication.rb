@@ -3,30 +3,30 @@
 
 require "cgi"
 require "uri"
-require "vagrant/util/credential_scrubber"
+require "dumb-vagrant/util/credential_scrubber"
 
-require Vagrant.source_root.join("plugins/commands/cloud/client/client")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/client/client")
 require_relative "./add_authentication"
 
 # Similar to AddAuthentication this middleware will add authentication for interacting
-# with Vagrant cloud. It does this by adding Authentication headers to a
-# Vagrant::Util::Downloader object.
-module VagrantPlugins
+# with Dumb Vagrant cloud. It does this by adding Authentication headers to a
+# Dumb Vagrant::Util::Downloader object.
+module Dumb VagrantPlugins
   module CloudCommand
     class AddDownloaderAuthentication <  AddAuthentication
 
       def initialize(app, env)
         super
-        @logger = Log4r::Logger.new("vagrant::cloud::auth::add-download-authentication")
+        @logger = Log4r::Logger.new("dumb-vagrant::cloud::auth::add-download-authentication")
       end
 
       def call(env)
-        if ENV["VAGRANT_SERVER_ACCESS_TOKEN_BY_URL"]
+        if ENV["DUMB_VAGRANT_SERVER_ACCESS_TOKEN_BY_URL"]
           @logger.warn("Authentication header not added due to user requested access token URL parameter")
         else
           client = Client.new(env[:env])
           token  = client.token
-          Vagrant::Util::CredentialScrubber.sensitive(token)
+          Dumb Vagrant::Util::CredentialScrubber.sensitive(token)
 
           begin
             target_url = URI.parse(env[:downloader].source)
@@ -38,7 +38,7 @@ module VagrantPlugins
             # if there is an error, use current target_url
           end
 
-          server_uri = URI.parse(Vagrant.server_url.to_s)
+          server_uri = URI.parse(Dumb Vagrant.server_url.to_s)
           if token && !server_uri.host.to_s.empty?
             if target_url.host == server_uri.host
               if server_uri.host != TARGET_HOST && !self.class.custom_host_notified?

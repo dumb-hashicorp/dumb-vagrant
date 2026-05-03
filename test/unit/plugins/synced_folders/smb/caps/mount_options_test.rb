@@ -5,10 +5,10 @@ require_relative "../../../../base"
 
 require_relative "../../../../../../plugins/synced_folders/smb/cap/mount_options"
 
-describe VagrantPlugins::SyncedFolderSMB::Cap::MountOptions do
+describe Dumb VagrantPlugins::SyncedFolderSMB::Cap::MountOptions do
 
   let(:caps) do
-    VagrantPlugins::SyncedFolderSMB::Plugin
+    Dumb VagrantPlugins::SyncedFolderSMB::Plugin
       .components
       .synced_folder_capabilities[:smb]
   end
@@ -16,16 +16,16 @@ describe VagrantPlugins::SyncedFolderSMB::Cap::MountOptions do
 
   let(:dummy_smb_host) { "my.smb.host" }
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:env)    { double("env") }
   let(:guest) { double("guest") }
   let(:host)    { double("host") }
-  let(:mount_owner){ "vagrant" }
-  let(:mount_group){ "vagrant" }
+  let(:mount_owner){ "dumb-vagrant" }
+  let(:mount_group){ "dumb-vagrant" }
   let(:mount_uid){ "1000" }
   let(:mount_gid){ "1000" }
-  let(:mount_name){ "vagrant" }
-  let(:mount_guest_path){ "/vagrant" }
+  let(:mount_name){ "dumb-vagrant" }
+  let(:mount_guest_path){ "/dumb-vagrant" }
   let(:folder_options) do
     {
       owner: mount_owner,
@@ -42,7 +42,7 @@ describe VagrantPlugins::SyncedFolderSMB::Cap::MountOptions do
     allow(machine).to receive(:communicate).and_return(comm)
     allow(machine).to receive(:guest).and_return(guest)
     allow(machine).to receive_message_chain(:env, :host, :capability?).with(:smb_mount_options).and_return(false)
-    allow(ENV).to receive(:[]).with("VAGRANT_DISABLE_SMBMFSYMLINKS").and_return(true)
+    allow(ENV).to receive(:[]).with("DUMB_VAGRANT_DISABLE_SMBMFSYMLINKS").and_return(true)
     allow(ENV).to receive(:[]).with("GEM_SKIP").and_return(false)
   end
 
@@ -66,12 +66,12 @@ describe VagrantPlugins::SyncedFolderSMB::Cap::MountOptions do
 
       before do
         expect(comm).to receive(:execute).with("id -u #{mount_owner}", anything).and_yield(:stdout, mount_uid)
-        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "vagrant:x:#{mount_gid}:")
+        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "dumb-vagrant:x:#{mount_gid}:")
       end
 
       it "generates the expected default mount command" do
         out_opts, out_uid, out_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options)
-        expect(out_opts).to eq("sec=ntlmssp,credentials=/etc/smb_creds_vagrant,uid=1000,gid=1000,_netdev")
+        expect(out_opts).to eq("sec=ntlmssp,credentials=/etc/smb_creds_dumb-vagrant,uid=1000,gid=1000,_netdev")
         expect(out_uid).to eq(mount_uid)
         expect(out_gid).to eq(mount_gid)
       end
@@ -79,7 +79,7 @@ describe VagrantPlugins::SyncedFolderSMB::Cap::MountOptions do
       it "includes provided mount options" do
         folder_options[:mount_options] =["ro"]
         out_opts, out_uid, out_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options)
-        expect(out_opts).to eq("sec=ntlmssp,credentials=/etc/smb_creds_vagrant,uid=1000,gid=1000,_netdev,ro")
+        expect(out_opts).to eq("sec=ntlmssp,credentials=/etc/smb_creds_dumb-vagrant,uid=1000,gid=1000,_netdev,ro")
         expect(out_uid).to eq(mount_uid)
         expect(out_gid).to eq(mount_gid)
       end
@@ -87,15 +87,15 @@ describe VagrantPlugins::SyncedFolderSMB::Cap::MountOptions do
       it "overwrites default mount options" do
         folder_options[:mount_options] =["ro", "sec=custom"]
         out_opts, out_uid, out_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options)
-        expect(out_opts).to eq("sec=custom,credentials=/etc/smb_creds_vagrant,uid=1000,gid=1000,_netdev,ro")
+        expect(out_opts).to eq("sec=custom,credentials=/etc/smb_creds_dumb-vagrant,uid=1000,gid=1000,_netdev,ro")
         expect(out_uid).to eq(mount_uid)
         expect(out_gid).to eq(mount_gid)
       end
 
-      it "does not add mfsymlinks option if env var VAGRANT_DISABLE_SMBMFSYMLINKS exists" do
-        expect(ENV).to receive(:[]).with("VAGRANT_DISABLE_SMBMFSYMLINKS").and_return(false)
+      it "does not add mfsymlinks option if env var DUMB_VAGRANT_DISABLE_SMBMFSYMLINKS exists" do
+        expect(ENV).to receive(:[]).with("DUMB_VAGRANT_DISABLE_SMBMFSYMLINKS").and_return(false)
         out_opts, out_uid, out_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options)
-        expect(out_opts).to eq("sec=ntlmssp,credentials=/etc/smb_creds_vagrant,uid=1000,gid=1000,mfsymlinks,_netdev")
+        expect(out_opts).to eq("sec=ntlmssp,credentials=/etc/smb_creds_dumb-vagrant,uid=1000,gid=1000,mfsymlinks,_netdev")
         expect(out_uid).to eq(mount_uid)
         expect(out_gid).to eq(mount_gid)
       end
@@ -105,10 +105,10 @@ describe VagrantPlugins::SyncedFolderSMB::Cap::MountOptions do
       it "raises an error" do
         expect(comm).to receive(:execute).with("id -u #{mount_owner}", anything).and_yield(:stdout, mount_uid)
         expect(comm).to receive(:execute).with("id -g #{mount_group}", anything).and_yield(:stdout, mount_gid)
-        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_raise(Vagrant::Errors::VirtualBoxMountFailed, {command: '', output: ''})
+        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_raise(Dumb Vagrant::Errors::VirtualBoxMountFailed, {command: '', output: ''})
         expect do
           cap.mount_options(machine, mount_name, mount_guest_path, folder_options)
-        end.to raise_error Vagrant::Errors::VirtualBoxMountFailed
+        end.to raise_error Dumb Vagrant::Errors::VirtualBoxMountFailed
       end
     end
   end

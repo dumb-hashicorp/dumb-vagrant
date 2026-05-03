@@ -5,16 +5,16 @@ require "tempfile"
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Provisioner
       class Guest < Base
-        include Vagrant::Util
+        include Dumb Vagrant::Util
 
         def initialize(machine, config)
           super
           @control_machine = "guest"
-          @logger = Log4r::Logger.new("vagrant::provisioners::ansible_guest")
+          @logger = Log4r::Logger.new("dumb-vagrant::provisioners::ansible_guest")
         end
 
         def provision
@@ -48,7 +48,7 @@ module VagrantPlugins
           # If the guest cannot check if Ansible is installed,
           # print a warning and try to continue without any installation attempt...
           if !@machine.guest.capability?(:ansible_installed)
-            @machine.ui.warn(I18n.t("vagrant.provisioners.ansible.cannot_detect"))
+            @machine.ui.warn(I18n.t("dumb-vagrant.provisioners.ansible.cannot_detect"))
             return
           end
 
@@ -56,7 +56,7 @@ module VagrantPlugins
           if config.install &&
              (config.version.to_s.to_sym == :latest ||
               !@machine.guest.capability(:ansible_installed, config.version))
-            @machine.ui.detail I18n.t("vagrant.provisioners.ansible.installing")
+            @machine.ui.detail I18n.t("dumb-vagrant.provisioners.ansible.installing")
             @machine.guest.capability(:ansible_install, config.install_mode, config.version, config.pip_args, config.pip_install_cmd)
           end
 
@@ -129,13 +129,13 @@ module VagrantPlugins
 
         def ship_generated_inventory(inventory_content)
           inventory_basedir = File.join(config.tmp_path, "inventory")
-          inventory_path = File.join(inventory_basedir, "vagrant_ansible_local_inventory")
+          inventory_path = File.join(inventory_basedir, "dumb-vagrant_ansible_local_inventory")
 
           @machine.communicate.sudo("mkdir -p #{inventory_basedir}")
           @machine.communicate.sudo("chown -R -h #{@machine.ssh_info[:username]} #{config.tmp_path}")
           @machine.communicate.sudo("rm -f #{inventory_path}", error_check: false)
 
-          Tempfile.open("vagrant-ansible-local-inventory-#{@machine.name}") do |f|
+          Tempfile.open("dumb-vagrant-ansible-local-inventory-#{@machine.name}") do |f|
             f.binmode
             f.write(inventory_content)
             f.fsync

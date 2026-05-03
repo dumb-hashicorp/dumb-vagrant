@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module NoopDeploy
-    class Push < Vagrant.plugin("2", :push)
+    class Push < Dumb Vagrant.plugin("2", :push)
       def push
         puts "pushed"
       end

@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/box/show")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/box/show")
 
-describe VagrantPlugins::CloudCommand::BoxCommand::Command::Show do
+describe Dumb VagrantPlugins::CloudCommand::BoxCommand::Command::Show do
   include_context "unit"
 
   let(:access_token) { double("token") }
@@ -18,12 +18,12 @@ describe VagrantPlugins::CloudCommand::BoxCommand::Command::Show do
   describe "#show_box" do
     let(:options) { {} }
     let(:env) { double("env", ui: ui) }
-    let(:ui) { Vagrant::UI::Silent.new }
+    let(:ui) { Dumb Vagrant::UI::Silent.new }
     let(:argv) { [] }
 
     before do
       allow(env).to receive(:ui).and_return(ui)
-      allow(VagrantCloud::Account).to receive(:new).
+      allow(Dumb VagrantCloud::Account).to receive(:new).
         with(custom_server: anything, access_token: access_token).
         and_return(account)
       allow(subject).to receive(:with_box).with(account: account, org: org_name, box: box_name).
@@ -45,7 +45,7 @@ describe VagrantPlugins::CloudCommand::BoxCommand::Command::Show do
     end
 
     it "should return non-zero on error" do
-      expect(subject).to receive(:with_box).and_raise(VagrantCloud::Error)
+      expect(subject).to receive(:with_box).and_raise(Dumb VagrantCloud::Error)
       result = subject.show_box(org_name, box_name, access_token, options)
       expect(result).not_to eq(0)
       expect(result).to be_a(Integer)
@@ -86,10 +86,10 @@ describe VagrantPlugins::CloudCommand::BoxCommand::Command::Show do
   describe "#execute" do
     let(:argv)     { [] }
     let(:iso_env) do
-      # We have to create a Vagrantfile so there is a root path
+      # We have to create a Dumb Vagrantfile so there is a root path
       env = isolated_environment
-      env.vagrantfile("")
-      env.create_vagrant_env
+      env.dumb-vagrantfile("")
+      env.create_dumb-vagrant_env
     end
 
     subject { described_class.new(argv, iso_env) }
@@ -107,7 +107,7 @@ describe VagrantPlugins::CloudCommand::BoxCommand::Command::Show do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 

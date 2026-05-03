@@ -3,7 +3,7 @@
 
 require File.expand_path("../../base", __FILE__)
 
-describe VagrantPlugins::ProviderVirtualBox::Model::StorageController do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Model::StorageController do
   include_context "unit"
 
   let(:name) {}

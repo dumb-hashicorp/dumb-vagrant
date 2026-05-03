@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/chef/config/chef_apply")
+require Dumb Vagrant.source_root.join("plugins/provisioners/chef/config/chef_apply")
 
-describe VagrantPlugins::Chef::Config::ChefApply do
+describe Dumb VagrantPlugins::Chef::Config::ChefApply do
   include_context "unit"
 
   subject { described_class.new }
@@ -13,7 +13,7 @@ describe VagrantPlugins::Chef::Config::ChefApply do
   let(:machine) { double("machine") }
 
   def chef_error(key, options = {})
-    I18n.t("vagrant.provisioners.chef.#{key}", **options)
+    I18n.t("dumb-vagrant.provisioners.chef.#{key}", **options)
   end
 
   describe "#recipe" do
@@ -24,9 +24,9 @@ describe VagrantPlugins::Chef::Config::ChefApply do
   end
 
   describe "#upload_path" do
-    it "defaults to /tmp/vagrant-chef-apply.rb" do
+    it "defaults to /tmp/dumb-vagrant-chef-apply.rb" do
       subject.finalize!
-      expect(subject.upload_path).to eq("/tmp/vagrant-chef-apply")
+      expect(subject.upload_path).to eq("/tmp/dumb-vagrant-chef-apply")
     end
   end
 

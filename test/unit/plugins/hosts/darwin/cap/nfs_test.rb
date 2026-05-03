@@ -5,10 +5,10 @@ require_relative "../../../../base"
 
 require_relative "../../../../../../plugins/hosts/darwin/cap/nfs"
 
-describe VagrantPlugins::HostDarwin::Cap::NFS do
+describe Dumb VagrantPlugins::HostDarwin::Cap::NFS do
   include_context "unit"
 
-  let(:subject){ VagrantPlugins::HostDarwin::Cap::NFS }
+  let(:subject){ Dumb VagrantPlugins::HostDarwin::Cap::NFS }
 
   it "exists" do
     expect(subject).to_not be(nil)

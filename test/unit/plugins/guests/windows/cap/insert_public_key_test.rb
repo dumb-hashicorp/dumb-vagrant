@@ -5,19 +5,19 @@ require "tempfile"
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/communicators/winssh/communicator"
 
-describe "VagrantPlugins::GuestWindows::Cap::InsertPublicKey" do
+describe "Dumb VagrantPlugins::GuestWindows::Cap::InsertPublicKey" do
   let(:caps) do
-    VagrantPlugins::GuestWindows::Plugin
+    Dumb VagrantPlugins::GuestWindows::Plugin
       .components
       .guest_capabilities[:windows]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:auth_keys_check_result){ 1 }
 
   before do
-    @tempfile = Tempfile.new("vagrant-test")
+    @tempfile = Tempfile.new("dumb-vagrant-test")
     allow(Tempfile).to receive(:new).and_return(@tempfile)
     allow(comm).to receive(:is_a?).and_return(true)
     allow(machine).to receive(:communicate).and_return(comm)
@@ -72,7 +72,7 @@ describe "VagrantPlugins::GuestWindows::Cap::InsertPublicKey" do
       end
 
       it "should raise an error" do
-        expect{ cap.insert_public_key(machine, "ssh-rsa ...") }.to raise_error(VagrantPlugins::GuestWindows::Errors::PublicKeyDirectoryFailure)
+        expect{ cap.insert_public_key(machine, "ssh-rsa ...") }.to raise_error(Dumb VagrantPlugins::GuestWindows::Errors::PublicKeyDirectoryFailure)
       end
     end
   end

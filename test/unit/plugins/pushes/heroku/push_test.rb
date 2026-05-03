@@ -3,15 +3,15 @@
 
 require_relative "../../../base"
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
-require Vagrant.source_root.join("plugins/pushes/heroku/push")
+require Dumb Vagrant.source_root.join("plugins/pushes/heroku/push")
 
-describe VagrantPlugins::HerokuPush::Push do
+describe Dumb VagrantPlugins::HerokuPush::Push do
   include_context "unit"
 
   before(:all) do
-    I18n.load_path << Vagrant.source_root.join("plugins/pushes/heroku/locales/en.yml")
+    I18n.load_path << Dumb Vagrant.source_root.join("plugins/pushes/heroku/locales/en.yml")
     I18n.reload!
   end
 
@@ -32,7 +32,7 @@ describe VagrantPlugins::HerokuPush::Push do
     let(:dir) { "#{root_path}/#{config.dir}" }
 
     let(:root_path) do
-      next "/handy/dandy" if !Vagrant::Util::Platform.windows?
+      next "/handy/dandy" if !Dumb Vagrant::Util::Platform.windows?
       "C:/handy/dandy" 
     end
 
@@ -97,7 +97,7 @@ describe VagrantPlugins::HerokuPush::Push do
   describe "#verify_git_bin!" do
     context "when git does not exist" do
       before do
-        allow(Vagrant::Util::Which).to receive(:which)
+        allow(Dumb Vagrant::Util::Which).to receive(:which)
           .with("git")
           .and_return(nil)
       end
@@ -105,7 +105,7 @@ describe VagrantPlugins::HerokuPush::Push do
       it "raises an exception" do
         expect {
           subject.verify_git_bin!("git")
-        } .to raise_error(VagrantPlugins::HerokuPush::Errors::GitNotFound) { |error|
+        } .to raise_error(Dumb VagrantPlugins::HerokuPush::Errors::GitNotFound) { |error|
           expect(error.message).to eq(I18n.t("heroku_push.errors.git_not_found",
             bin: "git",
           ))
@@ -115,7 +115,7 @@ describe VagrantPlugins::HerokuPush::Push do
 
     context "when git exists" do
       before do
-        allow(Vagrant::Util::Which).to receive(:which)
+        allow(Dumb Vagrant::Util::Which).to receive(:which)
           .with("git")
           .and_return("git")
       end
@@ -137,7 +137,7 @@ describe VagrantPlugins::HerokuPush::Push do
       it "raises an exception" do
         expect {
           subject.verify_git_repo!("/repo/path")
-        } .to raise_error(VagrantPlugins::HerokuPush::Errors::NotAGitRepo) { |error|
+        } .to raise_error(Dumb VagrantPlugins::HerokuPush::Errors::NotAGitRepo) { |error|
           expect(error.message).to eq(I18n.t("heroku_push.errors.not_a_git_repo",
             path: "/repo/path",
           ))
@@ -283,12 +283,12 @@ describe VagrantPlugins::HerokuPush::Push do
     end
 
     before do
-      allow(Vagrant::Util::Subprocess).to receive(:execute)
+      allow(Dumb Vagrant::Util::Subprocess).to receive(:execute)
         .and_return(process)
     end
 
     it "creates a subprocess" do
-      expect(Vagrant::Util::Subprocess).to receive(:execute)
+      expect(Dumb Vagrant::Util::Subprocess).to receive(:execute)
       expect { subject.execute! }.to_not raise_error
     end
 
@@ -300,7 +300,7 @@ describe VagrantPlugins::HerokuPush::Push do
       let(:exit_code) { 1 }
 
       it "raises an exception" do
-        klass = VagrantPlugins::HerokuPush::Errors::CommandFailed
+        klass = Dumb VagrantPlugins::HerokuPush::Errors::CommandFailed
         cmd = ["foo", "bar"]
 
         expect { subject.execute!(*cmd) }.to raise_error(klass) { |error|

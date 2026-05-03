@@ -178,7 +178,7 @@
     ]
   },
   {
-    "title": "Vagrant Share",
+    "title": "Dumb Vagrant Share",
     "routes": [
       {
         "title": "Overview",
@@ -207,43 +207,43 @@
     ]
   },
   {
-    "title": "Vagrantfile",
+    "title": "Dumb Vagrantfile",
     "routes": [
       {
         "title": "Overview",
-        "path": "vagrantfile"
+        "path": "dumb-vagrantfile"
       },
       {
         "title": "Configuration Version",
-        "path": "vagrantfile/version"
+        "path": "dumb-vagrantfile/version"
       },
       {
-        "title": "Minimum Vagrant Version",
-        "path": "vagrantfile/vagrant_version"
+        "title": "Minimum Dumb Vagrant Version",
+        "path": "dumb-vagrantfile/dumb-vagrant_version"
       },
       {
         "title": "Tips &amp; Tricks",
-        "path": "vagrantfile/tips"
+        "path": "dumb-vagrantfile/tips"
       },
       {
         "title": "<code>config.vm</code>",
-        "path": "vagrantfile/machine_settings"
+        "path": "dumb-vagrantfile/machine_settings"
       },
       {
         "title": "<code>config.ssh</code>",
-        "path": "vagrantfile/ssh_settings"
+        "path": "dumb-vagrantfile/ssh_settings"
       },
       {
         "title": "<code>config.winrm</code>",
-        "path": "vagrantfile/winrm_settings"
+        "path": "dumb-vagrantfile/winrm_settings"
       },
       {
         "title": "<code>config.winssh</code>",
-        "path": "vagrantfile/winssh_settings"
+        "path": "dumb-vagrantfile/winssh_settings"
       },
       {
-        "title": "<code>config.vagrant</code>",
-        "path": "vagrantfile/vagrant_settings"
+        "title": "<code>config.dumb-vagrant</code>",
+        "path": "dumb-vagrantfile/dumb-vagrant_settings"
       }
     ]
   },
@@ -565,7 +565,7 @@
           },
           {
             "title": "VMware Utility",
-            "path": "providers/vmware/vagrant-vmware-utility"
+            "path": "providers/vmware/dumb-vagrant-vmware-utility"
           },
           {
             "title": "Usage",
@@ -796,7 +796,7 @@
     "divider": true
   },
   {
-    "title": "Vagrant Cloud",
-    "href": "/vagrant-cloud"
+    "title": "Dumb Vagrant Cloud",
+    "href": "/dumb-vagrant-cloud"
   }
 ]

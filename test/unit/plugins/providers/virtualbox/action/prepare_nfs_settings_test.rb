@@ -3,17 +3,17 @@
 
 require_relative "../base"
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
-describe VagrantPlugins::ProviderVirtualBox::Action::PrepareNFSSettings do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Action::PrepareNFSSettings do
   include_context "unit"
   include_context "virtualbox"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) do
@@ -59,7 +59,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::PrepareNFSSettings do
 
     before do
       # We can't be on Windows, because NFS gets disabled on Windows
-      allow(Vagrant::Util::Platform).to receive(:windows?).and_return(false)
+      allow(Dumb Vagrant::Util::Platform).to receive(:windows?).and_return(false)
 
       env[:machine].config.vm.synced_folder("/host/path", "/guest/path", type: "nfs")
       env[:machine].config.finalize!
@@ -95,7 +95,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::PrepareNFSSettings do
         }
 
         it "raises an error when the machine IP is not within host interface range" do
-          expect{ subject.call(env) }.to raise_error(Vagrant::Errors::NFSNoHostonlyNetwork)
+          expect{ subject.call(env) }.to raise_error(Dumb Vagrant::Errors::NFSNoHostonlyNetwork)
         end
       end
     end
@@ -111,12 +111,12 @@ describe VagrantPlugins::ProviderVirtualBox::Action::PrepareNFSSettings do
       allow(driver).to receive(:read_network_interfaces) {{}}
 
       expect { subject.call(env) }.
-        to raise_error(Vagrant::Errors::NFSNoHostonlyNetwork)
+        to raise_error(Dumb Vagrant::Errors::NFSNoHostonlyNetwork)
     end
 
     it "retries through guest property not found errors" do
       raise_then_return = [
-        lambda { raise Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: 'stub' },
+        lambda { raise Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: 'stub' },
         lambda { "2.3.4.5" }
       ]
       allow(driver).to receive(:read_guest_ip) { raise_then_return.shift.call }
@@ -129,18 +129,18 @@ describe VagrantPlugins::ProviderVirtualBox::Action::PrepareNFSSettings do
 
     it "raises an error informing the user of a bug when the guest IP cannot be found" do
       allow(driver).to receive(:read_guest_ip) {
-        raise Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: 'stub'
+        raise Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: 'stub'
       }
 
       expect { subject.call(env) }.
-        to raise_error(Vagrant::Errors::NFSNoGuestIP)
+        to raise_error(Dumb Vagrant::Errors::NFSNoGuestIP)
     end
 
     it "allows statically configured guest IPs to work for NFS, even when guest property would fail" do
       env[:machine].config.vm.network :private_network, ip: "11.12.13.14"
 
       allow(driver).to receive(:read_guest_ip) {
-        raise Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: "stub"
+        raise Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: "stub"
       }
 
       subject.call(env)

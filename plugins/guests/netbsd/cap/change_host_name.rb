@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestNetBSD
     module Cap
       class ChangeHostName
         def self.change_host_name(machine, name)
           if !machine.communicate.test("hostname -s | grep '^#{name}$'")
             machine.communicate.sudo(<<CMDS, {shell: "sh"})
-sed -e 's/^hostname=.*$/hostname=#{name}/' /etc/rc.conf > /tmp/rc.conf.vagrant_changehostname_#{name} &&
-mv /tmp/rc.conf.vagrant_changehostname_#{name} /etc/rc.conf &&
+sed -e 's/^hostname=.*$/hostname=#{name}/' /etc/rc.conf > /tmp/rc.conf.dumb-vagrant_changehostname_#{name} &&
+mv /tmp/rc.conf.dumb-vagrant_changehostname_#{name} /etc/rc.conf &&
 hostname #{name}
 CMDS
           end

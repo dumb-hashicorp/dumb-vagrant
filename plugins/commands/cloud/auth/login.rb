@@ -3,33 +3,33 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module AuthCommand
       module Command
-        class Login < Vagrant.plugin("2", :command)
+        class Login < Dumb Vagrant.plugin("2", :command)
           include Util
 
           def execute
             options = {}
 
             opts = OptionParser.new do |o|
-              o.banner = "Usage: vagrant cloud auth login [options]"
+              o.banner = "Usage: dumb-vagrant cloud auth login [options]"
               o.separator ""
               o.separator "Options:"
               o.separator ""
               o.on("-c", "--check", "Checks if currently logged in") do |c|
                 options[:check] = c
               end
-              o.on("-d", "--description DESCRIPTION", String, "Set description for the Vagrant Cloud token") do |d|
+              o.on("-d", "--description DESCRIPTION", String, "Set description for the Dumb Vagrant Cloud token") do |d|
                 options[:description] = d
               end
 
-              o.on("-t", "--token TOKEN", String, "Set the Vagrant Cloud token") do |t|
+              o.on("-t", "--token TOKEN", String, "Set the Dumb Vagrant Cloud token") do |t|
                 options[:token] = t
               end
 
-              o.on("-u", "--username USERNAME_OR_EMAIL", String, "Vagrant Cloud username or email address") do |l|
+              o.on("-u", "--username USERNAME_OR_EMAIL", String, "Dumb Vagrant Cloud username or email address") do |l|
                 options[:login] = l
               end
             end
@@ -38,7 +38,7 @@ module VagrantPlugins
             argv = parse_options(opts)
             return if !argv
             if !argv.empty?
-              raise Vagrant::Errors::CLIInvalidUsage,
+              raise Dumb Vagrant::Errors::CLIInvalidUsage,
                 help: opts.help.chomp
             end
 

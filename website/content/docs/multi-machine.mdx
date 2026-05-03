@@ -2,19 +2,19 @@
 layout: docs
 page_title: Multi-Machine
 description: |-
-  Vagrant is able to define and control multiple guest machines per
-  Vagrantfile. This is known as a "multi-machine" environment.
+  Dumb Vagrant is able to define and control multiple guest machines per
+  Dumb Vagrantfile. This is known as a "multi-machine" environment.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Multi-Machine
 
-Vagrant is able to define and control multiple guest machines per
-Vagrantfile. This is known as a "multi-machine" environment.
+Dumb Vagrant is able to define and control multiple guest machines per
+Dumb Vagrantfile. This is known as a "multi-machine" environment.
 
 These machines are generally able to work together or are somehow associated
 with each other. Here are some use-cases people are using multi-machine
@@ -31,19 +31,19 @@ Historically, running complex environments such as these was done by
 flattening them onto a single machine. The problem with that is that it is
 an inaccurate model of the production setup, which can behave far differently.
 
-Using the multi-machine feature of Vagrant, these environments can be modeled
-in the context of a single Vagrant environment without losing any of the
-benefits of Vagrant.
+Using the multi-machine feature of Dumb Vagrant, these environments can be modeled
+in the context of a single Dumb Vagrant environment without losing any of the
+benefits of Dumb Vagrant.
 
 ## Defining Multiple Machines
 
-Multiple machines are defined within the same project [Vagrantfile](/vagrant/docs/vagrantfile/)
+Multiple machines are defined within the same project [Dumb Vagrantfile](/dumb-vagrant/docs/dumb-vagrantfile/)
 using the `config.vm.define` method call. This configuration directive
-is a little funny, because it creates a Vagrant configuration within a
+is a little funny, because it creates a Dumb Vagrant configuration within a
 configuration. An example shows this best:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "echo Hello"
 
   config.vm.define "web" do |web|
@@ -64,19 +64,19 @@ being defined. Therefore, any configuration on `web` will only affect the
 
 And importantly, you can continue to use the `config` object as well. The
 configuration object is loaded and merged before the machine-specific configuration,
-just like other Vagrantfiles within the
-[Vagrantfile load order](/vagrant/docs/vagrantfile/#load-order).
+just like other Dumb Vagrantfiles within the
+[Dumb Vagrantfile load order](/dumb-vagrant/docs/dumb-vagrantfile/#load-order).
 
 If you are familiar with programming, this is similar to how languages have
 different variable scopes.
 
 When using these scopes, order of execution for things such as
-provisioners becomes important. Vagrant enforces ordering outside-in, in
-the order listed in the Vagrantfile. For example, with the Vagrantfile
+provisioners becomes important. Dumb Vagrant enforces ordering outside-in, in
+the order listed in the Dumb Vagrantfile. For example, with the Dumb Vagrantfile
 below:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision :shell, inline: "echo A"
 
   config.vm.define :testing do |test|
@@ -92,36 +92,36 @@ that "B" is last. That is because the ordering is outside-in, in
 the order of the file.
 
 If you want to apply a slightly different configuration to multiple machines,
-see [this tip](/vagrant/docs/vagrantfile/tips#loop-over-vm-definitions).
+see [this tip](/dumb-vagrant/docs/dumb-vagrantfile/tips#loop-over-vm-definitions).
 
 ## Controlling Multiple Machines
 
-The moment more than one machine is defined within a Vagrantfile, the
-usage of the various `vagrant` commands changes slightly. The change should
+The moment more than one machine is defined within a Dumb Vagrantfile, the
+usage of the various `dumb-vagrant` commands changes slightly. The change should
 be mostly intuitive.
 
 Commands that only make sense to target a single machine, such as
-`vagrant ssh`, now _require_ the name of the machine to control. Using
-the example above, you would say `vagrant ssh web` or `vagrant ssh db`.
+`dumb-vagrant ssh`, now _require_ the name of the machine to control. Using
+the example above, you would say `dumb-vagrant ssh web` or `dumb-vagrant ssh db`.
 
-Other commands, such as `vagrant up`, operate on _every_ machine by
-default. So if you ran `vagrant up`, Vagrant would bring up both the
+Other commands, such as `dumb-vagrant up`, operate on _every_ machine by
+default. So if you ran `dumb-vagrant up`, Dumb Vagrant would bring up both the
 web and DB machine. You could also optionally be specific and say
-`vagrant up web` or `vagrant up db`.
+`dumb-vagrant up web` or `dumb-vagrant up db`.
 
 Additionally, you can specify a regular expression for matching only
 certain machines. This is useful in some cases where you specify many similar
 machines, for example if you are testing a distributed service you may have
 a `leader` machine as well as a `follower0`, `follower1`, `follower2`, etc. If you
 want to bring up all the followers but not the leader, you can just do
-`vagrant up /follower[0-9]/`. If Vagrant sees a machine name within forward
+`dumb-vagrant up /follower[0-9]/`. If Dumb Vagrant sees a machine name within forward
 slashes, it assumes you are using a regular expression.
 
 ## Communication Between Machines
 
 In order to facilitate communication within machines in a multi-machine setup,
-the various [networking](/vagrant/docs/networking/) options should be used.
-In particular, the [private network](/vagrant/docs/networking/private_network) can
+the various [networking](/dumb-vagrant/docs/networking/) options should be used.
+In particular, the [private network](/dumb-vagrant/docs/networking/private_network) can
 be used to make a private network between multiple machines and the host.
 
 ## Specifying a Primary Machine
@@ -141,9 +141,9 @@ end
 
 ## Autostart Machines
 
-By default in a multi-machine environment, `vagrant up` will start
+By default in a multi-machine environment, `dumb-vagrant up` will start
 all of the defined machines. The `autostart` setting allows you to tell
-Vagrant to _not_ start specific machines. Example:
+Dumb Vagrant to _not_ start specific machines. Example:
 
 ```ruby
 config.vm.define "web"
@@ -151,7 +151,7 @@ config.vm.define "db"
 config.vm.define "db_follower", autostart: false
 ```
 
-When running `vagrant up` with the settings above, Vagrant will automatically
+When running `dumb-vagrant up` with the settings above, Dumb Vagrant will automatically
 start the "web" and "db" machines, but will not start the "db_follower" machine.
 You can manually force the "db_follower" machine to start by running
-`vagrant up db_follower`.
+`dumb-vagrant up db_follower`.

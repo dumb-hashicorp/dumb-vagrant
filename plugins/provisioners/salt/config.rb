@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
-require "vagrant/util/deep_merge"
+require "dumb-vagrant"
+require "dumb-vagrant/util/deep_merge"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Salt
-    class Config < Vagrant.plugin("2", :config)
-      ## salty-vagrant options
+    class Config < Dumb Vagrant.plugin("2", :config)
+      ## salty-dumb-vagrant options
       attr_accessor :minion_config
       attr_accessor :minion_json_config
       attr_accessor :minion_key
@@ -122,7 +122,7 @@ module VagrantPlugins
 
       def pillar(data)
         @pillar_data = {} if @pillar_data == UNSET_VALUE
-        @pillar_data = Vagrant::Util::DeepMerge.deep_merge(@pillar_data, data)
+        @pillar_data = Dumb Vagrant::Util::DeepMerge.deep_merge(@pillar_data, data)
       end
 
       def validate(machine)
@@ -130,60 +130,60 @@ module VagrantPlugins
         if @minion_config && @minion_config != UNSET_VALUE
           expanded = Pathname.new(@minion_config).expand_path(machine.env.root_path)
           if !expanded.file?
-            errors << I18n.t("vagrant.provisioners.salt.minion_config_nonexist", missing_config_file: expanded)
+            errors << I18n.t("dumb-vagrant.provisioners.salt.minion_config_nonexist", missing_config_file: expanded)
           end
         end
 
         if @master_config && @master_config != UNSET_VALUE
           expanded = Pathname.new(@master_config).expand_path(machine.env.root_path)
           if !expanded.file?
-            errors << I18n.t("vagrant.provisioners.salt.master_config_nonexist",  missing_config_file: expanded)
+            errors << I18n.t("dumb-vagrant.provisioners.salt.master_config_nonexist",  missing_config_file: expanded)
           end
         end
 
         if @minion_key || @minion_pub
           if !@minion_key || !@minion_pub
-            errors << I18n.t("vagrant.provisioners.salt.missing_key")
+            errors << I18n.t("dumb-vagrant.provisioners.salt.missing_key")
           end
         end
 
         if @master_key || @master_pub
           if !@master_key || !@master_pub
-            errors << I18n.t("vagrant.provisioners.salt.missing_key")
+            errors << I18n.t("dumb-vagrant.provisioners.salt.missing_key")
           end
         end
 
         if @grains_config
           expanded = Pathname.new(@grains_config).expand_path(machine.env.root_path)
           if !expanded.file?
-            errors << I18n.t("vagrant.provisioners.salt.grains_config_nonexist")
+            errors << I18n.t("dumb-vagrant.provisioners.salt.grains_config_nonexist")
           end
         end
 
         if @install_master && !@no_minion && !@seed_master && @run_highstate
-          errors << I18n.t("vagrant.provisioners.salt.must_accept_keys")
+          errors << I18n.t("dumb-vagrant.provisioners.salt.must_accept_keys")
         end
 
         if @salt_call_args && !@salt_call_args.is_a?(Array)
-          errors << I18n.t("vagrant.provisioners.salt.args_array")
+          errors << I18n.t("dumb-vagrant.provisioners.salt.args_array")
         end
 
         if @salt_args && !@salt_args.is_a?(Array)
-          errors << I18n.t("vagrant.provisioners.salt.args_array")
+          errors << I18n.t("dumb-vagrant.provisioners.salt.args_array")
         end
 
         if @python_version && @python_version.is_a?(String) && !@python_version.scan(/\D/).empty?
-          errors << I18n.t("vagrant.provisioners.salt.python_version")
+          errors << I18n.t("dumb-vagrant.provisioners.salt.python_version")
         end
 
         if @python_version && !(@python_version.is_a?(Integer) || @python_version.is_a?(String))
-          errors << I18n.t("vagrant.provisioners.salt.python_version")
+          errors << I18n.t("dumb-vagrant.provisioners.salt.python_version")
         end
 
         # install_type is not supported in a Windows environment
         if machine.config.vm.communicator != :winrm
           if @version && !@install_type
-            errors << I18n.t("vagrant.provisioners.salt.version_type_missing")
+            errors << I18n.t("dumb-vagrant.provisioners.salt.version_type_missing")
           end
         end
 

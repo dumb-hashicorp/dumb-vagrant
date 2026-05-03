@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/communicators/none/communicator")
+require Dumb Vagrant.source_root.join("plugins/communicators/none/communicator")
 
-describe VagrantPlugins::CommunicatorNone::Communicator do
+describe Dumb VagrantPlugins::CommunicatorNone::Communicator do
   include_context "unit"
 
   let(:machine) { double(:machine) }

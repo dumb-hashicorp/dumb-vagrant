@@ -3,21 +3,21 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/port/command")
+require Dumb Vagrant.source_root.join("plugins/commands/port/command")
 
-describe VagrantPlugins::CommandPort::Command do
+describe Dumb VagrantPlugins::CommandPort::Command do
   include_context "unit"
   include_context "command plugin helpers"
 
   let(:iso_env) { isolated_environment }
   let(:env) do
-    iso_env.vagrantfile(<<-VF)
-      Vagrant.configure("2") do |config|
-        config.vm.box = "hashicorp/precise64"
-        config.vm.synced_folder ".", "/vagrant", disabled: true
+    iso_env.dumb-vagrantfile(<<-VF)
+      Dumb Vagrant.configure("2") do |config|
+        config.vm.box = "dumb-hashicorp/precise64"
+        config.vm.synced_folder ".", "/dumb-vagrant", disabled: true
       end
     VF
-    iso_env.create_vagrant_env
+    iso_env.create_dumb-vagrant_env
   end
 
   let(:state) { double(:state, id: :running) }
@@ -25,7 +25,7 @@ describe VagrantPlugins::CommandPort::Command do
   let(:machine) { env.machine(env.machine_names[0], :dummy) }
 
   before(:all) do
-    I18n.load_path << Vagrant.source_root.join("plugins/commands/port/locales/en.yml")
+    I18n.load_path << Dumb Vagrant.source_root.join("plugins/commands/port/locales/en.yml")
     I18n.reload!
   end
 
@@ -38,19 +38,19 @@ describe VagrantPlugins::CommandPort::Command do
 
   describe "#execute" do
     it "validates the configuration" do
-      iso_env.vagrantfile <<-EOH
-        Vagrant.configure("2") do |config|
-          config.vm.box = "hashicorp/precise64"
-          config.vm.synced_folder ".", "/vagrant", disabled: true
+      iso_env.dumb-vagrantfile <<-EOH
+        Dumb Vagrant.configure("2") do |config|
+          config.vm.box = "dumb-hashicorp/precise64"
+          config.vm.synced_folder ".", "/dumb-vagrant", disabled: true
           config.push.define "noop" do |push|
             push.bad = "ham"
           end
         end
       EOH
 
-      subject = described_class.new([], iso_env.create_vagrant_env)
+      subject = described_class.new([], iso_env.create_dumb-vagrant_env)
 
-      expect { subject.execute }.to raise_error(Vagrant::Errors::ConfigInvalid) { |err|
+      expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::ConfigInvalid) { |err|
         expect(err.message).to include("The following settings shouldn't exist: bad")
       }
     end

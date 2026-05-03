@@ -5,11 +5,11 @@ require_relative "../../../../base"
 require_relative "../../../../../../plugins/hosts/darwin/cap/path"
 require_relative "../../../../../../plugins/hosts/darwin/cap/version"
 
-describe VagrantPlugins::HostDarwin::Cap::Path do
+describe Dumb VagrantPlugins::HostDarwin::Cap::Path do
   include_context "unit"
 
   let(:caps) do
-    VagrantPlugins::HostDarwin::Plugin
+    Dumb VagrantPlugins::HostDarwin::Plugin
       .components
       .host_capabilities[:darwin]
   end
@@ -17,15 +17,15 @@ describe VagrantPlugins::HostDarwin::Cap::Path do
   let(:host) { @host }
   let(:hosts) {
     {
-      darwin: [VagrantPlugins::HostDarwin::Host, :bsd]
+      darwin: [Dumb VagrantPlugins::HostDarwin::Host, :bsd]
     }
   }
 
   let(:env) do
     ienv = isolated_environment
-    ienv.vagrantfile("")
-    env = ienv.create_vagrant_env
-    @host = Vagrant::Host.new(
+    ienv.dumb-vagrantfile("")
+    env = ienv.create_dumb-vagrant_env
+    @host = Dumb Vagrant::Host.new(
       :darwin,
       hosts,
       {darwin: caps},
@@ -37,11 +37,11 @@ describe VagrantPlugins::HostDarwin::Cap::Path do
 
   describe ".resolve_host_path" do
     let(:cap) { caps.get(:resolve_host_path) }
-    let(:path) { "/test/vagrant/path" }
+    let(:path) { "/test/dumb-vagrant/path" }
     let(:firmlink_map) { {} }
     let(:macos_version) { Gem::Version.new("10.15.1") }
     let(:result) {
-      Vagrant::Util::Subprocess::Result.new(0, macos_version, "")
+      Dumb Vagrant::Util::Subprocess::Result.new(0, macos_version, "")
     }
 
     before do
@@ -50,7 +50,7 @@ describe VagrantPlugins::HostDarwin::Cap::Path do
       # allow(host).to receive(:capability).
       #   with(:version).
       #   and_return(macos_version)
-      allow(Vagrant::Util::Subprocess).to receive(:execute).
+      allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).
         with("sw_vers", "-productVersion").
         and_return(result)
       allow(described_class).to receive(:firmlink_map).

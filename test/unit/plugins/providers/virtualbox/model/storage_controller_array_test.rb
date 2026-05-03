@@ -3,7 +3,7 @@
 
 require File.expand_path("../../base", __FILE__)
 
-describe VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray do
   include_context "unit"
 
   let(:controller1) { double("controller1", name: "IDE Controller", supported?: true, boot_priority: 1) }
@@ -22,7 +22,7 @@ describe VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray do
 
     it "raises an exception if a matching storage controller can't be found" do
       expect { subject.get_controller(name: "Foo Controller") }.
-        to raise_error(Vagrant::Errors::VirtualBoxDisksControllerNotFound)
+        to raise_error(Dumb Vagrant::Errors::VirtualBoxDisksControllerNotFound)
     end
   end
 
@@ -52,7 +52,7 @@ describe VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray do
         allow(controller2).to receive(:supported?).and_return(false)
 
         expect { subject.get_primary_controller }.
-          to raise_error(Vagrant::Errors::VirtualBoxDisksNoSupportedControllers)
+          to raise_error(Dumb Vagrant::Errors::VirtualBoxDisksNoSupportedControllers)
       end
     end
   end
@@ -88,7 +88,7 @@ describe VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray do
 
     it "raises an exception if no attachment exists at port 0, device 0" do
       allow(controller2).to receive(:get_attachment).with(port: "0", device: "0").and_return(nil)
-      expect { subject.get_primary_attachment }.to raise_error(Vagrant::Errors::VirtualBoxDisksPrimaryNotFound)
+      expect { subject.get_primary_attachment }.to raise_error(Dumb Vagrant::Errors::VirtualBoxDisksPrimaryNotFound)
     end
   end
 
@@ -107,7 +107,7 @@ describe VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray do
       it "raises an exception if the controller is unsupported" do
         allow(controller).to receive(:supported?).and_return(false)
 
-        expect { subject.get_dvd_controller }.to raise_error(Vagrant::Errors::VirtualBoxDisksNoSupportedControllers)
+        expect { subject.get_dvd_controller }.to raise_error(Dumb Vagrant::Errors::VirtualBoxDisksNoSupportedControllers)
       end
     end
 
@@ -128,7 +128,7 @@ describe VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray do
         allow(controller1).to receive(:supported?).and_return(false)
         allow(controller2).to receive(:supported?).and_return(false)
 
-        expect { subject.get_dvd_controller }.to raise_error(Vagrant::Errors::VirtualBoxDisksNoSupportedControllers)
+        expect { subject.get_dvd_controller }.to raise_error(Dumb Vagrant::Errors::VirtualBoxDisksNoSupportedControllers)
       end
     end
   end

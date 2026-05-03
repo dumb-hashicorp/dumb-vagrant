@@ -3,23 +3,23 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestLinux::Cap::MountVirtualBoxSharedFolder" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::MountVirtualBoxSharedFolder" do
   let(:caps) do
-    VagrantPlugins::GuestLinux::Plugin
+    Dumb VagrantPlugins::GuestLinux::Plugin
       .components
       .guest_capabilities[:linux]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
-  let(:mount_owner){ "vagrant" }
-  let(:mount_group){ "vagrant" }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:mount_owner){ "dumb-vagrant" }
+  let(:mount_group){ "dumb-vagrant" }
   let(:mount_uid){ "1000" }
   let(:mount_gid){ "1000" }
-  let(:mount_name){ "vagrant" }
-  let(:mount_guest_path){ "/vagrant" }
+  let(:mount_name){ "dumb-vagrant" }
+  let(:mount_guest_path){ "/dumb-vagrant" }
   let(:folder_options) do
-    Vagrant::Plugin::V2::SyncedFolder::Collection[
+    Dumb Vagrant::Plugin::V2::SyncedFolder::Collection[
       {
         owner: mount_owner,
         group: mount_group,

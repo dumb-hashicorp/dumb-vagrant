@@ -4,9 +4,9 @@
 require_relative "../../../base"
 require "fake_ftp"
 
-require Vagrant.source_root.join("plugins/pushes/ftp/push")
+require Dumb Vagrant.source_root.join("plugins/pushes/ftp/push")
 
-describe VagrantPlugins::FTPPush::Push do
+describe Dumb VagrantPlugins::FTPPush::Push do
   include_context "unit"
 
   let(:env) { isolated_environment }
@@ -20,7 +20,7 @@ describe VagrantPlugins::FTPPush::Push do
       destination: "/var/www/site",
     )
   end
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
 
   subject { described_class.new(env, config) }
 
@@ -40,7 +40,7 @@ describe VagrantPlugins::FTPPush::Push do
       end
       @server.start
 
-      @dir = Dir.mktmpdir("vagrant-ftp-push")
+      @dir = Dir.mktmpdir("dumb-vagrant-ftp-push")
       FileUtils.touch("#{@dir}/.hidden.rb")
       FileUtils.touch("#{@dir}/application.rb")
       FileUtils.touch("#{@dir}/config.rb")
@@ -78,12 +78,12 @@ describe VagrantPlugins::FTPPush::Push do
 
     it "raises informative exception when too many files to process" do
       expect(subject).to receive(:all_files).and_raise(SystemStackError)
-      expect{ subject.push }.to raise_error(VagrantPlugins::FTPPush::Errors::TooManyFiles)
+      expect{ subject.push }.to raise_error(Dumb VagrantPlugins::FTPPush::Errors::TooManyFiles)
     end
 
-    context "when VAGRANT_CWD is set to something relative" do
+    context "when DUMB_VAGRANT_CWD is set to something relative" do
       # this will be the PWD for the test context
-      let(:pwd) { Pathname.new(Dir.mktmpdir("vagrant-ftp-push-pwd")) }
+      let(:pwd) { Pathname.new(Dir.mktmpdir("dumb-vagrant-ftp-push-pwd")) }
 
       before do
         # this path should have a ../ in it since the pwd is another temp dir
@@ -96,7 +96,7 @@ describe VagrantPlugins::FTPPush::Push do
       end
 
       it "properly paths out the files to upload" do
-        Vagrant::Util::SafeChdir.safe_chdir(pwd) do
+        Dumb Vagrant::Util::SafeChdir.safe_chdir(pwd) do
           subject.push
         end
 
@@ -109,10 +109,10 @@ describe VagrantPlugins::FTPPush::Push do
 
   describe "#connect" do
     before do
-      allow_any_instance_of(VagrantPlugins::FTPPush::FTPAdapter)
+      allow_any_instance_of(Dumb VagrantPlugins::FTPPush::FTPAdapter)
         .to receive(:connect)
         .and_yield(:ftp)
-      allow_any_instance_of(VagrantPlugins::FTPPush::SFTPAdapter)
+      allow_any_instance_of(Dumb VagrantPlugins::FTPPush::SFTPAdapter)
         .to receive(:connect)
         .and_yield(:sftp)
     end
@@ -142,7 +142,7 @@ describe VagrantPlugins::FTPPush::Push do
 
   describe "#all_files" do
     before(:all) do
-      @dir = Dir.mktmpdir("vagrant-ftp-push-push-all-files")
+      @dir = Dir.mktmpdir("dumb-vagrant-ftp-push-push-all-files")
 
       FileUtils.touch("#{@dir}/.hidden.rb")
       FileUtils.touch("#{@dir}/application.rb")
@@ -186,7 +186,7 @@ describe VagrantPlugins::FTPPush::Push do
 
   describe "#includes_files" do
     before(:all) do
-      @dir = Dir.mktmpdir("vagrant-ftp-push-includes-files")
+      @dir = Dir.mktmpdir("dumb-vagrant-ftp-push-includes-files")
 
       FileUtils.touch("#{@dir}/.hidden.rb")
       FileUtils.touch("#{@dir}/application.rb")

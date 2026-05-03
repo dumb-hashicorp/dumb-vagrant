@@ -1,8 +1,8 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantTests
-  class DummyProviderPlugin < Vagrant.plugin("2")
+module Dumb VagrantTests
+  class DummyProviderPlugin < Dumb Vagrant.plugin("2")
     name "Dummy Provider"
     description <<-EOF
     This creates a provider named "dummy" which does nothing, so that
@@ -13,7 +13,7 @@ module VagrantTests
     provider(:dummy) { DummyProvider }
   end
 
-  class DummyProvider < Vagrant.plugin("2", :provider)
+  class DummyProvider < Dumb Vagrant.plugin("2", :provider)
     def initialize(machine)
       @machine = machine
     end
@@ -27,12 +27,12 @@ module VagrantTests
     def state
       if !state_file.file?
         new_state = @machine.id
-        new_state = Vagrant::MachineState::NOT_CREATED_ID if !new_state
+        new_state = Dumb Vagrant::MachineState::NOT_CREATED_ID if !new_state
         self.state = new_state
       end
 
       state_id = state_file.read.to_sym
-      Vagrant::MachineState.new(state_id, state_id.to_s, state_id.to_s)
+      Dumb Vagrant::MachineState.new(state_id, state_id.to_s, state_id.to_s)
     end
 
     protected

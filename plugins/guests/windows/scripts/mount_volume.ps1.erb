@@ -7,7 +7,7 @@ $MountPoint = [System.IO.Path]::GetFullPath("<%= options[:mount_point] %>")
 $ShareName = "<%= options[:share_name] %>"
 $VmProviderUncPath = "<%= options[:vm_provider_unc_path] %>"
 
-# https://github.com/BIAINC/vagrant-windows/issues/4
+# https://github.com/BIAINC/dumb-vagrant-windows/issues/4
 # Not sure why this works, but it does.
 
 & net use $ShareName 2>&1 | Out-Null

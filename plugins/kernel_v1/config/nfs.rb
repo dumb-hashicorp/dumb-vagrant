@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V1
-    class NFSConfig < Vagrant.plugin("1", :config)
+    class NFSConfig < Dumb Vagrant.plugin("1", :config)
       attr_accessor :map_uid
       attr_accessor :map_gid
 

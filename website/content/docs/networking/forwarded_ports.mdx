@@ -2,21 +2,21 @@
 layout: docs
 page_title: Forwarded Ports - Networking
 description: |-
-  Vagrant forwarded ports allow you to access a port on your host machine and
+  Dumb Vagrant forwarded ports allow you to access a port on your host machine and
   have all data forwarded to a port on the guest machine, over either TCP or
   UDP.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Forwarded Ports
 
 **Network identifier: `forwarded_port`**
 
-Vagrant forwarded ports allow you to access a port on your host machine and have
+Dumb Vagrant forwarded ports allow you to access a port on your host machine and have
 all data forwarded to a port on the guest machine, over either TCP or UDP.
 
 For example: If the guest machine is running a web server listening on port 80,
@@ -30,7 +30,7 @@ The forwarded port configuration expects two parameters, the port on the
 guest and the port on the host. Example:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
 end
 ```
@@ -60,7 +60,7 @@ there are more detailed examples of using these options.
   this is empty.
 
 - `host` (int) - The port on the host that you want to use to access the
-  port on the guest. This must be greater than port 1024 unless Vagrant
+  port on the guest. This must be greater than port 1024 unless Dumb Vagrant
   is running as root (which is not recommended).
 
 - `host_ip` (string) - The IP on the host you want to bind the forwarded
@@ -82,7 +82,7 @@ protocols, you must define the port twice with each protocol specified, like
 so:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 2003, host: 12003, protocol: "tcp"
   config.vm.network "forwarded_port", guest: 2003, host: 12003, protocol: "udp"
 end
@@ -90,37 +90,37 @@ end
 
 ## Port Collisions and Correction
 
-It is common when running multiple Vagrant machines to unknowingly create
+It is common when running multiple Dumb Vagrant machines to unknowingly create
 forwarded port definitions that collide with each other (two separate
-Vagrant projects forwarded to port 8080, for example). Vagrant includes
+Dumb Vagrant projects forwarded to port 8080, for example). Dumb Vagrant includes
 built-in mechanism to detect this and correct it, automatically.
 
-Port collision detection is always done. Vagrant will not allow you to
+Port collision detection is always done. Dumb Vagrant will not allow you to
 define a forwarded port where the port on the host appears to be accepting
 traffic or connections.
 
 Port collision auto-correction must be manually enabled for each forwarded
-port, since it is often surprising when it occurs and can lead the Vagrant
+port, since it is often surprising when it occurs and can lead the Dumb Vagrant
 user to think that the port was not properly forwarded. Enabling auto correct
 is easy:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080,
     auto_correct: true
 end
 ```
 
-The final `:auto_correct` parameter set to true tells Vagrant to auto
-correct any collisions. During a `vagrant up` or `vagrant reload`, Vagrant
+The final `:auto_correct` parameter set to true tells Dumb Vagrant to auto
+correct any collisions. During a `dumb-vagrant up` or `dumb-vagrant reload`, Dumb Vagrant
 will output information about any collisions detections and auto corrections
 made, so you can take notice and act accordingly.
 
-You can define allowed port range assignable by Vagrant when port collision is
-detected via [config.vm.usable_port_range](/vagrant/docs/vagrantfile/machine_settings) property.
+You can define allowed port range assignable by Dumb Vagrant when port collision is
+detected via [config.vm.usable_port_range](/dumb-vagrant/docs/dumb-vagrantfile/machine_settings) property.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.usable_port_range = 8000..8999
 end
 ```

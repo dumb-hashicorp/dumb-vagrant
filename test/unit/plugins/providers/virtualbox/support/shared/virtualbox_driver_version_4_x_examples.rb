@@ -6,10 +6,10 @@ shared_examples "a version 4.x virtualbox driver" do |options|
     raise ArgumentError, "Need virtualbox context to use these shared examples." if !(defined? vbox_context)
   end
 
-  describe "read_dhcp_servers" do
+  describe "read_ddumb-hcp_servers" do
     before {
       expect(subprocess).to receive(:execute).
-        with("VBoxManage", "list", "dhcpservers", an_instance_of(Hash)).
+        with("VBoxManage", "list", "ddumb-hcpservers", an_instance_of(Hash)).
         and_return(subprocess_result(stdout: output))
     }
 
@@ -17,11 +17,11 @@ shared_examples "a version 4.x virtualbox driver" do |options|
       let(:output) { "" }
 
       it "returns an empty list" do
-        expect(subject.read_dhcp_servers).to eq([])
+        expect(subject.read_ddumb-hcp_servers).to eq([])
       end
     end
 
-    context "with a single dhcp server" do
+    context "with a single ddumb-hcp server" do
       let(:output) {
         <<-OUTPUT.gsub(/^ */, '')
           NetworkName:    HostInterfaceNetworking-vboxnet0
@@ -36,7 +36,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
 
 
       it "returns a list with one entry describing that server" do
-        expect(subject.read_dhcp_servers).to eq([{
+        expect(subject.read_ddumb-hcp_servers).to eq([{
           network_name: 'HostInterfaceNetworking-vboxnet0',
           network:      'vboxnet0',
           ip:           '172.28.128.2',
@@ -47,7 +47,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
       end
     end
 
-    context "with a multiple dhcp servers" do
+    context "with a multiple ddumb-hcp servers" do
       let(:output) {
         <<-OUTPUT.gsub(/^ */, '')
           NetworkName:    HostInterfaceNetworking-vboxnet0
@@ -68,7 +68,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
 
 
       it "returns a list with one entry for each server" do
-        expect(subject.read_dhcp_servers).to eq([
+        expect(subject.read_ddumb-hcp_servers).to eq([
           {network_name: 'HostInterfaceNetworking-vboxnet0', network: 'vboxnet0', ip: '172.28.128.2', netmask: '255.255.255.0', lower: '172.28.128.3', upper: '172.28.128.254'},
           {network_name: 'HostInterfaceNetworking-vboxnet1', network: 'vboxnet1', ip: '10.0.0.2', netmask: '255.255.255.0', lower: '10.0.0.3', upper: '10.0.0.254'},
         ])
@@ -95,7 +95,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
         and_return(subprocess_result(stdout: "No value set!"))
 
       expect { subject.read_guest_property(key) }.
-        to raise_error Vagrant::Errors::VirtualBoxGuestPropertyNotFound
+        to raise_error Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound
     end
   end
 
@@ -120,7 +120,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
         and_return(subprocess_result(stdout: "Value: 0.0.0.0"))
 
       expect { subject.read_guest_ip(1) }.
-        to raise_error Vagrant::Errors::VirtualBoxGuestPropertyNotFound
+        to raise_error Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound
     end
   end
 
@@ -144,7 +144,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
         <<-OUTPUT.gsub(/^ */, '')
           Name:            vboxnet0
           GUID:            786f6276-656e-4074-8000-0a0027000000
-          DHCP:            Disabled
+          DDUMB_HCP:            Disabled
           IPAddress:       172.28.128.1
           NetworkMask:     255.255.255.0
           IPV6Address:
@@ -174,7 +174,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
         <<-OUTPUT.gsub(/^ */, '')
           Name:            vboxnet0
           GUID:            786f6276-656e-4074-8000-0a0027000000
-          DHCP:            Disabled
+          DDUMB_HCP:            Disabled
           IPAddress:       172.28.128.1
           NetworkMask:     255.255.255.0
           IPV6Address:
@@ -186,7 +186,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
 
           Name:            vboxnet1
           GUID:            5764a976-8479-8388-1245-8a0048080840
-          DHCP:            Disabled
+          DDUMB_HCP:            Disabled
           IPAddress:       10.0.0.1
           NetworkMask:     255.255.255.0
           IPV6Address:
@@ -212,7 +212,7 @@ shared_examples "a version 4.x virtualbox driver" do |options|
         <<-OUTPUT.gsub(/^ */, '')
           Name:            vboxnet1
           GUID:            786f6276-656e-4174-8000-0a0027000001
-          DHCP:            Disabled
+          DDUMB_HCP:            Disabled
           IPAddress:       192.168.57.1
           NetworkMask:     255.255.255.0
           IPV6Address:     fde4:8dba:82e1::
@@ -238,13 +238,13 @@ shared_examples "a version 4.x virtualbox driver" do |options|
     end
   end
 
-  describe "remove_dhcp_server" do
-    it "removes the dhcp server with the specified network name" do
+  describe "remove_ddumb-hcp_server" do
+    it "removes the ddumb-hcp server with the specified network name" do
       expect(subprocess).to receive(:execute).
-        with("VBoxManage", "dhcpserver", "remove", "--netname", "HostInterfaceNetworking-vboxnet0", an_instance_of(Hash)).
+        with("VBoxManage", "ddumb-hcpserver", "remove", "--netname", "HostInterfaceNetworking-vboxnet0", an_instance_of(Hash)).
         and_return(subprocess_result(stdout: ''))
 
-      subject.remove_dhcp_server("HostInterfaceNetworking-vboxnet0")
+      subject.remove_ddumb-hcp_server("HostInterfaceNetworking-vboxnet0")
     end
   end
 end

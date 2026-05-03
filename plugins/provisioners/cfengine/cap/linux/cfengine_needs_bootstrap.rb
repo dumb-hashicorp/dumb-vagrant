@@ -3,13 +3,13 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CFEngine
     module Cap
       module Linux
         module CFEngineNeedsBootstrap
           def self.cfengine_needs_bootstrap(machine, config)
-            logger = Log4r::Logger.new("vagrant::plugins::cfengine::cap_linux_cfengine_bootstrap")
+            logger = Log4r::Logger.new("dumb-vagrant::plugins::cfengine::cap_linux_cfengine_bootstrap")
 
             machine.communicate.tap do |comm|
               # We hardcode fixing the permissions on /var/cfengine/ppkeys/, if it exists,

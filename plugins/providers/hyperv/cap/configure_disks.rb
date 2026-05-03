@@ -3,22 +3,22 @@
 
 require "log4r"
 require "fileutils"
-require "vagrant/util/numeric"
-require "vagrant/util/experimental"
+require "dumb-vagrant/util/numeric"
+require "dumb-vagrant/util/experimental"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Cap
       module ConfigureDisks
-        LOGGER = Log4r::Logger.new("vagrant::plugins::hyperv::configure_disks")
+        LOGGER = Log4r::Logger.new("dumb-vagrant::plugins::hyperv::configure_disks")
 
-        # @param [Vagrant::Machine] machine
-        # @param [VagrantPlugins::Kernel_V2::VagrantConfigDisk] defined_disks
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigDisk] defined_disks
         # @return [Hash] configured_disks - A hash of all the current configured disks
         def self.configure_disks(machine, defined_disks)
           return {} if defined_disks.empty?
 
-          machine.ui.info(I18n.t("vagrant.cap.configure_disks.start"))
+          machine.ui.info(I18n.t("dumb-vagrant.cap.configure_disks.start"))
 
           current_disks = machine.provider.driver.list_hdds
 
@@ -30,7 +30,7 @@ module VagrantPlugins
               configured_disks[:disk] << disk_data if !disk_data.empty?
             elsif disk.type == :floppy
               # TODO: Write me
-              machine.ui.info(I18n.t("vagrant.cap.configure_disks.floppy_not_supported", name: disk.name))
+              machine.ui.info(I18n.t("dumb-vagrant.cap.configure_disks.floppy_not_supported", name: disk.name))
             elsif disk.type == :dvd
               disk_data = handle_configure_dvd(machine, disk)
               configured_disks[:dvd] << disk_data if !disk_data.empty?
@@ -42,7 +42,7 @@ module VagrantPlugins
 
         protected
 
-        # @param [Vagrant::Machine] machine - the current machine
+        # @param [Dumb Vagrant::Machine] machine - the current machine
         # @param [Config::Disk] disk - the current disk to configure
         # @param [Array] all_disks - A list of all currently defined disks in VirtualBox
         # @return [Hash] current_disk - Returns the current disk. Returns nil if it doesn't exist
@@ -79,7 +79,7 @@ module VagrantPlugins
 
         # Handles all disk configs of type `:disk`
         #
-        # @param [Vagrant::Machine] machine - the current machine
+        # @param [Dumb Vagrant::Machine] machine - the current machine
         # @param [Config::Disk] disk - the current disk to configure
         # @param [Array] all_disks - A list of all currently defined disks in VirtualBox
         # @return [Hash] - disk_metadata
@@ -147,7 +147,7 @@ module VagrantPlugins
 
         # Check to see if current disk is configured based on defined_disks
         #
-        # @param [Kernel_V2::VagrantConfigDisk] disk_config
+        # @param [Kernel_V2::Dumb VagrantConfigDisk] disk_config
         # @param [Hash] defined_disk
         # @return [Boolean]
         def self.compare_disk_size(machine, disk_config, defined_disk)
@@ -161,7 +161,7 @@ module VagrantPlugins
               # VHDX formats can be shrunk
               return true
             else
-              machine.ui.warn(I18n.t("vagrant.cap.configure_disks.shrink_size_not_supported", name: disk_config.name))
+              machine.ui.warn(I18n.t("dumb-vagrant.cap.configure_disks.shrink_size_not_supported", name: disk_config.name))
               return false
             end
           elsif defined_disk_size < requested_disk_size
@@ -173,10 +173,10 @@ module VagrantPlugins
 
         # Creates and attaches a disk to a machine
         #
-        # @param [Vagrant::Machine] machine
-        # @param [Kernel_V2::VagrantConfigDisk] disk_config
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Kernel_V2::Dumb VagrantConfigDisk] disk_config
         def self.create_disk(machine, disk_config)
-          machine.ui.detail(I18n.t("vagrant.cap.configure_disks.create_disk", name: disk_config.name))
+          machine.ui.detail(I18n.t("dumb-vagrant.cap.configure_disks.create_disk", name: disk_config.name))
           disk_provider_config = {}
 
           if disk_config.provider_config && disk_config.provider_config.key?(:hyperv)
@@ -219,19 +219,19 @@ module VagrantPlugins
         # @return [Hash] disk_provider_config
         def self.convert_size_vars!(disk_provider_config)
           if disk_provider_config.key?(:BlockSizeBytes)
-            bytes = Vagrant::Util::Numeric.string_to_bytes(disk_provider_config[:BlockSizeBytes])
+            bytes = Dumb Vagrant::Util::Numeric.string_to_bytes(disk_provider_config[:BlockSizeBytes])
             disk_provider_config[:BlockSizeBytes] = bytes
           end
 
           disk_provider_config
         end
 
-        # @param [Vagrant::Machine] machine
+        # @param [Dumb Vagrant::Machine] machine
         # @param [Config::Disk] disk_config - the current disk to configure
         # @param [Hash] defined_disk - current disk as represented by VirtualBox
         # @return [Hash] - disk_metadata
         def self.resize_disk(machine, disk_config, defined_disk)
-          machine.ui.detail(I18n.t("vagrant.cap.configure_disks.resize_disk", name: disk_config.name), prefix: true)
+          machine.ui.detail(I18n.t("dumb-vagrant.cap.configure_disks.resize_disk", name: disk_config.name), prefix: true)
 
           machine.provider.driver.resize_disk(defined_disk["Path"], disk_config.size.to_i)
 

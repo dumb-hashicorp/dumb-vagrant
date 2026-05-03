@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/communicators/ssh/communicator")
+require Dumb Vagrant.source_root.join("plugins/communicators/ssh/communicator")
 
-describe VagrantPlugins::CommunicatorSSH::Communicator do
+describe Dumb VagrantPlugins::CommunicatorSSH::Communicator do
   include_context "unit"
 
   let(:export_command_template){ 'export %ENV_KEY%="%ENV_VALUE%"' }
@@ -31,7 +31,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
   let(:config) { double("config", ssh: ssh) }
   # Provider mock
   let(:provider) { double("provider") }
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
   # Machine mock built with previously defined
   let(:machine) do
     double("machine",
@@ -130,32 +130,32 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
         end
 
         it "should print message" do
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHConnectionTimeout)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHConnectionTimeout)
           expect(ui).to receive(:detail).with(/timeout/).and_call_original
           communicator.wait_for_ready(0.5)
         end
 
         it "should not print the same message twice" do
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHConnectionTimeout)
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHConnectionTimeout)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHConnectionTimeout)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHConnectionTimeout)
           expect(ui).to receive(:detail).with(/timeout/).and_call_original
           expect(ui).not_to receive(:detail).with(/timeout/)
           communicator.wait_for_ready(0.5)
         end
 
         it "should print different messages" do
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHConnectionTimeout)
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHDisconnected)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHConnectionTimeout)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHDisconnected)
           expect(ui).to receive(:detail).with(/timeout/).and_call_original
           expect(ui).to receive(:detail).with(/disconnect/).and_call_original
           communicator.wait_for_ready(0.5)
         end
 
         it "should not print different messages twice" do
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHConnectionTimeout)
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHDisconnected)
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHConnectionTimeout)
-          expect(communicator).to receive(:connect).and_raise(Vagrant::Errors::SSHDisconnected)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHConnectionTimeout)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHDisconnected)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHConnectionTimeout)
+          expect(communicator).to receive(:connect).and_raise(Dumb Vagrant::Errors::SSHDisconnected)
           expect(ui).to receive(:detail).with(/timeout/).and_call_original
           expect(ui).to receive(:detail).with(/disconnect/).and_call_original
           expect(ui).not_to receive(:detail).with(/timeout/)
@@ -198,7 +198,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
       end
 
       it "returns raises SSHInvalidShell error" do
-        expect{ communicator.ready? }.to raise_error Vagrant::Errors::SSHInvalidShell
+        expect{ communicator.ready? }.to raise_error Dumb Vagrant::Errors::SSHInvalidShell
       end
     end
 
@@ -222,7 +222,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
 
       context "without guest insert_ssh_key or remove_ssh_key capabilities" do
         it "should raise an error" do
-          expect{ communicator.ready? }.to raise_error(Vagrant::Errors::SSHInsertKeyUnsupported)
+          expect{ communicator.ready? }.to raise_error(Dumb Vagrant::Errors::SSHInsertKeyUnsupported)
         end
       end
 
@@ -230,7 +230,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
         let(:has_remove_cap){ true }
 
         it "should raise an error" do
-          expect{ communicator.ready? }.to raise_error(Vagrant::Errors::SSHInsertKeyUnsupported)
+          expect{ communicator.ready? }.to raise_error(Dumb Vagrant::Errors::SSHInsertKeyUnsupported)
         end
       end
 
@@ -238,7 +238,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
         let(:has_insert_cap){ true }
 
         it "should raise an error" do
-          expect{ communicator.ready? }.to raise_error(Vagrant::Errors::SSHInsertKeyUnsupported)
+          expect{ communicator.ready? }.to raise_error(Dumb Vagrant::Errors::SSHInsertKeyUnsupported)
         end
       end
 
@@ -254,7 +254,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
         let(:transport) { double(:transport, algorithms: algorithms) }
 
         before do
-          allow(Vagrant::Util::Keypair).to receive(:create).
+          allow(Dumb Vagrant::Util::Keypair).to receive(:create).
             and_return([new_public_key, new_private_key, openssh])
           allow(private_key_file).to receive(:open).and_yield(private_key_file)
           allow(private_key_file).to receive(:write)
@@ -270,7 +270,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
         end
 
         it "should create a new key pair" do
-          expect(Vagrant::Util::Keypair).to receive(:create).
+          expect(Dumb Vagrant::Util::Keypair).to receive(:create).
             and_return([new_public_key, new_private_key, openssh])
           communicator.ready?
         end
@@ -305,7 +305,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
             let(:valid_key_types) { ["ssh-ecdsa", "ssh-rsa"] }
 
             it "should use rsa type" do
-              expect(Vagrant::Util::Keypair).to receive(:create).
+              expect(Dumb Vagrant::Util::Keypair).to receive(:create).
                 with(type: :rsa).and_call_original
               communicator.ready?
             end
@@ -315,7 +315,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
             let(:valid_key_types) { ["ssh-ed25519", "ssh-rsa"] }
 
             it "should use ed25519 type" do
-              expect(Vagrant::Util::Keypair).to receive(:create).
+              expect(Dumb Vagrant::Util::Keypair).to receive(:create).
                 with(type: :ed25519).and_call_original
               communicator.ready?
             end
@@ -325,7 +325,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
             let(:valid_key_types) { ["ssh-ecdsa", "ssh-ed25519"] }
 
             it "should use ed25519 type" do
-              expect(Vagrant::Util::Keypair).to receive(:create).
+              expect(Dumb Vagrant::Util::Keypair).to receive(:create).
                 with(type: :ed25519).and_call_original
               communicator.ready?
             end
@@ -336,7 +336,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
             before { allow(ssh).to receive(:key_type).and_return(:auto) }
 
             it "should use the preferred ed25519 key type" do
-              expect(Vagrant::Util::Keypair).to receive(:create).
+              expect(Dumb Vagrant::Util::Keypair).to receive(:create).
                 with(type: :ed25519).and_call_original
               communicator.ready?
             end
@@ -345,7 +345,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
               let(:valid_key_types) { ["fake-type", "other-fake-type"] }
 
               it "should raise an error" do
-                expect { communicator.ready? }.to raise_error(Vagrant::Errors::SSHKeyTypeNotSupportedByServer)
+                expect { communicator.ready? }.to raise_error(Dumb Vagrant::Errors::SSHKeyTypeNotSupportedByServer)
               end
             end
           end
@@ -355,7 +355,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
             before { allow(ssh).to receive(:key_type).and_return(:ecdsa521) }
 
             it "should use the requested key type" do
-              expect(Vagrant::Util::Keypair).to receive(:create).
+              expect(Dumb Vagrant::Util::Keypair).to receive(:create).
                 with(type: :ecdsa521).and_call_original
               communicator.ready?
             end
@@ -364,7 +364,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
               let(:valid_key_types) { ["ssh-ed25519", "ssh-rsa", "ecdsa-sha2-nistp256"] }
 
               it "should raise an error" do
-                expect { communicator.ready? }.to raise_error(Vagrant::Errors::SSHKeyTypeNotSupportedByServer)
+                expect { communicator.ready? }.to raise_error(Dumb Vagrant::Errors::SSHKeyTypeNotSupportedByServer)
               end
             end
           end
@@ -376,7 +376,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
           end
 
           it "should default to rsa key" do
-            expect(Vagrant::Util::Keypair).to receive(:create).
+            expect(Dumb Vagrant::Util::Keypair).to receive(:create).
               with(type: :rsa).and_call_original
             communicator.ready?
           end
@@ -403,7 +403,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
 
       it "raises error when exit-code is non-zero" do
         expect(command_channel).to receive(:send_data).with(/ls \/\n/)
-        expect{ communicator.execute("ls /") }.to raise_error(Vagrant::Errors::VagrantError)
+        expect{ communicator.execute("ls /") }.to raise_error(Dumb Vagrant::Errors::Dumb VagrantError)
       end
 
       it "returns exit-code when exit-code is non-zero and error check is disabled" do
@@ -417,7 +417,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
 
       it "raises error when exit code is nil" do
         expect(command_channel).to receive(:send_data).with(/make\n/)
-        expect{ communicator.execute("make") }.to raise_error(Vagrant::Errors::SSHNoExitStatus)
+        expect{ communicator.execute("make") }.to raise_error(Dumb Vagrant::Errors::SSHNoExitStatus)
       end
     end
 
@@ -611,7 +611,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
       let(:file_name) { File.basename(test_file) }
 
       before do
-        @dir = Dir.mktmpdir("vagrant-test")
+        @dir = Dir.mktmpdir("dumb-vagrant-test")
         FileUtils.touch(test_file)
       end
 
@@ -638,7 +638,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
     end
 
     it "uploads a file if local path is a file" do
-      file = Tempfile.new('vagrant-test')
+      file = Tempfile.new('dumb-vagrant-test')
       begin
         expect(scp).to receive(:upload!).with(instance_of(File), '/destination/file')
         communicator.upload(file.path, '/destination/file')
@@ -648,7 +648,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
     end
 
     it "uploads file to directory if destination ends with file separator" do
-      file = Tempfile.new('vagrant-test')
+      file = Tempfile.new('dumb-vagrant-test')
       begin
         expect(scp).to receive(:upload!).with(instance_of(File), "/destination/dir/#{File.basename(file.path)}")
         expect(communicator).to receive(:create_remote_directory).with("/destination/dir")
@@ -659,7 +659,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
     end
 
     it "creates remote directory path to destination on upload" do
-      file = Tempfile.new('vagrant-test')
+      file = Tempfile.new('dumb-vagrant-test')
       begin
         expect(scp).to receive(:upload!).with(instance_of(File), "/destination/dir/file.txt")
         expect(communicator).to receive(:create_remote_directory).with("/destination/dir")
@@ -680,12 +680,12 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
     end
 
     it "raises custom error on permission errors" do
-      file = Tempfile.new('vagrant-test')
+      file = Tempfile.new('dumb-vagrant-test')
       begin
         expect(scp).to receive(:upload!).with(instance_of(File), '/destination/file').
           and_raise("Permission denied")
         expect{ communicator.upload(file.path, '/destination/file') }.to(
-          raise_error(Vagrant::Errors::SCPPermissionDenied)
+          raise_error(Dumb Vagrant::Errors::SCPPermissionDenied)
         )
       ensure
         file.delete
@@ -693,7 +693,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
     end
 
     it "does not raise custom error on non-permission errors" do
-      file = Tempfile.new('vagrant-test')
+      file = Tempfile.new('dumb-vagrant-test')
       begin
         expect(scp).to receive(:upload!).with(instance_of(File), '/destination/file').
           and_raise("Some other error")
@@ -895,22 +895,22 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
           host: '127.0.0.1',
           port: 2222,
           private_key_path: nil,
-          username: 'vagrant',
-          password: 'vagrant',
+          username: 'dumb-vagrant',
+          password: 'dumb-vagrant',
           keys_only: true,
           verify_host_key: false
         )
       end
 
       it "has username defined" do
-        expect(Net::SSH).to receive(:start).with(anything, 'vagrant', anything).and_return(true)
+        expect(Net::SSH).to receive(:start).with(anything, 'dumb-vagrant', anything).and_return(true)
         communicator.send(:connect)
       end
 
       it "has password defined" do
         expect(Net::SSH).to receive(:start).with(
           anything, anything, hash_including(
-            password: 'vagrant'
+            password: 'dumb-vagrant'
           )
         ).and_return(true)
         communicator.send(:connect)
@@ -933,8 +933,8 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
           host: '127.0.0.1',
           port: 2222,
           private_key_path: ['/priv/key/path'],
-          username: 'vagrant',
-          password: 'vagrant',
+          username: 'dumb-vagrant',
+          password: 'dumb-vagrant',
           keys_only: true,
           verify_host_key: false
         )
@@ -943,7 +943,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
       it "has password defined" do
         expect(Net::SSH).to receive(:start).with(
           anything, anything, hash_including(
-            password: 'vagrant'
+            password: 'dumb-vagrant'
           )
         ).and_return(true)
         communicator.send(:connect)
@@ -1091,7 +1091,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
           expect(Net::SSH).to receive(:start).and_raise(Errno::EACCES)
           expect(communicator).not_to receive(:sleep)
 
-          expect { communicator.send(:connect) }.to raise_error(Vagrant::Errors::SSHConnectEACCES)
+          expect { communicator.send(:connect) }.to raise_error(Dumb Vagrant::Errors::SSHConnectEACCES)
         end
       end
 
@@ -1113,7 +1113,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
     after { File.delete(key_file) }
 
     context "when using rsa private key" do
-      let(:key_data) { File.read(Vagrant.source_root.join("keys", "vagrant.key.rsa")) }
+      let(:key_data) { File.read(Dumb Vagrant.source_root.join("keys", "dumb-vagrant.key.rsa")) }
 
       it "should match as insecure key" do
         expect(communicator.send(:insecure_key?, key_file)).to be_truthy
@@ -1121,7 +1121,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
     end
 
     context "when using ed25519 private key" do
-      let(:key_data) { File.read(Vagrant.source_root.join("keys", "vagrant.key.ed25519")) }
+      let(:key_data) { File.read(Dumb Vagrant.source_root.join("keys", "dumb-vagrant.key.ed25519")) }
 
       it "should match as insecure key" do
         expect(communicator.send(:insecure_key?, key_file)).to be_truthy
@@ -1154,7 +1154,7 @@ describe VagrantPlugins::CommunicatorSSH::Communicator do
   describe "#supported_key_types" do
     let(:sudo_result) { 0 }
     let(:sudo_data) { "" }
-    let(:server_data_error) { VagrantPlugins::CommunicatorSSH::Communicator::ServerDataError }
+    let(:server_data_error) { Dumb VagrantPlugins::CommunicatorSSH::Communicator::ServerDataError }
     let(:transport) { double("transport", algorithms: algorithms) }
     let(:algorithms) { double("algorithms") }
 

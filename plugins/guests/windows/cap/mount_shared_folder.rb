@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/template_renderer"
+require "dumb-vagrant/util/template_renderer"
 require "base64"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestWindows
     module Cap
       class MountSharedFolder
@@ -23,7 +23,7 @@ module VagrantPlugins
         def self.mount_smb_shared_folder(machine, name, guestpath, options)
           if !options[:smb_password].to_s.empty?
             # Ensure password is scrubbed
-            Vagrant::Util::CredentialScrubber.sensitive(options[:smb_password])
+            Dumb Vagrant::Util::CredentialScrubber.sensitive(options[:smb_password])
           end
           machine.communicate.execute("cmdkey /add:#{options[:smb_host]} /user:#{options[:smb_username]} /pass:\"#{options[:smb_password]}\"", {shell: :powershell, elevated: true})
           mount_shared_folder(machine, name, guestpath, "\\\\#{options[:smb_host]}\\")
@@ -35,7 +35,7 @@ module VagrantPlugins
           name = name.gsub(/[\/\/]/,'_').sub(/^_/, '')
 
           path = File.expand_path("../../scripts/mount_volume.ps1", __FILE__)
-          script = Vagrant::Util::TemplateRenderer.render(path, options: {
+          script = Dumb Vagrant::Util::TemplateRenderer.render(path, options: {
             mount_point: guestpath,
             share_name: name,
             vm_provider_unc_path: vm_provider_unc_base + name,

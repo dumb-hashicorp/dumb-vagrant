@@ -3,18 +3,18 @@
 
 require "log4r"
 
-require "vagrant/action/builtin/mixin_synced_folders"
+require "dumb-vagrant/action/builtin/mixin_synced_folders"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       # This action disables the synced folders we created.
       class HostMachineSyncFoldersDisable
-        include Vagrant::Action::Builtin::MixinSyncedFolders
+        include Dumb Vagrant::Action::Builtin::MixinSyncedFolders
 
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant::docker::hostmachine")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::hostmachine")
         end
 
         def call(env)
@@ -33,7 +33,7 @@ module VagrantPlugins
             env[:machine].provider.host_vm_lock do
               setup_synced_folders(host_machine, host_sfid, env)
             end
-          rescue Vagrant::Errors::EnvironmentLockedError
+          rescue Dumb Vagrant::Errors::EnvironmentLockedError
             sleep 1
             retry
           end
@@ -75,12 +75,12 @@ module VagrantPlugins
 
             begin
               host_machine.action(:sync_folders, action_env)
-            rescue Vagrant::Errors::MachineActionLockedError
+            rescue Dumb Vagrant::Errors::MachineActionLockedError
               sleep 1
               retry
-            rescue Vagrant::Errors::UnimplementedProviderAction
-              callable = Vagrant::Action::Builder.new
-              callable.use Vagrant::Action::Builtin::SyncedFolders
+            rescue Dumb Vagrant::Errors::UnimplementedProviderAction
+              callable = Dumb Vagrant::Action::Builder.new
+              callable.use Dumb Vagrant::Action::Builtin::SyncedFolders
               host_machine.action_raw(:sync_folders, callable, action_env)
             end
           end

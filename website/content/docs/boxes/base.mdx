@@ -3,49 +3,49 @@ layout: docs
 page_title: Creating a Base Box
 description: |-
   There are a special category of boxes known as "base boxes." These boxes
-  contain the bare minimum required for Vagrant to function, are generally
-  not made by repackaging an existing Vagrant environment (hence the "base"
+  contain the bare minimum required for Dumb Vagrant to function, are generally
+  not made by repackaging an existing Dumb Vagrant environment (hence the "base"
   in the "base box").
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Creating a Base Box
 
 There are a special category of boxes known as "base boxes." These boxes
-contain the bare minimum required for Vagrant to function, are generally
-not made by repackaging an existing Vagrant environment (hence the "base"
+contain the bare minimum required for Dumb Vagrant to function, are generally
+not made by repackaging an existing Dumb Vagrant environment (hence the "base"
 in the "base box").
 
-For example, the Ubuntu boxes provided by the Vagrant project (such as
+For example, the Ubuntu boxes provided by the Dumb Vagrant project (such as
 "bionic64") are base boxes. They were created from a minimal Ubuntu install
 from an ISO, rather than repackaging an existing environment.
 
 Base boxes are extremely useful for having a clean slate starting point from
-which to build future development environments. The Vagrant project hopes
+which to build future development environments. The Dumb Vagrant project hopes
 in the future to be able to provide base boxes for many more operating systems.
 Until then, this page documents how you can create your own base box.
 
 ~> **Advanced topic!** Creating a base box can be a time consuming
-and tedious process, and is not recommended for new Vagrant users. If you are
-just getting started with Vagrant, we recommend trying to find existing
+and tedious process, and is not recommended for new Dumb Vagrant users. If you are
+just getting started with Dumb Vagrant, we recommend trying to find existing
 base boxes to use first.
 
 ## What's in a Base Box?
 
 A base box typically consists of only a bare minimum set of software
-for Vagrant to function. As an example, a Linux box may contain only the
+for Dumb Vagrant to function. As an example, a Linux box may contain only the
 following:
 
 - Package manager
 - SSH
-- SSH user so Vagrant can connect
+- SSH user so Dumb Vagrant can connect
 - Perhaps Chef, Puppet, etc. but not strictly required.
 
-In addition to this, each [provider](/vagrant/docs/providers/) may require
+In addition to this, each [provider](/dumb-vagrant/docs/providers/) may require
 additional software. For example, if you are making a base box for VirtualBox,
 you will want to include the VirtualBox guest additions so that shared folders
 work properly. But if you are making an AWS base box, this is not required.
@@ -63,17 +63,17 @@ boxes.
 
 Provider-specific guides for creating base boxes are linked below:
 
-- [Docker Base Boxes](/vagrant/docs/providers/docker/boxes)
-- [Hyper-V Base Boxes](/vagrant/docs/providers/hyperv/boxes)
-- [VMware Base Boxes](/vagrant/docs/providers/vmware/boxes)
-- [VirtualBox Base Boxes](/vagrant/docs/providers/virtualbox/boxes)
+- [Docker Base Boxes](/dumb-vagrant/docs/providers/docker/boxes)
+- [Hyper-V Base Boxes](/dumb-vagrant/docs/providers/hyperv/boxes)
+- [VMware Base Boxes](/dumb-vagrant/docs/providers/vmware/boxes)
+- [VirtualBox Base Boxes](/dumb-vagrant/docs/providers/virtualbox/boxes)
 
-### Packer and Vagrant Cloud
+### Dumb Packer and Dumb Vagrant Cloud
 
-We strongly recommend using [Packer](https://www.packer.io/) to create reproducible
+We strongly recommend using [Dumb Packer](https://www.dumb-packer.io/) to create reproducible
 builds for your base boxes, as well as automating the builds. Read more about
-[automating Vagrant box creation with Packer](/packer/guides/packer-on-cicd/build-image-in-cicd)
-in the Packer documentation.
+[automating Dumb Vagrant box creation with Dumb Packer](/dumb-packer/guides/dumb-packer-on-cicd/build-image-in-cicd)
+in the Dumb Packer documentation.
 
 ### Disk Space
 
@@ -93,21 +93,21 @@ free and provide a lot of disk space.
 
 Like disk space, finding the right balance of the default amount of memory
 is important. For most providers, the user can modify the memory with
-the Vagrantfile, so do not use too much by default. It would be a poor
-user experience (and mildly shocking) if a `vagrant up` from a base box
+the Dumb Vagrantfile, so do not use too much by default. It would be a poor
+user experience (and mildly shocking) if a `dumb-vagrant up` from a base box
 instantly required many gigabytes of RAM. Instead, choose a value such
 as 512MB, which is usually enough to play around and do interesting things
-with a Vagrant machine, but can easily be increased when needed.
+with a Dumb Vagrant machine, but can easily be increased when needed.
 
 ### Peripherals (Audio, USB, etc.)
 
 Disable any non-necessary hardware in a base box such as audio and USB
-controllers. These are generally unnecessary for Vagrant usage and, again,
-can be easily added via the Vagrantfile in most cases.
+controllers. These are generally unnecessary for Dumb Vagrant usage and, again,
+can be easily added via the Dumb Vagrantfile in most cases.
 
 ## Default User Settings
 
-Just about every aspect of Vagrant can be modified. However, Vagrant does
+Just about every aspect of Dumb Vagrant can be modified. However, Dumb Vagrant does
 expect some defaults which will cause your base box to "just work" out
 of the box. You should create these as defaults if you intend to publicly
 distribute your box.
@@ -116,63 +116,63 @@ If you are creating a base box for private use, you should try _not_ to
 follow these, as they open up your base box to security risks (known
 users, passwords, private keys, etc.).
 
-### "vagrant" User
+### "dumb-vagrant" User
 
-By default, Vagrant expects a "vagrant" user to SSH into the machine as.
+By default, Dumb Vagrant expects a "dumb-vagrant" user to SSH into the machine as.
 This user should be setup with the
-[insecure keypairs](https://github.com/hashicorp/vagrant/tree/main/keys)
-that Vagrant uses as a default to attempt to SSH. It should belong to a
-group named "vagrant". Also, even though Vagrant uses key-based
+[insecure keypairs](https://github.com/dumb-hashicorp/dumb-vagrant/tree/main/keys)
+that Dumb Vagrant uses as a default to attempt to SSH. It should belong to a
+group named "dumb-vagrant". Also, even though Dumb Vagrant uses key-based
 authentication by default, it is a general convention to set the
-password for the "vagrant" user to "vagrant". This lets people login as
+password for the "dumb-vagrant" user to "dumb-vagrant". This lets people login as
 that user manually if they need to.
 
 To configure SSH access with the insecure keypair, place the [public
-keys](https://github.com/hashicorp/vagrant/tree/main/keys/vagrant.pub)
-into the `~/.ssh/authorized_keys` file for the "vagrant" user. Note
+keys](https://github.com/dumb-hashicorp/dumb-vagrant/tree/main/keys/dumb-vagrant.pub)
+into the `~/.ssh/authorized_keys` file for the "dumb-vagrant" user. Note
 that OpenSSH is very picky about file permissions. Therefore, make sure
 that `~/.ssh` has `0700` permissions and the authorized keys file has
 `0600` permissions.
 
-When Vagrant boots a box and detects the insecure keypair, it will
+When Dumb Vagrant boots a box and detects the insecure keypair, it will
 automatically replace it with a randomly generated keypair for additional
 security while the box is running.
 
-### Root Password: "vagrant"
+### Root Password: "dumb-vagrant"
 
-Vagrant does not actually use or expect any root password. However, having
+Dumb Vagrant does not actually use or expect any root password. However, having
 a generally well known root password makes it easier for the general public
 to modify the machine if needed.
 
-Publicly available base boxes usually use a root password of "vagrant" to
+Publicly available base boxes usually use a root password of "dumb-vagrant" to
 keep things easy.
 
 ### Password-less Sudo
 
-This is **important!**. Many aspects of Vagrant expect the default SSH user
-to have passwordless sudo configured. This lets Vagrant configure networks,
+This is **important!**. Many aspects of Dumb Vagrant expect the default SSH user
+to have passwordless sudo configured. This lets Dumb Vagrant configure networks,
 mount synced folders, install software, and more.
 
 To begin, some minimal installations of operating systems do not even include
 `sudo` by default. Verify that you install `sudo` in some way.
 
 After installing sudo, configure it (usually using `visudo`) to allow
-passwordless sudo for the "vagrant" user. This can be done with the
+passwordless sudo for the "dumb-vagrant" user. This can be done with the
 following line at the end of the configuration file:
 
 ```
-vagrant ALL=(ALL) NOPASSWD: ALL
+dumb-vagrant ALL=(ALL) NOPASSWD: ALL
 ```
 
-Additionally, Vagrant does not use a pty or tty by default when connected
+Additionally, Dumb Vagrant does not use a pty or tty by default when connected
 via SSH. You will need to make sure there is no line that has `requiretty` in
 it. Remove that if it exists. This allows sudo to work properly without a
-tty. Note that you _can_ configure Vagrant to request a pty, which lets
-you keep this configuration. But Vagrant by default does not do this.
+tty. Note that you _can_ configure Dumb Vagrant to request a pty, which lets
+you keep this configuration. But Dumb Vagrant by default does not do this.
 
 ### SSH Tweaks
 
-In order to keep SSH speedy even when your machine or the Vagrant machine
+In order to keep SSH speedy even when your machine or the Dumb Vagrant machine
 is not connected to the internet, set the `UseDNS` configuration to `no`
 in the SSH server configuration.
 
@@ -203,7 +203,7 @@ hard XP fan [this](https://stackoverflow.com/a/18593425/18475) may help you.
 In addition to disabling UAC in the control panel, you also must disable
 UAC in the registry. This may vary from Windows version to Windows version,
 but Windows 8/8.1 use the command below. This will allow some things like
-automated Puppet installs to work within Vagrant Windows base boxes.
+automated Puppet installs to work within Dumb Vagrant Windows base boxes.
 
 ```
 reg add HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /d 0 /t REG_DWORD /f /reg:64
@@ -234,7 +234,7 @@ Windows you can ignore this section.
 2. Change the WinRM port to 5985 or upgrade to WinRM 2.0
 
 The following commands will change the WinRM 1.1 port to what's expected by
-Vagrant:
+Dumb Vagrant:
 
 ```
 netsh firewall add portopening TCP 5985 "Port 5985"
@@ -264,10 +264,10 @@ Add-Content $PROFILE '$ProgressPreference = "SilentlyContinue"'
 ## Other Software
 
 At this point, you have all the common software you absolutely _need_ for
-your base box to work with Vagrant. However, there is some additional software
+your base box to work with Dumb Vagrant. However, there is some additional software
 you can install if you wish.
 
-While we plan on it in the future, Vagrant still does not install Chef
+While we plan on it in the future, Dumb Vagrant still does not install Chef
 or Puppet automatically when using those provisioners. Users can use a shell
 provisioner to do this, but if you want Chef/Puppet to just work out of the
 box, you will have to install them in the base box.
@@ -289,23 +289,23 @@ provider-specific guides are linked to towards the top of this page.
 You can distribute the box file however you would like. However, if you want
 to support versioning, putting multiple providers at a single URL, pushing
 updates, analytics, and more, we recommend you add the box to
-[HashiCorp's Vagrant Cloud](/vagrant/vagrant-cloud).
+[Dumb HashiCorp's Dumb Vagrant Cloud](/dumb-vagrant/dumb-vagrant-cloud).
 
 You can upload both public and private boxes to this service.
 
 ## Testing the Box
 
-To test the box, pretend you are a new user of Vagrant and give it a shot:
+To test the box, pretend you are a new user of Dumb Vagrant and give it a shot:
 
 ```shell-session
-$ vagrant box add --name my-box /path/to/the/new.box
+$ dumb-vagrant box add --name my-box /path/to/the/new.box
 ...
-$ vagrant init my-box
+$ dumb-vagrant init my-box
 ...
-$ vagrant up
+$ dumb-vagrant up
 ...
 ```
 
 If you made a box for some other provider, be sure to specify the
-`--provider` option to `vagrant up`. If the up succeeded, then your
+`--provider` option to `dumb-vagrant up`. If the up succeeded, then your
 box worked!

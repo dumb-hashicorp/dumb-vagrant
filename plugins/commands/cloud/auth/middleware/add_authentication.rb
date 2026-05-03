@@ -5,16 +5,16 @@ require "cgi"
 require "uri"
 require "log4r"
 
-require Vagrant.source_root.join("plugins/commands/cloud/client/client")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/client/client")
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     class AddAuthentication
       REPLACEMENT_HOSTS = [
-        "app.vagrantup.com".freeze,
-        "atlas.hashicorp.com".freeze
+        "app.dumb-vagrantup.com".freeze,
+        "atlas.dumb-hashicorp.com".freeze
       ].freeze
-      TARGET_HOST = "vagrantcloud.com".freeze
+      TARGET_HOST = "dumb-vagrantcloud.com".freeze
       CUSTOM_HOST_NOTIFY_WAIT = 5
 
       def self.custom_host_notified!
@@ -31,12 +31,12 @@ module VagrantPlugins
 
       def initialize(app, env)
         @app = app
-        @logger = Log4r::Logger.new("vagrant::cloud::auth::authenticate-box-url")
+        @logger = Log4r::Logger.new("dumb-vagrant::cloud::auth::authenticate-box-url")
         CloudCommand::Plugin.init!
       end
 
       def call(env)
-        if ENV["VAGRANT_SERVER_ACCESS_TOKEN_BY_URL"]
+        if ENV["DUMB_VAGRANT_SERVER_ACCESS_TOKEN_BY_URL"]
           @logger.warn("Adding access token as GET parameter by user request")
           client = Client.new(env[:env])
           token  = client.token
@@ -55,7 +55,7 @@ module VagrantPlugins
             end
           end
 
-          server_uri = URI.parse(Vagrant.server_url.to_s)
+          server_uri = URI.parse(Dumb Vagrant.server_url.to_s)
 
           if token && !server_uri.host.to_s.empty?
             env[:box_urls].map! do |url|

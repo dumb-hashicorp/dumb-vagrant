@@ -4,13 +4,13 @@
 require "ipaddr"
 require "timeout"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class WaitForIPAddress
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::hyperv::wait_for_ip_addr")
+          @logger = Log4r::Logger.new("dumb-vagrant::hyperv::wait_for_ip_addr")
         end
 
         def call(env)

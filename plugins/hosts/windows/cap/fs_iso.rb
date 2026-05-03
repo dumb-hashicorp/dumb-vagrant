@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "pathname"
-require "vagrant/util/caps"
+require "dumb-vagrant/util/caps"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostWindows
     module Cap
       class FsISO
-        extend Vagrant::Util::Caps::BuildISO
+        extend Dumb Vagrant::Util::Caps::BuildISO
 
-        @@logger = Log4r::Logger.new("vagrant::host::windows::fs_iso")
+        @@logger = Log4r::Logger.new("dumb-vagrant::host::windows::fs_iso")
 
         BUILD_ISO_CMD = "oscdimg.exe".freeze
         DEPLOYMENT_KIT_PATHS = [
@@ -19,20 +19,20 @@ module VagrantPlugins
 
         # Check that the host has the ability to generate ISOs
         #
-        # @param [Vagrant::Environment] env
+        # @param [Dumb Vagrant::Environment] env
         # @return [Boolean]
         def self.isofs_available(env)
           begin
             oscdimg_path
             true
-          rescue Vagrant::Errors::OscdimgCommandMissingError
+          rescue Dumb Vagrant::Errors::OscdimgCommandMissingError
             false
           end
         end
 
         # Generate an ISO file of the given source directory
         #
-        # @param [Vagrant::Environment] env
+        # @param [Dumb Vagrant::Environment] env
         # @param [String] source_directory Contents of ISO
         # @param [Map] extra arguments to pass to the iso building command
         #              :file_destination (string) location to store ISO
@@ -56,16 +56,16 @@ module VagrantPlugins
 
         # @return [String] oscdimg executable
         def self.oscdimg_path
-          return BUILD_ISO_CMD if Vagrant::Util::Which.which(BUILD_ISO_CMD)
+          return BUILD_ISO_CMD if Dumb Vagrant::Util::Which.which(BUILD_ISO_CMD)
           @@logger.debug("#{BUILD_ISO_CMD} not found on PATH")
           DEPLOYMENT_KIT_PATHS.each do |base|
-            path = File.join(base, Vagrant::Util::Platform.architecture,
+            path = File.join(base, Dumb Vagrant::Util::Platform.architecture,
               "Oscdimg", BUILD_ISO_CMD)
             @@logger.debug("#{BUILD_ISO_CMD} check at #{path}")
             return path if File.executable?(path)
           end
 
-          raise Vagrant::Errors::OscdimgCommandMissingError
+          raise Dumb Vagrant::Errors::OscdimgCommandMissingError
         end
       end
     end

@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestTinyCore::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestTinyCore::Cap::ChangeHostName" do
   let(:described_class) do
-    VagrantPlugins::GuestTinyCore::Plugin.components.guest_capabilities[:tinycore].get(:change_host_name)
+    Dumb VagrantPlugins::GuestTinyCore::Plugin.components.guest_capabilities[:tinycore].get(:change_host_name)
   end
   let(:machine) { double("machine") }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:old_hostname) { 'boot2docker' }
 
   before do

@@ -2,21 +2,21 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "log4r"
-require 'vagrant/util/guest_hosts'
-require 'vagrant/util/guest_inspection'
+require 'dumb-vagrant/util/guest_hosts'
+require 'dumb-vagrant/util/guest_inspection'
 
 require_relative "../../linux/cap/network_interfaces"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestDebian
     module Cap
       class ChangeHostName
 
-        extend Vagrant::Util::GuestInspection::Linux
-        extend Vagrant::Util::GuestHosts::Linux
+        extend Dumb Vagrant::Util::GuestInspection::Linux
+        extend Dumb Vagrant::Util::GuestHosts::Linux
 
         def self.change_host_name(machine, name)
-          @logger = Log4r::Logger.new("vagrant::guest::debian::changehostname")
+          @logger = Log4r::Logger.new("dumb-vagrant::guest::debian::changehostname")
           comm = machine.communicate
 
           if !comm.test("hostname -f | grep '^#{name}$'", sudo: false)
@@ -76,16 +76,16 @@ module VagrantPlugins
 
         # Due to how most Debian systems and older Ubuntu systems handle restarting
         # networking, we cannot simply run the networking init script or use the ifup/down
-        # tools to restart all interfaces to renew the machines DHCP lease when setting
+        # tools to restart all interfaces to renew the machines DDUMB_HCP lease when setting
         # its hostname. This method is a workaround for those older systems that
         # cannoy reliably restart networking. It restarts each individual interface
         # on its own instead.
         #
-        # @param [Vagrant::Machine] machine
+        # @param [Dumb Vagrant::Machine] machine
         # @param [Log4r::Logger] logger
         def self.restart_each_interface(machine, logger)
           comm = machine.communicate
-          interfaces = VagrantPlugins::GuestLinux::Cap::NetworkInterfaces.network_interfaces(machine)
+          interfaces = Dumb VagrantPlugins::GuestLinux::Cap::NetworkInterfaces.network_interfaces(machine)
           nettools = true
           if systemd?(comm)
             logger.debug("Attempting to restart networking with systemctl")

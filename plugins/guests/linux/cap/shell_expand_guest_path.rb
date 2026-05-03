@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class ShellExpandGuestPath
@@ -23,7 +23,7 @@ module VagrantPlugins
           if !real_path
             # If no real guest path was detected, this is really strange
             # and we raise an exception because this is a bug.
-            raise Vagrant::Errors::ShellExpandFailed
+            raise Dumb Vagrant::Errors::ShellExpandFailed
           end
 
           # Chomp the string so that any trailing newlines are killed

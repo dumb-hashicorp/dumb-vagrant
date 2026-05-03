@@ -2,17 +2,17 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "log4r"
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorNone
     # This class provides no communication with the VM.
-    # It allows Vagrant to manage a machine lifecycle
+    # It allows Dumb Vagrant to manage a machine lifecycle
     # while not actually connecting to it. The communicator
     # stubs out all methods to be successful allowing
-    # Vagrant to proceed "as normal" without actually
+    # Dumb Vagrant to proceed "as normal" without actually
     # doing anything.
-    class Communicator < Vagrant.plugin("2", :communicator)
+    class Communicator < Dumb Vagrant.plugin("2", :communicator)
       def self.match?(_)
         # Any machine can be not communicated with
         true

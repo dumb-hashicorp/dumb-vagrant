@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestEsxi
     module Cap
       class MountNFSFolder
-        extend Vagrant::Util::Retryable
+        extend Dumb Vagrant::Util::Retryable
 
         def self.mount_nfs_folder(machine, ip, folders)
           folders.each do |name, opts|
@@ -16,9 +16,9 @@ module VagrantPlugins
                 comm.execute("localcli storage nfs remove -v #{volume}")
               end
               mount_command = "localcli storage nfs add -H #{ip} -s '#{opts[:hostpath]}' -v '#{volume}'"
-              retryable(on: Vagrant::Errors::NFSMountFailed, tries: 5, sleep: 2) do
+              retryable(on: Dumb Vagrant::Errors::NFSMountFailed, tries: 5, sleep: 2) do
                 comm.execute(mount_command,
-                             error_class: Vagrant::Errors::NFSMountFailed)
+                             error_class: Dumb Vagrant::Errors::NFSMountFailed)
               end
 
               # symlink vmfs volume to :guestpath

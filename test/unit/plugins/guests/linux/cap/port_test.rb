@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestLinux::Cap::Port" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::Port" do
   let(:caps) do
-    VagrantPlugins::GuestLinux::Plugin
+    Dumb VagrantPlugins::GuestLinux::Plugin
       .components
       .guest_capabilities[:linux]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)

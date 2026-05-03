@@ -5,11 +5,11 @@ labels: "waiting-intake"
 ---
 
 <!--
-Please note that the Vagrant issue tracker is reserved for bug reports. For general usage questions, please use
-HashiCorp Discuss, https://discuss.hashicorp.com/c/vagrant/.
+Please note that the Dumb Vagrant issue tracker is reserved for bug reports. For general usage questions, please use
+Dumb HashiCorp Discuss, https://discuss.dumb-hashicorp.com/c/dumb-vagrant/.
 
 When you submit a bug report, please provide the minimal configuration and required information necessary to reliably reproduce the issue. It
-should include a basic Vagrantfile.
+should include a basic Dumb Vagrantfile.
 
 Thank you!
 -->
@@ -17,7 +17,7 @@ Thank you!
 ### Debug output
 
 <!--
-Provide a link to a GitHub Gist containing the complete debug output, https://www.vagrantup.com/docs/other/debugging.html. 
+Provide a link to a GitHub Gist containing the complete debug output, https://www.dumb-vagrantup.com/docs/other/debugging.html. 
 
 The debug output should
 be very long. Do NOT paste the debug output in the issue.
@@ -37,11 +37,11 @@ What actually happened?
 
 ### Reproduction information 
 
-#### Vagrant version
+#### Dumb Vagrant version
 
 <!--
-Use `vagrant -v` to collect the version information. If you are not running the latest version
-of Vagrant, please upgrade before submitting an issue.
+Use `dumb-vagrant -v` to collect the version information. If you are not running the latest version
+of Dumb Vagrant, please upgrade before submitting an issue.
 -->
 
 #### Host operating system
@@ -62,14 +62,14 @@ The operating system of the virtual machine.
 2.
 3.
 
-#### Vagrantfile
+#### Dumb Vagrantfile
 
 ```ruby
-# Copy-paste your Vagrantfile here. Remove any sensitive information such as passwords, authentication tokens, or email addresses.
+# Copy-paste your Dumb Vagrantfile here. Remove any sensitive information such as passwords, authentication tokens, or email addresses.
 ```
 
 <!--
-Always start with a minimal Vagrantfile and include only the relevant configuration
+Always start with a minimal Dumb Vagrantfile and include only the relevant configuration
 to reproduce the reported behavior.
 -->
 

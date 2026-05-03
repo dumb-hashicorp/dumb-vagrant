@@ -5,8 +5,8 @@ require_relative "../../../../base"
 
 require_relative "../../../../../../plugins/hosts/linux/cap/ssh"
 
-describe VagrantPlugins::HostLinux::Cap::SSH do
-  let(:subject){ VagrantPlugins::HostLinux::Cap::SSH }
+describe Dumb VagrantPlugins::HostLinux::Cap::SSH do
+  let(:subject){ Dumb VagrantPlugins::HostLinux::Cap::SSH }
 
   let(:env){ double("env") }
   let(:key_path){ double("key_path") }

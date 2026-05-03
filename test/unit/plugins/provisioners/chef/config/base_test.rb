@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/chef/config/base")
+require Dumb Vagrant.source_root.join("plugins/provisioners/chef/config/base")
 
-describe VagrantPlugins::Chef::Config::Base do
+describe Dumb VagrantPlugins::Chef::Config::Base do
   include_context "unit"
 
   subject { described_class.new }

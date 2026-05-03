@@ -13,7 +13,7 @@ then
     }
 fi
 
-usermod -a -G rvm vagrant || {
-  echo 'Failed to add vagrant to the rvm group' >&2
+usermod -a -G rvm dumb-vagrant || {
+  echo 'Failed to add dumb-vagrant to the rvm group' >&2
   exit 1
 }

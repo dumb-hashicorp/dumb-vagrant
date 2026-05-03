@@ -4,13 +4,13 @@
 require "tempfile"
 require "ipaddr"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestGentoo
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
+        include Dumb Vagrant::Util
 
         def self.configure_networks(machine, networks)
           comm = machine.communicate
@@ -34,11 +34,11 @@ module VagrantPlugins
             networks.each_pair do |device_name, device_networks|
               entry = TemplateRenderer.render('guests/gentoo/network_systemd', networks: device_networks)
 
-              filename = "50_vagrant_#{device_name}.network"
+              filename = "50_dumb-vagrant_#{device_name}.network"
               tmpfile = "/tmp/#{filename}"
               destfile = "/etc/systemd/network/#{filename}"
 
-              Tempfile.open('vagrant-gentoo-configure-networks') do |f|
+              Tempfile.open('dumb-vagrant-gentoo-configure-networks') do |f|
                 f.binmode
                 f.write(entry)
                 f.fsync
@@ -55,16 +55,16 @@ module VagrantPlugins
             # Configure networking for OpenRC
 
             # Remove any previous network additions to the configuration file.
-            commands << "sed -i'' -e '/^#VAGRANT-BEGIN/,/^#VAGRANT-END/ d' /etc/conf.d/net"
+            commands << "sed -i'' -e '/^#DUMB_VAGRANT-BEGIN/,/^#DUMB_VAGRANT-END/ d' /etc/conf.d/net"
 
             networks.each_with_index do |network, i|
               entry = TemplateRenderer.render("guests/gentoo/network_#{network[:type]}",
                 options: network,
               )
 
-              remote_path = "/tmp/vagrant-network-#{network[:device]}-#{Time.now.to_i}-#{i}"
+              remote_path = "/tmp/dumb-vagrant-network-#{network[:device]}-#{Time.now.to_i}-#{i}"
 
-              Tempfile.open("vagrant-gentoo-configure-networks") do |f|
+              Tempfile.open("dumb-vagrant-gentoo-configure-networks") do |f|
                 f.binmode
                 f.write(entry)
                 f.fsync

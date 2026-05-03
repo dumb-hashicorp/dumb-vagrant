@@ -3,7 +3,7 @@
 
 require_relative "../../../synced_folders/unix_mount_helpers"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class MountVirtualBoxSharedFolder
@@ -44,9 +44,9 @@ module VagrantPlugins
             # Attempt to mount the folder. We retry here a few times because
             # it can fail early on.
             stderr = ""
-            retryable(on: Vagrant::Errors::VirtualBoxMountFailed, tries: 3, sleep: 5) do
+            retryable(on: Dumb Vagrant::Errors::VirtualBoxMountFailed, tries: 3, sleep: 5) do
               machine.communicate.sudo(mount_command,
-                error_class: Vagrant::Errors::VirtualBoxMountFailed,
+                error_class: Dumb Vagrant::Errors::VirtualBoxMountFailed,
                 error_key: :virtualbox_mount_failed,
                 command: mount_command,
                 output: stderr,

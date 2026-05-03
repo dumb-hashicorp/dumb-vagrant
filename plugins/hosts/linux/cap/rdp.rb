@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/which"
+require "dumb-vagrant/util/which"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostLinux
     module Cap
       class RDP
@@ -11,15 +11,15 @@ module VagrantPlugins
           # Detect if an RDP client is available.
           # Prefer xfreerdp as it supports newer versions of RDP.
           rdp_client =
-            if Vagrant::Util::Which.which("xfreerdp")
+            if Dumb Vagrant::Util::Which.which("xfreerdp")
               "xfreerdp"
-            elsif Vagrant::Util::Which.which("rdesktop")
+            elsif Dumb Vagrant::Util::Which.which("rdesktop")
               "rdesktop"
             else
-              if Vagrant::Util::Platform.wsl?
+              if Dumb Vagrant::Util::Platform.wsl?
                 "mstsc.exe"
               else
-                raise Vagrant::Errors::LinuxRDPClientNotFound
+                raise Dumb Vagrant::Errors::LinuxRDPClientNotFound
               end
             end
 
@@ -44,14 +44,14 @@ module VagrantPlugins
               "/user:#{rdp_info[:username]}",
               "/pass:#{rdp_info[:password]}",
             ]
-            Vagrant::Util::Subprocess.execute("cmdkey.exe", *cmdKeyArgs)
+            Dumb Vagrant::Util::Subprocess.execute("cmdkey.exe", *cmdKeyArgs)
 
             args = ["/v:#{rdp_info[:host]}:#{rdp_info[:port]}"]
             args += rdp_info[:extra_args] if rdp_info[:extra_args]
           end
 
           # Finally, run the client.
-          Vagrant::Util::Subprocess.execute(rdp_client, *args, {:detach => true})
+          Dumb Vagrant::Util::Subprocess.execute(rdp_client, *args, {:detach => true})
         end
       end
     end

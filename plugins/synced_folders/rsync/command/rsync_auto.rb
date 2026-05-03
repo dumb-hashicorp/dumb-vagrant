@@ -5,30 +5,30 @@ require "log4r"
 require 'optparse'
 require "thread"
 
-require "vagrant/action/builtin/mixin_synced_folders"
-require "vagrant/util/busy"
-require "vagrant/util/platform"
+require "dumb-vagrant/action/builtin/mixin_synced_folders"
+require "dumb-vagrant/util/busy"
+require "dumb-vagrant/util/platform"
 
 require_relative "../helper"
 
 require "listen"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderRSync
     module Command
-      class RsyncAuto < Vagrant.plugin("2", :command)
-        include Vagrant::Action::Builtin::MixinSyncedFolders
+      class RsyncAuto < Dumb Vagrant.plugin("2", :command)
+        include Dumb Vagrant::Action::Builtin::MixinSyncedFolders
 
         def self.synopsis
           "syncs rsync synced folders automatically when files change"
         end
 
         def execute
-          @logger = Log4r::Logger.new("vagrant::commands::rsync-auto")
+          @logger = Log4r::Logger.new("dumb-vagrant::commands::rsync-auto")
 
           options = {}
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant rsync-auto [vm-name]"
+            o.banner = "Usage: dumb-vagrant rsync-auto [vm-name]"
             o.separator ""
             o.separator "Options:"
             o.separator ""
@@ -57,7 +57,7 @@ module VagrantPlugins
               proxy = machine.provider.capability(:proxy_machine)
               if proxy
                 machine.ui.warn(I18n.t(
-                  "vagrant.rsync_proxy_machine",
+                  "dumb-vagrant.rsync_proxy_machine",
                   name: machine.name.to_s,
                   provider: machine.provider_name.to_s))
 
@@ -69,7 +69,7 @@ module VagrantPlugins
             fresh  = synced_folders(machine)
             diff   = synced_folders_diff(cached, fresh)
             if !diff[:added].empty?
-              machine.ui.warn(I18n.t("vagrant.rsync_auto_new_folders"))
+              machine.ui.warn(I18n.t("dumb-vagrant.rsync_auto_new_folders"))
             end
 
             folders = cached[:rsync]
@@ -80,14 +80,14 @@ module VagrantPlugins
             # syncing all known containers with rsync to the boot2docker vm
             # and only syncs the current working dirs folders.
             sync_folders = {}
-            # Still sync existing synced folders from vagrantfile
+            # Still sync existing synced folders from dumb-vagrantfile
             config_synced_folders = machine.config.vm.synced_folders.values.map { |x| x[:hostpath] }
             config_synced_folders.map! { |x| File.expand_path(x, machine.env.root_path) }
             folders.each do |id, folder_opts|
               if cwd != folder_opts[:hostpath] &&
                   !config_synced_folders.include?(folder_opts[:hostpath])
 
-                machine.ui.info(I18n.t("vagrant.rsync_auto_remove_folder",
+                machine.ui.info(I18n.t("dumb-vagrant.rsync_auto_remove_folder",
                                     folder: folder_opts[:hostpath]))
               else
                 if options.has_key?(:rsync_chown)
@@ -102,7 +102,7 @@ module VagrantPlugins
             # sync to the VM.
             ssh_info = machine.ssh_info
             if ssh_info
-              machine.ui.info(I18n.t("vagrant.rsync_auto_initial"))
+              machine.ui.info(I18n.t("dumb-vagrant.rsync_auto_initial"))
               folders.each do |id, folder_opts|
                 RsyncHelper.rsync_single(machine, ssh_info, folder_opts)
               end
@@ -128,15 +128,15 @@ module VagrantPlugins
                 end
               end
 
-              # Always ignore Vagrant
-              ignores << /.vagrant\//
+              # Always ignore Dumb Vagrant
+              ignores << /.dumb-vagrant\//
               ignores.uniq!
             end
           end
 
           # Exit immediately if there is nothing to watch
           if paths.empty?
-            @env.ui.info(I18n.t("vagrant.rsync_auto_no_paths"))
+            @env.ui.info(I18n.t("dumb-vagrant.rsync_auto_no_paths"))
             return 1
           end
 
@@ -144,7 +144,7 @@ module VagrantPlugins
           paths.keys.sort.each do |path|
             paths[path].each do |path_opts|
               path_opts[:machine].ui.info(I18n.t(
-                "vagrant.rsync_auto_path",
+                "dumb-vagrant.rsync_auto_path",
                 path: path.to_s,
               ))
             end
@@ -170,7 +170,7 @@ module VagrantPlugins
 
           # Run the listener in a busy block so that we can cleanly
           # exit once we receive an interrupt.
-          Vagrant::Util::Busy.busy(callback) do
+          Dumb Vagrant::Util::Busy.busy(callback) do
             listener.start
             queue.pop
             listener.stop if listener.state != :stopped
@@ -221,19 +221,19 @@ module VagrantPlugins
                 RsyncHelper.rsync_single(opts[:machine], ssh_info, opts[:opts])
                 finish = Time.now
                 @logger.info("Time spent in rsync: #{finish-start} (in seconds)")
-              rescue Vagrant::Errors::MachineGuestNotReady
+              rescue Dumb Vagrant::Errors::MachineGuestNotReady
                 # Error communicating to the machine, probably a reload or
                 # halt is happening. Just notify the user but don't fail out.
                 opts[:machine].ui.error(I18n.t(
-                  "vagrant.rsync_communicator_not_ready_callback"))
-              rescue Vagrant::Errors::RSyncPostCommandError => e
+                  "dumb-vagrant.rsync_communicator_not_ready_callback"))
+              rescue Dumb Vagrant::Errors::RSyncPostCommandError => e
                 # Error executing rsync chown command
                 opts[:machine].ui.error(I18n.t(
-                  "vagrant.rsync_auto_post_command_error", message: e.to_s))
-              rescue Vagrant::Errors::RSyncError => e
+                  "dumb-vagrant.rsync_auto_post_command_error", message: e.to_s))
+              rescue Dumb Vagrant::Errors::RSyncError => e
                 # Error executing rsync, so show an error
                 opts[:machine].ui.error(I18n.t(
-                  "vagrant.rsync_auto_rsync_error", message: e.to_s))
+                  "dumb-vagrant.rsync_auto_rsync_error", message: e.to_s))
               end
             end
           end

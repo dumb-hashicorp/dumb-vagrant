@@ -3,15 +3,15 @@
 
 require 'optparse'
 
-require "vagrant/action/builtin/mixin_synced_folders"
+require "dumb-vagrant/action/builtin/mixin_synced_folders"
 
 require_relative "../helper"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderRSync
     module Command
-      class Rsync < Vagrant.plugin("2", :command)
-        include Vagrant::Action::Builtin::MixinSyncedFolders
+      class Rsync < Dumb Vagrant.plugin("2", :command)
+        include Dumb Vagrant::Action::Builtin::MixinSyncedFolders
 
         def self.synopsis
           "syncs rsync synced folders to remote machine"
@@ -20,7 +20,7 @@ module VagrantPlugins
         def execute
           options = {}
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant rsync [vm-name]"
+            o.banner = "Usage: dumb-vagrant rsync [vm-name]"
             o.separator ""
             o.separator "This command forces any synced folders with type 'rsync' to sync."
             o.separator "RSync is not an automatic sync so a manual command is used."
@@ -43,7 +43,7 @@ module VagrantPlugins
               proxy = machine.provider.capability(:proxy_machine)
               if proxy
                 machine.ui.warn(I18n.t(
-                  "vagrant.rsync_proxy_machine",
+                  "dumb-vagrant.rsync_proxy_machine",
                   name: machine.name.to_s,
                   provider: machine.provider_name.to_s))
 
@@ -52,7 +52,7 @@ module VagrantPlugins
             end
 
             if !machine.communicate.ready?
-              machine.ui.error(I18n.t("vagrant.rsync_communicator_not_ready"))
+              machine.ui.error(I18n.t("dumb-vagrant.rsync_communicator_not_ready"))
               error = true
               next
             end

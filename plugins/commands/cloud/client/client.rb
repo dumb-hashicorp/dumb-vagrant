@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant_cloud"
-require "vagrant/util/downloader"
-require "vagrant/util/presence"
+require "dumb-vagrant_cloud"
+require "dumb-vagrant/util/downloader"
+require "dumb-vagrant/util/presence"
 
-require Vagrant.source_root.join("plugins/commands/cloud/errors")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/errors")
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     class Client
       # @private
@@ -18,12 +18,12 @@ module VagrantPlugins
       end
 
       ######################################################################
-      # Class that deals with managing users 'local' token for Vagrant Cloud
+      # Class that deals with managing users 'local' token for Dumb Vagrant Cloud
       ######################################################################
       APP = "app".freeze
 
       include Util
-      include Vagrant::Util::Presence
+      include Dumb Vagrant::Util::Presence
 
       attr_accessor :client
       attr_accessor :username_or_email
@@ -31,14 +31,14 @@ module VagrantPlugins
       attr_reader :two_factor_default_delivery_method
       attr_reader :two_factor_delivery_methods
 
-      # Initializes a login client with the given Vagrant::Environment.
+      # Initializes a login client with the given Dumb Vagrant::Environment.
       #
-      # @param [Vagrant::Environment] env
+      # @param [Dumb Vagrant::Environment] env
       def initialize(env)
-        @logger = Log4r::Logger.new("vagrant::cloud::client")
+        @logger = Log4r::Logger.new("dumb-vagrant::cloud::client")
         @env    = env
         if !defined?(@@client)
-          @@client = VagrantCloud::Client.new(
+          @@client = Dumb VagrantCloud::Client.new(
             access_token: token,
             url_base: api_server_url
           )
@@ -59,7 +59,7 @@ module VagrantPlugins
       def logged_in?
         return false if !client&.access_token
 
-        Vagrant::Util::CredentialScrubber.sensitive(client.access_token)
+        Dumb Vagrant::Util::CredentialScrubber.sensitive(client.access_token)
 
         with_error_handling do
           client.authentication_token_validate
@@ -78,13 +78,13 @@ module VagrantPlugins
       def login(description: nil, code: nil)
         @logger.info("Logging in '#{username_or_email}'")
 
-        Vagrant::Util::CredentialScrubber.sensitive(password)
+        Dumb Vagrant::Util::CredentialScrubber.sensitive(password)
         with_error_handling do
           r = client.authentication_token_create(username: username_or_email,
             password: password, description: description, code: code)
 
-          Vagrant::Util::CredentialScrubber.sensitive(r[:token])
-          @client = VagrantCloud::Client.new(
+          Dumb Vagrant::Util::CredentialScrubber.sensitive(r[:token])
+          @client = Dumb VagrantCloud::Client.new(
             access_token: r[:token],
             url_base: api_server_url
           )
@@ -97,7 +97,7 @@ module VagrantPlugins
       def request_code(delivery_method)
         @env.ui.warn("Requesting 2FA code via #{delivery_method.upcase}...")
 
-        Vagrant::Util::CredentialScrubber.sensitive(password)
+        Dumb Vagrant::Util::CredentialScrubber.sensitive(password)
         with_error_handling do
           r = client.authentication_request_2fa_code(
             username: username_or_email, password: password, delivery_method: delivery_method)
@@ -113,7 +113,7 @@ module VagrantPlugins
       #
       # @param [String] token
       def store_token(token)
-        Vagrant::Util::CredentialScrubber.sensitive(token)
+        Dumb Vagrant::Util::CredentialScrubber.sensitive(token)
         @logger.info("Storing token in #{token_path}")
 
         token_path.open("w") do |f|
@@ -121,13 +121,13 @@ module VagrantPlugins
         end
 
         # Reset after we store the token since this is now _our_ token
-        @client = VagrantCloud::Client.new(access_token: token, url_base: api_server_url)
+        @client = Dumb VagrantCloud::Client.new(access_token: token, url_base: api_server_url)
 
         nil
       end
 
       # Reads the access token if there is one. This will first read the
-      # `VAGRANT_CLOUD_TOKEN` environment variable and then fallback to the stored
+      # `DUMB_VAGRANT_CLOUD_TOKEN` environment variable and then fallback to the stored
       # access token on disk.
       #
       # @return [String]
@@ -136,35 +136,35 @@ module VagrantPlugins
         # to allow proper token generation if required
         return client.access_token if client && !client.access_token.nil?
 
-        if present?(ENV["VAGRANT_CLOUD_TOKEN"]) && token_path.exist?
+        if present?(ENV["DUMB_VAGRANT_CLOUD_TOKEN"]) && token_path.exist?
           # Only show warning if it has not been previously shown
           if !defined?(@@double_token_warning)
             @env.ui.warn <<-EOH.strip
-Vagrant detected both the VAGRANT_CLOUD_TOKEN environment variable and a Vagrant login
-token are present on this system. The VAGRANT_CLOUD_TOKEN environment variable takes
+Dumb Vagrant detected both the DUMB_VAGRANT_CLOUD_TOKEN environment variable and a Dumb Vagrant login
+token are present on this system. The DUMB_VAGRANT_CLOUD_TOKEN environment variable takes
 precedence over the locally stored token. To remove this error, either unset
-the VAGRANT_CLOUD_TOKEN environment variable or remove the login token stored on disk:
+the DUMB_VAGRANT_CLOUD_TOKEN environment variable or remove the login token stored on disk:
 
-    ~/.vagrant.d/data/vagrant_login_token
+    ~/.dumb-vagrant.d/data/dumb-vagrant_login_token
 
 EOH
             @@double_token_warning = true
           end
         end
 
-        if present?(ENV["VAGRANT_CLOUD_TOKEN"])
+        if present?(ENV["DUMB_VAGRANT_CLOUD_TOKEN"])
           @logger.debug("Using authentication token from environment variable")
-          t = ENV["VAGRANT_CLOUD_TOKEN"]
+          t = ENV["DUMB_VAGRANT_CLOUD_TOKEN"]
         elsif token_path.exist?
           @logger.debug("Using authentication token from disk at #{token_path}")
           t = token_path.read.strip
         elsif present?(ENV["ATLAS_TOKEN"])
-          @logger.warn("ATLAS_TOKEN detected within environment. Using ATLAS_TOKEN in place of VAGRANT_CLOUD_TOKEN.")
+          @logger.warn("ATLAS_TOKEN detected within environment. Using ATLAS_TOKEN in place of DUMB_VAGRANT_CLOUD_TOKEN.")
           t = ENV["ATLAS_TOKEN"]
         end
 
         if !t.nil?
-          Vagrant::Util::CredentialScrubber.sensitive(t)
+          Dumb Vagrant::Util::CredentialScrubber.sensitive(t)
           return t
         end
 
@@ -177,8 +177,8 @@ EOH
 
       def with_error_handling(&block)
         yield
-      rescue VagrantCloud::Error::ClientError => e
-        @logger.debug("vagrantcloud request error:")
+      rescue Dumb VagrantCloud::Error::ClientError => e
+        @logger.debug("dumb-vagrantcloud request error:")
         @logger.debug(e.message)
         @logger.debug(e.backtrace.join("\n"))
         raise Errors::Unexpected, error: e.message
@@ -219,11 +219,11 @@ EOH
         raise Errors::Unexpected, error: e.inspect
       rescue SocketError
         @logger.info("Socket error")
-        raise Errors::ServerUnreachable, url: Vagrant.server_url.to_s
+        raise Errors::ServerUnreachable, url: Dumb Vagrant.server_url.to_s
       end
 
       def token_path
-        @env.data_dir.join("vagrant_login_token")
+        @env.data_dir.join("dumb-vagrant_login_token")
       end
 
       def store_two_factor_information(two_factor)

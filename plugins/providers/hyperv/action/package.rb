@@ -1,12 +1,12 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require_relative "../../../../lib/vagrant/action/general/package"
+require_relative "../../../../lib/dumb-vagrant/action/general/package"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
-      class Package < Vagrant::Action::General::Package
+      class Package < Dumb Vagrant::Action::General::Package
         # Doing this so that we can test that the parent is properly
         # called in the unit tests.
         alias_method :general_call, :call

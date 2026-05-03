@@ -3,35 +3,35 @@
 
 require File.expand_path("../../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/auth/middleware/add_authentication")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/auth/middleware/add_authentication")
 
-describe VagrantPlugins::CloudCommand::AddAuthentication do
+describe Dumb VagrantPlugins::CloudCommand::AddAuthentication do
   include_context "unit"
 
   let(:app) { lambda { |env| } }
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
   let(:env) { {
     env: iso_env,
     ui: ui
   } }
 
-  let(:iso_env) { isolated_environment.create_vagrant_env }
-  let(:server_url) { "http://vagrantcloud.com" }
+  let(:iso_env) { isolated_environment.create_dumb-vagrant_env }
+  let(:server_url) { "http://dumb-vagrantcloud.com" }
   let(:client) { double("client", token: token) }
   let(:token) { "TEST_TOKEN" }
 
   subject { described_class.new(app, env) }
 
   before do
-    allow(Vagrant).to receive(:server_url).and_return(server_url)
-    allow(VagrantPlugins::CloudCommand::Client).to receive(:new).
+    allow(Dumb Vagrant).to receive(:server_url).and_return(server_url)
+    allow(Dumb VagrantPlugins::CloudCommand::Client).to receive(:new).
       with(iso_env).and_return(client)
     stub_env("ATLAS_TOKEN" => nil)
   end
 
   describe "#call" do
     it "does nothing if we have no server set" do
-      allow(Vagrant).to receive(:server_url).and_return(nil)
+      allow(Dumb Vagrant).to receive(:server_url).and_return(nil)
 
       original = [token, "#{server_url}/bar"]
       env[:box_urls] = original.dup
@@ -69,9 +69,9 @@ describe VagrantPlugins::CloudCommand::AddAuthentication do
       end
     end
 
-    context "with VAGRANT_SERVER_ACCESS_TOKEN_BY_URL set" do
+    context "with DUMB_VAGRANT_SERVER_ACCESS_TOKEN_BY_URL set" do
 
-      before { stub_env("VAGRANT_SERVER_ACCESS_TOKEN_BY_URL" => "1") }
+      before { stub_env("DUMB_VAGRANT_SERVER_ACCESS_TOKEN_BY_URL" => "1") }
 
       it "appends the access token to the URL of server URLs" do
         original = [
@@ -90,15 +90,15 @@ describe VagrantPlugins::CloudCommand::AddAuthentication do
         expect(env[:box_urls]).to eq(expected)
       end
 
-      it "does not append the access token to vagrantcloud.com URLs if Atlas" do
-        server_url = "https://atlas.hashicorp.com"
-        allow(Vagrant).to receive(:server_url).and_return(server_url)
+      it "does not append the access token to dumb-vagrantcloud.com URLs if Atlas" do
+        server_url = "https://atlas.dumb-hashicorp.com"
+        allow(Dumb Vagrant).to receive(:server_url).and_return(server_url)
         allow(subject).to receive(:sleep)
 
         original = [
           "http://example.com/box.box",
-          "http://vagrantcloud.com/foo.box",
-          "http://vagrantcloud.com/bar.box?arg=true",
+          "http://dumb-vagrantcloud.com/foo.box",
+          "http://dumb-vagrantcloud.com/bar.box?arg=true",
         ]
 
         expected = original.dup
@@ -111,11 +111,11 @@ describe VagrantPlugins::CloudCommand::AddAuthentication do
 
       it "warns when adding token to custom server" do
         server_url = "https://example.com"
-        allow(Vagrant).to receive(:server_url).and_return(server_url)
+        allow(Dumb Vagrant).to receive(:server_url).and_return(server_url)
 
         original = [
           "http://example.org/box.box",
-          "http://vagrantcloud.com/foo.box",
+          "http://dumb-vagrantcloud.com/foo.box",
           "http://example.com/bar.box",
           "http://example.com/foo.box"
         ]
@@ -160,9 +160,9 @@ describe VagrantPlugins::CloudCommand::AddAuthentication do
         let(:token) { nil }
 
         it "modifies host URL to target if authorized host" do
-          originals = VagrantPlugins::CloudCommand::AddAuthentication::
+          originals = Dumb VagrantPlugins::CloudCommand::AddAuthentication::
             REPLACEMENT_HOSTS.map{ |h| "http://#{h}/box.box" }
-          expected = "http://#{VagrantPlugins::CloudCommand::AddAuthentication::TARGET_HOST}/box.box"
+          expected = "http://#{Dumb VagrantPlugins::CloudCommand::AddAuthentication::TARGET_HOST}/box.box"
           env[:box_urls] = originals
           subject.call(env)
           env[:box_urls].each do |url|
@@ -172,9 +172,9 @@ describe VagrantPlugins::CloudCommand::AddAuthentication do
 
         it "returns original urls when not modified" do
           to_persist = "file:////path/to/box.box"
-          to_change = VagrantPlugins::CloudCommand::AddAuthentication::
+          to_change = Dumb VagrantPlugins::CloudCommand::AddAuthentication::
             REPLACEMENT_HOSTS.map{ |h| "http://#{h}/box.box" }.first
-          expected = "http://#{VagrantPlugins::CloudCommand::AddAuthentication::TARGET_HOST}/box.box"
+          expected = "http://#{Dumb VagrantPlugins::CloudCommand::AddAuthentication::TARGET_HOST}/box.box"
           env[:box_urls] = [to_persist, to_change]
           subject.call(env)
           check_persist, check_change = env[:box_urls]
@@ -189,13 +189,13 @@ describe VagrantPlugins::CloudCommand::AddAuthentication do
     end
 
 
-    context "with VAGRANT_SERVER_ACCESS_TOKEN_BY_URL unset" do
+    context "with DUMB_VAGRANT_SERVER_ACCESS_TOKEN_BY_URL unset" do
 
-      before { stub_env("VAGRANT_SERVER_ACCESS_TOKEN_BY_URL" => nil) }
+      before { stub_env("DUMB_VAGRANT_SERVER_ACCESS_TOKEN_BY_URL" => nil) }
 
       it "returns the original urls" do
-        box1 = "http://vagrantcloud.com/box.box"
-        box2 = "http://app.vagrantup.com/box.box"
+        box1 = "http://dumb-vagrantcloud.com/box.box"
+        box2 = "http://app.dumb-vagrantup.com/box.box"
 
         env = {
           box_urls: [
@@ -209,9 +209,9 @@ describe VagrantPlugins::CloudCommand::AddAuthentication do
       end
 
       it "removes access_token parameters if set" do
-        box1 = "http://vagrantcloud.com/box.box"
-        box2 = "http://app.vagrantup.com/box.box"
-        box3 = "http://app.vagrantup.com/box.box?arg1=value1"
+        box1 = "http://dumb-vagrantcloud.com/box.box"
+        box2 = "http://app.dumb-vagrantup.com/box.box"
+        box3 = "http://app.dumb-vagrantup.com/box.box?arg1=value1"
 
         env = {
           box_urls: [

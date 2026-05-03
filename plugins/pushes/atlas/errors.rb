@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module AtlasPush
     module Errors
-      class Error < Vagrant::Errors::VagrantError
+      class Error < Dumb Vagrant::Errors::Dumb VagrantError
         error_namespace("atlas_push.errors")
       end
 

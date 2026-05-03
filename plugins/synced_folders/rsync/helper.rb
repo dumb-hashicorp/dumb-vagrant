@@ -6,10 +6,10 @@ require "ipaddr"
 require "shellwords"
 require "tmpdir"
 
-require "vagrant/util/platform"
-require "vagrant/util/subprocess"
+require "dumb-vagrant/util/platform"
+require "dumb-vagrant/util/subprocess"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderRSync
     # This is a helper that abstracts out the functionality of rsyncing
     # folders so that it can be called from anywhere.
@@ -49,7 +49,7 @@ module VagrantPlugins
         guestpath = opts[:guestpath]
         hostpath  = opts[:hostpath]
         hostpath  = File.expand_path(hostpath, machine.env.root_path)
-        hostpath  = Vagrant::Util::Platform.fs_real_path(hostpath).to_s
+        hostpath  = Dumb Vagrant::Util::Platform.fs_real_path(hostpath).to_s
 
         # if the guest has a guest path scrubber capability, use it
         if machine.guest.capability?(:rsync_scrub_guestpath)
@@ -59,9 +59,9 @@ module VagrantPlugins
         # Shellescape
         guestpath = Shellwords.escape(guestpath)
 
-        if Vagrant::Util::Platform.windows?
+        if Dumb Vagrant::Util::Platform.windows?
           # rsync for Windows expects cygwin style paths, always.
-          hostpath = Vagrant::Util::Platform.cygwin_path(hostpath)
+          hostpath = Dumb Vagrant::Util::Platform.cygwin_path(hostpath)
         end
 
         # Make sure the host path ends with a "/" to avoid creating
@@ -78,7 +78,7 @@ module VagrantPlugins
         log_level = ssh_info[:log_level] || "FATAL"
 
         # Connection information
-        # make it better match lib/vagrant/util/ssh.rb command_options style and logic
+        # make it better match lib/dumb-vagrant/util/ssh.rb command_options style and logic
         username = ssh_info[:username]
         host     = ssh_info[:host]
         proxy_command = ""
@@ -95,8 +95,8 @@ module VagrantPlugins
         # in the machine data dir but this can result in paths that are
         # too long for unix domain sockets.
         control_options = ""
-        unless Vagrant::Util::Platform.windows?
-          controlpath = Dir.mktmpdir("vagrant-rsync-")
+        unless Dumb Vagrant::Util::Platform.windows?
+          controlpath = Dir.mktmpdir("dumb-vagrant-rsync-")
           control_options = "-o ControlMaster=auto -o ControlPath=#{controlpath} -o ControlPersist=10m "
         end
 
@@ -113,7 +113,7 @@ module VagrantPlugins
         # Solaris/OpenSolaris/Illumos uses SunSSH which doesn't support the
         # IdentitiesOnly option. Also, we don't enable it if keys_only is false
         # so that SSH properly searches our identities and tries to do it itself.
-        if !Vagrant::Util::Platform.solaris? && ssh_info[:keys_only]
+        if !Dumb Vagrant::Util::Platform.solaris? && ssh_info[:keys_only]
           rsh += ["-o", "IdentitiesOnly=yes"]
         end
 
@@ -131,7 +131,7 @@ module VagrantPlugins
 
         # Exclude some files by default, and any that might be configured
         # by the user.
-        excludes = ['.vagrant/']
+        excludes = ['.dumb-vagrant/']
         excludes += Array(opts[:exclude]).map(&:to_s) if opts[:exclude]
         excludes.uniq!
 
@@ -141,7 +141,7 @@ module VagrantPlugins
         args ||= ["--verbose", "--archive", "--delete", "-z", "--copy-links"]
 
         # On Windows, we have to set a default chmod flag to avoid permission issues
-        if Vagrant::Util::Platform.windows? && !args.any? { |arg| arg.start_with?("--chmod=") }
+        if Dumb Vagrant::Util::Platform.windows? && !args.any? { |arg| arg.start_with?("--chmod=") }
           # Ensures that all non-masked bits get enabled
           args << "--chmod=ugo=rwX"
 
@@ -196,13 +196,13 @@ module VagrantPlugins
         command_opts[:workdir] = machine.env.root_path.to_s
 
         machine.ui.info(I18n.t(
-          "vagrant.rsync_folder", guestpath: guestpath, hostpath: hostpath))
+          "dumb-vagrant.rsync_folder", guestpath: guestpath, hostpath: hostpath))
         if excludes.length > 1
           machine.ui.info(I18n.t(
-            "vagrant.rsync_folder_excludes", excludes: excludes.inspect))
+            "dumb-vagrant.rsync_folder_excludes", excludes: excludes.inspect))
         end
         if opts.include?(:verbose)
-          machine.ui.info(I18n.t("vagrant.rsync_showing_output"));
+          machine.ui.info(I18n.t("dumb-vagrant.rsync_showing_output"));
         end
 
         # If we have tasks to do before rsyncing, do those.
@@ -212,16 +212,16 @@ module VagrantPlugins
 
         if opts.include?(:verbose)
           command_opts[:notify] = [:stdout, :stderr]
-          r = Vagrant::Util::Subprocess.execute(*(command + [command_opts])) {
+          r = Dumb Vagrant::Util::Subprocess.execute(*(command + [command_opts])) {
             |io_name,data| data.each_line { |line|
               machine.ui.info("rsync[#{io_name}] -> #{line}") }
           }
         else
-          r = Vagrant::Util::Subprocess.execute(*(command + [command_opts]))
+          r = Dumb Vagrant::Util::Subprocess.execute(*(command + [command_opts]))
         end
 
         if r.exit_code != 0
-          raise Vagrant::Errors::RSyncError,
+          raise Dumb Vagrant::Errors::RSyncError,
             command: command.map(&:inspect).join(" "),
             guestpath: guestpath,
             hostpath: hostpath,
@@ -232,8 +232,8 @@ module VagrantPlugins
         if machine.guest.capability?(:rsync_post)
           begin
             machine.guest.capability(:rsync_post, opts)
-          rescue Vagrant::Errors::VagrantError => err
-            raise Vagrant::Errors::RSyncPostCommandError,
+          rescue Dumb Vagrant::Errors::Dumb VagrantError => err
+            raise Dumb Vagrant::Errors::RSyncPostCommandError,
               guestpath: guestpath,
               hostpath: hostpath,
               message: err.to_s
@@ -245,7 +245,7 @@ module VagrantPlugins
 
       # Check if rsync versions support using chown option
       #
-      # @param [Vagrant::Machine] machine The remote machine
+      # @param [Dumb Vagrant::Machine] machine The remote machine
       # @return [Boolean]
       def self.rsync_chown_support?(machine)
         if !RSYNC_CHOWN_REQUIREMENT.satisfied_by?(Gem::Version.new(local_rsync_version))
@@ -276,7 +276,7 @@ module VagrantPlugins
       # @return [String, nil] version of local rsync
       def self.local_rsync_version
         if !@_rsync_version
-          r = Vagrant::Util::Subprocess.execute("rsync", "--version")
+          r = Dumb Vagrant::Util::Subprocess.execute("rsync", "--version")
           vmatch = r.stdout.to_s.match(/version\s+(?<version>[\d.]+)\s/)
           if vmatch
             @_rsync_version = vmatch[:version]

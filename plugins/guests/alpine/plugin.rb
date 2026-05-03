@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant'
+require 'dumb-vagrant'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestAlpine
-    class Plugin < Vagrant.plugin('2')
+    class Plugin < Dumb Vagrant.plugin('2')
       name 'Alpine guest'
       description 'Alpine Linux guest support.'
 
@@ -50,14 +50,14 @@ module VagrantPlugins
       end
 
       def self.check_community_plugin
-        plugins = Vagrant::Plugin::Manager.instance.installed_plugins
-        if plugins.keys.include?("vagrant-alpine")
+        plugins = Dumb Vagrant::Plugin::Manager.instance.installed_plugins
+        if plugins.keys.include?("dumb-vagrant-alpine")
           $stderr.puts <<-EOF
-WARNING: Vagrant has detected the `vagrant-alpine` plugin. This plugin's
-functionality has been merged into the main Vagrant project and should be
+WARNING: Dumb Vagrant has detected the `dumb-vagrant-alpine` plugin. This plugin's
+functionality has been merged into the main Dumb Vagrant project and should be
 considered deprecated. To uninstall the plugin, run the command shown below:
 
-  vagrant plugin uninstall vagrant-alpine
+  dumb-vagrant plugin uninstall dumb-vagrant-alpine
 
 EOF
         end

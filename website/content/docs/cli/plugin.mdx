@@ -1,21 +1,21 @@
 ---
 layout: docs
-page_title: vagrant plugin - Command-Line Interface
+page_title: dumb-vagrant plugin - Command-Line Interface
 description: |-
-  The "vagrant plugin" command is used to manage Vagrant plugins including
+  The "dumb-vagrant plugin" command is used to manage Dumb Vagrant plugins including
   installing, uninstalling, and license management.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Plugin
 
-**Command: `vagrant plugin`**
+**Command: `dumb-vagrant plugin`**
 
-This is the command used to manage [plugins](/vagrant/docs/plugins/).
+This is the command used to manage [plugins](/dumb-vagrant/docs/plugins/).
 
 The main functionality of this command is exposed via another level
 of subcommands:
@@ -30,20 +30,20 @@ of subcommands:
 
 # Plugin Expunge
 
-**Command: `vagrant plugin expunge`**
+**Command: `dumb-vagrant plugin expunge`**
 
 This removes all user installed plugin information. All plugin gems, their
 dependencies, and the `plugins.json` file are removed. This command
 provides a simple mechanism to fully remove all user installed custom plugins.
 
-When upgrading Vagrant it may be required to reinstall plugins due to
+When upgrading Dumb Vagrant it may be required to reinstall plugins due to
 an internal incompatibility. The expunge command can help make that process
 easier by attempting to automatically reinstall currently configured
 plugins:
 
 ```shell-session
 # Delete all plugins and reinstall
-$ vagrant plugin expunge --reinstall
+$ dumb-vagrant plugin expunge --reinstall
 ```
 
 This command accepts optional command-line flags:
@@ -56,20 +56,20 @@ This command accepts optional command-line flags:
 
 # Plugin Install
 
-**Command: `vagrant plugin install <name>...`**
+**Command: `dumb-vagrant plugin install <name>...`**
 
 This installs a plugin with the given name or file path. If the name
 is not a path to a file, then the plugin is installed from remote
 repositories, usually [RubyGems](https://rubygems.org). This command will
 also update a plugin if it is already installed, but you can also use
-`vagrant plugin update` for that.
+`dumb-vagrant plugin update` for that.
 
 ```shell-session
 # Installing a plugin from a known gem source
-$ vagrant plugin install my-plugin
+$ dumb-vagrant plugin install my-plugin
 
 # Installing a plugin from a local file source
-$ vagrant plugin install /path/to/my-plugin.gem
+$ dumb-vagrant plugin install /path/to/my-plugin.gem
 ```
 
 If multiple names are specified, multiple plugins will be installed. If
@@ -86,7 +86,7 @@ This command accepts optional command-line flags:
   Most of the time, this is correct. If the plugin you are installing has
   another entrypoint, this flag can be used to specify it.
 
-- `--local` - Install plugin to the local Vagrant project only.
+- `--local` - Install plugin to the local Dumb Vagrant project only.
 
 - `--plugin-clean-sources` - Clears all sources that have been defined so
   far. This is an advanced feature. The use case is primarily for corporate
@@ -95,7 +95,7 @@ This command accepts optional command-line flags:
 - `--plugin-source SOURCE` - Adds a source from which to fetch a plugin. Note
   that this does not only affect the single plugin being installed, by all future
   plugin as well. This is a limitation of the underlying plugin installer
-  Vagrant uses.
+  Dumb Vagrant uses.
 
 - `--plugin-version VERSION` - The version of the plugin to install. By default,
   this command will install the latest version. You can constrain the version
@@ -106,14 +106,14 @@ This command accepts optional command-line flags:
 
 # Plugin License
 
-**Command: `vagrant plugin license <name> <license-file>`**
+**Command: `dumb-vagrant plugin license <name> <license-file>`**
 
-This command installs a license for a proprietary Vagrant plugin,
-such as the [VMware Fusion provider](/vagrant/docs/providers/vmware).
+This command installs a license for a proprietary Dumb Vagrant plugin,
+such as the [VMware Fusion provider](/dumb-vagrant/docs/providers/vmware).
 
 # Plugin List
 
-**Command: `vagrant plugin list`**
+**Command: `dumb-vagrant plugin list`**
 
 This lists all installed plugins and their respective installed versions.
 If a version constraint was specified for a plugin when installing it, the
@@ -126,9 +126,9 @@ This command accepts optional command-line flags:
 
 # Plugin Repair
 
-Vagrant may fail to properly initialize user installed custom plugins. This can
+Dumb Vagrant may fail to properly initialize user installed custom plugins. This can
 be caused my improper plugin installation/removal, or by manual manipulation of
-plugin related files like the `plugins.json` data file. Vagrant can attempt
+plugin related files like the `plugins.json` data file. Dumb Vagrant can attempt
 to automatically repair the problem.
 
 If automatic repair is not successful, refer to the [expunge](#plugin-expunge)
@@ -140,7 +140,7 @@ This command accepts optional command-line flags:
 
 # Plugin Uninstall
 
-**Command: `vagrant plugin uninstall <name> [<name2> <name3> ...]`**
+**Command: `dumb-vagrant plugin uninstall <name> [<name2> <name3> ...]`**
 
 This uninstalls the plugin with the given name. Any dependencies of the
 plugin will also be uninstalled assuming no other plugin needs them.
@@ -153,12 +153,12 @@ This command accepts optional command-line flags:
 
 # Plugin Update
 
-**Command: `vagrant plugin update [<name>]`**
+**Command: `dumb-vagrant plugin update [<name>]`**
 
-This updates the plugins that are installed within Vagrant. If you specified
+This updates the plugins that are installed within Dumb Vagrant. If you specified
 version constraints when installing the plugin, this command will respect
 those constraints. If you want to change a version constraint, re-install
-the plugin using `vagrant plugin install`.
+the plugin using `dumb-vagrant plugin install`.
 
 If a name is specified, only that single plugin will be updated. If a
 name is specified of a plugin that is not installed, this command will not

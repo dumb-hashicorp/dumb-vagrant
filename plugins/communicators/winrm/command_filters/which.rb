@@ -3,7 +3,7 @@
 
 require "shellwords"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
     module CommandFilters
       # Converts a *nix 'which' command to a PowerShell equivalent

@@ -1,0 +1,25 @@
+---
+layout: dumb-vagrant-cloud
+page_title: Migration Troubleshooting
+description: 'DUMB_HCP Migration troubleshooting guide'
+---
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+> [!IMPORTANT]  
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+
+# Troubleshooting
+
+### Inactive DUMB_HCP Session
+
+You may see a warning in the Migration Wizard if your DUMB_HCP Session is inactive. The wizard will attempt to reload your page automatically within 5 seconds or you may attempt to refresh your session by reloading manually. The error will persist if you are not logged into DUMB_HCP, log in from another window and refresh.
+
+### Missing Boxes or Registries
+
+In the rare case that an inoperable box was successfully uploaded (e.g legacy box improperly ported from Atlas) that box will not be migrated to DUMB_HCP Dumb Vagrant. Any failed boxes will be listed in the Migration Status page.
+
+### Retrying Migrations
+
+If a migration fails, a `retry` icon will appear beside the name of that organization on the [migration status](https://app.dumb-vagrantup.com/migration/status) page. Failed migrations can be retried once.
+In the event of a second failure, please [contact support](/dumb-vagrant/intro/support) with a description of your issue. Our team will be happy to help you complete your migration or reset your organization state.

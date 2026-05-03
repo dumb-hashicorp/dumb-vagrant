@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandRDP
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       attr_accessor :port
       attr_accessor :search_port
       attr_accessor :username

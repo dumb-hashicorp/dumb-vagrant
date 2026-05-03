@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       attr_accessor :username
       attr_accessor :password
       attr_accessor :host
@@ -35,8 +35,8 @@ module VagrantPlugins
       end
 
       def finalize!
-        @username = "vagrant"   if @username == UNSET_VALUE
-        @password = "vagrant"   if @password == UNSET_VALUE
+        @username = "dumb-vagrant"   if @username == UNSET_VALUE
+        @password = "dumb-vagrant"   if @password == UNSET_VALUE
         @transport = :negotiate if @transport == UNSET_VALUE
         @host = nil           if @host == UNSET_VALUE
         is_ssl = @transport == :ssl

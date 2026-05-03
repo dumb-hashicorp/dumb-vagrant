@@ -5,7 +5,7 @@ require "rexml"
 
 require File.expand_path("../version_6_1", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Driver
       # Driver for VirtualBox 7.0.x
@@ -14,13 +14,13 @@ module VagrantPlugins
         # instead of host only interfaces
         HOSTONLY_NET_REQUIREMENT=Gem::Requirement.new(">= 7")
         # Prefix of name used for host only networks
-        HOSTONLY_NAME_PREFIX="vagrantnet-vbox"
+        HOSTONLY_NAME_PREFIX="dumb-vagrantnet-vbox"
         DEFAULT_NETMASK="255.255.255.0"
 
         def initialize(uuid)
           super
 
-          @logger = Log4r::Logger.new("vagrant::provider::virtualbox_7_0")
+          @logger = Log4r::Logger.new("dumb-vagrant::provider::virtualbox_7_0")
         end
 
         def read_bridged_interfaces
@@ -72,7 +72,7 @@ module VagrantPlugins
                   inuse_names << net_name
                 end
               end
-            rescue Vagrant::Errors::VBoxManageError => err
+            rescue Dumb Vagrant::Errors::VBoxManageError => err
               raise if !err.extra_data[:stderr].include?("VBOX_E_OBJECT_NOT_FOUND")
             end
           end
@@ -112,9 +112,9 @@ module VagrantPlugins
             netmask: options.fetch(:netmask, DEFAULT_NETMASK),
           }
 
-          if options[:type] == :dhcp
-            opts[:lower] = options[:dhcp_lower]
-            opts[:upper] = options[:dhcp_upper]
+          if options[:type] == :ddumb-hcp
+            opts[:lower] = options[:ddumb-hcp_lower]
+            opts[:upper] = options[:ddumb-hcp_upper]
           else
             addr = IPAddr.new(options[:adapter_ip])
             opts[:upper] = opts[:lower] = addr.mask(opts[:netmask]).to_range.first.to_s
@@ -146,14 +146,14 @@ module VagrantPlugins
         end
 
         # Disabled when host only nets are in use since
-        # the host only nets will provide the dhcp server
-        def remove_dhcp_server(*_, **_)
+        # the host only nets will provide the ddumb-hcp server
+        def remove_ddumb-hcp_server(*_, **_)
           super if !use_host_only_nets?
         end
 
         # Disabled when host only nets are in use since
-        # the host only nets will provide the dhcp server
-        def create_dhcp_server(*_, **_)
+        # the host only nets will provide the ddumb-hcp server
+        def create_ddumb-hcp_server(*_, **_)
           super if !use_host_only_nets?
         end
 
@@ -235,7 +235,7 @@ module VagrantPlugins
           info = execute("showvminfo", uuid, "--machinereadable", retryable: true)
           result = info.match(/CfgFile="(?<path>.+?)"/)
           if result.nil?
-            raise Vagrant::Errors::VirtualBoxConfigNotFound,
+            raise Dumb Vagrant::Errors::VirtualBoxConfigNotFound,
                   uuid: uuid
           end
 
@@ -276,7 +276,7 @@ module VagrantPlugins
             key = key.downcase
             if key == "name"
               networks.push(current) if !current.nil?
-              current = Vagrant::Util::HashWithIndifferentAccess.new
+              current = Dumb Vagrant::Util::HashWithIndifferentAccess.new
             end
             current[key] = value
           end
@@ -292,7 +292,7 @@ module VagrantPlugins
         #
         # @return [Boolean]
         def use_host_only_nets?
-          Vagrant::Util::Platform.darwin? &&
+          Dumb Vagrant::Util::Platform.darwin? &&
             HOSTONLY_NET_REQUIREMENT.satisfied_by?(get_version)
         end
 

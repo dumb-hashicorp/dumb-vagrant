@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestDebian::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestDebian::Cap::ChangeHostName" do
   let(:caps) do
-    VagrantPlugins::GuestDebian::Plugin
+    Dumb VagrantPlugins::GuestDebian::Plugin
       .components
       .guest_capabilities[:debian]
   end
 
   let(:machine) { double("machine", name: "guestname") }
   let(:logger) { double("logger", debug: true) }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -171,7 +171,7 @@ describe "VagrantPlugins::GuestDebian::Cap::ChangeHostName" do
 
     before do
       allow(cap).to receive(:systemd?).and_return(systemd)
-      allow(VagrantPlugins::GuestLinux::Cap::NetworkInterfaces).to receive(:network_interfaces).
+      allow(Dumb VagrantPlugins::GuestLinux::Cap::NetworkInterfaces).to receive(:network_interfaces).
         and_return(interfaces)
     end
 

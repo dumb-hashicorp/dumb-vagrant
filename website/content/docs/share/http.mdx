@@ -1,53 +1,53 @@
 ---
 layout: docs
-page_title: HTTP Sharing - Vagrant Share
+page_title: HTTP Sharing - Dumb Vagrant Share
 description: |-
-  Vagrant Share can create a publicly accessible URL endpoint to access an
-  HTTP server running in your Vagrant environment. This is known as "HTTP
-  sharing," and is enabled by default when "vagrant share" is used.
+  Dumb Vagrant Share can create a publicly accessible URL endpoint to access an
+  HTTP server running in your Dumb Vagrant environment. This is known as "HTTP
+  sharing," and is enabled by default when "dumb-vagrant share" is used.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # HTTP Sharing
 
-Vagrant Share can create a publicly accessible URL endpoint to access an
-HTTP server running in your Vagrant environment. This is known as "HTTP
-sharing," and is enabled by default when `vagrant share` is used.
+Dumb Vagrant Share can create a publicly accessible URL endpoint to access an
+HTTP server running in your Dumb Vagrant environment. This is known as "HTTP
+sharing," and is enabled by default when `dumb-vagrant share` is used.
 
 Because this mode of sharing creates a publicly accessible URL, the accessing
-party does not need to have Vagrant installed in order to view your environment.
+party does not need to have Dumb Vagrant installed in order to view your environment.
 
 This has a number of useful use cases: you can test webhooks by exposing
-your Vagrant environment to the internet, you can show your work to clients,
+your Dumb Vagrant environment to the internet, you can show your work to clients,
 teammates, or managers, etc.
 
 ## Usage
 
-To use HTTP sharing, simply run `vagrant share`:
+To use HTTP sharing, simply run `dumb-vagrant share`:
 
 ```shell-session
-$ vagrant share
+$ dumb-vagrant share
 ==> default: Detecting network information for machine...
 default: Local machine address: 192.168.84.130
 default: Local HTTP port: 9999
 default: Local HTTPS port: disabled
-==> default: Creating Vagrant Share session...
+==> default: Creating Dumb Vagrant Share session...
 ==> default: HTTP URL: http://b1fb1f3f.ngrok.io
 ```
 
-Vagrant detects where your HTTP server is running in your Vagrant environment
+Dumb Vagrant detects where your HTTP server is running in your Dumb Vagrant environment
 and outputs the endpoint that can be used to access this share. Just give
 this URL to anyone you want to share it with, and they will be able to access
-your Vagrant environment!
+your Dumb Vagrant environment!
 
-If Vagrant has trouble detecting the port of your servers in your environment,
+If Dumb Vagrant has trouble detecting the port of your servers in your environment,
 use the `--http` and/or `--https` flags to be more explicit.
 
-The share will be accessible for the duration that `vagrant share` is running.
+The share will be accessible for the duration that `dumb-vagrant share` is running.
 Press `Ctrl-C` to quit the sharing session.
 
 ~> **Warning:** This URL is accessible by _anyone_
@@ -56,7 +56,7 @@ who knows it, so be careful if you are sharing sensitive information.
 ## Disabling
 
 If you want to disable the creation of the publicly accessible endpoint,
-run `vagrant share` with the `--disable-http` flag. This will share your
+run `dumb-vagrant share` with the `--disable-http` flag. This will share your
 environment using one of the other methods available, and will not create
 the URL endpoint.
 
@@ -80,10 +80,10 @@ should do this anyways!
 
 ## HTTPS (SSL)
 
-Vagrant Share can also expose an SSL port that can be accessed over
+Dumb Vagrant Share can also expose an SSL port that can be accessed over
 SSL. Creating an HTTPS share requires a non-free ngrok account.
 
-`vagrant share` by default looks for any SSL traffic on port 443 in your
+`dumb-vagrant share` by default looks for any SSL traffic on port 443 in your
 development environment. If it cannot find any, then SSL is disabled by
 default.
 

@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/provisioners/puppet/provisioner/puppet")
+require Dumb Vagrant.source_root.join("plugins/provisioners/puppet/provisioner/puppet")
 
-describe VagrantPlugins::Puppet::Provisioner::Puppet do
+describe Dumb VagrantPlugins::Puppet::Provisioner::Puppet do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }
@@ -20,7 +20,7 @@ describe VagrantPlugins::Puppet::Provisioner::Puppet do
   let(:facts)        { [] }
   let(:communicator) { double("comm") }
   let(:guest)        { double("guest") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:module_paths) { ["etc/puppet/modules"] } # make this something real
 
   subject { described_class.new(machine, config) }
@@ -101,9 +101,9 @@ describe VagrantPlugins::Puppet::Provisioner::Puppet do
       allow(config).to receive(:facter).and_return({"coolfacts"=>"here they are"})
       allow(config).to receive(:structured_facts).and_return(true)
 
-      expect(machine.communicate).to receive(:upload).with(anything, "/tmp/vagrant_facts.yaml")
+      expect(machine.communicate).to receive(:upload).with(anything, "/tmp/dumb-vagrant_facts.yaml")
       expect(machine.communicate).to receive(:sudo).with("mkdir -p /tmp; chmod 0777 /tmp", {})
-      expect(machine.communicate).to receive(:sudo).with("cp /tmp/vagrant_facts.yaml /etc/puppetlabs/facter/facts.d/vagrant_facts.yaml")
+      expect(machine.communicate).to receive(:sudo).with("cp /tmp/dumb-vagrant_facts.yaml /etc/puppetlabs/facter/facts.d/dumb-vagrant_facts.yaml")
       subject.provision()
     end
 
@@ -125,8 +125,8 @@ describe VagrantPlugins::Puppet::Provisioner::Puppet do
       allow(config).to receive(:facter).and_return({"coolfacts"=>"here they are"})
       allow(config).to receive(:structured_facts).and_return(nil)
 
-      expect(machine.communicate).not_to receive(:upload).with(anything, "/tmp/vagrant_facts.yaml")
-      expect(machine.communicate).not_to receive(:sudo).with("cp /tmp/vagrant_facts.yaml /etc/puppetlabs/facter/facts.d/vagrant_facts.yaml")
+      expect(machine.communicate).not_to receive(:upload).with(anything, "/tmp/dumb-vagrant_facts.yaml")
+      expect(machine.communicate).not_to receive(:sudo).with("cp /tmp/dumb-vagrant_facts.yaml /etc/puppetlabs/facter/facts.d/dumb-vagrant_facts.yaml")
       subject.provision()
     end
   end

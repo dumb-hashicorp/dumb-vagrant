@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/guests/windows/cap/mount_shared_folder")
+require Dumb Vagrant.source_root.join("plugins/guests/windows/cap/mount_shared_folder")
 
-describe "VagrantPlugins::GuestWindows::Cap::MountSharedFolder" do
+describe "Dumb VagrantPlugins::GuestWindows::Cap::MountSharedFolder" do
 
   let(:machine) { double("machine") }
   let(:communicator) { double(:execute) }
@@ -23,12 +23,12 @@ describe "VagrantPlugins::GuestWindows::Cap::MountSharedFolder" do
   describe "virtualbox" do
 
     let(:described_class) do
-      VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_virtualbox_shared_folder)
+      Dumb VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_virtualbox_shared_folder)
     end
 
     describe ".mount_shared_folder" do
       it "should call mount_volume script with correct args" do
-        expect(Vagrant::Util::TemplateRenderer).to receive(:render).with(
+        expect(Dumb Vagrant::Util::TemplateRenderer).to receive(:render).with(
           /.+scripts\/mount_volume.ps1/, options: {
               mount_point: "guestpath",
               share_name: "name",
@@ -38,7 +38,7 @@ describe "VagrantPlugins::GuestWindows::Cap::MountSharedFolder" do
       end
 
       it "should replace invalid Windows share chars" do
-        expect(Vagrant::Util::TemplateRenderer).to receive(:render).with(
+        expect(Dumb Vagrant::Util::TemplateRenderer).to receive(:render).with(
           kind_of(String), options: {
               mount_point: kind_of(String),
               share_name: "invalid-windows_sharename",
@@ -52,12 +52,12 @@ describe "VagrantPlugins::GuestWindows::Cap::MountSharedFolder" do
   describe "vmware" do
 
     let(:described_class) do
-      VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_vmware_shared_folder)
+      Dumb VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_vmware_shared_folder)
     end
 
     describe ".mount_shared_folder" do
       it "should call mount_volume script with correct args" do
-        expect(Vagrant::Util::TemplateRenderer).to receive(:render).with(
+        expect(Dumb Vagrant::Util::TemplateRenderer).to receive(:render).with(
           /.+scripts\/mount_volume.ps1/, options: {
               mount_point: "guestpath",
               share_name: "name",
@@ -71,12 +71,12 @@ describe "VagrantPlugins::GuestWindows::Cap::MountSharedFolder" do
   describe "parallels" do
 
     let(:described_class) do
-      VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_parallels_shared_folder)
+      Dumb VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_parallels_shared_folder)
     end
 
     describe ".mount_shared_folder" do
       it "should call mount_volume script with correct args" do
-        expect(Vagrant::Util::TemplateRenderer).to receive(:render).with(
+        expect(Dumb Vagrant::Util::TemplateRenderer).to receive(:render).with(
           /.+scripts\/mount_volume.ps1/, options: {
               mount_point: "guestpath",
               share_name: "name",
@@ -90,12 +90,12 @@ describe "VagrantPlugins::GuestWindows::Cap::MountSharedFolder" do
   describe "smb" do
 
     let(:described_class) do
-      VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_smb_shared_folder)
+      Dumb VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_smb_shared_folder)
     end
 
     describe ".mount_shared_folder" do
       it "should call mount_volume script with correct args" do
-        expect(Vagrant::Util::TemplateRenderer).to receive(:render).with(
+        expect(Dumb Vagrant::Util::TemplateRenderer).to receive(:render).with(
           /.+scripts\/mount_volume.ps1/, options: {
               mount_point: "guestpath",
               share_name: "name",
@@ -110,7 +110,7 @@ describe "VagrantPlugins::GuestWindows::Cap::MountSharedFolder" do
   describe "virtualbox-ssh" do
 
     let(:described_class) do
-      VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_virtualbox_shared_folder)
+      Dumb VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:mount_virtualbox_shared_folder)
     end
 
     before do

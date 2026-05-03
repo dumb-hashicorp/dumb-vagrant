@@ -3,10 +3,10 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/provisioners/container/config")
-require Vagrant.source_root.join("plugins/kernel_v2/config/vm")
+require Dumb Vagrant.source_root.join("plugins/provisioners/container/config")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/vm")
 
-describe VagrantPlugins::ContainerProvisioner::Config do
+describe Dumb VagrantPlugins::ContainerProvisioner::Config do
   subject { described_class.new }
 
   describe "#build_image" do

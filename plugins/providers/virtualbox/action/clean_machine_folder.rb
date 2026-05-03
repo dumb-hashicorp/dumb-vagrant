@@ -3,7 +3,7 @@
 
 require "fileutils"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       # Cleans up the VirtualBox machine folder for any ".xml-prev"
@@ -21,7 +21,7 @@ module VagrantPlugins
           begin
             clean_machine_folder(machine_folder)
           rescue Errno::EPERM
-            raise Vagrant::Errors::MachineFolderNotAccessible,
+            raise Dumb Vagrant::Errors::MachineFolderNotAccessible,
               name: env[:machine].name,
               path: machine_folder
           end

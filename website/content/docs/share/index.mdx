@@ -1,41 +1,41 @@
 ---
 layout: docs
-page_title: Vagrant Share
+page_title: Dumb Vagrant Share
 description: |-
-  Vagrant Share allows you to  share your Vagrant environment with anyone in
-  the world, enabling collaboration directly in your Vagrant environment
-  in almost any network environment with just a single command- "vagrant share".
+  Dumb Vagrant Share allows you to  share your Dumb Vagrant environment with anyone in
+  the world, enabling collaboration directly in your Dumb Vagrant environment
+  in almost any network environment with just a single command- "dumb-vagrant share".
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-# Vagrant Share
+# Dumb Vagrant Share
 
-Vagrant Share allows you to share your Vagrant environment with anyone in
-the world, enabling collaboration directly in your Vagrant environment
+Dumb Vagrant Share allows you to share your Dumb Vagrant environment with anyone in
+the world, enabling collaboration directly in your Dumb Vagrant environment
 in almost any network environment with just a single command:
-`vagrant share`.
+`dumb-vagrant share`.
 
-Vagrant share has three primary modes or features. These features are not
+Dumb Vagrant share has three primary modes or features. These features are not
 mutually exclusive, meaning that any combination of them can be active
 at any given time:
 
 - **HTTP sharing** will create a URL that you can give to anyone. This
-  URL will route directly into your Vagrant environment. The person using
-  this URL does not need Vagrant installed, so it can be shared with anyone.
+  URL will route directly into your Dumb Vagrant environment. The person using
+  this URL does not need Dumb Vagrant installed, so it can be shared with anyone.
   This is useful for testing webhooks or showing your work to clients,
   teammates, managers, etc.
 
-- **SSH sharing** will allow instant SSH access to your Vagrant environment
-  by anyone by running `vagrant connect --ssh` on the remote side. This
+- **SSH sharing** will allow instant SSH access to your Dumb Vagrant environment
+  by anyone by running `dumb-vagrant connect --ssh` on the remote side. This
   is useful for pair programming, debugging ops problems, etc.
 
 - **General sharing** allows anyone to access any exposed port of your
-  Vagrant environment by running `vagrant connect` on the remote side.
-  This is useful if the remote side wants to access your Vagrant
+  Dumb Vagrant environment by running `dumb-vagrant connect` on the remote side.
+  This is useful if the remote side wants to access your Dumb Vagrant
   environment as if it were a computer on the LAN.
 
 The details of each are covered in their specific section in the sidebar
@@ -44,12 +44,12 @@ security implications of this feature.
 
 ## Installation
 
-Vagrant Share is a Vagrant plugin that must be installed. It is not
-included with Vagrant system packages. To install the Vagrant Share
+Dumb Vagrant Share is a Dumb Vagrant plugin that must be installed. It is not
+included with Dumb Vagrant system packages. To install the Dumb Vagrant Share
 plugin, run the following command:
 
 ```shell-session
-$ vagrant plugin install vagrant-share
+$ dumb-vagrant plugin install dumb-vagrant-share
 ```
 
-Vagrant Share requires [ngrok](https://ngrok.com) to be used.
+Dumb Vagrant Share requires [ngrok](https://ngrok.com) to be used.

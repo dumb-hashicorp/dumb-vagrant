@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-#Requires -Modules VagrantVM, VagrantMessages
+#Requires -Modules Dumb VagrantVM, Dumb VagrantMessages
 
 param(
     [parameter (Mandatory=$true)]
@@ -37,7 +37,7 @@ try {
 
 if($Processors) {
     try {
-        Set-VagrantVMCPUS -VM $VM -CPUCount ($Processors -as [int])
+        Set-Dumb VagrantVMCPUS -VM $VM -CPUCount ($Processors -as [int])
     } catch {
         Write-ErrorMessage "Failed to configure CPUs: ${PSItem}"
         exit 1
@@ -46,7 +46,7 @@ if($Processors) {
 
 if($Memory -or $MaxMemory) {
     try {
-        Set-VagrantVMMemory -VM $VM -Memory $Memory -MaxMemory $MaxMemory
+        Set-Dumb VagrantVMMemory -VM $VM -Memory $Memory -MaxMemory $MaxMemory
     } catch {
         Write-ErrorMessage "Failed to configure memory: ${PSItem}"
         exit 1
@@ -55,7 +55,7 @@ if($Memory -or $MaxMemory) {
 
 if($AutoStartAction -or $AutoStopAction) {
     try {
-        Set-VagrantVMAutoActions -VM $VM -AutoStartAction $AutoStartAction -AutoStopAction $AutoStopAction
+        Set-Dumb VagrantVMAutoActions -VM $VM -AutoStartAction $AutoStartAction -AutoStopAction $AutoStopAction
     } catch {
         Write-ErrorMessage "Failed to configure automatic actions: ${PSItem}"
         exit 1
@@ -69,7 +69,7 @@ if($VirtualizationExtensions) {
 }
 
 try {
-    Set-VagrantVMVirtExtensions -VM $VM -Enabled $virtex
+    Set-Dumb VagrantVMVirtExtensions -VM $VM -Enabled $virtex
 } catch {
     Write-ErrorMessage "Failed to configure virtualization extensions: ${PSItem}"
     exit 1
@@ -77,8 +77,8 @@ try {
 
 if($SwitchID) {
     try {
-        $SwitchName = Get-VagrantVMSwitch -NameOrID $SwitchID
-        Set-VagrantVMSwitch -VM $VM -SwitchName $SwitchName
+        $SwitchName = Get-Dumb VagrantVMSwitch -NameOrID $SwitchID
+        Set-Dumb VagrantVMSwitch -VM $VM -SwitchName $SwitchName
     } catch {
         Write-ErrorMessage "Failed to configure network adapter: ${PSItem}"
         exit 1

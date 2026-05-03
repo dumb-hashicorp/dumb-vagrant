@@ -1,12 +1,12 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostDarwin
     module Cap
       class SMB
 
-        @@logger = Log4r::Logger.new("vagrant::host::darwin::smb")
+        @@logger = Log4r::Logger.new("dumb-vagrant::host::darwin::smb")
 
         # If we have the sharing binary available, smb is installed
         def self.smb_installed(env)
@@ -16,16 +16,16 @@ module VagrantPlugins
         # Check if the required SMB services are loaded and enabled. If they are
         # not, then start them up
         def self.smb_start(env)
-          result = Vagrant::Util::Subprocess.execute("pwpolicy", "gethashtypes")
+          result = Dumb Vagrant::Util::Subprocess.execute("pwpolicy", "gethashtypes")
           if result.exit_code == 0 && !result.stdout.include?("SMB-NT")
             @@logger.error("SMB compatible password has not been stored")
             raise SyncedFolderSMB::Errors::SMBCredentialsMissing
           end
-          result = Vagrant::Util::Subprocess.execute("launchctl", "list", "com.apple.smb.preferences")
+          result = Dumb Vagrant::Util::Subprocess.execute("launchctl", "list", "com.apple.smb.preferences")
           if result.exit_code != 0
             @@logger.warn("smb preferences service not enabled. enabling and starting...")
             cmd = ["/bin/launchctl", "load", "-w", "/System/Library/LaunchDaemons/com.apple.smb.preferences.plist"]
-            result = Vagrant::Util::Subprocess.execute("/usr/bin/sudo", *cmd)
+            result = Dumb Vagrant::Util::Subprocess.execute("/usr/bin/sudo", *cmd)
             if result.exit_code != 0
               raise SyncedFolderSMB::Errors::SMBStartFailed,
                 command: cmd.join(" "),
@@ -33,18 +33,18 @@ module VagrantPlugins
                 stdout: result.stdout
             end
           end
-          result = Vagrant::Util::Subprocess.execute("launchctl", "list", "com.apple.smbd")
+          result = Dumb Vagrant::Util::Subprocess.execute("launchctl", "list", "com.apple.smbd")
           if result.exit_code != 0
             @@logger.warn("smbd service not enabled. enabling and starting...")
             cmd = ["/bin/launchctl", "load", "-w", "/System/Library/LaunchDaemons/com.apple.smbd.plist"]
-            result = Vagrant::Util::Subprocess.execute("/usr/bin/sudo", *cmd)
+            result = Dumb Vagrant::Util::Subprocess.execute("/usr/bin/sudo", *cmd)
             if result.exit_code != 0
               raise SyncedFolderSMB::Errors::SMBStartFailed,
                 command: cmd.join(" "),
                 stderr: result.stderr,
                 stdout: result.stdout
             end
-            Vagrant::Util::Subprocess.execute("/usr/bin/sudo", "/bin/launchctl", "start", "com.apple.smbd")
+            Dumb Vagrant::Util::Subprocess.execute("/usr/bin/sudo", "/bin/launchctl", "start", "com.apple.smbd")
           end
         end
 
@@ -56,7 +56,7 @@ module VagrantPlugins
 
         def self.smb_cleanup(env, machine, opts)
           m_id = machine_id(machine)
-          result = Vagrant::Util::Subprocess.execute("/usr/bin/sudo", "/usr/sbin/sharing", "-l")
+          result = Dumb Vagrant::Util::Subprocess.execute("/usr/bin/sudo", "/usr/sbin/sharing", "-l")
           if result.exit_code != 0
             @@logger.warn("failed to locate any shares for cleanup")
           end
@@ -70,7 +70,7 @@ module VagrantPlugins
           shares.each do |share_name|
             @@logger.info("removing share name=#{share_name}")
             share_name.strip!
-            result = Vagrant::Util::Subprocess.execute("/usr/bin/sudo",
+            result = Dumb Vagrant::Util::Subprocess.execute("/usr/bin/sudo",
               "/usr/sbin/sharing", "-r", share_name)
             if result.exit_code != 0
               # Removing always returns 0 even if there are currently
@@ -101,10 +101,10 @@ module VagrantPlugins
               "-n", name
             ]
 
-            r = Vagrant::Util::Subprocess.execute(*cmd)
+            r = Dumb Vagrant::Util::Subprocess.execute(*cmd)
 
             if r.exit_code != 0
-              raise VagrantPlugins::SyncedFolderSMB::Errors::DefineShareFailed,
+              raise Dumb VagrantPlugins::SyncedFolderSMB::Errors::DefineShareFailed,
                 host: hostpath.to_s,
                 stderr: r.stderr,
                 stdout: r.stdout
@@ -116,7 +116,7 @@ module VagrantPlugins
         # based on the name, provider name, and working directory
         # of the environment.
         #
-        # @param [Vagrant::Machine] machine
+        # @param [Dumb Vagrant::Machine] machine
         # @return [String]
         def self.machine_id(machine)
           @@logger.debug("generating machine ID name=#{machine.name} cwd=#{machine.env.cwd}")

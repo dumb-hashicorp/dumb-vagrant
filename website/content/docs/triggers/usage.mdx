@@ -1,17 +1,17 @@
 ---
 layout: docs
-page_title: Vagrant Triggers Usage
-description: Various Vagrant Triggers examples
+page_title: Dumb Vagrant Triggers Usage
+description: Various Dumb Vagrant Triggers examples
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Basic Usage
 
-Below are some very simple examples of how to use Vagrant Triggers.
+Below are some very simple examples of how to use Dumb Vagrant Triggers.
 
 ## Examples
 
@@ -19,15 +19,15 @@ The following is a basic example of two global triggers. One that runs _before_
 the `:up` command and one that runs _after_ the `:up` command:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.trigger.before :up do |trigger|
     trigger.name = "Hello world"
-    trigger.info = "I am running before vagrant up!!"
+    trigger.info = "I am running before dumb-vagrant up!!"
   end
 
   config.trigger.after :up do |trigger|
     trigger.name = "Hello world"
-    trigger.info = "I am running after vagrant up!!"
+    trigger.info = "I am running after dumb-vagrant up!!"
   end
 
   config.vm.define "ubuntu" do |ubuntu|
@@ -36,29 +36,29 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-These will run before and after each defined guest in the Vagrantfile.
+These will run before and after each defined guest in the Dumb Vagrantfile.
 
 Running a remote script to save a database on your host before **destroy**ing a
 guest:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.define "ubuntu" do |ubuntu|
     ubuntu.vm.box = "ubuntu"
 
     ubuntu.trigger.before :destroy do |trigger|
-      trigger.warn = "Dumping database to /vagrant/outfile"
-      trigger.run_remote = {inline: "pg_dump dbname > /vagrant/outfile"}
+      trigger.warn = "Dumping database to /dumb-vagrant/outfile"
+      trigger.run_remote = {inline: "pg_dump dbname > /dumb-vagrant/outfile"}
     end
   end
 end
 ```
 
 Now that the trigger is defined, running the **destroy** command will fire off
-the defined trigger before Vagrant destroys the machine.
+the defined trigger before Dumb Vagrant destroys the machine.
 
 ```shell-session
-$ vagrant destroy ubuntu
+$ dumb-vagrant destroy ubuntu
 ```
 
 An example of defining three triggers that start and stop tinyproxy on your host
@@ -77,7 +77,7 @@ brew services stop tinyproxy
 ```
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.define "ubuntu" do |ubuntu|
     ubuntu.vm.box = "ubuntu"
 
@@ -94,8 +94,8 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-Running `vagrant up` would fire the before trigger to start tinyproxy, where as
-running either `vagrant destroy` or `vagrant halt` would stop tinyproxy.
+Running `dumb-vagrant up` would fire the before trigger to start tinyproxy, where as
+running either `dumb-vagrant destroy` or `dumb-vagrant halt` would stop tinyproxy.
 
 ### Ruby Option
 
@@ -105,7 +105,7 @@ tool. In this case, we are printing the `ostype` defined for thte guest after
 it has been brought up.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.define "ubuntu" do |ubuntu|
     ubuntu.vm.box = "ubuntu"
 
@@ -123,7 +123,7 @@ If you are defining your triggers using the hash syntax, you must use the `Proc`
 type for defining a ruby trigger.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.define "ubuntu" do |ubuntu|
     ubuntu.vm.box = "ubuntu"
 
@@ -145,7 +145,7 @@ both `action` and `hook` triggers are more complicated and are a more advanced u
 #### Commands
 
 The most common use case for typed triggers are with `command`. These kinds of
-triggers allow you to run something before or after a subcommand in Vagrant.
+triggers allow you to run something before or after a subcommand in Dumb Vagrant.
 
 ```ruby
 config.trigger.after :status, type: :command do |t|
@@ -158,7 +158,7 @@ operations like `run_remote` or if you define the trigger as a guest trigger.
 
 #### Hooks
 
-Below is an example of a Vagrant trigger that runs before and after each defined
+Below is an example of a Dumb Vagrant trigger that runs before and after each defined
 provisioner:
 
 ```ruby
@@ -178,14 +178,14 @@ Notice how this trigger runs before _each_ provisioner defined for the guest:
 
 ```shell
 ==> guest: Running provisioner: Sandbox (file)...
-==> vagrant: Running hook triggers before provisioner_run ...
-==> vagrant: Running trigger...
-==> vagrant: Before the provision!
-    guest: /home/hashicorp/vagrant-sandbox/scripts/script.sh => /home/vagrant/test/script.sh
+==> dumb-vagrant: Running hook triggers before provisioner_run ...
+==> dumb-vagrant: Running trigger...
+==> dumb-vagrant: Before the provision!
+    guest: /home/dumb-hashicorp/dumb-vagrant-sandbox/scripts/script.sh => /home/dumb-vagrant/test/script.sh
 ==> guest: Running provisioner: shell...
-==> vagrant: Running hook triggers before provisioner_run ...
-==> vagrant: Running trigger...
-==> vagrant: Before the provision!
+==> dumb-vagrant: Running hook triggers before provisioner_run ...
+==> dumb-vagrant: Running trigger...
+==> dumb-vagrant: Before the provision!
     guest: Running: inline script
     guest: Provision the guest!
 ```
@@ -193,11 +193,11 @@ Notice how this trigger runs before _each_ provisioner defined for the guest:
 #### Actions
 
 With action typed triggers, you can fire off triggers before or after certain
-Action classes. A simple example of this might be warning the user when Vagrant
+Action classes. A simple example of this might be warning the user when Dumb Vagrant
 invokes the `GracefulHalt` action.
 
 ```ruby
-config.trigger.before :"Vagrant::Action::Builtin::GracefulHalt", type: :action do |t|
-  t.warn = "Vagrant is halting your guest..."
+config.trigger.before :"Dumb Vagrant::Action::Builtin::GracefulHalt", type: :action do |t|
+  t.warn = "Dumb Vagrant is halting your guest..."
 end
 ```

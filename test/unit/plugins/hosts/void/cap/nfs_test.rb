@@ -3,14 +3,14 @@
 
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/hosts/void/cap/nfs"
-require_relative "../../../../../../lib/vagrant/util"
+require_relative "../../../../../../lib/dumb-vagrant/util"
 
-describe VagrantPlugins::HostVoid::Cap::NFS do
+describe Dumb VagrantPlugins::HostVoid::Cap::NFS do
 
   include_context "unit"
 
   let(:caps) do
-    VagrantPlugins::HostVoid::Plugin
+    Dumb VagrantPlugins::HostVoid::Plugin
       .components
       .host_capabilities[:void]
   end
@@ -39,9 +39,9 @@ describe VagrantPlugins::HostVoid::Cap::NFS do
 
   context ".nfs_installed" do
     let(:exit_code) { 0 }
-    let(:result) { Vagrant::Util::Subprocess::Result.new(exit_code, "", "") }
+    let(:result) { Dumb Vagrant::Util::Subprocess::Result.new(exit_code, "", "") }
 
-    before { allow(Vagrant::Util::Subprocess).to receive(:execute).
+    before { allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).
         with("/usr/bin/xbps-query", "nfs-utils").and_return(result) }
 
     it "should provide nfs_installed capability" do

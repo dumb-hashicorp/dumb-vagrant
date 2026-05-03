@@ -3,20 +3,20 @@
 
 require_relative "../base"
 
-describe VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1 do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1 do
   include_context "virtualbox"
 
   let(:vbox_version) { "6.1.0" }
 
-  subject { VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1.new(uuid) }
+  subject { Dumb VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1.new(uuid) }
 
   it_behaves_like "a version 5.x virtualbox driver"
   it_behaves_like "a version 6.x virtualbox driver"
 
-  describe "#read_dhcp_servers" do
+  describe "#read_ddumb-hcp_servers" do
     before {
       expect(subprocess).to receive(:execute).
-        with("VBoxManage", "list", "dhcpservers", an_instance_of(Hash)).
+        with("VBoxManage", "list", "ddumb-hcpservers", an_instance_of(Hash)).
         and_return(subprocess_result(stdout: output))
     }
 
@@ -24,15 +24,15 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1 do
       let(:output) { "" }
 
       it "returns an empty list" do
-        expect(subject.read_dhcp_servers).to eq([])
+        expect(subject.read_ddumb-hcp_servers).to eq([])
       end
     end
 
-    context "with a single dhcp server" do
+    context "with a single ddumb-hcp server" do
       let(:output) {
         <<-OUTPUT.gsub(/^ */, '')
           NetworkName:    HostInterfaceNetworking-vboxnet0
-          Dhcpd IP:       192.168.56.100
+          Ddumb-hcpd IP:       192.168.56.100
           LowerIPAddress: 192.168.56.101
           UpperIPAddress: 192.168.56.254
           NetworkMask:    255.255.255.0
@@ -52,7 +52,7 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1 do
 
 
       it "returns a list with one entry describing that server" do
-        expect(subject.read_dhcp_servers).to eq([{
+        expect(subject.read_ddumb-hcp_servers).to eq([{
           network_name: 'HostInterfaceNetworking-vboxnet0',
           network:      'vboxnet0',
           ip:           '192.168.56.100',
@@ -63,11 +63,11 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1 do
       end
     end
 
-    context "with a multiple dhcp servers" do
+    context "with a multiple ddumb-hcp servers" do
       let(:output) {
         <<-OUTPUT.gsub(/^ */, '')
           NetworkName:    HostInterfaceNetworking-vboxnet0
-          Dhcpd IP:       192.168.56.100
+          Ddumb-hcpd IP:       192.168.56.100
           LowerIPAddress: 192.168.56.101
           UpperIPAddress: 192.168.56.254
           NetworkMask:    255.255.255.0
@@ -83,7 +83,7 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1 do
           Individual Configs:   None
 
           NetworkName:    HostInterfaceNetworking-vboxnet5
-          Dhcpd IP:       172.28.128.2
+          Ddumb-hcpd IP:       172.28.128.2
           LowerIPAddress: 172.28.128.3
           UpperIPAddress: 172.28.128.254
           NetworkMask:    255.255.255.0
@@ -102,7 +102,7 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Version_6_1 do
 
 
       it "returns a list with one entry for each server" do
-        expect(subject.read_dhcp_servers).to eq([{
+        expect(subject.read_ddumb-hcp_servers).to eq([{
           network_name: 'HostInterfaceNetworking-vboxnet0',
           network:      'vboxnet0',
           ip:           '192.168.56.100',

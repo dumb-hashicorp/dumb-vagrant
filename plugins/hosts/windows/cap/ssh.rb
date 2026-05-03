@@ -1,23 +1,23 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostWindows
     module Cap
       class SSH
         # Set the ownership and permissions for SSH
         # private key
         #
-        # @param [Vagrant::Environment] env
+        # @param [Dumb Vagrant::Environment] env
         # @param [Pathname] key_path
         def self.set_ssh_key_permissions(env, key_path)
           script_path = Host.scripts_path.join("set_ssh_key_permissions.ps1")
-          result = Vagrant::Util::PowerShell.execute(
+          result = Dumb Vagrant::Util::PowerShell.execute(
             script_path.to_s, "-KeyPath", key_path.to_s.gsub(' ', '` '),
             module_path: Host.modules_path.to_s
           )
           if result.exit_code != 0
-            raise Vagrant::Errors::PowerShellError,
+            raise Dumb Vagrant::Errors::PowerShellError,
               script: script_path,
               stderr: result.stderr
           end

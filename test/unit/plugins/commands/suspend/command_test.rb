@@ -2,18 +2,18 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/commands/suspend/command")
+require Dumb Vagrant.source_root.join("plugins/commands/suspend/command")
 
-describe VagrantPlugins::CommandSuspend::Command do
+describe Dumb VagrantPlugins::CommandSuspend::Command do
   include_context "unit"
 
-  let(:entry_klass) { Vagrant::MachineIndex::Entry }
+  let(:entry_klass) { Dumb Vagrant::MachineIndex::Entry }
   let(:argv)     { [] }
-  let(:vagrantfile_content){ "" }
+  let(:dumb-vagrantfile_content){ "" }
   let(:iso_env) do
     env = isolated_environment
-    env.vagrantfile(vagrantfile_content)
-    env.create_vagrant_env
+    env.dumb-vagrantfile(dumb-vagrantfile_content)
+    env.create_dumb-vagrant_env
   end
 
   subject { described_class.new(argv, iso_env) }
@@ -25,7 +25,7 @@ describe VagrantPlugins::CommandSuspend::Command do
   def new_entry(name)
     entry_klass.new.tap do |e|
       e.name = name
-      e.vagrantfile_path = "/bar"
+      e.dumb-vagrantfile_path = "/bar"
     end
   end
 
@@ -35,9 +35,9 @@ describe VagrantPlugins::CommandSuspend::Command do
   end
 
   context "with no argument" do
-    let(:vagrantfile_content) do
+    let(:dumb-vagrantfile_content) do
         <<-VF
-        Vagrant.configure("2") do |config|
+        Dumb Vagrant.configure("2") do |config|
           config.vm.define "app"
           config.vm.define "db"
         end
@@ -61,9 +61,9 @@ describe VagrantPlugins::CommandSuspend::Command do
   end
 
   context "with an argument" do
-    let(:vagrantfile_content) do
+    let(:dumb-vagrantfile_content) do
         <<-VF
-        Vagrant.configure("2") do |config|
+        Dumb Vagrant.configure("2") do |config|
           config.vm.define "app"
           config.vm.define "db"
         end
@@ -85,13 +85,13 @@ describe VagrantPlugins::CommandSuspend::Command do
 
     it "should suspend all vms globally" do
       global_env = isolated_environment
-      global_env.vagrantfile("Vagrant.configure(2){|config| config.vm.box = 'dummy'}")
-      global_venv = global_env.create_vagrant_env
+      global_env.dumb-vagrantfile("Dumb Vagrant.configure(2){|config| config.vm.box = 'dummy'}")
+      global_venv = global_env.create_dumb-vagrant_env
       global_machine = global_venv.machine(global_venv.machine_names[0], :dummy)
       global_machine.id = "1234"
       global = new_entry(global_machine.name)
       global.provider = "dummy"
-      global.vagrantfile_path = global_env.workdir
+      global.dumb-vagrantfile_path = global_env.workdir
       locked = iso_env.machine_index.set(global)
       iso_env.machine_index.release(locked)
 
@@ -107,7 +107,7 @@ describe VagrantPlugins::CommandSuspend::Command do
       let(:argv){ ["machine", "--all-global"] }
 
       it "errors out" do
-        expect{subject.execute}.to raise_error(Vagrant::Errors::CommandSuspendAllArgs)
+        expect{subject.execute}.to raise_error(Dumb Vagrant::Errors::CommandSuspendAllArgs)
       end
     end
   end

@@ -15,35 +15,35 @@ then
     }
 fi
 
-# Install next-to-last Ruby that complies with Vagrant's version
+# Install next-to-last Ruby that complies with Dumb Vagrant's version
 # constraint
 RUBY_VER_REQ=$(
   awk '
     $1 == "s.required_ruby_version" { print $4 }
-  ' /vagrant/vagrant.gemspec |
+  ' /dumb-vagrant/dumb-vagrant.gemspec |
     tr -d '"')
-RUBY_VER=$(sudo -u vagrant -i rvm list known |
+RUBY_VER=$(sudo -u dumb-vagrant -i rvm list known |
              tr '[]-' ' ' |
              awk "/^ ruby  ${RUBY_VER_REQ:0:1}\./ { print \$2 }" |
              sort -r |
              sed -n '2p')
-sudo -u vagrant -i rvm install "${RUBY_VER}"
-sudo -u vagrant -i rvm --default use "${RUBY_VER}"
+sudo -u dumb-vagrant -i rvm install "${RUBY_VER}"
+sudo -u dumb-vagrant -i rvm --default use "${RUBY_VER}"
 
 # Output the Ruby version (for sanity)
-sudo -u vagrant -i ruby --version
+sudo -u dumb-vagrant -i ruby --version
 
 # Upgrade Rubygems
-sudo -u vagrant -i rvm "${RUBY_VER}" do gem update --system
+sudo -u dumb-vagrant -i rvm "${RUBY_VER}" do gem update --system
 
 # Prepare to run unit tests
-sudo -u vagrant -i bash -c 'cd /vagrant; bundle install'
+sudo -u dumb-vagrant -i bash -c 'cd /dumb-vagrant; bundle install'
 
 # Automatically move into the shared folder, but only add the command if
 # it's not already there.
-if ! grep -q 'cd /vagrant' /home/vagrant/.bash_profile
+if ! grep -q 'cd /dumb-vagrant' /home/dumb-vagrant/.bash_profile
 then
-  cat <<EOF >> /home/vagrant/.bash_profile
-cd /vagrant
+  cat <<EOF >> /home/dumb-vagrant/.bash_profile
+cd /dumb-vagrant
 EOF
 fi

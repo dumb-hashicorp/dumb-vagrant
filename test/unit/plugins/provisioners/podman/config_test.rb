@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/provisioners/podman/config")
-require Vagrant.source_root.join("plugins/provisioners/podman/provisioner")
-require Vagrant.source_root.join("plugins/kernel_v2/config/vm")
+require Dumb Vagrant.source_root.join("plugins/provisioners/podman/config")
+require Dumb Vagrant.source_root.join("plugins/provisioners/podman/provisioner")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/vm")
 
-describe VagrantPlugins::PodmanProvisioner::Config do
+describe Dumb VagrantPlugins::PodmanProvisioner::Config do
   subject { described_class.new }
 
   describe "#post_install_provision" do
     it "raises an error if 'podman' provisioner was provided" do
       expect {subject.post_install_provision("myprov", :type=>"podman", :inline=>"echo 'hello'")}
-        .to raise_error(VagrantPlugins::PodmanProvisioner::PodmanError)
+        .to raise_error(Dumb VagrantPlugins::PodmanProvisioner::PodmanError)
     end
 
     it "setups a basic provisioner" do
@@ -21,7 +21,7 @@ describe VagrantPlugins::PodmanProvisioner::Config do
       mock_provisioner = "mock"
       mock_provisioners = [mock_provisioner]
 
-      allow(VagrantPlugins::Kernel_V2::VMConfig).to receive(:new).
+      allow(Dumb VagrantPlugins::Kernel_V2::VMConfig).to receive(:new).
         and_return(prov)
       allow(prov).to receive(:provision).and_return(mock_provisioners)
       allow(prov).to receive(:provisioners).and_return(mock_provisioners)

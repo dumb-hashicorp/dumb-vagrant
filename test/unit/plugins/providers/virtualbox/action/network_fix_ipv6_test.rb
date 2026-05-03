@@ -4,14 +4,14 @@
 require_relative "../base"
 require 'socket'
 
-describe VagrantPlugins::ProviderVirtualBox::Action::NetworkFixIPv6 do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Action::NetworkFixIPv6 do
   include_context "unit"
   include_context "virtualbox"
 
   let(:iso_env) do
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) do

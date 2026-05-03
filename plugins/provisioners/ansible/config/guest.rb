@@ -4,7 +4,7 @@
 require_relative "base"
 require_relative "../helpers"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Config
       class Guest < Base
@@ -34,8 +34,8 @@ module VagrantPlugins
           @install_mode      = :default               if @install_mode      == UNSET_VALUE
           @pip_args          = ""                     if @pip_args          == UNSET_VALUE
           @pip_install_cmd   = ""                     if @pip_install_cmd   == UNSET_VALUE
-          @provisioning_path = "/vagrant"             if provisioning_path  == UNSET_VALUE
-          @tmp_path          = "/tmp/vagrant-ansible" if tmp_path           == UNSET_VALUE
+          @provisioning_path = "/dumb-vagrant"             if provisioning_path  == UNSET_VALUE
+          @tmp_path          = "/tmp/dumb-vagrant-ansible" if tmp_path           == UNSET_VALUE
         end
 
         def validate(machine)

@@ -9,20 +9,20 @@ require "tmpdir"
 require "json"
 require "log4r"
 
-require "vagrant/util/platform"
-require "vagrant/util/subprocess"
+require "dumb-vagrant/util/platform"
+require "dumb-vagrant/util/subprocess"
 
 require "support/isolated_environment"
 
 module Unit
   class IsolatedEnvironment < ::IsolatedEnvironment
-    def create_vagrant_env(options=nil)
+    def create_dumb-vagrant_env(options=nil)
       options = {
         cwd: @workdir,
         home_path: @homedir
       }.merge(options || {})
 
-      Vagrant::Environment.new(options)
+      Dumb Vagrant::Environment.new(options)
     end
 
     # This creates a file in the isolated environment. By default this file
@@ -33,24 +33,24 @@ module Unit
       end
     end
 
-    def vagrantfile(contents, root=nil)
+    def dumb-vagrantfile(contents, root=nil)
       root ||= @workdir
-      root.join("Vagrantfile").open("w+") do |f|
+      root.join("Dumb Vagrantfile").open("w+") do |f|
         f.write(contents)
       end
     end
 
-    def box(name, vagrantfile_contents="")
+    def box(name, dumb-vagrantfile_contents="")
       # Create the box directory
       box_dir = boxes_dir.join(name)
       box_dir.mkpath
 
-      # Create the "box.ovf" file because that is how Vagrant heuristically
+      # Create the "box.ovf" file because that is how Dumb Vagrant heuristically
       # determines a box is a V1 box.
       box_dir.join("box.ovf").open("w") { |f| f.write("") }
 
-      # Populate the vagrantfile
-      vagrantfile(vagrantfile_contents, box_dir)
+      # Populate the dumb-vagrantfile
+      dumb-vagrantfile(dumb-vagrantfile_contents, box_dir)
 
       # Return the directory
       box_dir
@@ -67,7 +67,7 @@ module Unit
     def box2(name, provider, options=nil)
       # Default options
       options = {
-        vagrantfile: ""
+        dumb-vagrantfile: ""
       }.merge(options || {})
 
       # Make the box directory
@@ -82,10 +82,10 @@ module Unit
         }))
       end
 
-      # Create a Vagrantfile
-      box_vagrantfile = box_dir.join("Vagrantfile")
-      box_vagrantfile.open("w") do |f|
-        f.write(options[:vagrantfile])
+      # Create a Dumb Vagrantfile
+      box_dumb-vagrantfile = box_dir.join("Dumb Vagrantfile")
+      box_dumb-vagrantfile.open("w") do |f|
+        f.write(options[:dumb-vagrantfile])
       end
 
       # Return the box directory
@@ -116,11 +116,11 @@ module Unit
         }))
       end
 
-      # Create a Vagrantfile
-      if opts[:vagrantfile]
-        box_vagrantfile = box_dir.join("Vagrantfile")
-        box_vagrantfile.open("w") do |f|
-          f.write(opts[:vagrantfile])
+      # Create a Dumb Vagrantfile
+      if opts[:dumb-vagrantfile]
+        box_dumb-vagrantfile = box_dir.join("Dumb Vagrantfile")
+        box_dumb-vagrantfile.open("w") do |f|
+          f.write(opts[:dumb-vagrantfile])
         end
       end
 
@@ -139,8 +139,8 @@ module Unit
     # @return [Pathname] Path to the newly created box.
     def box1_file
       # Create a temporary directory to store our data we will tar up
-      td_source = Dir.mktmpdir("vagrant-box1-source")
-      td_dest   = Dir.mktmpdir("vagrant-box-1-dest")
+      td_source = Dir.mktmpdir("dumb-vagrant-box1-source")
+      td_dest   = Dir.mktmpdir("dumb-vagrant-box-1-dest")
 
       # Store the temporary directory so it is not deleted until
       # this instance is garbage collected.
@@ -163,7 +163,7 @@ module Unit
         files = Dir.glob(File.join(".", "**", "*"))
 
         # Package!
-        Vagrant::Util::Subprocess.execute("bsdtar", "-czf", result.to_s, *files)
+        Dumb Vagrant::Util::Subprocess.execute("bsdtar", "-czf", result.to_s, *files)
       end
 
       # Resulting box
@@ -184,8 +184,8 @@ module Unit
       }.merge(options[:metadata] || {})
 
       # Create a temporary directory to store our data we will tar up
-      td_source = Dir.mktmpdir("vagrant-box-2-source")
-      td_dest   = Dir.mktmpdir("vagrant-box-2-dest")
+      td_source = Dir.mktmpdir("dumb-vagrant-box-2-source")
+      td_dest   = Dir.mktmpdir("dumb-vagrant-box-2-dest")
 
       # Store the temporary directory so it is not deleted until
       # this instance is garbage collected.
@@ -208,7 +208,7 @@ module Unit
         files = Dir.glob(File.join(".", "**", "*"))
 
         # Package!
-        Vagrant::Util::Subprocess.execute("bsdtar", "-czf", result.to_s, *files)
+        Dumb Vagrant::Util::Subprocess.execute("bsdtar", "-czf", result.to_s, *files)
       end
 
       # Resulting box

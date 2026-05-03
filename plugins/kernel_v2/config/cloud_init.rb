@@ -4,9 +4,9 @@
 require "log4r"
 require "securerandom"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
-    class VagrantConfigCloudInit < Vagrant.plugin("2", :config)
+    class Dumb VagrantConfigCloudInit < Dumb Vagrant.plugin("2", :config)
       #-------------------------------------------------------------------
       # Config class for cloud-init
       #-------------------------------------------------------------------
@@ -45,7 +45,7 @@ module VagrantPlugins
       attr_accessor :inline
 
       def initialize(type=nil)
-        @logger = Log4r::Logger.new("vagrant::config::vm::cloud_init")
+        @logger = Log4r::Logger.new("dumb-vagrant::config::vm::cloud_init")
 
         @type = type if type
 
@@ -76,38 +76,38 @@ module VagrantPlugins
         errors = _detected_errors
 
         if @type && @type != DEFAULT_CONFIG_TYPE
-          errors << I18n.t("vagrant.cloud_init.incorrect_type_set",
+          errors << I18n.t("dumb-vagrant.cloud_init.incorrect_type_set",
                            type: @type,
                            machine: machine.name,
                            default_type: DEFAULT_CONFIG_TYPE)
         end
 
         if !@content_type
-          errors << I18n.t("vagrant.cloud_init.content_type_not_set",
+          errors << I18n.t("dumb-vagrant.cloud_init.content_type_not_set",
                            machine: machine.name,
                            accepted_types: DEFAULT_CONTENT_TYPES.join(', '))
         elsif !DEFAULT_CONTENT_TYPES.include?(@content_type)
-          errors << I18n.t("vagrant.cloud_init.incorrect_content_type",
+          errors << I18n.t("dumb-vagrant.cloud_init.incorrect_content_type",
                            machine: machine.name,
                            content_type: @content_type,
                            accepted_types: DEFAULT_CONTENT_TYPES.join(', '))
         end
 
         if @path && @inline
-          errors << I18n.t("vagrant.cloud_init.path_and_inline_set",
+          errors << I18n.t("dumb-vagrant.cloud_init.path_and_inline_set",
                            machine: machine.name)
         end
 
         if @path
           if !@path.is_a?(String)
-            errors << I18n.t("vagrant.cloud_init.incorrect_path_type",
+            errors << I18n.t("dumb-vagrant.cloud_init.incorrect_path_type",
                               machine: machine.name,
                               path: @path,
                               type: @path.class.name)
           else
             expanded_path = Pathname.new(@path).expand_path(machine.env.root_path)
             if !expanded_path.file?
-              errors << I18n.t("vagrant.cloud_init.path_invalid",
+              errors << I18n.t("dumb-vagrant.cloud_init.path_invalid",
                                path: expanded_path,
                                machine: machine.name)
             end
@@ -116,7 +116,7 @@ module VagrantPlugins
 
         if @inline
           if !@inline.is_a?(String)
-            errors << I18n.t("vagrant.cloud_init.incorrect_inline_type",
+            errors << I18n.t("dumb-vagrant.cloud_init.incorrect_inline_type",
                              machine: machine.name,
                              type: @inline.class.name)
           end

@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/auth/whoami")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/auth/whoami")
 
-describe VagrantPlugins::CloudCommand::AuthCommand::Command::Whoami do
+describe Dumb VagrantPlugins::CloudCommand::AuthCommand::Command::Whoami do
   include_context "unit"
 
   let(:argv)     { [] }
   let(:env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
   let(:client) { double("client", token: token) }
   let(:token) { double("token") }
@@ -25,8 +25,8 @@ describe VagrantPlugins::CloudCommand::AuthCommand::Command::Whoami do
 
   before do
     allow(env).to receive(:action_runner).and_return(action_runner)
-    allow(VagrantPlugins::CloudCommand::Client).to receive(:new).and_return(client)
-    allow(VagrantCloud::Account).to receive(:new).and_return(account)
+    allow(Dumb VagrantPlugins::CloudCommand::Client).to receive(:new).and_return(client)
+    allow(Dumb VagrantCloud::Account).to receive(:new).and_return(account)
   end
 
   describe "whoami" do
@@ -49,7 +49,7 @@ describe VagrantPlugins::CloudCommand::AuthCommand::Command::Whoami do
       let(:token) { "my-token" }
 
       it "should load an account to validate" do
-        expect(VagrantCloud::Account).to receive(:new).
+        expect(Dumb VagrantCloud::Account).to receive(:new).
           with(hash_including(access_token: token)).and_return(account)
         subject.whoami(token)
       end
@@ -64,7 +64,7 @@ describe VagrantPlugins::CloudCommand::AuthCommand::Command::Whoami do
       end
 
       context "when error is encountered" do
-        before { allow(VagrantCloud::Account).to receive(:new).and_raise(VagrantCloud::Error::ClientError) }
+        before { allow(Dumb VagrantCloud::Account).to receive(:new).and_raise(Dumb VagrantCloud::Error::ClientError) }
 
         it "should output an error" do
           expect(env.ui).to receive(:error).twice
@@ -89,7 +89,7 @@ describe VagrantPlugins::CloudCommand::AuthCommand::Command::Whoami do
       let(:argv) { ["token", "token", "token"] }
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 

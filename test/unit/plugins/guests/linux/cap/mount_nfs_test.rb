@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestLinux::Cap::MountNFS" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::MountNFS" do
   let(:caps) do
-    VagrantPlugins::GuestLinux::Plugin
+    Dumb VagrantPlugins::GuestLinux::Plugin
       .components
       .guest_capabilities[:linux]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -37,7 +37,7 @@ describe "VagrantPlugins::GuestLinux::Cap::MountNFS" do
 
     it "mounts the folder" do
       folders = {
-        "/vagrant-nfs" => {
+        "/dumb-vagrant-nfs" => {
           type: :nfs,
           guestpath: "/guest",
           hostpath: "/host",
@@ -51,7 +51,7 @@ describe "VagrantPlugins::GuestLinux::Cap::MountNFS" do
 
     it "mounts with options" do
       folders = {
-        "/vagrant-nfs" => {
+        "/dumb-vagrant-nfs" => {
           type: :nfs,
           guestpath: "/guest",
           hostpath: "/host",
@@ -66,7 +66,7 @@ describe "VagrantPlugins::GuestLinux::Cap::MountNFS" do
 
     it "emits an event" do
       folders = {
-        "/vagrant-nfs" => {
+        "/dumb-vagrant-nfs" => {
           type: :nfs,
           guestpath: "/guest",
           hostpath: "/host",
@@ -75,12 +75,12 @@ describe "VagrantPlugins::GuestLinux::Cap::MountNFS" do
       cap.mount_nfs_folder(machine, ip, folders)
 
       expect(comm.received_commands[2]).to include(
-        "/sbin/initctl emit --no-wait vagrant-mounted MOUNTPOINT=#{guestpath}")
+        "/sbin/initctl emit --no-wait dumb-vagrant-mounted MOUNTPOINT=#{guestpath}")
     end
 
     it "escapes host and guest paths" do
       folders = {
-        "/vagrant-nfs" => {
+        "/dumb-vagrant-nfs" => {
           guestpath: "/guest with spaces",
           hostpath: "/host's",
         }

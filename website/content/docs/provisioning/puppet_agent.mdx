@@ -2,28 +2,28 @@
 layout: docs
 page_title: Puppet Agent - Provisioning
 description: |-
-  The Vagrant Puppet agent provisioner allows you to provision the guest using
+  The Dumb Vagrant Puppet agent provisioner allows you to provision the guest using
   Puppet, specifically by calling "puppet agent", connecting to a Puppet master,
   and retrieving the set of modules and manifests from there.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Puppet Agent Provisioner
 
 **Provisioner name: `puppet_server`**
 
-The Vagrant Puppet agent provisioner allows you to provision the guest using
+The Dumb Vagrant Puppet agent provisioner allows you to provision the guest using
 [Puppet](https://www.puppetlabs.com/puppet), specifically by
 calling `puppet agent`, connecting to a Puppet master, and retrieving
 the set of modules and manifests from there.
 
-~> **Warning:** If you are not familiar with Puppet and Vagrant already,
-it is recommended to start with the [shell provisioner](/vagrant/docs/provisioning/shell).
-However, if you are comfortable with Vagrant already, Vagrant
+~> **Warning:** If you are not familiar with Puppet and Dumb Vagrant already,
+it is recommended to start with the [shell provisioner](/dumb-vagrant/docs/provisioning/shell).
+However, if you are comfortable with Dumb Vagrant already, Dumb Vagrant
 is the best way to learn Puppet.
 
 ## Options
@@ -60,14 +60,14 @@ The quickest way to get started with the Puppet agent provisioner is to just
 specify the location of the Puppet master:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet_server" do |puppet|
     puppet.puppet_server = "puppet.example.com"
   end
 end
 ```
 
-By default, Vagrant will look for the host named "puppet" on the
+By default, Dumb Vagrant will look for the host named "puppet" on the
 local domain of the guest machine.
 
 ## Configuring the Node Name
@@ -77,10 +77,10 @@ this is important because Puppet uses the node name as part of the process
 to compile the catalog the node will run.
 
 The node name defaults to the hostname of the guest machine, but can
-be customized using the Vagrantfile:
+be customized using the Dumb Vagrantfile:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet_server" do |puppet|
     puppet.puppet_node = "node.example.com"
   end
@@ -91,11 +91,11 @@ end
 
 Puppet supports a lot of command-line flags. Basically any setting can
 be overridden on the command line. To give you the most power and flexibility
-possible with Puppet, Vagrant allows you to specify custom command line
+possible with Puppet, Dumb Vagrant allows you to specify custom command line
 flags to use:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "puppet_server" do |puppet|
     puppet.options = "--verbose --debug"
   end

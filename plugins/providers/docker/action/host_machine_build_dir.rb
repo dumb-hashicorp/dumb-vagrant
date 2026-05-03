@@ -4,13 +4,13 @@
 require "digest/md5"
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class HostMachineBuildDir
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::docker::hostmachinebuilddir")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::hostmachinebuilddir")
         end
 
         def call(env)

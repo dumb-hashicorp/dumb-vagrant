@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantTests
+module Dumb VagrantTests
   module DummyCommunicator
-    class Communicator < Vagrant.plugin("2", :communicator)
+    class Communicator < Dumb Vagrant.plugin("2", :communicator)
       def ready?
         true
       end

@@ -3,9 +3,9 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandCap
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
         "checks and executes capability"
       end
@@ -15,14 +15,14 @@ module VagrantPlugins
         options[:check] = false
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant cap [options] TYPE NAME [args]"
+          o.banner = "Usage: dumb-vagrant cap [options] TYPE NAME [args]"
           o.separator ""
           o.separator "This is an advanced command. If you don't know what this"
           o.separator "does and you aren't explicitly trying to use it, you probably"
           o.separator "don't want to use this."
           o.separator ""
           o.separator "This command checks or executes arbitrary capabilities that"
-          o.separator "Vagrant has for hosts, guests, and providers."
+          o.separator "Dumb Vagrant has for hosts, guests, and providers."
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -41,7 +41,7 @@ module VagrantPlugins
         argv = parse_options(opts)
         return if !argv
         if argv.length < 2
-          raise Vagrant::Errors::CLIInvalidUsage,
+          raise Dumb Vagrant::Errors::CLIInvalidUsage,
             help: opts.help.chomp
         end
 
@@ -60,7 +60,7 @@ module VagrantPlugins
                        when :guest
                          vm.guest
                        else
-                         raise Vagrant::Errors::CLIInvalidUsage,
+                         raise Dumb Vagrant::Errors::CLIInvalidUsage,
                            help: opts.help.chomp
                        end
           end

@@ -2,25 +2,25 @@
 layout: docs
 page_title: Custom Configuration - Plugin Development
 description: |-
-  This page documents how to add new configuration options to Vagrant,
-  settable with "config.YOURKEY" in Vagrantfiles. Prior to reading this,
+  This page documents how to add new configuration options to Dumb Vagrant,
+  settable with "config.YOURKEY" in Dumb Vagrantfiles. Prior to reading this,
   you should be familiar with the plugin development basics.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Plugin Development: Configuration
 
-This page documents how to add new configuration options to Vagrant,
-settable with `config.YOURKEY` in Vagrantfiles. Prior to reading this,
+This page documents how to add new configuration options to Dumb Vagrant,
+settable with `config.YOURKEY` in Dumb Vagrantfiles. Prior to reading this,
 you should be familiar with the
-[plugin development basics](/vagrant/docs/plugins/development-basics).
+[plugin development basics](/dumb-vagrant/docs/plugins/development-basics).
 
 ~> **Warning: Advanced Topic!** Developing plugins is an
-advanced topic that only experienced Vagrant users who are reasonably
+advanced topic that only experienced Dumb Vagrant users who are reasonably
 comfortable with Ruby should approach.
 
 ## Definition Component
@@ -38,18 +38,18 @@ end
 Configuration keys are defined with the `config` method, which takes as an
 argument the name of the configuration variable as the argument. This
 means that the configuration object will be accessible via `config.foo`
-in Vagrantfiles. Then, the block argument returns a class that implements
-the `Vagrant.plugin(2, :config)` interface.
+in Dumb Vagrantfiles. Then, the block argument returns a class that implements
+the `Dumb Vagrant.plugin(2, :config)` interface.
 
 ## Implementation
 
-Implementations of configuration keys should subclass `Vagrant.plugin(2, :config)`,
-which is a Vagrant method that will return the proper subclass for a version
+Implementations of configuration keys should subclass `Dumb Vagrant.plugin(2, :config)`,
+which is a Dumb Vagrant method that will return the proper subclass for a version
 2 configuration section. The implementation is very simple, and acts mostly
 as a plain Ruby object. Here is an example:
 
 ```ruby
-class Config < Vagrant.plugin(2, :config)
+class Config < Dumb Vagrant.plugin(2, :config)
   attr_accessor :widgets
 
   def initialize
@@ -65,7 +65,7 @@ end
 When using this configuration class, it looks like the following:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ...
 
   config.foo.widgets = 12
@@ -73,13 +73,13 @@ end
 ```
 
 Easy. The only odd thing is the `UNSET_VALUE` bits above. This is actually
-so that Vagrant can properly automatically merge multiple configurations.
+so that Dumb Vagrant can properly automatically merge multiple configurations.
 Merging is covered in the next section, and `UNSET_VALUE` will be explained
 there.
 
 ## Merging
 
-Vagrant works by loading [multiple Vagrantfiles and merging them](/vagrant/docs/vagrantfile/#load-order).
+Dumb Vagrant works by loading [multiple Dumb Vagrantfiles and merging them](/dumb-vagrant/docs/dumb-vagrantfile/#load-order).
 This merge logic is built-in to configuration classes. When merging two
 configuration objects, we will call them "old" and "new", it'll by default
 take all the instance variables defined on "new" that are not `UNSET_VALUE`
@@ -87,30 +87,30 @@ and set them onto the merged result.
 
 The reason `UNSET_VALUE` is used instead of Ruby's `nil` is because
 it is possible that you want the default to be some value, and the user
-actually wants to set the value to `nil`, and it is impossible for Vagrant
+actually wants to set the value to `nil`, and it is impossible for Dumb Vagrant
 to automatically determine whether the user set the instance variable, or
 if it was defaulted as nil.
 
 This merge logic is what you want almost every time. Hence, in the example
-above, `@widgets` is set to `UNSET_VALUE`. If we had two Vagrant configuration
-objects in the same file, then Vagrant would properly merge the follows.
+above, `@widgets` is set to `UNSET_VALUE`. If we had two Dumb Vagrant configuration
+objects in the same file, then Dumb Vagrant would properly merge the follows.
 The example below shows this:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.widgets = 1
 end
 
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ... other stuff
 end
 
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.widgets = 2
 end
 ```
 
-If this were placed in a Vagrantfile, after merging, the value of widgets
+If this were placed in a Dumb Vagrantfile, after merging, the value of widgets
 would be "2".
 
 The `finalize!` method is called only once ever on the final configuration
@@ -123,7 +123,7 @@ wanted our widgets to be additive. We can override the `merge` method to
 do this:
 
 ```ruby
-class Config < Vagrant.config("2", :config)
+class Config < Dumb Vagrant.config("2", :config)
   attr_accessor :widgets
 
   def initialize
@@ -146,11 +146,11 @@ blocks, the final value of widgets would be "3".
 ## Validation
 
 Configuration classes are also responsible for validating their own
-values. Vagrant will call the `validate` method to do this. An example
+values. Dumb Vagrant will call the `validate` method to do this. An example
 validation method is shown below:
 
 ```ruby
-class Config < Vagrant.plugin("2", :config)
+class Config < Dumb Vagrant.plugin("2", :config)
   # ...
 
   def validate(machine)
@@ -165,16 +165,16 @@ end
 ```
 
 The validation method is given a `machine` object, since validation is
-done for each machine that Vagrant is managing. This allows you to
+done for each machine that Dumb Vagrant is managing. This allows you to
 conditionally validate some keys based on the state of the machine and so on.
 
-The `_detected_errors` method returns any errors already detected by Vagrant,
+The `_detected_errors` method returns any errors already detected by Dumb Vagrant,
 such as unknown configuration keys. This returns an array of error messages,
 so be sure to turn it into the proper Hash object to return later.
 
 The return value is a Ruby Hash object, where the key is a section name,
 and the value is a list of error messages. These will be displayed by
-Vagrant. The hash must not contain any values if there are no errors.
+Dumb Vagrant. The hash must not contain any values if there are no errors.
 
 ## Accessing
 
@@ -206,5 +206,5 @@ def my_helper
 end
 ```
 
-For examples, take a look at Vagrant's own internal plugins in the `plugins`
-folder in Vagrant's source on GitHub.
+For examples, take a look at Dumb Vagrant's own internal plugins in the `plugins`
+folder in Dumb Vagrant's source on GitHub.

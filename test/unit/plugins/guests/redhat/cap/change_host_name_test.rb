@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestRedHat::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestRedHat::Cap::ChangeHostName" do
   let(:caps) do
-    VagrantPlugins::GuestRedHat::Plugin
+    Dumb VagrantPlugins::GuestRedHat::Plugin
       .components
       .guest_capabilities[:redhat]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)

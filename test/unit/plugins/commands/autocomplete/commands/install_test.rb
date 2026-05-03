@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/autocomplete/command/install")
+require Dumb Vagrant.source_root.join("plugins/commands/autocomplete/command/install")
 
-describe VagrantPlugins::CommandAutocomplete::Command::Install do
+describe Dumb VagrantPlugins::CommandAutocomplete::Command::Install do
   include_context "unit"
 
   let(:argv)     { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:homedir) { Dir.mktmpdir("homedir") }

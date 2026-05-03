@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/provisioners/docker/provisioner")
+require Dumb Vagrant.source_root.join("plugins/provisioners/docker/provisioner")
 
-describe VagrantPlugins::DockerProvisioner::Installer do
+describe Dumb VagrantPlugins::DockerProvisioner::Installer do
   include_context "unit"
   subject { described_class.new(machine) }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }
@@ -44,7 +44,7 @@ describe VagrantPlugins::DockerProvisioner::Installer do
       allow(machine).to receive_message_chain(:guest, :capability).with(:docker_installed).and_return(false)
 
       # Expect to raise error since we are mocking out the test for docker install to return false
-      expect {subject.ensure_installed()}.to raise_error(VagrantPlugins::DockerProvisioner::DockerError)
+      expect {subject.ensure_installed()}.to raise_error(Dumb VagrantPlugins::DockerProvisioner::DockerError)
     end
   end
 

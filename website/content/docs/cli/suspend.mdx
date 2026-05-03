@@ -1,25 +1,25 @@
 ---
 layout: docs
-page_title: vagrant suspend - Command-Line Interface
+page_title: dumb-vagrant suspend - Command-Line Interface
 description: |-
-  The "vagrant suspend" command is used to suspend the guest machine Vagrant is
+  The "dumb-vagrant suspend" command is used to suspend the guest machine Dumb Vagrant is
   currently managing.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Suspend
 
-**Command: `vagrant suspend [name|id]`**
+**Command: `dumb-vagrant suspend [name|id]`**
 
-This suspends the guest machine Vagrant is managing, rather than fully
-[shutting it down](/vagrant/docs/cli/halt) or [destroying it](/vagrant/docs/cli/destroy).
+This suspends the guest machine Dumb Vagrant is managing, rather than fully
+[shutting it down](/dumb-vagrant/docs/cli/halt) or [destroying it](/dumb-vagrant/docs/cli/destroy).
 
 A suspend effectively saves the _exact point-in-time state_ of the machine,
-so that when you [resume](/vagrant/docs/cli/resume) it later, it begins running
+so that when you [resume](/dumb-vagrant/docs/cli/resume) it later, it begins running
 immediately from that point, rather than doing a full boot.
 
 This generally requires extra disk space to store all the contents of the

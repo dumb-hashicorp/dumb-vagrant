@@ -3,7 +3,7 @@
 
 require 'json'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSnapshot
     module Command
       module PushShared
@@ -44,7 +44,7 @@ module VagrantPlugins
 
           # If no snapshot was found, we never pushed
           if !name
-            machine.ui.info(I18n.t("vagrant.commands.snapshot.no_push_snapshot"))
+            machine.ui.info(I18n.t("dumb-vagrant.commands.snapshot.no_push_snapshot"))
             return
           end
 

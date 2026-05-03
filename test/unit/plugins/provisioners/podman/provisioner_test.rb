@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/provisioners/podman/provisioner")
+require Dumb Vagrant.source_root.join("plugins/provisioners/podman/provisioner")
 
-describe VagrantPlugins::PodmanProvisioner::Provisioner do
+describe Dumb VagrantPlugins::PodmanProvisioner::Provisioner do
   include_context "unit"
   subject { described_class.new(machine, config, installer, client) }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }
@@ -44,7 +44,7 @@ describe VagrantPlugins::PodmanProvisioner::Provisioner do
 
   describe "#provision" do
     let(:provisioner) do
-      prov = VagrantPlugins::Kernel_V2::VagrantConfigProvisioner.new("spec-test", :shell)
+      prov = Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigProvisioner.new("spec-test", :shell)
       prov.config = {}
       prov
     end

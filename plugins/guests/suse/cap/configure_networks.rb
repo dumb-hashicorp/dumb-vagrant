@@ -3,14 +3,14 @@
 
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSUSE
     module Cap
       class ConfigureNetworks
-        extend Vagrant::Util::Retryable
-        include Vagrant::Util
+        extend Dumb Vagrant::Util::Retryable
+        include Dumb Vagrant::Util
 
         def self.configure_networks(machine, networks)
           comm = machine.communicate
@@ -27,9 +27,9 @@ module VagrantPlugins
               options: network,
             )
 
-            remote_path = "/tmp/vagrant-network-#{network[:device]}-#{Time.now.to_i}-#{i}"
+            remote_path = "/tmp/dumb-vagrant-network-#{network[:device]}-#{Time.now.to_i}-#{i}"
 
-            Tempfile.open("vagrant-suse-configure-networks") do |f|
+            Tempfile.open("dumb-vagrant-suse-configure-networks") do |f|
               f.binmode
               f.write(entry)
               f.fsync

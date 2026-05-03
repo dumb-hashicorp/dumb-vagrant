@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestPld::Cap::Flavor" do
+describe "Dumb VagrantPlugins::GuestPld::Cap::Flavor" do
   let(:caps) do
-    VagrantPlugins::GuestPld::Plugin
+    Dumb VagrantPlugins::GuestPld::Plugin
       .components
       .guest_capabilities[:pld]
   end

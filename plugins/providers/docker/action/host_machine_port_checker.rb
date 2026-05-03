@@ -3,14 +3,14 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       # This sets up the middleware env var to check for ports in use.
       class HostMachinePortChecker
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant::docker::hostmachineportchecker")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::hostmachineportchecker")
         end
 
         def call(env)

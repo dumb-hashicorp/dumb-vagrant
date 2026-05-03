@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Cap
       module Guest
@@ -38,7 +38,7 @@ module VagrantPlugins
               pip_install_cmd = DEFAULT_PIP_INSTALL_CMD
             end
 
-            machine.ui.detail I18n.t("vagrant.provisioners.ansible.installing_pip")
+            machine.ui.detail I18n.t("dumb-vagrant.provisioners.ansible.installing_pip")
             machine.communicate.execute pip_install_cmd
           end
 

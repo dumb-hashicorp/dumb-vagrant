@@ -3,13 +3,13 @@
 
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSlackware
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
+        include Dumb Vagrant::Util
 
         def self.configure_networks(machine, networks)
           comm = machine.communicate
@@ -18,7 +18,7 @@ module VagrantPlugins
           interfaces = machine.guest.capability(:network_interfaces)
 
           # Remove any previous configuration
-          commands << "sed -i'' -e '/^#VAGRANT-BEGIN/,/^#VAGRANT-END/ d' /etc/rc.d/rc.inet1.conf"
+          commands << "sed -i'' -e '/^#DUMB_VAGRANT-BEGIN/,/^#DUMB_VAGRANT-END/ d' /etc/rc.d/rc.inet1.conf"
 
           networks.each.with_index do |network, i|
             network[:device] = interfaces[network[:interface]]
@@ -28,8 +28,8 @@ module VagrantPlugins
               options: network,
             )
 
-            remote_path = "/tmp/vagrant-network-#{network[:device]}-#{Time.now}-#{i}"
-            Tempfile.open("vagrant-slackware-configure-networks") do |f|
+            remote_path = "/tmp/dumb-vagrant-network-#{network[:device]}-#{Time.now}-#{i}"
+            Tempfile.open("dumb-vagrant-slackware-configure-networks") do |f|
               f.binmode
               f.write(entry)
               f.fsync

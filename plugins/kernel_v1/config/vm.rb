@@ -1,12 +1,12 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V1
-    # This is the Version 1.0.x Vagrant VM configuration. This is
+    # This is the Version 1.0.x Dumb Vagrant VM configuration. This is
     # _outdated_ and exists purely to be upgraded over to the new V2
     # format.
-    class VMConfig < Vagrant.plugin("1", :config)
+    class VMConfig < Dumb Vagrant.plugin("1", :config)
       DEFAULT_VM_NAME = :default
 
       attr_accessor :name
@@ -73,7 +73,7 @@ module VagrantPlugins
       end
 
       # This argument is nil only because the old style was deprecated and
-      # we didn't want to break Vagrantfiles. This was never removed and
+      # we didn't want to break Dumb Vagrantfiles. This was never removed and
       # since we've moved onto V2 configuration, we might as well keep this
       # around forever.
       def customize(command=nil)
@@ -160,14 +160,14 @@ module VagrantPlugins
           guestpath    = options.delete(:guestpath)
           hostpath     = options.delete(:hostpath)
 
-          # This was the name of the old default /vagrant shared folder.
+          # This was the name of the old default /dumb-vagrant shared folder.
           # We warn the use that this changed, but also silently change
           # it to try to make things work properly.
           if options[:id] == "v-root"
-            warnings << "The 'v-root' shared folders have been renamed to 'vagrant-root'.\n" +
-              "Assuming you meant 'vagrant-root'..."
+            warnings << "The 'v-root' shared folders have been renamed to 'dumb-vagrant-root'.\n" +
+              "Assuming you meant 'dumb-vagrant-root'..."
 
-            options[:id] = "vagrant-root"
+            options[:id] = "dumb-vagrant-root"
           end
 
           new.vm.synced_folder(hostpath, guestpath, options)

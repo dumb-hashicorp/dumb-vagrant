@@ -6,13 +6,13 @@ en:
     middleware:
       authentication:
         different_target: |-
-          Vagrant has detected a custom Vagrant server in use for downloading
+          Dumb Vagrant has detected a custom Dumb Vagrant server in use for downloading
           box files. An authentication token is currently set which will be
-          added to the box request. If the custom Vagrant server should not
+          added to the box request. If the custom Dumb Vagrant server should not
           be receiving the authentication token, please unset it.
 
-            Known Vagrant server:  %{known_host}
-            Custom Vagrant server: %{custom_host}
+            Known Dumb Vagrant server:  %{known_host}
+            Custom Dumb Vagrant server: %{custom_host}
 
           Press ctrl-c to cancel...
     publish:
@@ -26,7 +26,7 @@ en:
         Complete! Published %{org}/%{box_name}
       confirm:
         warn: |-
-          You are about to publish a box on Vagrant Cloud with the following options:
+          You are about to publish a box on Dumb Vagrant Cloud with the following options:
         box: |-
           %{org}/%{box_name}:   (v%{version}) for provider '%{provider_name}'
         private: |-
@@ -63,7 +63,7 @@ en:
       delete_success: |-
         Deleted box %{org}/%{box_name}
       delete_warn: |-
-        This will completely remove %{box} from Vagrant Cloud. This cannot be undone.
+        This will completely remove %{box} from Dumb Vagrant Cloud. This cannot be undone.
       update_success: |-
         Updated box %{org}/%{box_name}
       not_found: |-
@@ -74,7 +74,7 @@ en:
     upload:
       no_url: |-
         No URL was provided to upload the provider
-        You will need to run the `vagrant cloud provider upload` command to provide a box
+        You will need to run the `dumb-vagrant cloud provider upload` command to provide a box
     provider:
       upload: |-
         Uploading box file for '%{org}/%{box_name}' (v%{version}) for provider: '%{provider}'
@@ -87,7 +87,7 @@ en:
         Please enter the architecture name to delete:
       delete_warn: |-
         This will completely remove provider %{provider} with architecture %{architecture}
-        on version %{version} from %{box} on Vagrant Cloud. This cannot be undone.
+        on version %{version} from %{box} on Dumb Vagrant Cloud. This cannot be undone.
       create_success: |-
         Created provider %{provider} with %{architecture} architecture on %{org}/%{box_name} for version %{version}
       delete_success: |-
@@ -98,7 +98,7 @@ en:
       not_found: |-
         Failed to locate %{provider_name} provider for %{org}/%{box_name} on version %{version}
       direct_disable: |-
-        Vagrant is automatically disabling direct upload to backend storage.
+        Dumb Vagrant is automatically disabling direct upload to backend storage.
         Uploads directly to backend storage are currently only supported for
         files 5G in size or smaller. Box file to upload is: %{size}
     version:
@@ -113,11 +113,11 @@ en:
       update_success: |-
         Updated version %{version} on %{org}/%{box_name}
       revoke_warn: |-
-        This will revoke version %{version} from %{box} from Vagrant Cloud. This cannot be undone.
+        This will revoke version %{version} from %{box} from Dumb Vagrant Cloud. This cannot be undone.
       release_warn: |-
-        This will release version %{version} from %{box} to Vagrant Cloud and be available to download.
+        This will release version %{version} from %{box} to Dumb Vagrant Cloud and be available to download.
       delete_warn: |-
-        This will completely remove version %{version} from %{box} from Vagrant Cloud. This cannot be undone.
+        This will completely remove version %{version} from %{box} from Dumb Vagrant Cloud. This cannot be undone.
       not_found: |-
         Failed to locate version %{version} for %{org}/%{box_name}
     errors:
@@ -160,11 +160,11 @@ en:
         update_fail: |-
           Failed to update version %{version} on box %{org}/%{box_name}
       server_error: |-
-        The Vagrant Cloud server responded with a not-OK response:
+        The Dumb Vagrant Cloud server responded with a not-OK response:
 
         %{errors}
       server_unreachable: |-
-        The Vagrant Cloud server is not currently accepting connections. Please check
+        The Dumb Vagrant Cloud server is not currently accepting connections. Please check
         your network connection and try again later.
 
       unauthorized: |-
@@ -175,16 +175,16 @@ en:
     check_logged_in: |-
       You are already logged in.
     check_not_logged_in: |-
-      You are not currently logged in. Please run `vagrant login` and provide
+      You are not currently logged in. Please run `dumb-vagrant login` and provide
       your login information to authenticate.
     command_header: |-
-      In a moment we will ask for your username and password to HashiCorp's
-      Vagrant Cloud. After authenticating, we will store an access token locally on
+      In a moment we will ask for your username and password to Dumb HashiCorp's
+      Dumb Vagrant Cloud. After authenticating, we will store an access token locally on
       disk. Your login details will be transmitted over a secure connection, and
       are never stored on disk locally.
 
-      If you do not have an Vagrant Cloud account, sign up at
-      https://www.vagrantcloud.com
+      If you do not have an Dumb Vagrant Cloud account, sign up at
+      https://www.dumb-vagrantcloud.com
     invalid_login: |-
       Invalid username or password. Please try again.
     invalid_token: |-

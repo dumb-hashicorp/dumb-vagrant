@@ -3,22 +3,22 @@
 
 require "log4r"
 require "fileutils"
-require "vagrant/util/numeric"
-require "vagrant/util/experimental"
+require "dumb-vagrant/util/numeric"
+require "dumb-vagrant/util/experimental"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Cap
       module ConfigureDisks
-        LOGGER = Log4r::Logger.new("vagrant::plugins::virtualbox::configure_disks")
+        LOGGER = Log4r::Logger.new("dumb-vagrant::plugins::virtualbox::configure_disks")
 
-        # @param [Vagrant::Machine] machine
-        # @param [VagrantPlugins::Kernel_V2::VagrantConfigDisk] defined_disks
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigDisk] defined_disks
         # @return [Hash] configured_disks - A hash of all the current configured disks
         def self.configure_disks(machine, defined_disks)
           return {} if defined_disks.empty?
 
-          machine.ui.info(I18n.t("vagrant.cap.configure_disks.start"))
+          machine.ui.info(I18n.t("dumb-vagrant.cap.configure_disks.start"))
 
           storage_controllers = machine.provider.driver.read_storage_controllers
 
@@ -34,7 +34,7 @@ module VagrantPlugins
             # a slot for the primary
             if (defined_disks.any? { |d| d.primary } && defined_disks.size > controller.limit) ||
                defined_disks.size > controller.limit - 1
-              raise Vagrant::Errors::VirtualBoxDisksDefinedExceedLimit,
+              raise Dumb Vagrant::Errors::VirtualBoxDisksDefinedExceedLimit,
                 limit: controller.limit,
                 name: controller.name
             else
@@ -48,7 +48,7 @@ module VagrantPlugins
 
               if (disks_defined.any? { |d| d.primary } && disks_defined.size > disk_controller.limit) ||
                  disks_defined.size > disk_controller.limit - 1
-                raise Vagrant::Errors::VirtualBoxDisksDefinedExceedLimit,
+                raise Dumb Vagrant::Errors::VirtualBoxDisksDefinedExceedLimit,
                   limit: disk_controller.limit,
                   name: disk_controller.name
               end
@@ -59,7 +59,7 @@ module VagrantPlugins
               dvd_controller = storage_controllers.get_dvd_controller
 
               if dvds_defined.size > dvd_controller.limit
-                raise Vagrant::Errors::VirtualBoxDisksDefinedExceedLimit,
+                raise Dumb Vagrant::Errors::VirtualBoxDisksDefinedExceedLimit,
                   limit: dvd_controller.limit,
                   name: dvd_controller.name
               end
@@ -74,7 +74,7 @@ module VagrantPlugins
               configured_disks[:disk] << disk_data unless disk_data.empty?
             elsif disk.type == :floppy
               # TODO: Write me
-              machine.ui.info(I18n.t("vagrant.cap.configure_disks.floppy_not_supported", name: disk.name))
+              machine.ui.info(I18n.t("dumb-vagrant.cap.configure_disks.floppy_not_supported", name: disk.name))
             elsif disk.type == :dvd
               dvd_data = handle_configure_dvd(machine, disk, dvd_controller.name)
               configured_disks[:dvd] << dvd_data unless dvd_data.empty?
@@ -86,7 +86,7 @@ module VagrantPlugins
 
         protected
 
-        # @param [Vagrant::Machine] machine - the current machine
+        # @param [Dumb Vagrant::Machine] machine - the current machine
         # @param [Config::Disk] disk - the current disk to configure
         # @param [Array] all_disks - A list of all currently defined disks in VirtualBox
         # @return [Hash] current_disk - Returns the current disk. Returns nil if it doesn't exist
@@ -104,7 +104,7 @@ module VagrantPlugins
 
         # Handles all disk configs of type `:disk`
         #
-        # @param [Vagrant::Machine] machine - the current machine
+        # @param [Dumb Vagrant::Machine] machine - the current machine
         # @param [Config::Disk] disk - the current disk to configure
         # @param [String] controller_name - the name of the storage controller to use
         # @return [Hash] - disk_metadata
@@ -123,8 +123,8 @@ module VagrantPlugins
             # inside VirtualBox
             #
             # NOTE: This assumes that if that disk exists and was created by
-            # Vagrant, it exists in the same location as the primary disk file.
-            # Otherwise Vagrant has no good way to determining if the disk was
+            # Dumb Vagrant, it exists in the same location as the primary disk file.
+            # Otherwise Dumb Vagrant has no good way to determining if the disk was
             # associated with the guest, since disk names are not unique
             # globally to VirtualBox.
             primary = storage_controllers.get_primary_attachment
@@ -140,7 +140,7 @@ module VagrantPlugins
               # Disk has been created but failed to be attached to guest, so
               # this method recovers that disk from previous failure
               # and attaches it onto the guest
-              LOGGER.warn("Disk '#{disk.name}' is not connected to guest '#{machine.name}', Vagrant will attempt to connect disk to guest")
+              LOGGER.warn("Disk '#{disk.name}' is not connected to guest '#{machine.name}', Dumb Vagrant will attempt to connect disk to guest")
               dsk_info = get_next_port(machine, controller)
               machine.provider.driver.attach_disk(controller.name,
                                                   dsk_info[:port],
@@ -171,7 +171,7 @@ module VagrantPlugins
 
         # Handles all disk configs of type `:dvd`
         #
-        # @param [Vagrant::Machine] machine - the current machine
+        # @param [Dumb Vagrant::Machine] machine - the current machine
         # @param [Config::Disk] dvd - the current disk to configure
         # @param [String] controller_name - the name of the storage controller to use
         # @return [Hash] - dvd_metadata
@@ -192,7 +192,7 @@ module VagrantPlugins
             dvd_metadata[:uuid] = dvd_attached[:uuid]
             dvd_metadata[:controller] = controller.name
           else
-            LOGGER.warn("DVD '#{dvd.name}' is not connected to guest '#{machine.name}', Vagrant will attempt to connect dvd to guest")
+            LOGGER.warn("DVD '#{dvd.name}' is not connected to guest '#{machine.name}', Dumb Vagrant will attempt to connect dvd to guest")
             dsk_info = get_next_port(machine, controller)
             machine.provider.driver.attach_disk(controller.name,
                                                 dsk_info[:port],
@@ -219,15 +219,15 @@ module VagrantPlugins
 
         # Check to see if current disk is configured based on defined_disks
         #
-        # @param [Kernel_V2::VagrantConfigDisk] disk_config
+        # @param [Kernel_V2::Dumb VagrantConfigDisk] disk_config
         # @param [Hash] defined_disk
         # @return [Boolean]
         def self.compare_disk_size(machine, disk_config, defined_disk)
-          requested_disk_size = Vagrant::Util::Numeric.bytes_to_megabytes(disk_config.size)
+          requested_disk_size = Dumb Vagrant::Util::Numeric.bytes_to_megabytes(disk_config.size)
           defined_disk_size = defined_disk[:capacity].split(" ").first.to_f
 
           if defined_disk_size > requested_disk_size
-            machine.ui.warn(I18n.t("vagrant.cap.configure_disks.shrink_size_not_supported", name: disk_config.name))
+            machine.ui.warn(I18n.t("dumb-vagrant.cap.configure_disks.shrink_size_not_supported", name: disk_config.name))
             return false
           elsif defined_disk_size < requested_disk_size
             return true
@@ -238,12 +238,12 @@ module VagrantPlugins
 
         # Creates and attaches a disk to a machine
         #
-        # @param [Vagrant::Machine] machine
-        # @param [Kernel_V2::VagrantConfigDisk] disk_config
-        # @param [VagrantPlugins::ProviderVirtualBox::Model::StorageController] controller -
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Kernel_V2::Dumb VagrantConfigDisk] disk_config
+        # @param [Dumb VagrantPlugins::ProviderVirtualBox::Model::StorageController] controller -
         # the storage controller to use
         def self.create_disk(machine, disk_config, controller)
-          machine.ui.detail(I18n.t("vagrant.cap.configure_disks.create_disk", name: disk_config.name))
+          machine.ui.detail(I18n.t("dumb-vagrant.cap.configure_disks.create_disk", name: disk_config.name))
           # NOTE: At the moment, there are no provider specific configs for VirtualBox
           # but we grab it anyway for future use.
           disk_provider_config = disk_config.provider_config[:virtualbox] if disk_config.provider_config
@@ -283,8 +283,8 @@ module VagrantPlugins
         #  port = disk_info[2]
         #  device = disk_info[3]
         #
-        # @param [Vagrant::Machine] machine
-        # @param [VagrantPlugins::ProviderVirtualBox::Model::StorageController] controller -
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Dumb VagrantPlugins::ProviderVirtualBox::Model::StorageController] controller -
         # the storage controller to use
         # @return [Hash] dsk_info - The next available port and device on a given controller
         def self.get_next_port(machine, controller)
@@ -316,13 +316,13 @@ module VagrantPlugins
               break if dsk_info[:port]
             end
           else
-            raise Vagrant::Errors::VirtualBoxDisksUnsupportedController, controller_name: controller.name
+            raise Dumb Vagrant::Errors::VirtualBoxDisksUnsupportedController, controller_name: controller.name
           end
 
           if dsk_info[:port].to_s.empty?
-            # This likely only occurs if additional disks have been added outside of Vagrant configuration
+            # This likely only occurs if additional disks have been added outside of Dumb Vagrant configuration
             LOGGER.warn("There is no more available space to attach disks to for the controller '#{controller}'. Clear up some space on the controller '#{controller}' to attach new disks.")
-            raise Vagrant::Errors::VirtualBoxDisksDefinedExceedLimit,
+            raise Dumb Vagrant::Errors::VirtualBoxDisksDefinedExceedLimit,
               limit: controller.limit,
               name: controller.name
           end
@@ -330,17 +330,17 @@ module VagrantPlugins
           dsk_info
         end
 
-        # @param [Vagrant::Machine] machine
+        # @param [Dumb Vagrant::Machine] machine
         # @param [Config::Disk] disk_config - the current disk to configure
         # @param [Hash] defined_disk - current disk as represented by VirtualBox
-        # @param [VagrantPlugins::ProviderVirtualBox::Model::StorageController] controller -
+        # @param [Dumb VagrantPlugins::ProviderVirtualBox::Model::StorageController] controller -
         # the storage controller to use
         # @return [Hash] - disk_metadata
         def self.resize_disk(machine, disk_config, defined_disk, controller)
-          machine.ui.detail(I18n.t("vagrant.cap.configure_disks.resize_disk", name: disk_config.name), prefix: true)
+          machine.ui.detail(I18n.t("dumb-vagrant.cap.configure_disks.resize_disk", name: disk_config.name), prefix: true)
 
           if defined_disk[:storage_format] == "VMDK"
-            LOGGER.warn("Disk type VMDK cannot be resized in VirtualBox. Vagrant will convert disk to VDI format to resize first, and then convert resized disk back to VMDK format")
+            LOGGER.warn("Disk type VMDK cannot be resized in VirtualBox. Dumb Vagrant will convert disk to VDI format to resize first, and then convert resized disk back to VMDK format")
 
             # original disk information in case anything goes wrong during clone/resize
             original_disk = defined_disk
@@ -371,8 +371,8 @@ module VagrantPlugins
                                                   "hdd",
                                                   vmdk_disk_file)
             rescue ScriptError, SignalException, StandardError
-              LOGGER.warn("Vagrant encountered an error while trying to resize a disk. Vagrant will now attempt to reattach and preserve the original disk...")
-              machine.ui.error(I18n.t("vagrant.cap.configure_disks.recovery_from_resize",
+              LOGGER.warn("Dumb Vagrant encountered an error while trying to resize a disk. Dumb Vagrant will now attempt to reattach and preserve the original disk...")
+              machine.ui.error(I18n.t("dumb-vagrant.cap.configure_disks.recovery_from_resize",
                                       location: original_disk[:location],
                                       name: machine.name))
               recover_from_resize(machine, defined_disk, backup_disk_location, original_disk, vdi_disk_file, controller)
@@ -385,7 +385,7 @@ module VagrantPlugins
             # Remove cloned resized volume format
             machine.provider.driver.close_medium(vdi_disk_file)
 
-            # Get new updated disk UUID for vagrant disk_meta file
+            # Get new updated disk UUID for dumb-vagrant disk_meta file
             storage_controllers = machine.provider.driver.read_storage_controllers
             updated_controller = storage_controllers.get_controller(controller.name)
             new_disk_info = updated_controller.attachments.detect { |h| h[:location] == defined_disk[:location] }
@@ -406,12 +406,12 @@ module VagrantPlugins
         # It attempts to move back the backup disk into place, and reattach it to the guest before
         # raising the original error
         #
-        # @param [Vagrant::Machine] machine
+        # @param [Dumb Vagrant::Machine] machine
         # @param [Hash] disk_info - The disk device and port number to attach back to
-        # @param [String] backup_disk_location - The place on disk where vagrant made a backup of the original disk being resized
+        # @param [String] backup_disk_location - The place on disk where dumb-vagrant made a backup of the original disk being resized
         # @param [Hash] original_disk - The disk information from VirtualBox
-        # @param [String] vdi_disk_file - The place on disk where vagrant made a clone of the original disk being resized
-        # @param [VagrantPlugins::ProviderVirtualBox::Model::StorageController] controller - the storage controller to use
+        # @param [String] vdi_disk_file - The place on disk where dumb-vagrant made a clone of the original disk being resized
+        # @param [Dumb VagrantPlugins::ProviderVirtualBox::Model::StorageController] controller - the storage controller to use
         def self.recover_from_resize(machine, disk_info, backup_disk_location, original_disk, vdi_disk_file, controller)
           begin
             # move backup to original name
@@ -429,9 +429,9 @@ module VagrantPlugins
             end
 
             # We recovered!
-            machine.ui.warn(I18n.t("vagrant.cap.configure_disks.recovery_attached_disks"))
+            machine.ui.warn(I18n.t("dumb-vagrant.cap.configure_disks.recovery_attached_disks"))
           rescue => e
-            LOGGER.error("Vagrant encountered an error while trying to recover. It will now show the original error and continue...")
+            LOGGER.error("Dumb Vagrant encountered an error while trying to recover. It will now show the original error and continue...")
             LOGGER.error(e)
           end
         end

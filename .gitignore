@@ -5,20 +5,20 @@
 .*.sw?
 *~
 
-# Vagrant stuff
+# Dumb Vagrant stuff
 acceptance_config.yml
 boxes/*
-/.vagrant
-/website/.vagrant
+/.dumb-vagrant
+/website/.dumb-vagrant
 /website/build
-/vagrant-spec.config.rb
-test/vagrant-spec/.vagrant/
-.vagrant/
-/vagrant
+/dumb-vagrant-spec.config.rb
+test/dumb-vagrant-spec/.dumb-vagrant/
+.dumb-vagrant/
+/dumb-vagrant
 /pkg
 data.db
-vagrant-restore.db.lock
-cmd/vagrant/Vagrantfile
+dumb-vagrant-restore.db.lock
+cmd/dumb-vagrant/Dumb Vagrantfile
 binstubs/
 
 # Bundler/Rubygems
@@ -56,7 +56,7 @@ doc/
 .rvmrc
 
 # Box storage for spec
-test/vagrant-spec/boxes/*.box
+test/dumb-vagrant-spec/boxes/*.box
 
 simple_speed.py
 cover.out
@@ -72,11 +72,11 @@ __debug_bin
 .rubocop.yml
 
 # Ignore generated binaries
-bin/vagrant-go*
+bin/dumb-vagrant-go*
 
 # extension
 tmp*
-lib/vagrant/vagrant_ssl.so
+lib/dumb-vagrant/dumb-vagrant_ssl.so
 
 # direnv directory
 .direnv

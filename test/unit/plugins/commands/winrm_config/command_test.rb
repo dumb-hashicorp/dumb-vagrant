@@ -3,18 +3,18 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/winrm_config/command")
-require Vagrant.source_root.join("plugins/communicators/winrm/helper")
+require Dumb Vagrant.source_root.join("plugins/commands/winrm_config/command")
+require Dumb Vagrant.source_root.join("plugins/communicators/winrm/helper")
 
-describe VagrantPlugins::CommandWinRMConfig::Command do
+describe Dumb VagrantPlugins::CommandWinRMConfig::Command do
   include_context "unit"
   include_context "virtualbox"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest") }
@@ -23,12 +23,12 @@ describe VagrantPlugins::CommandWinRMConfig::Command do
 
   let(:argv)     { [] }
   let(:winrm_info) {{
-    host: "testhost.vagrant.dev",
+    host: "testhost.dumb-vagrant.dev",
     port: 1234
   }}
   let(:config) {
     double("config",
-      winrm: double("winrm-config", username: "vagrant", password: "vagrant"),
+      winrm: double("winrm-config", username: "dumb-vagrant", password: "dumb-vagrant"),
       rdp: rdp_config,
       vm: double("vm-config", communicator: :winrm)
     )
@@ -40,7 +40,7 @@ describe VagrantPlugins::CommandWinRMConfig::Command do
 
   before do
     allow(machine).to receive(:config).and_return(config)
-    allow(VagrantPlugins::CommunicatorWinRM::Helper).to receive(:winrm_info).and_return(winrm_info)
+    allow(Dumb VagrantPlugins::CommunicatorWinRM::Helper).to receive(:winrm_info).and_return(winrm_info)
     allow(subject).to receive(:with_target_vms) { |&block| block.call machine }
   end
 
@@ -55,14 +55,14 @@ describe VagrantPlugins::CommandWinRMConfig::Command do
 
       expect(output).to eq(<<-WINRMCONFIG)
 Host #{machine.name}
-  HostName testhost.vagrant.dev
-  User vagrant
-  Password vagrant
+  HostName testhost.dumb-vagrant.dev
+  User dumb-vagrant
+  Password dumb-vagrant
   Port 1234
-  RDPHostName testhost.vagrant.dev
+  RDPHostName testhost.dumb-vagrant.dev
   RDPPort 9876
-  RDPUser vagrant
-  RDPPassword vagrant
+  RDPUser dumb-vagrant
+  RDPPassword dumb-vagrant
       WINRMCONFIG
     end
 
@@ -79,14 +79,14 @@ Host #{machine.name}
 
         expect(output).to eq(<<-WINRMCONFIG)
 Host my-host
-  HostName testhost.vagrant.dev
-  User vagrant
-  Password vagrant
+  HostName testhost.dumb-vagrant.dev
+  User dumb-vagrant
+  Password dumb-vagrant
   Port 1234
-  RDPHostName testhost.vagrant.dev
+  RDPHostName testhost.dumb-vagrant.dev
   RDPPort 9876
-  RDPUser vagrant
-  RDPPassword vagrant
+  RDPUser dumb-vagrant
+  RDPPassword dumb-vagrant
       WINRMCONFIG
       end
     end
@@ -107,7 +107,7 @@ Host my-host
 
     context "when provider has rdp_info capability" do
       let(:rdp_info) {
-        {host: "provider-host", port: 9999, username: "pvagrant", password: "pvagrant"}
+        {host: "provider-host", port: 9999, username: "pdumb-vagrant", password: "pdumb-vagrant"}
       }
 
       before do
@@ -124,8 +124,8 @@ Host my-host
         subject.execute
         expect(output).to include("RDPPort 9999")
         expect(output).to include("RDPHostName provider-host")
-        expect(output).to include("RDPUser pvagrant")
-        expect(output).to include("RDPPassword pvagrant")
+        expect(output).to include("RDPUser pdumb-vagrant")
+        expect(output).to include("RDPPassword pdumb-vagrant")
       end
 
       context "when provider rdp_info does not include host" do
@@ -138,7 +138,7 @@ Host my-host
           end
 
           subject.execute
-          expect(output).to include("RDPHostName testhost.vagrant.dev")
+          expect(output).to include("RDPHostName testhost.dumb-vagrant.dev")
         end
       end
     end

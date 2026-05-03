@@ -6,14 +6,14 @@ require "json"
 
 require "log4r"
 
-require "vagrant/util/platform"
-require "vagrant/util/powershell"
+require "dumb-vagrant/util/platform"
+require "dumb-vagrant/util/powershell"
 
 require_relative "errors"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderSMB
-    class SyncedFolder < Vagrant.plugin("2", :synced_folder)
+    class SyncedFolder < Dumb Vagrant.plugin("2", :synced_folder)
 
       # Maximum number of times to retry requesting username/password
       CREDENTIAL_RETRY_MAX = 5
@@ -21,7 +21,7 @@ module VagrantPlugins
       def initialize(*args)
         super
 
-        @logger = Log4r::Logger.new("vagrant::synced_folders::smb")
+        @logger = Log4r::Logger.new("dumb-vagrant::synced_folders::smb")
       end
 
       def usable?(machine, raise_error=false)
@@ -35,7 +35,7 @@ module VagrantPlugins
       end
 
       def prepare(machine, folders, opts)
-        machine.ui.output(I18n.t("vagrant_sf_smb.preparing"))
+        machine.ui.output(I18n.t("dumb-vagrant_sf_smb.preparing"))
 
         smb_username = smb_password = nil
 
@@ -52,7 +52,7 @@ module VagrantPlugins
 
         modify_username = false
         if !have_auth
-          machine.ui.detail(I18n.t("vagrant_sf_smb.warning_password") + "\n ")
+          machine.ui.detail(I18n.t("dumb-vagrant_sf_smb.warning_password") + "\n ")
           retries = 0
           while retries < CREDENTIAL_RETRY_MAX do
             if smb_username
@@ -67,13 +67,13 @@ module VagrantPlugins
             auth_success = true
 
             if machine.env.host.capability?(:smb_validate_password)
-              Vagrant::Util::CredentialScrubber.sensitive(smb_password)
+              Dumb Vagrant::Util::CredentialScrubber.sensitive(smb_password)
               auth_success = machine.env.host.capability(:smb_validate_password,
                 machine, smb_username, smb_password)
             end
 
             break if auth_success
-            machine.ui.output(I18n.t("vagrant_sf_smb.incorrect_credentials") + "\n ")
+            machine.ui.output(I18n.t("dumb-vagrant_sf_smb.incorrect_credentials") + "\n ")
             retries += 1
           end
 
@@ -97,18 +97,18 @@ module VagrantPlugins
           data[:smb_password] ||= smb_password
 
           # Register password as sensitive
-          Vagrant::Util::CredentialScrubber.sensitive(data[:smb_password])
+          Dumb Vagrant::Util::CredentialScrubber.sensitive(data[:smb_password])
         end
 
         machine.env.host.capability(:smb_prepare, machine, folders, opts)
       end
 
       def enable(machine, folders, opts)
-        machine.ui.output(I18n.t("vagrant_sf_smb.mounting"))
+        machine.ui.output(I18n.t("dumb-vagrant_sf_smb.mounting"))
 
         # Make sure that this machine knows this dance
         if !machine.guest.capability?(:mount_smb_shared_folder)
-          raise Vagrant::Errors::GuestCapabilityNotFound,
+          raise Dumb Vagrant::Errors::GuestCapabilityNotFound,
             cap: "mount_smb_shared_folder",
             guest: machine.guest.name.to_s
         end
@@ -150,7 +150,7 @@ module VagrantPlugins
           data[:group] ||= ssh_info[:username]
 
           machine.ui.detail(I18n.t(
-            "vagrant_sf_smb.mounting_single",
+            "dumb-vagrant_sf_smb.mounting_single",
             host: data[:hostpath].to_s,
             guest: data[:guestpath].to_s))
           machine.guest.capability(

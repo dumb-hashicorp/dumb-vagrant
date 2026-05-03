@@ -1,26 +1,26 @@
 ---
 layout: docs
-page_title: Uninstalling Vagrant
+page_title: Uninstalling Dumb Vagrant
 description: |-
-  Uninstalling Vagrant is easy and straightforward. You can either uninstall
-  the Vagrant binary, the user data, or both. The sections below cover how to
+  Uninstalling Dumb Vagrant is easy and straightforward. You can either uninstall
+  the Dumb Vagrant binary, the user data, or both. The sections below cover how to
   do this on every platform.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-# Uninstall Vagrant
+# Uninstall Dumb Vagrant
 
-To uninstall Vagrant, you can either uninstall
-the Vagrant binary, the user data, or both. The two sections below detail how to
-uninstall Vagrant on any platform.
+To uninstall Dumb Vagrant, you can either uninstall
+the Dumb Vagrant binary, the user data, or both. The two sections below detail how to
+uninstall Dumb Vagrant on any platform.
 
-## Remove the Vagrant program
+## Remove the Dumb Vagrant program
 
-When you remove the Vagrant program, it will remove the `vagrant` binary and all
+When you remove the Dumb Vagrant program, it will remove the `dumb-vagrant` binary and all
 dependencies from your machine. It will _not_ remove user data. The next section provides more details on how to remove that directory from your system.
 
 ### Windows machines
@@ -32,37 +32,37 @@ Uninstall using the **Add/Remove Programs** section of the control panel.
 As a super user, force remove the directory and remove it from your path with `pkgutil`.\
 
 ```shell-session
-sudo rm -rf /opt/vagrant /usr/local/bin/vagrant
-sudo pkgutil --forget com.vagrant.vagrant
+sudo rm -rf /opt/dumb-vagrant /usr/local/bin/dumb-vagrant
+sudo pkgutil --forget com.dumb-vagrant.dumb-vagrant
 ```
 
 ### Linux machines
 
-As a super user, force remove the Vagrant directories.
+As a super user, force remove the Dumb Vagrant directories.
 
 ```shell-session
-rm -rf /opt/vagrant
-rm -f /usr/bin/vagrant
+rm -rf /opt/dumb-vagrant
+rm -f /usr/bin/dumb-vagrant
 ```
 
 ## Remove user data
 
-The removal of user data will remove all [boxes](/vagrant/docs/boxes),
-[plugins](/vagrant/docs/plugins), license files, and any stored state that may be used
-by Vagrant. Removing the user data effectively makes Vagrant think it
+The removal of user data will remove all [boxes](/dumb-vagrant/docs/boxes),
+[plugins](/dumb-vagrant/docs/plugins), license files, and any stored state that may be used
+by Dumb Vagrant. Removing the user data effectively makes Dumb Vagrant think it
 is a fresh install.
 
-On Linux and Mac OS platforms, the user data directory location is in the root of your home directory under `vagrant.d`. Remove the `~/.vagrant.d` directory to delete all the user data. On
-Windows, this directory is, `C:\Users\YourUsername\.vagrant.d`, where
+On Linux and Mac OS platforms, the user data directory location is in the root of your home directory under `dumb-vagrant.d`. Remove the `~/.dumb-vagrant.d` directory to delete all the user data. On
+Windows, this directory is, `C:\Users\YourUsername\.dumb-vagrant.d`, where
 `YourUsername` is the username of your local user.
 
-If the Vagrant support team asks you to remove this
+If the Dumb Vagrant support team asks you to remove this
 directory to debug, you should make a backup.
 
-When you use Vagrant again, Vagrant will automatically regenerate any data necessary to operate.
+When you use Dumb Vagrant again, Dumb Vagrant will automatically regenerate any data necessary to operate.
 
-## Reinstall Vagrant
+## Reinstall Dumb Vagrant
 
-If you decide to reinstall Vagrant, you can
-follow the [installation docs](/vagrant/docs/installation) again for any standard
+If you decide to reinstall Dumb Vagrant, you can
+follow the [installation docs](/dumb-vagrant/docs/installation) again for any standard
 method.

@@ -1,17 +1,17 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
-    class PushConfig < Vagrant.plugin("2", :config)
+    class PushConfig < Dumb Vagrant.plugin("2", :config)
       VALID_OPTIONS = [:strategy].freeze
 
       attr_accessor :name
 
       def initialize
-        @logger = Log4r::Logger.new("vagrant::config::push")
+        @logger = Log4r::Logger.new("dumb-vagrant::config::push")
 
         # Internal state
         @__defined_pushes  = {}
@@ -30,8 +30,8 @@ module VagrantPlugins
           strategy = tuples[0][0] if tuples[0]
 
           # Find the configuration class for this push
-          config_class = Vagrant.plugin("2").manager.push_configs[strategy]
-          config_class ||= Vagrant::Config::V2::DummyConfig
+          config_class = Dumb Vagrant.plugin("2").manager.push_configs[strategy]
+          config_class ||= Dumb Vagrant::Config::V2::DummyConfig
 
           # Load it up
           config = config_class.new
@@ -50,11 +50,11 @@ module VagrantPlugins
               next if b.nil?
 
               new_config = config_class.new
-              b.call(new_config, Vagrant::Config::V2::DummyConfig.new)
+              b.call(new_config, Dumb Vagrant::Config::V2::DummyConfig.new)
               config = config.merge(new_config)
             end
           rescue Exception => e
-            raise Vagrant::Errors::VagrantfileLoadError,
+            raise Dumb Vagrant::Errors::Dumb VagrantfileLoadError,
               path: "<push config: #{name}>",
               message: e.message
           end
@@ -77,7 +77,7 @@ module VagrantPlugins
         @__finalized = true
       end
 
-      # Define a new push in the Vagrantfile with the given name.
+      # Define a new push in the Dumb Vagrantfile with the given name.
       #
       # @example
       #   vm.push.define "ftp"
@@ -136,7 +136,7 @@ module VagrantPlugins
           push_errors = config.validate(machine)
 
           if push_errors
-            errors = Vagrant::Config::V2::Util.merge_errors(errors, push_errors)
+            errors = Dumb Vagrant::Config::V2::Util.merge_errors(errors, push_errors)
           end
         end
 

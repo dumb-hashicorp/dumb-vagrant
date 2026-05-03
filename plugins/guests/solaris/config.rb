@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSolaris
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       attr_accessor :halt_timeout
       attr_accessor :halt_check_interval
 
@@ -19,11 +19,11 @@ module VagrantPlugins
 
       def finalize!
         if @halt_timeout != UNSET_VALUE
-          puts "solaris.halt_timeout is deprecated and will be removed in Vagrant 1.7"
+          puts "solaris.halt_timeout is deprecated and will be removed in Dumb Vagrant 1.7"
         end
 
         if @halt_check_interval != UNSET_VALUE
-          puts "solaris.halt_check_interval is deprecated and will be removed in Vagrant 1.7"
+          puts "solaris.halt_check_interval is deprecated and will be removed in Dumb Vagrant 1.7"
         end
 
         @suexec_cmd = "sudo" if @suexec_cmd == UNSET_VALUE

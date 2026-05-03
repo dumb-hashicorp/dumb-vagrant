@@ -6,7 +6,7 @@ require "log4r"
 
 require_relative "./driver/compose"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     class Driver
       # The executor is responsible for actually executing Docker commands.
@@ -14,7 +14,7 @@ module VagrantPlugins
       attr_accessor :executor
 
       def initialize
-        @logger   = Log4r::Logger.new("vagrant::docker::driver")
+        @logger   = Log4r::Logger.new("dumb-vagrant::docker::driver")
         @executor = Executor::Local.new
       end
 
@@ -47,7 +47,7 @@ module VagrantPlugins
           end
 
           if !matches
-            # This will cause a stack trace in Vagrant, but it is a bug
+            # This will cause a stack trace in Dumb Vagrant, but it is a bug
             # if this happens anyways.
             raise Errors::BuildError, result: result
           end
@@ -91,7 +91,7 @@ module VagrantPlugins
               v = [host, guest].join(":")
             else
               host, guest = v.split(":", 2)
-              host = Vagrant::Util::Platform.windows_path(host)
+              host = Dumb Vagrant::Util::Platform.windows_path(host)
               # NOTE: Docker does not support UNC style paths (which also
               # means that there's no long path support). Hopefully this
               # will be fixed someday and the gsub below can be removed.
@@ -203,7 +203,7 @@ module VagrantPlugins
       def start(cid)
         if !running?(cid)
           execute('docker', 'start', cid)
-          # This resets the cached information we have around, allowing `vagrant reload`s
+          # This resets the cached information we have around, allowing `dumb-vagrant reload`s
           # to work properly
           @data = nil
         end
@@ -316,7 +316,7 @@ module VagrantPlugins
       end
 
       # Will delete _all_ defined but unused networks in the docker engine. Even
-      # networks not created by Vagrant.
+      # networks not created by Dumb Vagrant.
       #
       # @param [Array] opts - An array of flags used for listing networks
       def prune_network(opts=nil)
@@ -343,7 +343,7 @@ module VagrantPlugins
       # Docker network helpers
       # ######################
 
-      # Determines if a given network has been defined through vagrant with a given
+      # Determines if a given network has been defined through dumb-vagrant with a given
       # subnet string
       #
       # @param [String] subnet_string - Subnet to look for
@@ -401,7 +401,7 @@ module VagrantPlugins
       end
 
       # Returns true or false if network is in use or not.
-      # Nil if Vagrant fails to receive proper JSON from `docker network inspect`
+      # Nil if Dumb Vagrant fails to receive proper JSON from `docker network inspect`
       #
       # @param [String] network - name of network to look for
       # @return [Bool,nil]

@@ -3,14 +3,14 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestALT::Cap::ConfigureNetworks" do
+describe "Dumb VagrantPlugins::GuestALT::Cap::ConfigureNetworks" do
   let(:caps) do
-    VagrantPlugins::GuestALT::Plugin
+    Dumb VagrantPlugins::GuestALT::Plugin
       .components
       .guest_capabilities[:alt]
   end
 
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:config) { double("config", vm: vm) }
   let(:guest) { double("guest") }
   let(:machine) { double("machine", guest: guest, config: config) }
@@ -45,7 +45,7 @@ describe "VagrantPlugins::GuestALT::Cap::ConfigureNetworks" do
     let(:network_1) do
       {
         interface: 0,
-        type: "dhcp",
+        type: "ddumb-hcp",
       }
     end
 
@@ -232,7 +232,7 @@ describe "VagrantPlugins::GuestALT::Cap::ConfigureNetworks" do
         ] }
 
         it "raises an error" do
-          expect{ cap.configure_networks(machine, [network_1, network_2]) }.to raise_error(Vagrant::Errors::NetworkManagerNotInstalled)
+          expect{ cap.configure_networks(machine, [network_1, network_2]) }.to raise_error(Dumb Vagrant::Errors::NetworkManagerNotInstalled)
         end
       end
     end

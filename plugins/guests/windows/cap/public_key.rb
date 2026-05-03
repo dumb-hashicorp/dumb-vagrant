@@ -5,7 +5,7 @@ require "tempfile"
 
 require_relative '../../../communicators/winssh/communicator'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestWindows
     module Cap
       class PublicKey
@@ -18,7 +18,7 @@ module VagrantPlugins
               end
             end
           else
-            raise Vagrant::Errors::SSHInsertKeyUnsupported
+            raise Dumb Vagrant::Errors::SSHInsertKeyUnsupported
           end
         end
 
@@ -28,7 +28,7 @@ module VagrantPlugins
               keys.delete(contents)
             end
           else
-            raise Vagrant::Errors::SSHInsertKeyUnsupported
+            raise Dumb Vagrant::Errors::SSHInsertKeyUnsupported
           end
         end
 
@@ -41,10 +41,10 @@ module VagrantPlugins
           # Ensure the user's ssh directory exists
           remote_ssh_dir = "#{home_dir}\\.ssh"
           comm.execute("New-Item -Path '#{remote_ssh_dir}' -ItemType directory -Force", shell: "powershell")
-          remote_upload_path = "#{temp_dir}\\vagrant-insert-pubkey-#{Time.now.to_i}"
+          remote_upload_path = "#{temp_dir}\\dumb-vagrant-insert-pubkey-#{Time.now.to_i}"
           remote_authkeys_path = "#{remote_ssh_dir}\\authorized_keys"
 
-          keys_file = Tempfile.new("vagrant-windows-insert-public-key")
+          keys_file = Tempfile.new("dumb-vagrant-windows-insert-public-key")
           keys_file.close
           # Check if an authorized_keys file already exists
           result = comm.execute("dir \"#{remote_authkeys_path}\"", shell: "cmd", error_check: false)

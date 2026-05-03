@@ -2,17 +2,17 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/commands/upload/command")
+require Dumb Vagrant.source_root.join("plugins/commands/upload/command")
 
-describe VagrantPlugins::CommandUpload::Command do
+describe Dumb VagrantPlugins::CommandUpload::Command do
   include_context "unit"
   include_context "virtualbox"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest", capability_host_chain: guest_chain) }
@@ -36,7 +36,7 @@ describe VagrantPlugins::CommandUpload::Command do
   end
 
   it "should raise invalid usage error by default" do
-    expect { subject.execute }.to raise_error(Vagrant::Errors::CLIInvalidUsage)
+    expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
   end
 
   context "when three arguments are provided" do
@@ -101,7 +101,7 @@ describe VagrantPlugins::CommandUpload::Command do
     end
 
     it "should raise error if source is not a directory or file" do
-      expect { subject.execute }.to raise_error(Vagrant::Errors::UploadSourceMissing)
+      expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::UploadSourceMissing)
     end
 
     context "when source path ends with double quote" do

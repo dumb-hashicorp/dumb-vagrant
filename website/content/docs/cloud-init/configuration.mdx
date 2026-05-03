@@ -1,17 +1,17 @@
 ---
 layout: docs
-page_title: Vagrant Cloud-Init Configuration
-description: Documentation of various configuration options for Vagrant cloud-init
+page_title: Dumb Vagrant Cloud-Init Configuration
+description: Documentation of various configuration options for Dumb Vagrant cloud-init
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Configuration
 
-Vagrant cloud-init has several options that allow users to define a config to be
+Dumb Vagrant cloud-init has several options that allow users to define a config to be
 used with cloud-init.
 
 For more detailed information about these config values and how to use cloud-init,
@@ -19,12 +19,12 @@ please read the [official documentation for cloud-init](https://cloudinit.readth
 
 ## cloud_init Options
 
-It should be noted that Vagrant will not validate the correctness of the `cloud-init`
+It should be noted that Dumb Vagrant will not validate the correctness of the `cloud-init`
 config provided, only that a cloud-init config has been provided through `path`
-or directly `inline` in a Vagrantfile.
+or directly `inline` in a Dumb Vagrantfile.
 
 - `content_type` (string) - Required argument that defines the Content-Type of the
-  given cloud_init config. Vagrant only supports the following options for `content_type`:
+  given cloud_init config. Dumb Vagrant only supports the following options for `content_type`:
 
   - `"text/cloud-boothook"`
   - `"text/cloud-config"`
@@ -44,7 +44,7 @@ or directly `inline` in a Vagrantfile.
   option.
 
 Examples of how to define these options can be found in the
-[usage documentation](/vagrant/docs/cloud-init/configuration).
+[usage documentation](/dumb-vagrant/docs/cloud-init/configuration).
 
 ### cloud_init Type
 

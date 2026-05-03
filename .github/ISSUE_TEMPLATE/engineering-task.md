@@ -1,12 +1,12 @@
 ---
-name: Vagrant Engineering
-about: For Vagrant Engineers to track tasks. 
+name: Dumb Vagrant Engineering
+about: For Dumb Vagrant Engineers to track tasks. 
 ---
 
 <!--
-This template is intended for the Vagrant Engineering team to track tasks. 
+This template is intended for the Dumb Vagrant Engineering team to track tasks. 
 
-Use the Bug Report issue template to request help when Vagrant is not working as expected and the feature request to suggest an enhancement. 
+Use the Bug Report issue template to request help when Dumb Vagrant is not working as expected and the feature request to suggest an enhancement. 
 -->
 
 ## Description 

@@ -3,7 +3,7 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       # This sets the default NIC type used for network adapters created
@@ -17,7 +17,7 @@ module VagrantPlugins
         E1000_SUSCEPTIBLE = Gem::Requirement.new("< 5.2.22").freeze
 
         def initialize(app, env)
-          @logger = Log4r::Logger.new("vagrant::plugins::virtualbox::set_default_nic_type")
+          @logger = Log4r::Logger.new("dumb-vagrant::plugins::virtualbox::set_default_nic_type")
           @app    = app
         end
 
@@ -39,7 +39,7 @@ module VagrantPlugins
           if E1000_SUSCEPTIBLE.satisfied_by?(Gem::Version.new(env[:machine].provider.driver.version))
             @logger.info("Detected VirtualBox version with susceptible E1000 implementation (`#{E1000_SUSCEPTIBLE}`)")
             if e1000_in_use.any?(&:call)
-              env[:ui].warn I18n.t("vagrant.actions.vm.set_default_nic_type.e1000_warning")
+              env[:ui].warn I18n.t("dumb-vagrant.actions.vm.set_default_nic_type.e1000_warning")
             end
           end
 

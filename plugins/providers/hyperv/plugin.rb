@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     autoload :Action, File.expand_path("../action", __FILE__)
     autoload :Errors, File.expand_path("../errors", __FILE__)
 
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "Hyper-V provider"
       description <<-DESC
-      This plugin installs a provider that allows Vagrant to manage
+      This plugin installs a provider that allows Dumb Vagrant to manage
       machines in Hyper-V.
       DESC
 
@@ -65,7 +65,7 @@ module VagrantPlugins
       def self.init!
         return if defined?(@_init)
         I18n.load_path << File.expand_path(
-          "templates/locales/providers_hyperv.yml", Vagrant.source_root)
+          "templates/locales/providers_hyperv.yml", Dumb Vagrant.source_root)
         I18n.reload!
         @_init = true
       end

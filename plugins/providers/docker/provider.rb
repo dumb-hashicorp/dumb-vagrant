@@ -6,23 +6,23 @@ require "fileutils"
 require "thread"
 require "log4r"
 
-require "vagrant/util/silence_warnings"
+require "dumb-vagrant/util/silence_warnings"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
-    class Provider < Vagrant.plugin("2", :provider)
+    class Provider < Dumb Vagrant.plugin("2", :provider)
       @@host_vm_mutex = Mutex.new
 
       def self.usable?(raise_error=false)
         Driver.new.execute("docker", "version")
         true
-      rescue Vagrant::Errors::CommandUnavailable, Errors::ExecuteError
+      rescue Dumb Vagrant::Errors::CommandUnavailable, Errors::ExecuteError
         raise if raise_error
         return false
       end
 
       def initialize(machine)
-        @logger  = Log4r::Logger.new("vagrant::provider::docker")
+        @logger  = Log4r::Logger.new("dumb-vagrant::provider::docker")
         @machine = machine
 
         if host_vm?
@@ -32,7 +32,7 @@ module VagrantPlugins
         end
       end
 
-      # @see Vagrant::Plugin::V2::Provider#action
+      # @see Dumb Vagrant::Plugin::V2::Provider#action
       def action(name)
         action_method = "action_#{name}"
         return Action.send(action_method) if Action.respond_to?(action_method)
@@ -49,34 +49,34 @@ module VagrantPlugins
           end
         end
         if host_vm?
-          @driver.executor = Executor::Vagrant.new(host_vm)
+          @driver.executor = Executor::Dumb Vagrant.new(host_vm)
         end
 
         @driver
       end
 
-      # This returns the {Vagrant::Machine} that is our host machine.
+      # This returns the {Dumb Vagrant::Machine} that is our host machine.
       # It does not perform any action on the machine or verify it is
       # running.
       #
-      # @return [Vagrant::Machine]
+      # @return [Dumb Vagrant::Machine]
       def host_vm
         return @host_vm if @host_vm
 
-        vf_path           = @machine.provider_config.vagrant_vagrantfile
-        host_machine_name = @machine.provider_config.vagrant_machine || :default
+        vf_path           = @machine.provider_config.dumb-vagrant_dumb-vagrantfile
+        host_machine_name = @machine.provider_config.dumb-vagrant_machine || :default
         if !vf_path
-          # We don't have a Vagrantfile path set, so we're going to use
+          # We don't have a Dumb Vagrantfile path set, so we're going to use
           # the default but we need to copy it into the data dir so that
           # we don't write into our installation dir (we can't).
-          default_path = File.expand_path("../hostmachine/Vagrantfile", __FILE__)
-          vf_path      = @machine.env.data_dir.join("docker-host", "Vagrantfile")
+          default_path = File.expand_path("../hostmachine/Dumb Vagrantfile", __FILE__)
+          vf_path      = @machine.env.data_dir.join("docker-host", "Dumb Vagrantfile")
           begin
             @machine.env.lock("docker-provider-hostvm") do
               vf_path.dirname.mkpath
               FileUtils.cp(default_path, vf_path)
             end
-          rescue Vagrant::Errors::EnvironmentLockedError
+          rescue Dumb Vagrant::Errors::EnvironmentLockedError
             # Lock contention, just retry
             retry
           end
@@ -93,17 +93,17 @@ module VagrantPlugins
         vf_path = File.dirname(vf_path)
 
         # Create the env to manage this machine
-        @host_vm = Vagrant::Util::SilenceWarnings.silence! do
-          host_env = Vagrant::Environment.new(
+        @host_vm = Dumb Vagrant::Util::SilenceWarnings.silence! do
+          host_env = Dumb Vagrant::Environment.new(
             cwd: vf_path,
             home_path: @machine.env.home_path,
             ui_class: @machine.env.ui_class,
-            vagrantfile_name: vf_file,
+            dumb-vagrantfile_name: vf_file,
           )
 
-          # If there is no root path, then the Vagrantfile wasn't found
+          # If there is no root path, then the Dumb Vagrantfile wasn't found
           # and it is an error...
-          raise Errors::VagrantfileNotFound if !host_env.root_path
+          raise Errors::Dumb VagrantfileNotFound if !host_env.root_path
 
           host_env.machine(
             host_machine_name,
@@ -165,7 +165,7 @@ module VagrantPlugins
         end
 
         # If we were not able to identify the container's IP, we return nil
-        # here and we let Vagrant core deal with it ;)
+        # here and we let Dumb Vagrant core deal with it ;)
         return nil if port_info.nil? || port_info.empty?
 
         {
@@ -181,7 +181,7 @@ module VagrantPlugins
         begin
           state_id = :host_state_unknown if !state_id && \
             host_vm? && !host_vm.communicate.ready?
-        rescue Errors::VagrantfileNotFound
+        rescue Errors::Dumb VagrantfileNotFound
           state_id = :host_state_unknown
         end
 
@@ -200,10 +200,10 @@ module VagrantPlugins
 
         # If we're not created, then specify the special ID flag
         if state_id == :not_created
-          state_id = Vagrant::MachineState::NOT_CREATED_ID
+          state_id = Dumb Vagrant::MachineState::NOT_CREATED_ID
         end
 
-        Vagrant::MachineState.new(state_id, short, long)
+        Dumb Vagrant::MachineState.new(state_id, short, long)
       end
 
       def to_s

@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
-    class SyncedFolder < Vagrant.plugin("2", :synced_folder)
+    class SyncedFolder < Dumb Vagrant.plugin("2", :synced_folder)
       def usable?(machine, raise_error=false)
         # These synced folders only work if the provider is Docker
         if machine.provider_name != :docker

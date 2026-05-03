@@ -5,17 +5,17 @@ require File.expand_path("../../ssh/communicator", __FILE__)
 
 require "net/sftp"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinSSH
     # This class provides communication with a Windows VM running
     # the Windows native port of OpenSSH
-    class Communicator < VagrantPlugins::CommunicatorSSH::Communicator
+    class Communicator < Dumb VagrantPlugins::CommunicatorSSH::Communicator
       # Command to run when checking if connection is ready and working
       READY_COMMAND="dir"
 
       def initialize(machine)
         super
-        @logger = Log4r::Logger.new("vagrant::communication::winssh")
+        @logger = Log4r::Logger.new("dumb-vagrant::communication::winssh")
       end
 
       # Wrap the shell if required. By default we are using powershell
@@ -128,9 +128,9 @@ module VagrantPlugins
             exit_status = 0
             pty = false
           rescue Net::SSH::ChannelOpenFailed
-            raise Vagrant::Errors::SSHChannelOpenFail
+            raise Dumb Vagrant::Errors::SSHChannelOpenFail
           rescue Net::SSH::Disconnect
-            raise Vagrant::Errors::SSHDisconnected
+            raise Dumb Vagrant::Errors::SSHDisconnected
           end
         ensure
           # Kill the keep-alive thread
@@ -158,7 +158,7 @@ module VagrantPlugins
       # privileges. I believe this is because Windows SSH sessions are started
       # in an elevated process.
       def upload(from, to)
-        to = Vagrant::Util::Platform.unix_windows_path(to)
+        to = Dumb Vagrant::Util::Platform.unix_windows_path(to)
         @logger.debug("Uploading: #{from} to #{to}")
 
         if File.directory?(from)

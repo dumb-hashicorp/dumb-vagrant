@@ -4,21 +4,21 @@
 require "pathname"
 require "tempfile"
 
-require "vagrant/util/downloader"
-require "vagrant/util/file_checksum"
-require "vagrant/util/powershell"
-require "vagrant/util/subprocess"
+require "dumb-vagrant/util/downloader"
+require "dumb-vagrant/util/file_checksum"
+require "dumb-vagrant/util/powershell"
+require "dumb-vagrant/util/subprocess"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostWindows
     module Cap
       class ConfiguredIPAddresses
 
         def self.configured_ip_addresses(env)
           script_path = File.expand_path("../../scripts/host_info.ps1", __FILE__)
-          r = Vagrant::Util::PowerShell.execute(script_path)
+          r = Dumb Vagrant::Util::PowerShell.execute(script_path)
           if r.exit_code != 0
-            raise Vagrant::Errors::PowerShellError,
+            raise Dumb Vagrant::Errors::PowerShellError,
               script: script_path,
               stderr: r.stderr
           end

@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestGentoo::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestGentoo::Cap::ChangeHostName" do
   let(:described_class) do
-    VagrantPlugins::GuestGentoo::Plugin
+    Dumb VagrantPlugins::GuestGentoo::Plugin
       .components
       .guest_capabilities[:gentoo]
       .get(:change_host_name)
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:name) { "banana-rama.example.com" }
   let(:basename) { "banana-rama" }
 

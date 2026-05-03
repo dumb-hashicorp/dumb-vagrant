@@ -2,16 +2,16 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "log4r"
-require "vagrant/util/experimental"
+require "dumb-vagrant/util/experimental"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Cap
       module CleanupDisks
-        LOGGER = Log4r::Logger.new("vagrant::plugins::virtualbox::cleanup_disks")
+        LOGGER = Log4r::Logger.new("dumb-vagrant::plugins::virtualbox::cleanup_disks")
 
-        # @param [Vagrant::Machine] machine
-        # @param [VagrantPlugins::Kernel_V2::VagrantConfigDisk] defined_disks
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigDisk] defined_disks
         # @param [Hash] disk_meta_file - A hash of all the previously defined disks from the last configure_disk action
         def self.cleanup_disks(machine, defined_disks, disk_meta_file)
           return if disk_meta_file.values.flatten.empty?
@@ -23,8 +23,8 @@ module VagrantPlugins
 
         protected
 
-        # @param [Vagrant::Machine] machine
-        # @param [VagrantPlugins::Kernel_V2::VagrantConfigDisk] defined_disks
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigDisk] defined_disks
         # @param [Array<Hash>] disk_meta - An array of all the previously defined disks from the last configure_disk action
         def self.handle_cleanup_disk(machine, defined_disks, disk_meta)
           raise TypeError, "Expected `Array` but received `#{disk_meta.class}`" if !disk_meta.is_a?(Array)
@@ -38,8 +38,8 @@ module VagrantPlugins
             if !dsk.empty? || d["uuid"] == primary_uuid
               next
             else
-              LOGGER.warn("Found disk not in Vagrantfile config: '#{d["name"]}'. Removing disk from guest #{machine.name}")
-              machine.ui.warn(I18n.t("vagrant.cap.cleanup_disks.disk_cleanup", name: d["name"]), prefix: true)
+              LOGGER.warn("Found disk not in Dumb Vagrantfile config: '#{d["name"]}'. Removing disk from guest #{machine.name}")
+              machine.ui.warn(I18n.t("dumb-vagrant.cap.cleanup_disks.disk_cleanup", name: d["name"]), prefix: true)
 
               controller = storage_controllers.get_controller(d["controller"])
               attachment = controller.get_attachment(uuid: d["uuid"])
@@ -55,8 +55,8 @@ module VagrantPlugins
           end
         end
 
-        # @param [Vagrant::Machine] machine
-        # @param [VagrantPlugins::Kernel_V2::VagrantConfigDisk] defined_dvds
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigDisk] defined_dvds
         # @param [Array<Hash>] dvd_meta - An array of all the previously defined dvds from the last configure_disk action
         def self.handle_cleanup_dvd(machine, defined_dvds, dvd_meta)
           raise TypeError, "Expected `Array` but received `#{dvd_meta.class}`" if !dvd_meta.is_a?(Array)
@@ -65,8 +65,8 @@ module VagrantPlugins
             if !dsk.empty?
               next
             else
-              LOGGER.warn("Found dvd not in Vagrantfile config: '#{d["name"]}'. Removing dvd from guest #{machine.name}")
-              machine.ui.warn("DVD '#{d["name"]}' no longer exists in Vagrant config. Removing medium from guest...", prefix: true)
+              LOGGER.warn("Found dvd not in Dumb Vagrantfile config: '#{d["name"]}'. Removing dvd from guest #{machine.name}")
+              machine.ui.warn("DVD '#{d["name"]}' no longer exists in Dumb Vagrant config. Removing medium from guest...", prefix: true)
 
               storage_controllers = machine.provider.driver.read_storage_controllers
               controller = storage_controllers.get_controller(d["controller"])

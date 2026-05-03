@@ -3,7 +3,7 @@
 
 require_relative '../base'
 
-describe VagrantPlugins::ProviderVirtualBox::Action::CleanMachineFolder do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Action::CleanMachineFolder do
   let(:app) { double("app") }
   let(:driver) { double("driver") }
   let(:machine) { double("machine", provider: double("provider", driver: driver), name: "") }
@@ -22,7 +22,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::CleanMachineFolder do
     end
 
     it "raises an error" do
-      expect { subject.call(env) }.to raise_error(Vagrant::Errors::MachineFolderNotAccessible)
+      expect { subject.call(env) }.to raise_error(Dumb Vagrant::Errors::MachineFolderNotAccessible)
     end
   end
 end

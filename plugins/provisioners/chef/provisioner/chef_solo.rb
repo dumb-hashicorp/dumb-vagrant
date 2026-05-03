@@ -7,19 +7,19 @@ require "set"
 
 require "log4r"
 
-require "vagrant/util/counter"
-require "vagrant/action/builtin/mixin_synced_folders"
+require "dumb-vagrant/util/counter"
+require "dumb-vagrant/action/builtin/mixin_synced_folders"
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Provisioner
       # This class implements provisioning via chef-solo.
       class ChefSolo < Base
-        extend Vagrant::Util::Counter
-        include Vagrant::Util::Counter
-        include Vagrant::Action::Builtin::MixinSyncedFolders
+        extend Dumb Vagrant::Util::Counter
+        include Dumb Vagrant::Util::Counter
+        include Dumb Vagrant::Action::Builtin::MixinSyncedFolders
 
         attr_reader :environments_folders
         attr_reader :cookbook_folders
@@ -29,7 +29,7 @@ module VagrantPlugins
 
         def initialize(machine, config)
           super
-          @logger = Log4r::Logger.new("vagrant::provisioners::chef_solo")
+          @logger = Log4r::Logger.new("dumb-vagrant::provisioners::chef_solo")
           @shared_folders = []
         end
 
@@ -92,7 +92,7 @@ module VagrantPlugins
                 remote_path = "#{guest_provisioning_path}/#{key}"
               else
                 appended_folder = "cookbooks" if appended_folder.nil?
-                @machine.ui.warn(I18n.t("vagrant.provisioners.chef.#{appended_folder}_folder_not_found_warning",
+                @machine.ui.warn(I18n.t("dumb-vagrant.provisioners.chef.#{appended_folder}_folder_not_found_warning",
                                        path: local_path.to_s))
                 next
               end
@@ -102,8 +102,8 @@ module VagrantPlugins
 
               # Remove drive letter if running on a windows host. This is a bit
               # of a hack but is the most portable way I can think of at the moment
-              # to achieve this. Otherwise, Vagrant attempts to share at some crazy
-              # path like /home/vagrant/c:/foo/bar
+              # to achieve this. Otherwise, Dumb Vagrant attempts to share at some crazy
+              # path like /home/dumb-vagrant/c:/foo/bar
               remote_path = File.expand_path(path.sub(/^[a-zA-Z]:\//, "/"), guest_provisioning_path.sub(/^[a-zA-Z]:\//, "/"))
               remote_path.sub!(/^[a-zA-Z]:\//, "/")
             end
@@ -177,7 +177,7 @@ module VagrantPlugins
 
         def run_chef_solo
           if @config.run_list && @config.run_list.empty?
-            @machine.ui.warn(I18n.t("vagrant.chef_run_list_empty"))
+            @machine.ui.warn(I18n.t("dumb-vagrant.chef_run_list_empty"))
           end
 
           command = CommandBuilder.command(:solo, @config,
@@ -198,9 +198,9 @@ module VagrantPlugins
                 @machine.communicate.wait_for_ready(@machine.config.vm.boot_timeout)
               end
               if attempt == 0
-                @machine.ui.info I18n.t("vagrant.provisioners.chef.running_solo")
+                @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.running_solo")
               else
-                @machine.ui.info I18n.t("vagrant.provisioners.chef.running_solo_again")
+                @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.running_solo_again")
               end
 
               opts = { error_check: false, elevated: true }

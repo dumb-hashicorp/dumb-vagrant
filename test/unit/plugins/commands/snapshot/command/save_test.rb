@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/snapshot/command/save")
+require Dumb Vagrant.source_root.join("plugins/commands/snapshot/command/save")
 
-describe VagrantPlugins::CommandSnapshot::Command::Save do
+describe Dumb VagrantPlugins::CommandSnapshot::Command::Save do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest") }
@@ -37,7 +37,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Save do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
@@ -52,7 +52,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Save do
       it "raises an exception" do
         machine.id = "foo"
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::SnapshotNotSupported)
+          to raise_error(Dumb Vagrant::Errors::SnapshotNotSupported)
       end
     end
 
@@ -111,7 +111,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Save do
 
         expect(machine).to_not receive(:action)
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::SnapshotConflictFailed)
+          to raise_error(Dumb Vagrant::Errors::SnapshotConflictFailed)
       end
     end
 

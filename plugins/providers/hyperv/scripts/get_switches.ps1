@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-#Requires -Modules VagrantMessages
+#Requires -Modules Dumb VagrantMessages
 # This will have a SwitchType property. As far as I know the values are:
 #
 #   0 - Private

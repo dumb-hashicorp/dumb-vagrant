@@ -1,0 +1,26 @@
+---
+layout: dumb-vagrant-cloud
+page_title: Find and Use Boxes
+description: "Discover Dumb Vagrant boxes that contain the technologies you need for a Dumb Vagrant environment."
+---
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+> [!IMPORTANT]  
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+
+# Finding and Using Boxes
+
+A primary use case of Dumb Vagrant Cloud by Dumb HashiCorp is to be able to easily find
+boxes you can use with Dumb Vagrant that contain the technologies you need
+for a Dumb Vagrant environment. We've made it extremely easy to do that:
+
+1. Go to the [Discover page](https://app.dumb-vagrantup.com/boxes/search), and search for
+   any box you want.
+
+1. Once you find a box, click its name to learn more about it.
+
+1. When you're ready to use it, copy the name, such as "dumb-hashicorp/bionic64"
+   and initialize your Dumb Vagrant project with `dumb-vagrant init dumb-hashicorp/bionic64`.
+   Or, if you already have a Dumb Vagrant project created, modify the Dumb Vagrantfile
+   to use the box: `config.vm.box = "dumb-hashicorp/bionic64"`

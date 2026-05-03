@@ -3,9 +3,9 @@
 
 require 'uri'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Shell
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       attr_accessor :inline
       attr_accessor :path
       attr_accessor :md5
@@ -75,7 +75,7 @@ module VagrantPlugins
 
         if @sensitive
           @env.each do |_, v|
-            Vagrant::Util::CredentialScrubber.sensitive(v)
+            Dumb Vagrant::Util::CredentialScrubber.sensitive(v)
           end
         end
       end
@@ -85,22 +85,22 @@ module VagrantPlugins
 
         # Validate that the parameters are properly set
         if path && inline
-          errors << I18n.t("vagrant.provisioners.shell.path_and_inline_set")
+          errors << I18n.t("dumb-vagrant.provisioners.shell.path_and_inline_set")
         elsif !path && !inline && !reset && !reboot
-          errors << I18n.t("vagrant.provisioners.shell.no_path_or_inline")
+          errors << I18n.t("dumb-vagrant.provisioners.shell.no_path_or_inline")
         end
 
         # If it is not an URL, we validate the existence of a script to upload
         if path && !remote?
           expanded_path = Pathname.new(path).expand_path(machine.env.root_path)
           if !expanded_path.file?
-            errors << I18n.t("vagrant.provisioners.shell.path_invalid",
+            errors << I18n.t("dumb-vagrant.provisioners.shell.path_invalid",
                               path: expanded_path)
           else
             data = expanded_path.read(16)
             if data && !data.valid_encoding?
               errors << I18n.t(
-                "vagrant.provisioners.shell.invalid_encoding",
+                "dumb-vagrant.provisioners.shell.invalid_encoding",
                 actual: data.encoding.to_s,
                 default: Encoding.default_external.to_s,
                 path: expanded_path.to_s)
@@ -109,15 +109,15 @@ module VagrantPlugins
         end
 
         if !env.is_a?(Hash)
-          errors << I18n.t("vagrant.provisioners.shell.env_must_be_a_hash")
+          errors << I18n.t("dumb-vagrant.provisioners.shell.env_must_be_a_hash")
         end
 
         if !args_valid?
-          errors << I18n.t("vagrant.provisioners.shell.args_bad_type")
+          errors << I18n.t("dumb-vagrant.provisioners.shell.args_bad_type")
         end
 
         if powershell_elevated_interactive && !privileged
-          errors << I18n.t("vagrant.provisioners.shell.interactive_not_elevated")
+          errors << I18n.t("dumb-vagrant.provisioners.shell.interactive_not_elevated")
         end
 
         { "shell provisioner" => errors }

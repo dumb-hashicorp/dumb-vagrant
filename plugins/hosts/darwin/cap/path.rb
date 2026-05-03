@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostDarwin
     module Cap
       class Path
-        @@logger = Log4r::Logger.new("vagrant::host::darwin::path")
+        @@logger = Log4r::Logger.new("dumb-vagrant::host::darwin::path")
 
         FIRMLINK_DEFS = "/usr/share/firmlinks".freeze
         FIRMLINK_DATA_PATH = "/System/Volumes/Data".freeze

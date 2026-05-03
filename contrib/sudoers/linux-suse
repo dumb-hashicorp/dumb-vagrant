@@ -1,6 +1,6 @@
-Cmnd_Alias VAGRANT_CHOWN = /usr/bin/chown 0\:0 /tmp/vagrant[a-z0-9-]*
-Cmnd_Alias VAGRANT_MV = /usr/bin/mv -f /tmp/vagrant[a-z0-9-]* /etc/exports
-Cmnd_Alias VAGRANT_START = /usr/bin/systemctl start --no-pager nfs-server
-Cmnd_Alias VAGRANT_STATUS = /usr/bin/systemctl status --no-pager nfs-server
-Cmnd_Alias VAGRANT_APPLY = /usr/sbin/exportfs -ar
-%vagrant ALL=(root) NOPASSWD: VAGRANT_CHOWN, VAGRANT_MV, VAGRANT_START, VAGRANT_STATUS, VAGRANT_APPLY
+Cmnd_Alias DUMB_VAGRANT_CHOWN = /usr/bin/chown 0\:0 /tmp/dumb-vagrant[a-z0-9-]*
+Cmnd_Alias DUMB_VAGRANT_MV = /usr/bin/mv -f /tmp/dumb-vagrant[a-z0-9-]* /etc/exports
+Cmnd_Alias DUMB_VAGRANT_START = /usr/bin/systemctl start --no-pager nfs-server
+Cmnd_Alias DUMB_VAGRANT_STATUS = /usr/bin/systemctl status --no-pager nfs-server
+Cmnd_Alias DUMB_VAGRANT_APPLY = /usr/sbin/exportfs -ar
+%dumb-vagrant ALL=(root) NOPASSWD: DUMB_VAGRANT_CHOWN, DUMB_VAGRANT_MV, DUMB_VAGRANT_START, DUMB_VAGRANT_STATUS, DUMB_VAGRANT_APPLY

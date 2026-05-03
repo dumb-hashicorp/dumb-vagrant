@@ -3,14 +3,14 @@
 
 require 'optparse'
 
-require Vagrant.source_root.join("plugins/commands/up/start_mixins")
+require Dumb Vagrant.source_root.join("plugins/commands/up/start_mixins")
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSnapshot
     module Command
-      class Restore < Vagrant.plugin("2", :command)
+      class Restore < Dumb Vagrant.plugin("2", :command)
 
-        include VagrantPlugins::CommandUp::StartMixins
+        include Dumb VagrantPlugins::CommandUp::StartMixins
 
         def execute
           options = {}
@@ -18,7 +18,7 @@ module VagrantPlugins
           options[:snapshot_start] = true
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant snapshot restore [options] [vm-name] <name>"
+            o.banner = "Usage: dumb-vagrant snapshot restore [options] [vm-name] <name>"
             o.separator ""
             build_start_options(o, options)
             o.separator "Restore a snapshot taken previously with snapshot save."
@@ -32,7 +32,7 @@ module VagrantPlugins
           argv = parse_options(opts)
           return if !argv
           if argv.empty? || argv.length > 2
-            raise Vagrant::Errors::CLIInvalidUsage,
+            raise Dumb Vagrant::Errors::CLIInvalidUsage,
               help: opts.help.chomp
           end
 
@@ -44,7 +44,7 @@ module VagrantPlugins
 
           with_target_vms(argv) do |vm|
             if !vm.provider.capability?(:snapshot_list)
-              raise Vagrant::Errors::SnapshotNotSupported
+              raise Dumb Vagrant::Errors::SnapshotNotSupported
             end
 
             snapshot_list = vm.provider.capability(:snapshot_list)
@@ -52,7 +52,7 @@ module VagrantPlugins
             if snapshot_list.include? name
               vm.action(:snapshot_restore, options)
             else
-              raise Vagrant::Errors::SnapshotNotFound,
+              raise Dumb Vagrant::Errors::SnapshotNotFound,
                 snapshot_name: name,
                 machine: vm.name.to_s
             end

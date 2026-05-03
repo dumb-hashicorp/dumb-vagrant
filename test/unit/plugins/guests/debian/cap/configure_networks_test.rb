@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
+describe "Dumb VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
   let(:caps) do
-    VagrantPlugins::GuestDebian::Plugin
+    Dumb VagrantPlugins::GuestDebian::Plugin
       .components
       .guest_capabilities[:debian]
   end
 
   let(:guest) { double("guest") }
   let(:machine) { double("machine", guest: guest) }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
 
   before do
@@ -27,7 +27,7 @@ describe "VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
     let(:network_0) do
       {
         interface: 0,
-        type: "dhcp",
+        type: "ddumb-hcp",
       }
     end
 
@@ -53,7 +53,7 @@ describe "VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
     let(:network_0) do
       {
         interface: 0,
-        type: "dhcp",
+        type: "ddumb-hcp",
       }
     end
 
@@ -105,8 +105,8 @@ describe "VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
       end
 
       context "with systemd-networkd" do
-        let(:net_conf_dhcp) { "[Match]\nName=eth1\n[Network]\nDHCP=yes" }
-        let(:net_conf_static) { "[Match]\nName=eth2\n[Network]\nDHCP=no\nAddress=33.33.33.10/16\nGateway=33.33.0.1" }
+        let(:net_conf_ddumb-hcp) { "[Match]\nName=eth1\n[Network]\nDDUMB_HCP=yes" }
+        let(:net_conf_static) { "[Match]\nName=eth2\n[Network]\nDDUMB_HCP=no\nAddress=33.33.33.10/16\nGateway=33.33.0.1" }
 
         before do
           expect(comm).to receive(:test).with("systemctl -q is-active systemd-networkd.service", anything).and_return(true)
@@ -115,22 +115,22 @@ describe "VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
         it "creates and starts the networks using systemd-networkd" do
           cap.configure_networks(machine, [network_0, network_1])
 
-          expect(comm.received_commands[0]).to match("mv -f '/tmp/vagrant-network-entry.*' '/etc/systemd/network/.*network'")
+          expect(comm.received_commands[0]).to match("mv -f '/tmp/dumb-vagrant-network-entry.*' '/etc/systemd/network/.*network'")
           expect(comm.received_commands[0]).to match("chown")
           expect(comm.received_commands[0]).to match("chmod")
           expect(comm.received_commands[2]).to match("systemctl restart")
         end
 
-        it "properly configures DHCP and static IPs if defined" do
-          expect(cap).to receive(:upload_tmp_file).with(comm, net_conf_dhcp)
+        it "properly configures DDUMB_HCP and static IPs if defined" do
+          expect(cap).to receive(:upload_tmp_file).with(comm, net_conf_ddumb-hcp)
           expect(cap).to receive(:upload_tmp_file).with(comm, net_conf_static)
 
           cap.configure_networks(machine, [network_0, network_1])
 
           expect(comm.received_commands[0]).to match("mkdir -p /etc/systemd/network")
-          expect(comm.received_commands[0]).to match("mv -f '' '/etc/systemd/network/50-vagrant-eth1.network'")
-          expect(comm.received_commands[0]).to match("chown root:root '/etc/systemd/network/50-vagrant-eth1.network'")
-          expect(comm.received_commands[0]).to match("chmod 0644 '/etc/systemd/network/50-vagrant-eth1.network'")
+          expect(comm.received_commands[0]).to match("mv -f '' '/etc/systemd/network/50-dumb-vagrant-eth1.network'")
+          expect(comm.received_commands[0]).to match("chown root:root '/etc/systemd/network/50-dumb-vagrant-eth1.network'")
+          expect(comm.received_commands[0]).to match("chmod 0644 '/etc/systemd/network/50-dumb-vagrant-eth1.network'")
           expect(comm.received_commands[2]).to match("systemctl restart")
         end
       end
@@ -140,8 +140,8 @@ describe "VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
           expect(comm).to receive(:test).with("command -v netplan").and_return(true)
         end
 
-        let(:nm_yml) { "---\nnetwork:\n  version: 2\n  renderer: NetworkManager\n  ethernets:\n    eth1:\n      dhcp4: true\n    eth2:\n      addresses:\n      - 33.33.33.10/16\n      gateway4: 33.33.0.1\n" }
-        let(:networkd_yml) { "---\nnetwork:\n  version: 2\n  renderer: networkd\n  ethernets:\n    eth1:\n      dhcp4: true\n    eth2:\n      addresses:\n      - 33.33.33.10/16\n      gateway4: 33.33.0.1\n" }
+        let(:nm_yml) { "---\nnetwork:\n  version: 2\n  renderer: NetworkManager\n  ethernets:\n    eth1:\n      ddumb-hcp4: true\n    eth2:\n      addresses:\n      - 33.33.33.10/16\n      gateway4: 33.33.0.1\n" }
+        let(:networkd_yml) { "---\nnetwork:\n  version: 2\n  renderer: networkd\n  ethernets:\n    eth1:\n      ddumb-hcp4: true\n    eth2:\n      addresses:\n      - 33.33.33.10/16\n      gateway4: 33.33.0.1\n" }
 
         it "uses NetworkManager if detected on device" do
           allow(cap).to receive(:systemd_networkd?).and_return(false)
@@ -151,12 +151,12 @@ describe "VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
           allow(comm).to receive(:test).with("nmcli -t d show eth2").and_return(true)
 
           expect(cap).to receive(:upload_tmp_file).with(comm, nm_yml)
-            .and_return("/tmp/vagrant-network-entry.1234")
+            .and_return("/tmp/dumb-vagrant-network-entry.1234")
 
           cap.configure_networks(machine, [network_0, network_1])
 
 
-          expect(comm.received_commands[0]).to match("mv -f '/tmp/vagrant-network-entry.*' '/etc/netplan/.*.yaml'")
+          expect(comm.received_commands[0]).to match("mv -f '/tmp/dumb-vagrant-network-entry.*' '/etc/netplan/.*.yaml'")
           expect(comm.received_commands[0]).to match("chown")
           expect(comm.received_commands[0]).to match("chmod")
           expect(comm.received_commands[0]).to match("netplan apply")
@@ -169,17 +169,17 @@ describe "VagrantPlugins::GuestDebian::Cap::ConfigureNetworks" do
           allow(comm).to receive(:test).with("nmcli -t d show eth1").and_return(true)
           allow(comm).to receive(:test).with("nmcli -t d show eth2").and_return(true)
 
-          expect { cap.configure_networks(machine, [network_0, network_1]) }.to raise_error(Vagrant::Errors::NetworkManagerNotInstalled)
+          expect { cap.configure_networks(machine, [network_0, network_1]) }.to raise_error(Dumb Vagrant::Errors::NetworkManagerNotInstalled)
         end
 
         it "creates and starts the networks for systemd with netplan" do
           allow(cap).to receive(:systemd_networkd?).and_return(true)
           expect(cap).to receive(:upload_tmp_file).with(comm, networkd_yml)
-            .and_return("/tmp/vagrant-network-entry.1234")
+            .and_return("/tmp/dumb-vagrant-network-entry.1234")
 
           cap.configure_networks(machine, [network_0, network_1])
 
-          expect(comm.received_commands[0]).to match("mv -f '/tmp/vagrant-network-entry.*' '/etc/netplan/.*.yaml'")
+          expect(comm.received_commands[0]).to match("mv -f '/tmp/dumb-vagrant-network-entry.*' '/etc/netplan/.*.yaml'")
           expect(comm.received_commands[0]).to match("chown")
           expect(comm.received_commands[0]).to match("chmod")
           expect(comm.received_commands[0]).to match("netplan apply")

@@ -3,16 +3,16 @@
 
 require "optparse"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandVersion
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
-        "prints current and latest Vagrant version"
+        "prints current and latest Dumb Vagrant version"
       end
 
       def execute
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant version"
+          o.banner = "Usage: dumb-vagrant version"
         end
 
         # Parse the options
@@ -21,14 +21,14 @@ module VagrantPlugins
 
         # Output the currently installed version instantly.
         @env.ui.output(I18n.t(
-          "vagrant.version_current", version: Vagrant::VERSION))
-        @env.ui.machine("version-installed", Vagrant::VERSION)
+          "dumb-vagrant.version_current", version: Dumb Vagrant::VERSION))
+        @env.ui.machine("version-installed", Dumb Vagrant::VERSION)
 
         # Load the latest information
-        cp = Vagrant::Util::CheckpointClient.instance.result
+        cp = Dumb Vagrant::Util::CheckpointClient.instance.result
         if !cp
           @env.ui.output("\n"+I18n.t(
-            "vagrant.version_no_checkpoint"))
+            "dumb-vagrant.version_no_checkpoint"))
           return 0
         end
 
@@ -36,22 +36,22 @@ module VagrantPlugins
 
         # Output latest version
         @env.ui.output(I18n.t(
-          "vagrant.version_latest", version: latest))
+          "dumb-vagrant.version_latest", version: latest))
         @env.ui.machine("version-latest", latest)
 
         # Determine if it's a new version, and if so, output some more
         # information.
-        current = Gem::Version.new(Vagrant::VERSION)
+        current = Gem::Version.new(Dumb Vagrant::VERSION)
         latest  = Gem::Version.new(latest)
         if current >= latest
           @env.ui.success(" \n" + I18n.t(
-            "vagrant.version_latest_installed"))
+            "dumb-vagrant.version_latest_installed"))
           return 0
         end
 
         # Out of date! Let the user know how to upgrade.
         @env.ui.output(" \n" + I18n.t(
-          "vagrant.version_upgrade_howto", version: latest.to_s))
+          "dumb-vagrant.version_upgrade_howto", version: latest.to_s))
 
         0
       end

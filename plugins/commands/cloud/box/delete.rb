@@ -3,20 +3,20 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module BoxCommand
       module Command
-        class Delete < Vagrant.plugin("2", :command)
+        class Delete < Dumb Vagrant.plugin("2", :command)
           include Util
 
           def execute
             options = {}
 
             opts = OptionParser.new do |o|
-              o.banner = "Usage: vagrant cloud box delete [options] organization/box-name"
+              o.banner = "Usage: dumb-vagrant cloud box delete [options] organization/box-name"
               o.separator ""
-              o.separator "Deletes box entry on Vagrant Cloud"
+              o.separator "Deletes box entry on Dumb Vagrant Cloud"
               o.separator ""
               o.separator "Options:"
               o.separator ""
@@ -30,7 +30,7 @@ module VagrantPlugins
             argv = parse_options(opts)
             return if !argv
             if argv.empty? || argv.length > 1
-              raise Vagrant::Errors::CLIInvalidUsage,
+              raise Dumb Vagrant::Errors::CLIInvalidUsage,
                 help: opts.help.chomp
             end
 
@@ -53,7 +53,7 @@ module VagrantPlugins
           # @param [String] access_token User access token
           # @return [Integer]
           def delete_box(org, box_name, access_token)
-            account = VagrantCloud::Account.new(
+            account = Dumb VagrantCloud::Account.new(
               custom_server: api_server_url,
               access_token: access_token
             )
@@ -62,7 +62,7 @@ module VagrantPlugins
               @env.ui.success(I18n.t("cloud_command.box.delete_success", org: org, box_name: box_name))
               0
             end
-          rescue VagrantCloud::Error => e
+          rescue Dumb VagrantCloud::Error => e
             @env.ui.error(I18n.t("cloud_command.errors.box.delete_fail", org: org, box_name: box_name))
             @env.ui.error(e.message)
             1

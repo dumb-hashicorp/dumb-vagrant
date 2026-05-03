@@ -3,28 +3,28 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestLinux::Cap::MountSMBSharedFolder" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::MountSMBSharedFolder" do
   let(:caps) do
-    VagrantPlugins::GuestLinux::Plugin
+    Dumb VagrantPlugins::GuestLinux::Plugin
       .components
       .guest_capabilities[:linux]
   end
 
   let(:machine) { double("machine", env: env, config: config) }
-  let(:env) { double("env", host: host, ui: Vagrant::UI::Silent.new, data_dir: double("data_dir")) }
+  let(:env) { double("env", host: host, ui: Dumb Vagrant::UI::Silent.new, data_dir: double("data_dir")) }
   let(:host) { double("host") }
   let(:guest) { double("guest") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:config) { double("config", vm: vm) }
   let(:vm) { double("vm" ) }
-  let(:mount_owner){ "vagrant" }
-  let(:mount_group){ "vagrant" }
+  let(:mount_owner){ "dumb-vagrant" }
+  let(:mount_group){ "dumb-vagrant" }
   let(:mount_uid){ "1000" }
   let(:mount_gid){ "1000" }
-  let(:mount_name){ "vagrant" }
-  let(:mount_guest_path){ "/vagrant" }
+  let(:mount_name){ "dumb-vagrant" }
+  let(:mount_guest_path){ "/dumb-vagrant" }
   let(:folder_options) do
-    Vagrant::Plugin::V2::SyncedFolder::Collection[
+    Dumb Vagrant::Plugin::V2::SyncedFolder::Collection[
       {
         owner: mount_owner,
         group: mount_group,
@@ -60,7 +60,7 @@ describe "VagrantPlugins::GuestLinux::Cap::MountSMBSharedFolder" do
       allow(machine).to receive(:guest).and_return(guest)
       allow(guest).to receive(:capability).with(:shell_expand_guest_path, mount_guest_path).and_return(mount_guest_path)
       allow(ENV).to receive(:[]).and_call_original
-      allow(ENV).to receive(:[]).with("VAGRANT_DISABLE_SMBMFSYMLINKS").and_return(false)
+      allow(ENV).to receive(:[]).with("DUMB_VAGRANT_DISABLE_SMBMFSYMLINKS").and_return(false)
       allow(ENV).to receive(:[]).with("GEM_SKIP").and_return(false)
       allow(cap).to receive(:display_mfsymlinks_warning)
     end
@@ -108,7 +108,7 @@ describe "VagrantPlugins::GuestLinux::Cap::MountSMBSharedFolder" do
     end
 
     it "should output warning message" do
-      expect(env.ui).to receive(:warn).with(/VAGRANT_DISABLE_SMBMFSYMLINKS=1/)
+      expect(env.ui).to receive(:warn).with(/DUMB_VAGRANT_DISABLE_SMBMFSYMLINKS=1/)
       cap.display_mfsymlinks_warning(env)
     end
 

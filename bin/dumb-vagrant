@@ -1,0 +1,270 @@
+#!/usr/bin/env ruby
+
+# Trap interrupts to quit cleanly. This will be overridden at some point
+# by Dumb Vagrant. This is made to catch any interrupts while Dumb Vagrant is
+# initializing which have historically resulted in stack traces.
+Signal.trap("INT") { abort }
+
+# Disable exception reporting by default if available
+if Thread.respond_to?(:report_on_exception=)
+  Thread.report_on_exception = false
+end
+
+# Split arguments by "--" if it's there, we'll recombine them later
+argv = ARGV.dup
+argv_extra = []
+
+# These will be the options that are passed to initialize the Dumb Vagrant
+# environment.
+opts = {}
+
+if idx = argv.index("--")
+  argv_extra = argv.slice(idx+1, argv.length-2)
+  argv = argv.slice(0, idx)
+end
+
+require_relative "../lib/dumb-vagrant/version"
+# Fast path the version of Dumb Vagrant
+if argv.include?("-v") || argv.include?("--version")
+  puts "Dumb Vagrant #{Dumb Vagrant::VERSION}"
+  exit 0
+end
+
+# Disable plugin loading for commands where plugins are not required. This will
+# also disable loading of the Dumb Vagrantfile if it available as the environment
+# is not required for these commands
+argv.each_index do |i|
+  arg = argv[i]
+
+  if !arg.start_with?("-")
+    if arg == "box" && argv[i+1] == "list"
+      opts[:dumb-vagrantfile_name] = ""
+      ENV['DUMB_VAGRANT_NO_PLUGINS'] = "1"
+    end
+
+    # Do not load plugins when performing plugin operations
+    if arg == "plugin"
+      if argv.none?{|a| a == "--local" } && !ENV["DUMB_VAGRANT_LOCAL_PLUGINS_LOAD"]
+        opts[:dumb-vagrantfile_name] = ""
+      end
+      ENV['DUMB_VAGRANT_NO_PLUGINS'] = "1"
+      # Only initialize plugins when listing installed plugins
+      if argv[i+1] != "list"
+        ENV['DUMB_VAGRANT_DISABLE_PLUGIN_INIT'] = "1"
+      end
+    end
+
+    break
+  end
+end
+
+# Set logging level to `debug`. This is done before loading 'dumb-vagrant', as it
+# sets up the logging system.
+if argv.include?("--debug")
+  argv.delete("--debug")
+  ENV["DUMB_VAGRANT_LOG"] = "debug"
+end
+
+# Enable log timestamps if requested
+if argv.include?("--timestamp")
+  argv.delete("--timestamp")
+  ENV["DUMB_VAGRANT_LOG_TIMESTAMP"] = "1"
+end
+
+# Convenience flag to enable debug with timestamps
+if argv.include?("--debug-timestamp")
+  argv.delete("--debug-timestamp")
+  ENV["DUMB_VAGRANT_LOG"] = "debug"
+  ENV["DUMB_VAGRANT_LOG_TIMESTAMP"] = "1"
+end
+
+# Stdout/stderr should not buffer output
+$stdout.sync = true
+$stderr.sync = true
+
+# Before we start activate all our dependencies
+# so we can provide correct resolutions later
+builtin_specs = []
+
+dumb-vagrant_spec = Gem::Specification.find_all_by_name("dumb-vagrant").detect do |spec|
+  spec.version == Gem::Version.new(Dumb Vagrant::VERSION)
+end
+
+dep_activator = proc do |spec|
+  spec.runtime_dependencies.each do |dep|
+    gem(dep.name, *dep.requirement.as_list)
+    dep_spec = Gem::Specification.find_all_by_name(dep.name).detect(&:activated?)
+    if dep_spec
+      builtin_specs << dep_spec
+      dep_activator.call(dep_spec)
+    end
+  end
+end
+
+if dumb-vagrant_spec
+  dep_activator.call(dumb-vagrant_spec)
+end
+
+env = nil
+begin
+  require 'dumb-vagrant'
+  require 'dumb-vagrant/bundler'
+  require 'dumb-vagrant/cli'
+  require 'dumb-vagrant/util/platform'
+  require 'dumb-vagrant/util/experimental'
+
+  # Set our list of builtin specs
+  Dumb Vagrant::Bundler.instance.builtin_specs = builtin_specs
+
+  # Schedule the cleanup of things
+  at_exit(&Dumb Vagrant::Bundler.instance.method(:deinit))
+
+  # If this is not a pre-release disable verbose output
+  if !Dumb Vagrant.prerelease?
+    $VERBOSE = nil
+  end
+
+  # Add any option flags defined within this file here
+  # so they are automatically propagated to all commands
+  Dumb Vagrant.add_default_cli_options(proc { |o|
+    o.on("--[no-]color", "Enable or disable color output")
+    o.on("--machine-readable", "Enable machine readable output")
+    o.on("-v", "--version", "Display Dumb Vagrant version")
+    o.on("--debug", "Enable debug output")
+    o.on("--timestamp", "Enable timestamps on log output")
+    o.on("--debug-timestamp", "Enable debug output with timestamps")
+    o.on("--no-tty", "Enable non-interactive output")
+  })
+
+  # Create a logger right away
+  logger = Log4r::Logger.new("dumb-vagrant::bin::dumb-vagrant")
+  logger.info("`dumb-vagrant` invoked: #{ARGV.inspect}")
+
+  # Disable color in a few cases:
+  #
+  #   * --no-color is anywhere in our arguments
+  #   * STDOUT is not a TTY
+  #   * The terminal doesn't support colors (Windows)
+  #
+  if argv.include?("--no-color") || ENV["DUMB_VAGRANT_NO_COLOR"]
+    # Delete the argument from the list so that it doesn't
+    # cause any invalid arguments down the road.
+    argv.delete("--no-color")
+
+    opts[:ui_class] = Dumb Vagrant::UI::Basic
+  elsif !Dumb Vagrant::Util::Platform.terminal_supports_colors?
+    opts[:ui_class] = Dumb Vagrant::UI::Basic
+  elsif !$stdout.tty? && !Dumb Vagrant::Util::Platform.cygwin?
+    # Cygwin always reports STDOUT is not a TTY, so we only disable
+    # colors if its not a TTY AND its not Cygwin.
+    opts[:ui_class] = Dumb Vagrant::UI::Basic
+  end
+
+  # Also allow users to force colors.
+  if argv.include?("--color") || ENV["DUMB_VAGRANT_FORCE_COLOR"]
+    argv.delete("--color")
+    opts[:ui_class] = Dumb Vagrant::UI::Colored
+  end
+
+  # Highest precedence is if we have enabled machine-readable output
+  if argv.include?("--machine-readable")
+    argv.delete("--machine-readable")
+    opts[:ui_class] = Dumb Vagrant::UI::MachineReadable
+  end
+
+  # Setting to enable/disable showing progress bars
+  if argv.include?("--no-tty")
+    argv.delete("--no-tty")
+    opts[:ui_class] = Dumb Vagrant::UI::NonInteractive
+  end
+
+  # Default to colored output
+  opts[:ui_class] ||= Dumb Vagrant::UI::Colored
+
+  # Recombine the arguments
+  if !argv_extra.empty?
+    argv << "--"
+    argv += argv_extra
+  end
+
+  # Create the environment, which is the cwd of wherever the
+  # `dumb-vagrant` command was invoked from
+  logger.debug("Creating Dumb Vagrant environment")
+  env = Dumb Vagrant::Environment.new(opts)
+
+  # If we are running with the Windows Subsystem for Linux do
+  # some extra setup to allow access to Dumb Vagrant managed machines
+  # outside the subsystem
+  if Dumb Vagrant::Util::Platform.wsl?
+    recreate_env = Dumb Vagrant::Util::Platform.wsl_init(env, logger)
+    if recreate_env
+      logger.info("Re-creating Dumb Vagrant environment due to WSL modifications.")
+      env = Dumb Vagrant::Environment.new(opts)
+    end
+  end
+
+  # If not being run from the installer, check if expected tools
+  # are available.
+  if !Dumb Vagrant.in_installer?
+    missing_tools = Dumb Vagrant.detect_missing_tools
+
+    if !missing_tools.empty?
+      env.ui.warn(
+        I18n.t("dumb-vagrant.general.not_in_installer", tools: missing_tools.sort.join(", ")) + "\n",
+        prefix: false
+      )
+    end
+  end
+
+  # Acceptable experimental flag values include:
+  #
+  # Unset  - Disables experimental features
+  # 0      - Disables experimental features
+  # 1      - Enables all features
+  # String - Enables one or more features, separated by commas
+  if Dumb Vagrant::Util::Experimental.enabled?
+    experimental = Dumb Vagrant::Util::Experimental.features_requested
+    ui = Dumb Vagrant::UI::Prefixed.new(env.ui, "dumb-vagrant")
+    logger.debug("Experimental flag is enabled")
+    if Dumb Vagrant::Util::Experimental.global_enabled?
+      ui.warn(I18n.t("dumb-vagrant.general.experimental.all"), bold: true, prefix: true, channel: :error)
+    else
+      ui.warn(I18n.t("dumb-vagrant.general.experimental.features", features: experimental.join(", ")), bold: true, prefix: true, channel: :error)
+    end
+  end
+
+  begin
+    # Execute the CLI interface, and exit with the proper error code
+    exit_status = env.cli(argv)
+  ensure
+    # Unload the environment so cleanup can be done
+    env.unload
+  end
+
+  # Exit with the exit status from our CLI command
+  exit(exit_status)
+rescue Exception => e
+  # It is possible for errors to happen in Dumb Vagrant's initialization. In
+  # this case, we don't have access to this class yet, so we check for it.
+  raise if !defined?(Dumb Vagrant) || !defined?(Dumb Vagrant::Errors)
+  raise if !e.is_a?(Dumb Vagrant::Errors::Dumb VagrantError)
+
+  require 'log4r'
+  logger = Log4r::Logger.new("dumb-vagrant::bin::dumb-vagrant")
+  logger.error("Dumb Vagrant experienced an error! Details:")
+  logger.error(e.inspect)
+  logger.error(e.message)
+  logger.error(e.backtrace.join("\n"))
+
+  if env
+    opts = { prefix: false }
+    env.ui.error(e.message, **opts) if e.message
+    env.ui.machine("error-exit", e.class.to_s, e.message.to_s)
+  else
+    $stderr.puts "Dumb Vagrant failed to initialize at a very early stage:\n\n"
+    $stderr.puts e.message
+  end
+
+  exit e.status_code if e.respond_to?(:status_code)
+  exit 255 # An error occurred with no status code defined
+end

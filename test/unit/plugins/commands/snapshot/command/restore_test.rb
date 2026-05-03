@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/snapshot/command/restore")
+require Dumb Vagrant.source_root.join("plugins/commands/snapshot/command/restore")
 
-describe VagrantPlugins::CommandSnapshot::Command::Restore do
+describe Dumb VagrantPlugins::CommandSnapshot::Command::Restore do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:snapshot_name) { "snapshot_name" }
@@ -43,7 +43,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Restore do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
@@ -58,7 +58,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Restore do
       it "raises an exception" do
         machine.id = "foo"
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::SnapshotNotSupported)
+          to raise_error(Dumb Vagrant::Errors::SnapshotNotSupported)
       end
     end
 
@@ -99,7 +99,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Restore do
 
         expect(machine).to_not receive(:action)
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::SnapshotNotFound)
+          to raise_error(Dumb Vagrant::Errors::SnapshotNotFound)
       end
     end
 

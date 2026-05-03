@@ -3,11 +3,11 @@
 
 require_relative "../../../synced_folders/unix_mount_helpers"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Cap
       module MountOptions
-        extend VagrantPlugins::SyncedFolder::UnixMountHelpers
+        extend Dumb VagrantPlugins::SyncedFolder::UnixMountHelpers
 
         VB_MOUNT_TYPE = "vboxsf".freeze
 

@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/kernel_v2/config/vm_trigger")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/vm_trigger")
 
-describe VagrantPlugins::Kernel_V2::VagrantConfigTrigger do
+describe Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigTrigger do
   include_context "unit"
 
   let(:command) { :up }
@@ -146,8 +146,8 @@ describe VagrantPlugins::Kernel_V2::VagrantConfigTrigger do
       expect(cfg.on_error).to eq(:continue)
       expect(cfg.ignore).to eq([:up])
       expect(cfg.only_on).to eq(["guest"])
-      expect(cfg.run).to be_a(VagrantPlugins::Shell::Config)
-      expect(cfg.run_remote).to be_a(VagrantPlugins::Shell::Config)
+      expect(cfg.run).to be_a(Dumb VagrantPlugins::Shell::Config)
+      expect(cfg.run_remote).to be_a(Dumb VagrantPlugins::Shell::Config)
       expect(cfg.abort).to eq(3)
       expect(cfg.ruby_block).to be_a(Proc)
     end

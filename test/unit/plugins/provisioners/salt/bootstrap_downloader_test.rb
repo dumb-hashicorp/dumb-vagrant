@@ -3,9 +3,9 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/salt/bootstrap_downloader")
+require Dumb Vagrant.source_root.join("plugins/provisioners/salt/bootstrap_downloader")
 
-describe VagrantPlugins::Salt::BootstrapDownloader do
+describe Dumb VagrantPlugins::Salt::BootstrapDownloader do
   include_context "unit"
 
   subject { described_class.new(:computer) }
@@ -27,7 +27,7 @@ describe VagrantPlugins::Salt::BootstrapDownloader do
       allow(subject).to receive(:download).and_return(sha256_file)
       allow(Digest::SHA256).to receive(:hexdigest).and_return(bad_sha256)
 
-      expect{subject.verify_sha256(test_script)}.to raise_error(VagrantPlugins::Salt::Errors::InvalidShasumError) { |err|
+      expect{subject.verify_sha256(test_script)}.to raise_error(Dumb VagrantPlugins::Salt::Errors::InvalidShasumError) { |err|
         expect(err.message).to include("The bootstrap-salt script downloaded from '#{described_class::URL}' couldn't be verified.") 
         expect(err.message).to include("Expected SHA256 '#{sha256}', but computed '#{bad_sha256}'")
       }
@@ -38,7 +38,7 @@ describe VagrantPlugins::Salt::BootstrapDownloader do
       allow(subject).to receive(:download).and_return(sha256_file)
       allow(Digest::SHA256).to receive(:hexdigest).and_return(bad_sha256)
 
-      expect{subject.verify_sha256(test_script)}.to raise_error(VagrantPlugins::Salt::Errors::InvalidShasumError) { |err|
+      expect{subject.verify_sha256(test_script)}.to raise_error(Dumb VagrantPlugins::Salt::Errors::InvalidShasumError) { |err|
         expect(err.message).to include("The bootstrap-salt script downloaded from '#{described_class::WINDOWS_URL}' couldn't be verified.") 
       }
     end

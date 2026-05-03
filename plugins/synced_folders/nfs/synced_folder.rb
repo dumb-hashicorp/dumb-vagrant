@@ -7,9 +7,9 @@ require 'zlib'
 
 require "log4r"
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderNFS
     # This synced folder requires that two keys be set on the environment
     # within the middleware sequence:
@@ -18,13 +18,13 @@ module VagrantPlugins
     #   - `:nfs_machine_ip` - The IP of the machine where the NFS folder
     #     will be mounted.
     #
-    class SyncedFolder < Vagrant.plugin("2", :synced_folder)
+    class SyncedFolder < Dumb Vagrant.plugin("2", :synced_folder)
       @@lock = Mutex.new
 
       def initialize(*args)
         super
 
-        @logger = Log4r::Logger.new("vagrant::synced_folders::nfs")
+        @logger = Log4r::Logger.new("dumb-vagrant::synced_folders::nfs")
       end
 
       def usable?(machine, raise_error=false)
@@ -37,7 +37,7 @@ module VagrantPlugins
           return true if machine.env.host.capability(:nfs_installed)
         end
         return false if !raise_error
-        raise Vagrant::Errors::NFSNotSupported
+        raise Dumb Vagrant::Errors::NFSNotSupported
       end
 
       def prepare(machine, folders, opts)
@@ -45,16 +45,16 @@ module VagrantPlugins
       end
 
       def enable(machine, folders, nfsopts)
-        raise Vagrant::Errors::NFSNoHostIP if !nfsopts[:nfs_host_ip]
-        raise Vagrant::Errors::NFSNoGuestIP if !nfsopts[:nfs_machine_ip]
+        raise Dumb Vagrant::Errors::NFSNoHostIP if !nfsopts[:nfs_host_ip]
+        raise Dumb Vagrant::Errors::NFSNoGuestIP if !nfsopts[:nfs_machine_ip]
 
         if machine.config.nfs.verify_installed
           if machine.guest.capability?(:nfs_client_installed)
             installed = machine.guest.capability(:nfs_client_installed)
             if !installed
               can_install = machine.guest.capability?(:nfs_client_install)
-              raise Vagrant::Errors::NFSClientNotInstalledInGuest if !can_install
-              machine.ui.info I18n.t("vagrant.actions.vm.nfs.installing")
+              raise Dumb Vagrant::Errors::NFSClientNotInstalledInGuest if !can_install
+              machine.ui.info I18n.t("dumb-vagrant.actions.vm.nfs.installing")
               machine.guest.capability(:nfs_client_install)
             end
           end
@@ -84,12 +84,12 @@ module VagrantPlugins
           @@lock.synchronize do
             begin
               machine.env.lock("nfs-export") do
-                machine.ui.info I18n.t("vagrant.actions.vm.nfs.exporting")
+                machine.ui.info I18n.t("dumb-vagrant.actions.vm.nfs.exporting")
                 machine.env.host.capability(
                   :nfs_export,
                   machine.ui, machine.id, machine_ip, export_folders)
               end
-            rescue Vagrant::Errors::EnvironmentLockedError
+            rescue Dumb Vagrant::Errors::EnvironmentLockedError
               sleep 1
               retry
             end
@@ -97,14 +97,14 @@ module VagrantPlugins
         end
 
         # Mount
-        machine.ui.info I18n.t("vagrant.actions.vm.nfs.mounting")
+        machine.ui.info I18n.t("dumb-vagrant.actions.vm.nfs.mounting")
 
         # Only mount folders that have a guest path specified.
         mount_folders = {}
         folders.each do |id, opts|
           mount_folders[id] = opts.dup if opts[:guestpath]
 
-          machine.ui.detail(I18n.t("vagrant.actions.vm.nfs.mounting_entry",
+          machine.ui.detail(I18n.t("dumb-vagrant.actions.vm.nfs.mounting_entry",
             guestpath: opts[:guestpath],
             hostpath: opts[:hostpath]
           ))
@@ -125,7 +125,7 @@ module VagrantPlugins
 
       def cleanup(machine, opts)
         ids = opts[:nfs_valid_ids]
-        raise Vagrant::Errors::NFSNoValidIds if !ids
+        raise Dumb Vagrant::Errors::NFSNoValidIds if !ids
 
         # Prune any of the unused machines
         @logger.info("NFS pruning. Valid IDs: #{ids.inspect}")
@@ -143,7 +143,7 @@ module VagrantPlugins
         end
 
         if opts[:nfs_version].to_s.start_with?('4') && opts[:nfs_udp]
-          machine.ui.info I18n.t("vagrant.actions.vm.nfs.v4_with_udp_warning")
+          machine.ui.info I18n.t("dumb-vagrant.actions.vm.nfs.v4_with_udp_warning")
         end
 
         # We use a CRC32 to generate a 32-bit checksum so that the

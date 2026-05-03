@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestRedHat::Cap::SMB" do
+describe "Dumb VagrantPlugins::GuestRedHat::Cap::SMB" do
   let(:described_class) do
-    VagrantPlugins::GuestRedHat::Plugin
+    Dumb VagrantPlugins::GuestRedHat::Plugin
       .components
       .guest_capabilities[:redhat]
       .get(:smb_install)
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)

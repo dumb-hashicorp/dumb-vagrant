@@ -1,33 +1,33 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module Util
-      # @return [String] Vagrant Cloud server URL
+      # @return [String] Dumb Vagrant Cloud server URL
       def api_server_url
-        if Vagrant.server_url == Vagrant::DEFAULT_SERVER_URL
-          return "#{Vagrant.server_url}/api/v1"
+        if Dumb Vagrant.server_url == Dumb Vagrant::DEFAULT_SERVER_URL
+          return "#{Dumb Vagrant.server_url}/api/v1"
         end
         begin
-          addr = URI.parse(Vagrant.server_url)
+          addr = URI.parse(Dumb Vagrant.server_url)
           if addr.path.empty? || addr.path.to_s == "/"
             addr.path = "/api/v1"
           end
 
           addr.to_s
         rescue URI::Error
-          Vagrant.server_url
+          Dumb Vagrant.server_url
         end
       end
 
-      # @param [Vagrant::Environment] env
+      # @param [Dumb Vagrant::Environment] env
       # @param [Hash] options
       # @option options [String] :login Username or email
       # @option options [String] :description Description of login usage for token
       # @option options [String] :code 2FA code for login
       # @option options [Boolean] :quiet Do not prompt user
-      # @returns [VagrantPlugins::CloudCommand::Client, nil]
+      # @returns [Dumb VagrantPlugins::CloudCommand::Client, nil]
       def client_login(env, options={})
         return @_client if defined?(@_client)
         @_client = Client.new(env)
@@ -41,22 +41,22 @@ module VagrantPlugins
         env.ui.output(I18n.t("cloud_command.command_header") + "\n")
 
         # If it is a private cloud installation, show that
-        if Vagrant.server_url != Vagrant::DEFAULT_SERVER_URL
-          env.ui.output("Vagrant Cloud URL: #{Vagrant.server_url}")
+        if Dumb Vagrant.server_url != Dumb Vagrant::DEFAULT_SERVER_URL
+          env.ui.output("Dumb Vagrant Cloud URL: #{Dumb Vagrant.server_url}")
         end
 
         options = {} if !options
         # Ask for the username
         if options[:login]
           @_client.username_or_email = options[:login]
-          env.ui.output("Vagrant Cloud username or email: #{@_client.username_or_email}")
+          env.ui.output("Dumb Vagrant Cloud username or email: #{@_client.username_or_email}")
         else
-          @_client.username_or_email = env.ui.ask("Vagrant Cloud username or email: ")
+          @_client.username_or_email = env.ui.ask("Dumb Vagrant Cloud username or email: ")
         end
 
         @_client.password = env.ui.ask("Password (will be hidden): ", echo: false)
 
-        description_default = "Vagrant login from #{Socket.gethostname}"
+        description_default = "Dumb Vagrant login from #{Socket.gethostname}"
         if !options[:description]
           description = env.ui.ask("Token description (Defaults to #{description_default.inspect}): ")
         else
@@ -84,17 +84,17 @@ module VagrantPlugins
         end
 
         @_client.store_token(token)
-        Vagrant::Util::CredentialScrubber.sensitive(token)
+        Dumb Vagrant::Util::CredentialScrubber.sensitive(token)
         env.ui.success(I18n.t("cloud_command.logged_in"))
         @_client
       end
 
-      # Print search results from Vagrant Cloud to the console
+      # Print search results from Dumb Vagrant Cloud to the console
       #
-      # @param [Array<VagrantCloud::Box>] search_results Box search results from Vagrant Cloud
+      # @param [Array<Dumb VagrantCloud::Box>] search_results Box search results from Dumb Vagrant Cloud
       # @param [Boolean] short Print short summary
       # @param [Boolean] json Print output in JSON format
-      # @param [Vagrant::Environment] env Current Vagrant environment
+      # @param [Dumb Vagrant::Environment] env Current Dumb Vagrant environment
       # @return [nil]
       def format_search_results(search_results, short, json, env)
         result = search_results.map do |b|
@@ -122,15 +122,15 @@ module VagrantPlugins
         nil
       end
 
-      # Output box details result from Vagrant Cloud
+      # Output box details result from Dumb Vagrant Cloud
       #
-      # @param [VagrantCloud::Box, VagrantCloud::Box::Version] box Box or box version to display
-      # @param [Vagrant::Environment] env Current Vagrant environment
+      # @param [Dumb VagrantCloud::Box, Dumb VagrantCloud::Box::Version] box Box or box version to display
+      # @param [Dumb Vagrant::Environment] env Current Dumb Vagrant environment
       # @return [nil]
       def format_box_results(box, env, options={})
-        if box.is_a?(VagrantCloud::Box)
+        if box.is_a?(Dumb VagrantCloud::Box)
           info = box_info(box, options)
-        elsif box.is_a?(VagrantCloud::Box::Version)
+        elsif box.is_a?(Dumb VagrantCloud::Box::Version)
           info = version_info(box)
         else
           info = provider_info(box)
@@ -153,10 +153,10 @@ module VagrantPlugins
 
       # Load box and yield
       #
-      # @param [VagrantCloud::Account] account Vagrant Cloud account
+      # @param [Dumb VagrantCloud::Account] account Dumb Vagrant Cloud account
       # @param [String] org Organization name
       # @param [String] box Box name
-      # @yieldparam [VagrantCloud::Box] box Requested Vagrant Cloud box
+      # @yieldparam [Dumb VagrantCloud::Box] box Requested Dumb Vagrant Cloud box
       # @yieldreturn [Integer]
       # @return [Integer]
       def with_box(account:, org:, box:)
@@ -172,11 +172,11 @@ module VagrantPlugins
 
       # Load box version and yield
       #
-      # @param [VagrantCloud::Account] account Vagrant Cloud account
+      # @param [Dumb VagrantCloud::Account] account Dumb Vagrant Cloud account
       # @param [String] org Organization name
       # @param [String] box Box name
       # @param [String] version Box version
-      # @yieldparam [VagrantCloud::Box::Version] version Requested Vagrant Cloud box version
+      # @yieldparam [Dumb VagrantCloud::Box::Version] version Requested Dumb Vagrant Cloud box version
       # @yieldreturn [Integer]
       # @return [Integer]
       def with_version(account:, org:, box:, version:)
@@ -193,12 +193,12 @@ module VagrantPlugins
 
       # Load box version and yield
       #
-      # @param [VagrantCloud::Account] account Vagrant Cloud account
+      # @param [Dumb VagrantCloud::Account] account Dumb Vagrant Cloud account
       # @param [String] org Organization name
       # @param [String] box Box name
       # @param [String] version Box version
       # @param [String] provider Box version provider name
-      # @yieldparam [VagrantCloud::Box::Provider] provider Requested Vagrant Cloud box version provider
+      # @yieldparam [Dumb VagrantCloud::Box::Provider] provider Requested Dumb Vagrant Cloud box version provider
       # @yieldreturn [Integer]
       # @return [Integer]
       def with_provider(account:, org:, box:, version:, provider:, architecture:)
@@ -220,7 +220,7 @@ module VagrantPlugins
 
       # Extract box information for display
       #
-      # @param [VagrantCloud::Box] box Box for extracting information
+      # @param [Dumb VagrantCloud::Box] box Box for extracting information
       # @return [Hash<String,String>]
       def box_info(box, options={})
         current_version = box.current_version
@@ -265,7 +265,7 @@ module VagrantPlugins
 
       # Extract version information for display
       #
-      # @param [VagrantCloud::Box::Version] version Box version for extracting information
+      # @param [Dumb VagrantCloud::Box::Version] version Box version for extracting information
       # @return [Hash<String,String>]
       def version_info(version)
         provider_arches = version.providers.group_by(&:name).map { |provider_name, info|
@@ -284,7 +284,7 @@ module VagrantPlugins
 
       # Extract provider information for display
       #
-      # @param [VagrantCloud::Box::Provider] provider Box provider for extracting information
+      # @param [Dumb VagrantCloud::Box::Provider] provider Box provider for extracting information
       # @return [Hash<String,String>]
       def provider_info(provider)
         {
@@ -299,7 +299,7 @@ module VagrantPlugins
 
       # Print table results from search request
       #
-      # @param [Vagrant::Environment] env Current Vagrant environment
+      # @param [Dumb Vagrant::Environment] env Current Dumb Vagrant environment
       # @param [Hash] column_labels A hash of key/value pairs for table labels (i.e. {col1: "COL1"})
       # @param [Array] results An array of hashes representing search resuls
       # @param [Array] to_jrust_keys - List of columns keys to right justify (left justify is defualt)
@@ -321,7 +321,7 @@ module VagrantPlugins
 
       # Write the header for a table
       #
-      # @param [Vagrant::Environment] env Current Vagrant environment
+      # @param [Dumb Vagrant::Environment] env Current Dumb Vagrant environment
       # @param [Array<Hash>] columns List of columns in Hash format with `:label` and `:width` keys
       # @return [nil]
       def write_header(env, columns)
@@ -331,7 +331,7 @@ module VagrantPlugins
 
       # Write a row divider for a table
       #
-      # @param [Vagrant::Environment] env Current Vagrant environment
+      # @param [Dumb Vagrant::Environment] env Current Dumb Vagrant environment
       # @param [Array<Hash>] columns List of columns in Hash format with `:label` and `:width` keys
       # @return [nil]
       def write_divider(env, columns)
@@ -341,7 +341,7 @@ module VagrantPlugins
 
       # Write a line of content for a table
       #
-      # @param [Vagrant::Environment] env Current Vagrant environment
+      # @param [Dumb Vagrant::Environment] env Current Dumb Vagrant environment
       # @param [Array<Hash>] columns List of columns in Hash format with `:label` and `:width` keys
       # @param [Hash] h Values to print in row
       # @param [Array<String>] to_rjust_keys List of columns to right justify

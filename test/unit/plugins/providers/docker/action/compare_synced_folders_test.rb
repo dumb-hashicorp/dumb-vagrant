@@ -4,16 +4,16 @@
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/providers/docker/action/compare_synced_folders"
 
-describe VagrantPlugins::DockerProvider::Action::CompareSyncedFolders do
+describe Dumb VagrantPlugins::DockerProvider::Action::CompareSyncedFolders do
   include_context "unit"
   include_context "virtualbox"
 
   let(:sandbox) { isolated_environment }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
-    sandbox.vagrantfile("")
-    sandbox.create_vagrant_env
+    # We have to create a Dumb Vagrantfile so there is a root path
+    sandbox.dumb-vagrantfile("")
+    sandbox.create_dumb-vagrant_env
   end
 
   let(:machine) do
@@ -33,10 +33,10 @@ describe VagrantPlugins::DockerProvider::Action::CompareSyncedFolders do
   end
 
   describe "#call" do
-    let(:cached) { {:docker=>{"/vagrant"=>{:guestpath=>"/vagrant", :hostpath=>"/home/hashicorp/code/vagrant-sandbox", :disabled=>false, :__vagrantfile=>true}}} }
-    let(:fresh) { {:docker=>{"/vagrant"=>{:guestpath=>"/vagrant", :hostpath=>".", :disabled=>false, :__vagrantfile=>true}}} }
+    let(:cached) { {:docker=>{"/dumb-vagrant"=>{:guestpath=>"/dumb-vagrant", :hostpath=>"/home/dumb-hashicorp/code/dumb-vagrant-sandbox", :disabled=>false, :__dumb-vagrantfile=>true}}} }
+    let(:fresh) { {:docker=>{"/dumb-vagrant"=>{:guestpath=>"/dumb-vagrant", :hostpath=>".", :disabled=>false, :__dumb-vagrantfile=>true}}} }
 
-    let(:existing) { {"/vagrant"=>"/home/hashicorp/code/vagrant-sandbox"} }
+    let(:existing) { {"/dumb-vagrant"=>"/home/dumb-hashicorp/code/dumb-vagrant-sandbox"} }
 
 
     it "calls the next action in the chain" do
@@ -51,8 +51,8 @@ describe VagrantPlugins::DockerProvider::Action::CompareSyncedFolders do
     end
 
     context "invalid or existing entries" do
-      let(:cached) { {:docker=>{"/vagrant"=>{:guestpath=>"/not-real", :hostpath=>"/home/hashicorp/code/vagrant-sandbox", :disabled=>false, :__vagrantfile=>true}}} }
-      let(:fresh) { {:docker=>{"/vagrant"=>{:guestpath=>"/vagrant", :hostpath=>".", :disabled=>false, :__vagrantfile=>true}}} }
+      let(:cached) { {:docker=>{"/dumb-vagrant"=>{:guestpath=>"/not-real", :hostpath=>"/home/dumb-hashicorp/code/dumb-vagrant-sandbox", :disabled=>false, :__dumb-vagrantfile=>true}}} }
+      let(:fresh) { {:docker=>{"/dumb-vagrant"=>{:guestpath=>"/dumb-vagrant", :hostpath=>".", :disabled=>false, :__dumb-vagrantfile=>true}}} }
       it "shows a warning" do
         allow(machine.provider).to receive(:host_vm?).and_return(false)
 

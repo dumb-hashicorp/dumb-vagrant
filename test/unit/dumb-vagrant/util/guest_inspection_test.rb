@@ -1,0 +1,21 @@
+# Copyright IBM Corp. 2010, 2025
+# SPDX-License-Identifier: BUSL-1.1
+
+require File.expand_path("../../../base", __FILE__)
+
+require "dumb-vagrant/util/guest_inspection"
+
+describe Dumb Vagrant::Util::GuestInspection::Linux do
+  include_context "unit"
+
+  let(:comm) { double("comm") }
+
+  subject{ Class.new { extend Dumb Vagrant::Util::GuestInspection::Linux } }
+
+  describe "#systemd?" do
+    it "should execute the command with sudo" do
+      expect(comm).to receive(:test).with(/ps/, {sudo: true}).and_return(true)
+      expect(subject.systemd?(comm)).to be(true)
+    end
+  end
+end

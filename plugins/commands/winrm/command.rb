@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require 'optparse'
-require "vagrant/util/safe_puts"
+require "dumb-vagrant/util/safe_puts"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandWinRM
-    class Command < Vagrant.plugin("2", :command)
-      include Vagrant::Util::SafePuts
+    class Command < Dumb Vagrant.plugin("2", :command)
+      include Dumb Vagrant::Util::SafePuts
 
       def self.synopsis
         "executes commands on a machine via WinRM"
@@ -20,7 +20,7 @@ module VagrantPlugins
         }
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant winrm [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant winrm [options] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -43,7 +43,7 @@ module VagrantPlugins
 
         with_target_vms(argv, single_target: true) do |machine|
           if machine.config.vm.communicator != :winrm
-            raise Vagrant::Errors::WinRMInvalidCommunicator
+            raise Dumb Vagrant::Errors::WinRMInvalidCommunicator
           end
 
           opts = {
@@ -57,7 +57,7 @@ module VagrantPlugins
                 io = type == :stderr ? $stderr : $stdout
                 safe_puts(data, io: io, printer: :print)
               end
-            rescue VagrantPlugins::CommunicatorWinRM::Errors::WinRMBadExitStatus
+            rescue Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMBadExitStatus
               return 1
             end
           end

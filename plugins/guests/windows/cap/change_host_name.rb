@@ -3,7 +3,7 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestWindows
     module Cap
       module ChangeHostName

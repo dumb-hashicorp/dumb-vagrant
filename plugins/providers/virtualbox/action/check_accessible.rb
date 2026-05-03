@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class CheckAccessible
@@ -15,7 +15,7 @@ module VagrantPlugins
             # is a very bad situation and can only be fixed by the user. It
             # also prohibits us from actually doing anything with the virtual
             # machine, so we raise an error.
-            raise Vagrant::Errors::VMInaccessible
+            raise Dumb Vagrant::Errors::VMInaccessible
           end
 
           @app.call(env)

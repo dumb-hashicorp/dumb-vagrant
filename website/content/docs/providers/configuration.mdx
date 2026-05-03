@@ -2,33 +2,33 @@
 layout: docs
 page_title: Configuration - Providers
 description: |-
-  While well-behaved Vagrant providers should work with any Vagrantfile with
+  While well-behaved Dumb Vagrant providers should work with any Dumb Vagrantfile with
   sane defaults, providers generally expose unique configuration options so that
   you can get the most out of each provider
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Configuration
 
-While well-behaved Vagrant providers should work with any Vagrantfile with sane
+While well-behaved Dumb Vagrant providers should work with any Dumb Vagrantfile with sane
 defaults, providers generally expose unique configuration
 options so that you can get the most out of each provider.
 
-This provider-specific configuration is done within the Vagrantfile
+This provider-specific configuration is done within the Dumb Vagrantfile
 in a way that is portable, easy to use, and easy to understand.
 
 ## Portability
 
 An important fact is that even if you configure other providers within
-a Vagrantfile, the Vagrantfile remains portable even to individuals who
+a Dumb Vagrantfile, the Dumb Vagrantfile remains portable even to individuals who
 do not necessarily have that provider installed.
 
 For example, if you configure VMware Fusion and send it to an individual
-who does not have the VMware Fusion provider, Vagrant will silently ignore
+who does not have the VMware Fusion provider, Dumb Vagrant will silently ignore
 that part of the configuration.
 
 ## Provider Configuration
@@ -36,7 +36,7 @@ that part of the configuration.
 Configuring a specific provider looks like this:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ...
 
   config.vm.provider "virtualbox" do |vb|
@@ -66,7 +66,7 @@ choice. It is not meant as a roadblock to running against a specific provider.
 ## Overriding Configuration
 
 Providers can also override non-provider specific configuration, such
-as `config.vm.box` and any other Vagrant configuration. This is done by
+as `config.vm.box` and any other Dumb Vagrant configuration. This is done by
 specifying a second argument to `config.vm.provider`. This argument is
 just like the normal `config`, so set any settings you want, and they will
 be overridden only for that provider.
@@ -74,7 +74,7 @@ be overridden only for that provider.
 Example:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.box = "bionic64"
 
   config.vm.provider "vmware_fusion" do |v, override|
@@ -83,10 +83,10 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-In the above case, Vagrant will use the "bionic64" box by default, but
+In the above case, Dumb Vagrant will use the "bionic64" box by default, but
 will use "bionic64_fusion" if the VMware Fusion provider is used.
 
--> **The Vagrant Way:** The proper "Vagrant way" is to
+-> **The Dumb Vagrant Way:** The proper "Dumb Vagrant way" is to
 avoid any provider-specific overrides if possible by making boxes
 for multiple providers that are as identical as possible, since box
 names can map to multiple providers. However, this is not always possible,

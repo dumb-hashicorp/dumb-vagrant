@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/chef/provisioner/base")
+require Dumb Vagrant.source_root.join("plugins/provisioners/chef/provisioner/base")
 
-describe VagrantPlugins::Chef::Provisioner::Base do
+describe Dumb VagrantPlugins::Chef::Provisioner::Base do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }
@@ -49,7 +49,7 @@ describe VagrantPlugins::Chef::Provisioner::Base do
     it "generates a random name if no hostname or node_name is given" do
       machine.config.vm.hostname = nil
       instance = described_class.new(machine, OpenStruct.new(node_name: nil))
-      expect(instance.config.node_name).to match(/vagrant\-.+/)
+      expect(instance.config.node_name).to match(/dumb-vagrant\-.+/)
     end
 
     it "does not set node_name if configuration does not define it" do

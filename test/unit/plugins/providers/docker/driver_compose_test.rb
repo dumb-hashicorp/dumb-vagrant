@@ -4,10 +4,10 @@
 require "yaml"
 require_relative "../../../base"
 
-require Vagrant.source_root.join("lib/vagrant/util/deep_merge")
-require Vagrant.source_root.join("plugins/providers/docker/driver")
+require Dumb Vagrant.source_root.join("lib/dumb-vagrant/util/deep_merge")
+require Dumb Vagrant.source_root.join("plugins/providers/docker/driver")
 
-describe VagrantPlugins::DockerProvider::Driver::Compose do
+describe Dumb VagrantPlugins::DockerProvider::Driver::Compose do
   let(:cmd_executed) { @cmd }
   let(:execute_result) {
     double("execute_result",
@@ -54,28 +54,28 @@ describe VagrantPlugins::DockerProvider::Driver::Compose do
 
   before do
     @cmd = []
-    allow(Vagrant::Util::Subprocess).to receive(:execute) { |*args|
+    allow(Dumb Vagrant::Util::Subprocess).to receive(:execute) { |*args|
       if args.last.is_a?(Hash)
         args = args[0, args.size - 1]
       end
       invalid = args.detect { |a| !a.is_a?(String) }
       if invalid
         raise TypeError,
-          "Vagrant::Util::Subprocess#execute only accepts signle option Hash and String arguments, received `#{invalid.class}'"
+          "Dumb Vagrant::Util::Subprocess#execute only accepts signle option Hash and String arguments, received `#{invalid.class}'"
       end
       @cmd << args.join(" ")
     }.and_return(execute_result)
-    allow_any_instance_of(Vagrant::Errors::VagrantError).
+    allow_any_instance_of(Dumb Vagrant::Errors::Dumb VagrantError).
       to receive(:translate_error) { |*args| args.join(" ") }
 
-    allow(Vagrant::Util::Which).to receive(:which).and_return("/dev/null/docker-compose")
+    allow(Dumb Vagrant::Util::Which).to receive(:which).and_return("/dev/null/docker-compose")
     allow(env).to receive(:lock).and_yield
     allow(Pathname).to receive(:new).with(local_data_path).and_return(local_data_path)
     allow(Pathname).to receive(:new).with('/host/path').and_call_original
     allow(local_data_path).to receive(:join).and_return(data_directory)
     allow(data_directory).to receive(:mkpath)
     allow(FileUtils).to receive(:mv)
-    allow(Tempfile).to receive(:new).with("vagrant-docker-compose").and_return(docker_yml)
+    allow(Tempfile).to receive(:new).with("dumb-vagrant-docker-compose").and_return(docker_yml)
     allow(docker_yml).to receive(:write)
     allow(docker_yml).to receive(:close)
   end

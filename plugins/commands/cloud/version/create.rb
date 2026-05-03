@@ -3,20 +3,20 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module VersionCommand
       module Command
-        class Create < Vagrant.plugin("2", :command)
+        class Create < Dumb Vagrant.plugin("2", :command)
           include Util
 
           def execute
             options = {}
 
             opts = OptionParser.new do |o|
-              o.banner = "Usage: vagrant cloud version create [options] organization/box-name version"
+              o.banner = "Usage: dumb-vagrant cloud version create [options] organization/box-name version"
               o.separator ""
-              o.separator "Creates a version entry on Vagrant Cloud"
+              o.separator "Creates a version entry on Dumb Vagrant Cloud"
               o.separator ""
               o.separator "Options:"
               o.separator ""
@@ -30,7 +30,7 @@ module VagrantPlugins
             argv = parse_options(opts)
             return if !argv
             if argv.empty? || argv.length != 2
-              raise Vagrant::Errors::CLIInvalidUsage,
+              raise Dumb Vagrant::Errors::CLIInvalidUsage,
                 help: opts.help.chomp
             end
 
@@ -46,12 +46,12 @@ module VagrantPlugins
           # @param [String] org Organization box is within
           # @param [String] box_name Name of box
           # @param [String] box_version Version of box to create
-          # @param [String] access_token User Vagrant Cloud access token
+          # @param [String] access_token User Dumb Vagrant Cloud access token
           # @param [Hash] options
           # @option options [String] :description Description of box version
           # @return [Integer]
           def create_version(org, box_name, box_version, access_token, options={})
-            account = VagrantCloud::Account.new(
+            account = Dumb VagrantCloud::Account.new(
               custom_server: api_server_url,
               access_token: access_token
             )
@@ -64,7 +64,7 @@ module VagrantPlugins
               format_box_results(version, @env)
               0
             end
-          rescue VagrantCloud::Error => e
+          rescue Dumb VagrantCloud::Error => e
             @env.ui.error(I18n.t("cloud_command.errors.version.create_fail",
               version: box_version, org: org, box_name: box_name))
             @env.ui.error(e.message)

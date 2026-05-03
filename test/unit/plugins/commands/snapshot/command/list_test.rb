@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/snapshot/command/list")
+require Dumb Vagrant.source_root.join("plugins/commands/snapshot/command/list")
 
-describe VagrantPlugins::CommandSnapshot::Command::List do
+describe Dumb VagrantPlugins::CommandSnapshot::Command::List do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest") }
@@ -45,7 +45,7 @@ describe VagrantPlugins::CommandSnapshot::Command::List do
       it "raises an exception" do
         machine.id = "foo"
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::SnapshotNotSupported)
+          to raise_error(Dumb Vagrant::Errors::SnapshotNotSupported)
       end
     end
 

@@ -1,27 +1,27 @@
 ---
 layout: docs
-page_title: vagrant halt - Command-Line Interface
+page_title: dumb-vagrant halt - Command-Line Interface
 description: |-
-  The "vagrant halt" command is used to shut down the virtual machine that
-  Vagrant is currently managing.
+  The "dumb-vagrant halt" command is used to shut down the virtual machine that
+  Dumb Vagrant is currently managing.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Halt
 
-**Command: `vagrant halt [name|id]`**
+**Command: `dumb-vagrant halt [name|id]`**
 
-This command shuts down the running machine Vagrant is managing.
+This command shuts down the running machine Dumb Vagrant is managing.
 
-Vagrant will first attempt to gracefully shut down the machine by running
+Dumb Vagrant will first attempt to gracefully shut down the machine by running
 the guest OS shutdown mechanism. If this fails, or if the `--force` flag is
-specified, Vagrant will effectively just shut off power to the machine.
+specified, Dumb Vagrant will effectively just shut off power to the machine.
 
-For Linux-based guests, Vagrant will:
+For Linux-based guests, Dumb Vagrant will:
 
 1. Attempt to detect and use Systemd to execute `systemctl poweroff`; but otherwise,
 2. Fallback to using the `shutdown` command to gracefully

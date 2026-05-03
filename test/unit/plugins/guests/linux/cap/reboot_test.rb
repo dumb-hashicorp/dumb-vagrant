@@ -3,17 +3,17 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/guests/linux/cap/reboot")
+require Dumb Vagrant.source_root.join("plugins/guests/linux/cap/reboot")
 
-describe "VagrantPlugins::GuestLinux::Cap::Reboot" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::Reboot" do
   let(:described_class) do
-    VagrantPlugins::GuestLinux::Plugin.components.guest_capabilities[:linux].get(:wait_for_reboot)
+    Dumb VagrantPlugins::GuestLinux::Plugin.components.guest_capabilities[:linux].get(:wait_for_reboot)
   end
 
   let(:machine) { double("machine", guest: guest) }
   let(:guest) { double("guest") }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
 
   context "systemd not enabled" do
     before do
@@ -80,7 +80,7 @@ describe "VagrantPlugins::GuestLinux::Cap::Reboot" do
         allow(communicator).to receive(:execute)
         expect(communicator).to receive(:execute).with(/reboot/, nil).and_return(0)
         allow(described_class).to receive(:sleep).and_return(described_class::WAIT_SLEEP_TIME)
-        allow(described_class).to receive(:wait_for_reboot).and_raise(Vagrant::Errors::MachineGuestNotReady)
+        allow(described_class).to receive(:wait_for_reboot).and_raise(Dumb Vagrant::Errors::MachineGuestNotReady)
       end
 
       context "default retry duration value" do
@@ -88,7 +88,7 @@ describe "VagrantPlugins::GuestLinux::Cap::Reboot" do
 
         it "should receive expected number of wait_for_reboot calls" do
           expect(described_class).to receive(:wait_for_reboot).exactly(max_retries).times
-          expect { described_class.reboot(machine) }.to raise_error(Vagrant::Errors::MachineGuestNotReady)
+          expect { described_class.reboot(machine) }.to raise_error(Dumb Vagrant::Errors::MachineGuestNotReady)
         end
       end
 
@@ -97,12 +97,12 @@ describe "VagrantPlugins::GuestLinux::Cap::Reboot" do
         let(:max_retries) { (duration / described_class::WAIT_SLEEP_TIME) + 2 }
 
         before do
-          expect(ENV).to receive(:fetch).with("VAGRANT_MAX_REBOOT_RETRY_DURATION", anything).and_return(duration)
+          expect(ENV).to receive(:fetch).with("DUMB_VAGRANT_MAX_REBOOT_RETRY_DURATION", anything).and_return(duration)
         end
 
         it "should receive expected number of wait_for_reboot calls" do
           expect(described_class).to receive(:wait_for_reboot).exactly(max_retries).times
-          expect { described_class.reboot(machine) }.to raise_error(Vagrant::Errors::MachineGuestNotReady)
+          expect { described_class.reboot(machine) }.to raise_error(Dumb Vagrant::Errors::MachineGuestNotReady)
         end
       end
     end

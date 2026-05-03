@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/guests/windows/cap/change_host_name")
+require Dumb Vagrant.source_root.join("plugins/guests/windows/cap/change_host_name")
 
-describe "VagrantPlugins::GuestWindows::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestWindows::Cap::ChangeHostName" do
   let(:described_class) do
-    VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:change_host_name)
+    Dumb VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:change_host_name)
   end
   let(:machine) { double("machine", guest: guest) }
   let(:guest) { double("guest") }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(communicator)
@@ -27,7 +27,7 @@ describe "VagrantPlugins::GuestWindows::Cap::ChangeHostName" do
         $computer = Get-WmiObject -Class Win32_ComputerSystem
         $retval = $computer.rename("newhostname").returnvalue
         if ($retval -eq 0) {
-          shutdown /r /t 5 /f /d p:4:1 /c "Vagrant Rename Computer"
+          shutdown /r /t 5 /f /d p:4:1 /c "Dumb Vagrant Rename Computer"
         }
         exit $retval
       EOH

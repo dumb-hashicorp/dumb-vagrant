@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 en:
-  vagrant_winrm:
+  dumb-vagrant_winrm:
     errors:
       authentication_failed: |-
         An authorization error occurred while connecting to WinRM.
@@ -12,7 +12,7 @@ en:
         Message: %{message}
       winrm_bad_exit_status: |-
         The following WinRM command responded with a non-zero exit status.
-        Vagrant assumes that this means the command failed!
+        Dumb Vagrant assumes that this means the command failed!
 
         %{command}
 
@@ -42,8 +42,8 @@ en:
 
       winrm_not_ready: |-
         The box is not able to report an address for WinRM to connect to yet.
-        WinRM cannot access this Vagrant environment. Please wait for the
-        Vagrant environment to be running and try again.
+        WinRM cannot access this Dumb Vagrant environment. Please wait for the
+        Dumb Vagrant environment to be running and try again.
       winrm_file_transfer_error: |-
         Failed to transfer a file between the host and guest
 
@@ -54,22 +54,22 @@ en:
       connection_refused: |-
         WinRM connection was refused! This usually happens if the VM failed to
         boot properly. Some steps to try to fix this: First, try reloading your
-        VM with `vagrant reload`, since a simple restart sometimes fixes things.
-        If that doesn't work, destroy your VM and recreate it with a `vagrant destroy`
-        followed by a `vagrant up`. If that doesn't work, contact a Vagrant
+        VM with `dumb-vagrant reload`, since a simple restart sometimes fixes things.
+        If that doesn't work, destroy your VM and recreate it with a `dumb-vagrant destroy`
+        followed by a `dumb-vagrant up`. If that doesn't work, contact a Dumb Vagrant
         maintainer (support channels listed on the website) for more assistance.
       connection_reset: |-
         WinRM connection was reset! This usually happens when the machine is
         taking too long to reboot. First, try reloading your machine with
-        `vagrant reload`, since a simple restart sometimes fixes things.
+        `dumb-vagrant reload`, since a simple restart sometimes fixes things.
         If that doesn't work, destroy your machine and recreate it with
-        a `vagrant destroy` followed by a `vagrant up`. If that doesn't work,
+        a `dumb-vagrant destroy` followed by a `dumb-vagrant up`. If that doesn't work,
         contact support.
       connection_timeout: |-
-        Vagrant timed out while attempting to connect via WinRM. This usually
+        Dumb Vagrant timed out while attempting to connect via WinRM. This usually
         means that the VM booted, but there are issues with the WinRM configuration
-        or network connectivity issues. Please try to `vagrant reload` or
-        `vagrant up` again.
+        or network connectivity issues. Please try to `dumb-vagrant reload` or
+        `dumb-vagrant up` again.
       disconnected: |-
         The WinRM connection was unexpectedly closed by the remote end. This
         usually indicates that WinRM within the guest machine was unable to

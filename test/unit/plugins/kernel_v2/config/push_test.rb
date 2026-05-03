@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/kernel_v2/config/push")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/push")
 
-describe VagrantPlugins::Kernel_V2::PushConfig do
+describe Dumb VagrantPlugins::Kernel_V2::PushConfig do
   include_context "unit"
 
   subject { described_class.new }
@@ -91,19 +91,19 @@ describe VagrantPlugins::Kernel_V2::PushConfig do
     let(:pushes) { a.merge(b).tap { |r| r.finalize! }.__compiled_pushes }
     let(:key)    { pushes[:foo][0] }
     let(:config) { pushes[:foo][1] }
-    let(:unset)  { Vagrant.plugin("2", :config).const_get(:UNSET_VALUE) }
-    let(:dummy_klass) { Vagrant::Config::V2::DummyConfig }
+    let(:unset)  { Dumb Vagrant.plugin("2", :config).const_get(:UNSET_VALUE) }
+    let(:dummy_klass) { Dumb Vagrant::Config::V2::DummyConfig }
 
     before do
       register_plugin("2") do |plugin|
         plugin.name "foo"
 
         plugin.push(:foo) do
-          Class.new(Vagrant.plugin("2", :push))
+          Class.new(Dumb Vagrant.plugin("2", :push))
         end
 
         plugin.config(:foo, :push) do
-          Class.new(Vagrant.plugin("2", :config)) do
+          Class.new(Dumb Vagrant.plugin("2", :config)) do
             attr_accessor :bar
             attr_accessor :zip
 

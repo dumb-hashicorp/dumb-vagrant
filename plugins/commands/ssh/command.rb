@@ -3,9 +3,9 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSSH
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
         "connects to machine via SSH"
       end
@@ -15,7 +15,7 @@ module VagrantPlugins
         options[:tty] = true
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant ssh [options] [name|id] [-- extra ssh args]"
+          o.banner = "Usage: dumb-vagrant ssh [options] [name|id] [-- extra ssh args]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -64,7 +64,7 @@ module VagrantPlugins
             exit_status = env[:ssh_run_exit_status] || 0
             return exit_status
           else
-            Vagrant::Bundler.instance.deinit
+            Dumb Vagrant::Bundler.instance.deinit
             @logger.debug("Invoking `ssh` action on machine")
             vm.action(:ssh, ssh_opts: ssh_opts)
 

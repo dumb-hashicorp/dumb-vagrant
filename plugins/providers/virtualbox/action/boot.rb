@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class Boot
@@ -15,7 +15,7 @@ module VagrantPlugins
           boot_mode = @env[:machine].provider_config.gui ? "gui" : "headless"
 
           # Start up the VM and wait for it to boot.
-          env[:ui].info I18n.t("vagrant.actions.vm.boot.booting")
+          env[:ui].info I18n.t("dumb-vagrant.actions.vm.boot.booting")
           env[:machine].provider.driver.start(boot_mode)
 
           @app.call(env)

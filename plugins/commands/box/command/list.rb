@@ -3,15 +3,15 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandBox
     module Command
-      class List < Vagrant.plugin("2", :command)
+      class List < Dumb Vagrant.plugin("2", :command)
         def execute
           options = {}
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant box list [options]"
+            o.banner = "Usage: dumb-vagrant box list [options]"
             o.separator ""
             o.separator "Options:"
             o.separator ""
@@ -27,7 +27,7 @@ module VagrantPlugins
 
           boxes = @env.boxes.all
           if boxes.empty?
-            @env.ui.warn(I18n.t("vagrant.commands.box.no_installed_boxes"), prefix: false)
+            @env.ui.warn(I18n.t("dumb-vagrant.commands.box.no_installed_boxes"), prefix: false)
             return 0
           end
 

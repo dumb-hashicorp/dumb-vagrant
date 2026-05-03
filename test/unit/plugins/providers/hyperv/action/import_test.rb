@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/action/import")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/action/import")
 
-describe VagrantPlugins::HyperV::Action::Import do
+describe Dumb VagrantPlugins::HyperV::Action::Import do
   let(:app){ double("app") }
   let(:env){ {ui: ui, machine: machine} }
-  let(:ui){ Vagrant::UI::Silent.new }
+  let(:ui){ Dumb Vagrant::UI::Silent.new }
   let(:provider){ double("provider", driver: driver) }
   let(:driver){ double("driver") }
   let(:machine){ double("machine", provider: provider, provider_config: provider_config, box: box, data_dir: data_dir, name: "machname") }
@@ -48,7 +48,7 @@ describe VagrantPlugins::HyperV::Action::Import do
     before{ expect(vm_dir).to receive(:directory?).and_return(false) }
 
     it "should raise an error" do
-      expect{ subject.call(env) }.to raise_error(VagrantPlugins::HyperV::Errors::BoxInvalid)
+      expect{ subject.call(env) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::BoxInvalid)
     end
   end
 
@@ -56,7 +56,7 @@ describe VagrantPlugins::HyperV::Action::Import do
     before{ expect(hd_dir).to receive(:directory?).and_return(false) }
 
     it "should raise an error" do
-      expect{ subject.call(env) }.to raise_error(VagrantPlugins::HyperV::Errors::BoxInvalid)
+      expect{ subject.call(env) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::BoxInvalid)
     end
   end
 
@@ -66,7 +66,7 @@ describe VagrantPlugins::HyperV::Action::Import do
     end
 
     it "should raise an error" do
-      expect{ subject.call(env) }.to raise_error(VagrantPlugins::HyperV::Errors::BoxInvalid)
+      expect{ subject.call(env) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::BoxInvalid)
     end
   end
 
@@ -76,7 +76,7 @@ describe VagrantPlugins::HyperV::Action::Import do
     end
 
     it "should raise an error" do
-      expect{ subject.call(env) }.to raise_error(VagrantPlugins::HyperV::Errors::BoxInvalid)
+      expect{ subject.call(env) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::BoxInvalid)
     end
   end
 
@@ -123,7 +123,7 @@ describe VagrantPlugins::HyperV::Action::Import do
 
       it "should not match VMCX config file" do
         expect(vm_dir).to receive(:each_child).and_yield(Pathname.new("config.vmcx"))
-        expect{ subject.call(env) }.to raise_error(VagrantPlugins::HyperV::Errors::BoxInvalid)
+        expect{ subject.call(env) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::BoxInvalid)
       end
     end
 

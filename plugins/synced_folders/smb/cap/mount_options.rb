@@ -3,11 +3,11 @@
 
 require_relative "../../unix_mount_helpers"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderSMB
     module Cap
       module MountOptions
-        extend VagrantPlugins::SyncedFolder::UnixMountHelpers
+        extend Dumb VagrantPlugins::SyncedFolder::UnixMountHelpers
 
         MOUNT_TYPE = "cifs".freeze
 
@@ -34,7 +34,7 @@ module VagrantPlugins
           mnt_opts << "credentials=/etc/smb_creds_#{options[:smb_id]}"
           mnt_opts << "uid=#{mount_uid}"
           mnt_opts << "gid=#{mount_gid}"
-          if !ENV['VAGRANT_DISABLE_SMBMFSYMLINKS']
+          if !ENV['DUMB_VAGRANT_DISABLE_SMBMFSYMLINKS']
             mnt_opts << "mfsymlinks"
           end
           mnt_opts << "_netdev"

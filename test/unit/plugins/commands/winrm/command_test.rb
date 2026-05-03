@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/winrm/command")
+require Dumb Vagrant.source_root.join("plugins/commands/winrm/command")
 
-describe VagrantPlugins::CommandWinRM::Command do
+describe Dumb VagrantPlugins::CommandWinRM::Command do
   include_context "unit"
   include_context "virtualbox"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest") }
@@ -92,7 +92,7 @@ describe VagrantPlugins::CommandWinRM::Command do
     let(:communicator_name) { :ssh }
 
     it "should raise an error" do
-      expect { subject.execute }.to raise_error(Vagrant::Errors::WinRMInvalidCommunicator)
+      expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::WinRMInvalidCommunicator)
     end
   end
 end

@@ -4,13 +4,13 @@
 require "tempfile"
 require "yaml"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestCoreOS
     module Cap
       class ConfigureNetworks
-        extend Vagrant::Util::GuestInspection::Linux
+        extend Dumb Vagrant::Util::GuestInspection::Linux
 
         NETWORK_MANAGER_CONN_DIR = "/etc/NetworkManager/system-connections".freeze
         DEFAULT_ENVIRONMENT_IP = "127.0.0.1".freeze
@@ -27,7 +27,7 @@ module VagrantPlugins
               nm_dev[dev] = id
             end
           end
-          comm.sudo("rm #{File.join(NETWORK_MANAGER_CONN_DIR, 'vagrant-*.conf')}",
+          comm.sudo("rm #{File.join(NETWORK_MANAGER_CONN_DIR, 'dumb-vagrant-*.conf')}",
             error_check: false)
 
           networks.each_with_index do |network, i|
@@ -42,7 +42,7 @@ module VagrantPlugins
               end
             end
 
-            f = Tempfile.new("vagrant-coreos-network")
+            f = Tempfile.new("dumb-vagrant-coreos-network")
             {
               connection: {
                 type: "ethernet",
@@ -66,8 +66,8 @@ module VagrantPlugins
             f.close
             comm.sudo("nmcli d disconnect '#{network[:device]}'", error_check: false)
             comm.sudo("nmcli c delete '#{nm_dev[network[:device]]}'", error_check: false)
-            dst = File.join("/var/tmp", "vagrant-#{network[:device]}.conf")
-            final = File.join(NETWORK_MANAGER_CONN_DIR, "vagrant-#{network[:device]}.conf")
+            dst = File.join("/var/tmp", "dumb-vagrant-#{network[:device]}.conf")
+            final = File.join(NETWORK_MANAGER_CONN_DIR, "dumb-vagrant-#{network[:device]}.conf")
             comm.upload(f.path, dst)
             comm.sudo("chown root:root '#{dst}'")
             comm.sudo("chmod 0600 '#{dst}'")
@@ -106,10 +106,10 @@ module VagrantPlugins
           interfaces = machine.guest.capability(:network_interfaces)
           units = networks.map do |network|
             iface = network[:interface].to_i
-            unit_name = "50-vagrant#{iface}.network"
+            unit_name = "50-dumb-vagrant#{iface}.network"
             device = interfaces[iface]
-            if network[:type].to_s == "dhcp"
-              network_content = "DHCP=yes"
+            if network[:type].to_s == "ddumb-hcp"
+              network_content = "DDUMB_HCP=yes"
             else
               prefix = IPAddr.new("255.255.255.255/#{network[:netmask]}").to_i.to_s(2).count("1")
               address = "#{network[:ip]}/#{prefix}"
@@ -122,7 +122,7 @@ module VagrantPlugins
           cloud_config["coreos"] = {"units" => units.compact}
 
           # Upload configuration and apply
-          file = Tempfile.new("vagrant-coreos-networks")
+          file = Tempfile.new("dumb-vagrant-coreos-networks")
           file.puts("#cloud-config\n")
           file.puts(cloud_config.to_yaml)
           file.close

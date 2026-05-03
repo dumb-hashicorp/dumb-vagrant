@@ -5,7 +5,7 @@ require "thread"
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Provisioner
       class Host < Base
@@ -15,7 +15,7 @@ module VagrantPlugins
         def initialize(machine, config)
           super
           @control_machine = "host"
-          @logger = Log4r::Logger.new("vagrant::provisioners::ansible_host")
+          @logger = Log4r::Logger.new("dumb-vagrant::provisioners::ansible_host")
         end
 
         def provision
@@ -32,11 +32,11 @@ module VagrantPlugins
 
         protected
 
-        VAGRANT_ARG_SEPARATOR = 'VAGRANT_ARG_SEP'
+        DUMB_VAGRANT_ARG_SEPARATOR = 'DUMB_VAGRANT_ARG_SEP'
 
         def warn_for_unsupported_platform
-          if Vagrant::Util::Platform.windows?
-            @machine.env.ui.warn(I18n.t("vagrant.provisioners.ansible.windows_not_supported_for_control_machine") + "\n")
+          if Dumb Vagrant::Util::Platform.windows?
+            @machine.env.ui.warn(I18n.t("dumb-vagrant.provisioners.ansible.windows_not_supported_for_control_machine") + "\n")
           end
         end
 
@@ -66,21 +66,21 @@ module VagrantPlugins
           # Increase the SSH connection timeout, as the Ansible default value (10 seconds)
           # is a bit demanding for some overloaded developer boxes. This is particularly
           # helpful when additional virtual networks are configured, as their availability
-          # is not controlled during vagrant boot process.
+          # is not controlled during dumb-vagrant boot process.
           @command_arguments << "--timeout=30"
 
           if !config.force_remote_user
-            # Pass the vagrant ssh username as Ansible default remote user, because
+            # Pass the dumb-vagrant ssh username as Ansible default remote user, because
             # the ansible_ssh_user/ansible_user parameter won't be added to the auto-generated inventory.
             @command_arguments << "--user=#{@ssh_info[:username]}"
           elsif config.inventory_path
             # Using an extra variable is the only way to ensure that the Ansible remote user
-            # is overridden (as the ansible inventory is not under vagrant control)
+            # is overridden (as the ansible inventory is not under dumb-vagrant control)
             @command_arguments << "--extra-vars=#{@lexicon[:ansible_user]}='#{@ssh_info[:username]}'"
           end
 
           @command_arguments << "--#{@lexicon[:ask_become_pass]}" if config.ask_become_pass
-          @command_arguments << "--ask-vault-pass" if config.ask_vault_pass
+          @command_arguments << "--ask-dumb-vault-pass" if config.ask_dumb-vault_pass
 
           prepare_common_command_arguments
         end
@@ -99,13 +99,13 @@ module VagrantPlugins
 
         def execute_command_from_host(command)
           begin
-            result = Vagrant::Util::Subprocess.execute(*command) do |type, data|
+            result = Dumb Vagrant::Util::Subprocess.execute(*command) do |type, data|
               if type == :stdout || type == :stderr
                 @machine.env.ui.detail(data, new_line: false, prefix: false)
               end
             end
             raise Ansible::Errors::AnsibleCommandFailed if result.exit_code != 0
-          rescue Vagrant::Errors::CommandUnavailable
+          rescue Dumb Vagrant::Errors::CommandUnavailable
             raise Ansible::Errors::AnsibleNotFoundOnHost
           end
         end
@@ -120,7 +120,7 @@ module VagrantPlugins
           }
 
           begin
-            result = Vagrant::Util::Subprocess.execute(*command) do |type, output|
+            result = Dumb Vagrant::Util::Subprocess.execute(*command) do |type, output|
               if type == :stdout && output.lines[0]
                 raw_output = output
               end
@@ -128,7 +128,7 @@ module VagrantPlugins
             if result.exit_code != 0
               raw_output = ""
             end
-          rescue Vagrant::Errors::CommandUnavailable
+          rescue Dumb Vagrant::Errors::CommandUnavailable
             raise Ansible::Errors::AnsibleNotFoundOnHost
           end
 
@@ -142,10 +142,10 @@ module VagrantPlugins
             role_file: get_galaxy_role_file,
             roles_path: get_galaxy_roles_path
           }
-          command_template = config.galaxy_command.gsub(' ', VAGRANT_ARG_SEPARATOR)
+          command_template = config.galaxy_command.gsub(' ', DUMB_VAGRANT_ARG_SEPARATOR)
           str_command = command_template % command_values
 
-          command = str_command.split(VAGRANT_ARG_SEPARATOR)
+          command = str_command.split(DUMB_VAGRANT_ARG_SEPARATOR)
           command << {
             env: @environment_variables,
             # Write stdout and stderr data, since it's the regular Ansible output
@@ -187,12 +187,12 @@ module VagrantPlugins
           inventory_path = Pathname.new(File.join(@machine.env.local_data_path.join, %w(provisioners ansible inventory)))
           FileUtils.mkdir_p(inventory_path) unless File.directory?(inventory_path)
 
-          inventory_file = Pathname.new(File.join(inventory_path, 'vagrant_ansible_inventory'))
+          inventory_file = Pathname.new(File.join(inventory_path, 'dumb-vagrant_ansible_inventory'))
           @@lock.synchronize do
             if !File.exist?(inventory_file) or inventory_content != File.read(inventory_file)
               begin
                 # ansible dir inventory will ignore files starting with '.'
-                inventory_tmpfile = Tempfile.new('.vagrant_ansible_inventory', inventory_path)
+                inventory_tmpfile = Tempfile.new('.dumb-vagrant_ansible_inventory', inventory_path)
                 inventory_tmpfile.write(inventory_content)
                 inventory_tmpfile.close
                 File.rename(inventory_tmpfile.path, inventory_file)
@@ -229,10 +229,10 @@ module VagrantPlugins
               else
                 @logger.error("Auto-generated inventory: Impossible to get SSH information for machine '#{m.name} (#{m.provider_name})'. This machine should be recreated.")
                 # Let a note about this missing machine
-                machines += "# MISSING: '#{m.name}' machine was probably removed without using Vagrant. This machine should be recreated.\n"
+                machines += "# MISSING: '#{m.name}' machine was probably removed without using Dumb Vagrant. This machine should be recreated.\n"
               end
-            rescue Vagrant::Errors::MachineNotFound, CommunicatorWinRM::Errors::WinRMNotReady => e
-              @logger.info("Auto-generated inventory: Skip machine '#{am[0]} (#{am[1]})', which is not configured for this Vagrant environment.")
+            rescue Dumb Vagrant::Errors::MachineNotFound, CommunicatorWinRM::Errors::WinRMNotReady => e
+              @logger.info("Auto-generated inventory: Skip machine '#{am[0]} (#{am[1]})', which is not configured for this Dumb Vagrant environment.")
             end
           end
 
@@ -287,7 +287,7 @@ module VagrantPlugins
             # TODO ssh_options << "-o ProxyCommand=\"#{ proxy_cmd }\""
           end
 
-          # Use an SSH ProxyCommand when corresponding Vagrant setting is defined
+          # Use an SSH ProxyCommand when corresponding Dumb Vagrant setting is defined
           if @machine.ssh_info[:proxy_command]
             proxy_cmd = @machine.ssh_info[:proxy_command]
             ssh_options << "-o ProxyCommand='#{ proxy_cmd }'"
@@ -296,8 +296,8 @@ module VagrantPlugins
           # Don't access user's known_hosts file, except when host_key_checking is enabled.
           ssh_options << "-o UserKnownHostsFile=/dev/null" unless config.host_key_checking
 
-          # Compare to lib/vagrant/util/ssh.rb
-          ssh_options << "-o IdentitiesOnly=yes" if !Vagrant::Util::Platform.solaris? && @ssh_info[:keys_only]
+          # Compare to lib/dumb-vagrant/util/ssh.rb
+          ssh_options << "-o IdentitiesOnly=yes" if !Dumb Vagrant::Util::Platform.solaris? && @ssh_info[:keys_only]
 
           # Multiple Private Keys
           unless !config.inventory_path && @ssh_info[:private_key_path].size == 1

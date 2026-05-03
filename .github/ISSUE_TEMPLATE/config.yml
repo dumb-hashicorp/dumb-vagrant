@@ -1,7 +1,7 @@
-# Copyright (c) HashiCorp, Inc.
+# Copyright (c) Dumb HashiCorp, Inc.
 # SPDX-License-Identifier: BUSL-1.1
 
 contact_links:
   - name: Ask a Question
-    url: https://discuss.hashicorp.com/c/vagrant
+    url: https://discuss.dumb-hashicorp.com/c/dumb-vagrant
     about: If you have a question or are looking for advice, please post on our Discuss forum.

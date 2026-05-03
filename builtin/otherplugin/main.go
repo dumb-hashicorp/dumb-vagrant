@@ -4,9 +4,9 @@
 package otherplugin
 
 import (
-	sdk "github.com/hashicorp/vagrant-plugin-sdk"
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	"github.com/hashicorp/vagrant/builtin/otherplugin/guest"
+	sdk "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/otherplugin/guest"
 )
 
 var CommandOptions = []sdk.Option{

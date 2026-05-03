@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/commands/cloud/version/revoke")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/version/revoke")
 
-describe VagrantPlugins::CloudCommand::VersionCommand::Command::Revoke do
+describe Dumb VagrantPlugins::CloudCommand::VersionCommand::Command::Revoke do
   include_context "unit"
 
   let(:access_token) { double("token") }
@@ -19,12 +19,12 @@ describe VagrantPlugins::CloudCommand::VersionCommand::Command::Revoke do
   describe "#revoke_version" do
     let(:options) { {} }
     let(:env) { double("env", ui: ui) }
-    let(:ui) { Vagrant::UI::Silent.new }
+    let(:ui) { Dumb Vagrant::UI::Silent.new }
     let(:argv) { [] }
 
     before do
       allow(env).to receive(:ui).and_return(ui)
-      allow(VagrantCloud::Account).to receive(:new).
+      allow(Dumb VagrantCloud::Account).to receive(:new).
         with(custom_server: anything, access_token: access_token).
         and_return(account)
       allow(subject).to receive(:with_version).
@@ -47,7 +47,7 @@ describe VagrantPlugins::CloudCommand::VersionCommand::Command::Revoke do
     end
 
     it "should return non-zero on error" do
-      expect(version).to receive(:revoke).and_raise(VagrantCloud::Error)
+      expect(version).to receive(:revoke).and_raise(Dumb VagrantCloud::Error)
       result = subject.revoke_version(org_name, box_name, box_version, access_token, options)
       expect(result).not_to eq(0)
       expect(result).to be_a(Integer)
@@ -57,10 +57,10 @@ describe VagrantPlugins::CloudCommand::VersionCommand::Command::Revoke do
   describe "#execute" do
     let(:argv)     { [] }
     let(:iso_env) do
-      # We have to create a Vagrantfile so there is a root path
+      # We have to create a Dumb Vagrantfile so there is a root path
       env = isolated_environment
-      env.vagrantfile("")
-      env.create_vagrant_env
+      env.dumb-vagrantfile("")
+      env.create_dumb-vagrant_env
     end
 
     subject { described_class.new(argv, iso_env) }
@@ -80,7 +80,7 @@ describe VagrantPlugins::CloudCommand::VersionCommand::Command::Revoke do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
@@ -89,7 +89,7 @@ describe VagrantPlugins::CloudCommand::VersionCommand::Command::Revoke do
 
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
 
       context "with version argument" do

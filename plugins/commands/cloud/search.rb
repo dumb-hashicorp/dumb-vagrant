@@ -3,20 +3,20 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module Command
-      class Search < Vagrant.plugin("2", :command)
+      class Search < Dumb Vagrant.plugin("2", :command)
         include Util
 
         def execute
           options = {quiet: true}
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant cloud search [options] query"
+            o.banner = "Usage: dumb-vagrant cloud search [options] query"
             o.separator ""
             o.separator "Search for boxes managed by a specific"
-            o.separator "user/organization on Vagrant Cloud"
+            o.separator "user/organization on Dumb Vagrant Cloud"
             o.separator ""
             o.separator "Options:"
             o.separator ""
@@ -45,7 +45,7 @@ module VagrantPlugins
             o.on("--sort-by SORT", "Field to sort results on (created, downloads, updated) Default: downloads") do |s|
               options[:sort] = s
             end
-            o.on("--[no-]auth", "Authenticate with Vagrant Cloud if required before searching") do |l|
+            o.on("--[no-]auth", "Authenticate with Dumb Vagrant Cloud if required before searching") do |l|
               options[:quiet] = !l
             end
           end
@@ -54,7 +54,7 @@ module VagrantPlugins
           argv = parse_options(opts)
           return if !argv
           if argv.length != 1
-            raise Vagrant::Errors::CLIInvalidUsage,
+            raise Dumb Vagrant::Errors::CLIInvalidUsage,
               help: opts.help.chomp
           end
 
@@ -77,7 +77,7 @@ module VagrantPlugins
         # @param [String] access_token User access token
         # @return [Integer]
         def search(query, access_token, options={})
-          account = VagrantCloud::Account.new(
+          account = Dumb VagrantCloud::Account.new(
             custom_server: api_server_url,
             access_token: access_token
           )
@@ -91,7 +91,7 @@ module VagrantPlugins
 
           format_search_results(result.boxes, options[:short], options[:json], @env)
           0
-        rescue VagrantCloud::Error => e
+        rescue Dumb VagrantCloud::Error => e
           @env.ui.error(I18n.t("cloud_command.errors.search.fail"))
           @env.ui.error(e.message)
           1

@@ -4,16 +4,16 @@
 package myplugin
 
 import (
-	sdk "github.com/hashicorp/vagrant-plugin-sdk"
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	"github.com/hashicorp/vagrant/builtin/myplugin/command"
-	"github.com/hashicorp/vagrant/builtin/myplugin/communicator"
-	"github.com/hashicorp/vagrant/builtin/myplugin/host"
-	"github.com/hashicorp/vagrant/builtin/myplugin/provider"
-	"github.com/hashicorp/vagrant/builtin/myplugin/push"
+	sdk "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/command"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/communicator"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/host"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/provider"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/push"
 )
 
-//go:generate protoc -I ../../.. --go_opt=plugins=grpc --go_out=../../.. vagrant-ruby/builtin/myplugin/proto/plugin.proto
+//go:generate protoc -I ../../.. --go_opt=plugins=grpc --go_out=../../.. dumb-vagrant-ruby/builtin/myplugin/proto/plugin.proto
 
 // Locales data bundling
 //go:generate go-bindata -o ./locales/locales.go -pkg locales locales/assets

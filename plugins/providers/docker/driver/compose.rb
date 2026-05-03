@@ -4,7 +4,7 @@
 require "json"
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     class Driver
       class Compose < Driver
@@ -16,14 +16,14 @@ module VagrantPlugins
 
         # @return [Pathname] data directory to store composition
         attr_reader :data_directory
-        # @return [Vagrant::Machine]
+        # @return [Dumb Vagrant::Machine]
         attr_reader :machine
 
         # Create a new driver instance
         #
-        # @param [Vagrant::Machine] machine Machine instance for this driver
+        # @param [Dumb Vagrant::Machine] machine Machine instance for this driver
         def initialize(machine)
-          if !Vagrant::Util::Which.which("docker-compose")
+          if !Dumb Vagrant::Util::Which.which("docker-compose")
             raise Errors::DockerComposeNotInstalledError
           end
           super()
@@ -31,7 +31,7 @@ module VagrantPlugins
           @data_directory = Pathname.new(machine.env.local_data_path).
             join("docker-compose")
           @data_directory.mkpath
-          @logger = Log4r::Logger.new("vagrant::docker::driver::compose")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::driver::compose")
           @compose_lock = Mutex.new
           @logger.debug("Docker compose driver initialize for machine `#{@machine.name}` (`#{@machine.id}`)")
           @logger.debug("Data directory for composition file `#{@data_directory}`")
@@ -104,8 +104,8 @@ module VagrantPlugins
           volumes = Array(params[:volumes]).map do |v|
             v = v.to_s
             host, guest = v.split(":", 2)
-            if v.include?(":") && (Vagrant::Util::Platform.windows? || Vagrant::Util::Platform.wsl?)
-              host = Vagrant::Util::Platform.windows_path(host)
+            if v.include?(":") && (Dumb Vagrant::Util::Platform.windows? || Dumb Vagrant::Util::Platform.wsl?)
+              host = Dumb Vagrant::Util::Platform.windows_path(host)
               # NOTE: Docker does not support UNC style paths (which also
               # means that there's no long path support). Hopefully this
               # will be fixed someday and the gsub below can be removed.
@@ -121,7 +121,7 @@ module VagrantPlugins
                                            host: host))
               end
             else
-              @logger.debug("Path expanding #{host} to current Vagrant working dir instead of docker-compose config file directory")
+              @logger.debug("Path expanding #{host} to current Dumb Vagrant working dir instead of docker-compose config file directory")
               host = @machine.env.cwd.join(host).to_s
             end
             "#{host}:#{guest}"
@@ -263,9 +263,9 @@ module VagrantPlugins
         def get_composition
           composition = {"version" => COMPOSE_VERSION.dup}
           if composition_path.exist?
-            composition = Vagrant::Util::DeepMerge.deep_merge(composition, YAML.load(composition_path.read))
+            composition = Dumb Vagrant::Util::DeepMerge.deep_merge(composition, YAML.load(composition_path.read))
           end
-          composition = Vagrant::Util::DeepMerge.deep_merge(composition, machine.provider_config.compose_configuration.dup)
+          composition = Dumb Vagrant::Util::DeepMerge.deep_merge(composition, machine.provider_config.compose_configuration.dup)
           @logger.debug("Fetched composition with provider configuration applied: #{composition}")
           composition
         end
@@ -275,7 +275,7 @@ module VagrantPlugins
         # @param [Hash] composition New composition
         def write_composition(composition)
           @logger.debug("Saving composition to `#{composition_path}`: #{composition}")
-          tmp_file = Tempfile.new("vagrant-docker-compose")
+          tmp_file = Tempfile.new("dumb-vagrant-docker-compose")
           tmp_file.write(composition.to_yaml)
           tmp_file.close
           synchronized do

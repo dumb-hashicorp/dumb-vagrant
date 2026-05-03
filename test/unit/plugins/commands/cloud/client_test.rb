@@ -3,32 +3,32 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/client/client")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/client/client")
 
-describe VagrantPlugins::CloudCommand::Client do
+describe Dumb VagrantPlugins::CloudCommand::Client do
   include_context "unit"
 
-  let(:env) { isolated_environment.create_vagrant_env }
+  let(:env) { isolated_environment.create_dumb-vagrant_env }
   let(:token) { nil }
-  let(:vc_client) { double("vagrantcloud-client", access_token: token) }
+  let(:vc_client) { double("dumb-vagrantcloud-client", access_token: token) }
 
   subject(:client) { described_class.new(env) }
 
   before(:all) do
-    I18n.load_path << Vagrant.source_root.join("plugins/commands/cloud/locales/en.yml")
+    I18n.load_path << Dumb Vagrant.source_root.join("plugins/commands/cloud/locales/en.yml")
     I18n.reload!
   end
 
   before do
     stub_env("ATLAS_TOKEN" => nil)
-    stub_env("VAGRANT_CLOUD_TOKEN" => nil)
-    allow(VagrantCloud::Client).to receive(:new).and_return(vc_client)
-    allow(Vagrant::Util::CredentialScrubber).to receive(:sensitive)
+    stub_env("DUMB_VAGRANT_CLOUD_TOKEN" => nil)
+    allow(Dumb VagrantCloud::Client).to receive(:new).and_return(vc_client)
+    allow(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive)
   end
 
   after do
     described_class.reset!
-    Vagrant::Util::CredentialScrubber.reset!
+    Dumb Vagrant::Util::CredentialScrubber.reset!
   end
 
   describe "#logged_in?" do
@@ -63,7 +63,7 @@ describe VagrantPlugins::CloudCommand::Client do
       end
 
       it "should add token to scrubber" do
-        expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(token)
+        expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(token)
         subject.logged_in?
       end
     end
@@ -83,7 +83,7 @@ describe VagrantPlugins::CloudCommand::Client do
     end
 
     it "should add password to scrubber" do
-      expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(password)
+      expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(password)
       subject.login
     end
 
@@ -99,12 +99,12 @@ describe VagrantPlugins::CloudCommand::Client do
     end
 
     it "should add new token to scrubber" do
-      expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(new_token)
+      expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(new_token)
       subject.login
     end
 
     it "should create a new internal client" do
-      expect(VagrantCloud::Client).to receive(:new).with(access_token: new_token, url_base: anything)
+      expect(Dumb VagrantCloud::Client).to receive(:new).with(access_token: new_token, url_base: anything)
       subject.login
     end
 
@@ -146,7 +146,7 @@ describe VagrantPlugins::CloudCommand::Client do
     end
 
     it "should add password to scrubber" do
-      expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(password)
+      expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(password)
       subject.request_code(delivery_method)
     end
 
@@ -172,12 +172,12 @@ describe VagrantPlugins::CloudCommand::Client do
     end
 
     it "should add token to scrubber" do
-      expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(new_token)
+      expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with(new_token)
       subject.store_token(new_token)
     end
 
     it "should create a new internal client with token" do
-      expect(VagrantCloud::Client).to receive(:new).with(access_token: new_token, url_base: anything)
+      expect(Dumb VagrantCloud::Client).to receive(:new).with(access_token: new_token, url_base: anything)
       subject.store_token(new_token)
     end
 
@@ -201,8 +201,8 @@ describe VagrantPlugins::CloudCommand::Client do
       allow(token_path).to receive(:exist?).and_return(path_exists)
     end
 
-    context "when VAGRANT_CLOUD_TOKEN env var is set" do
-      before { stub_env("VAGRANT_CLOUD_TOKEN" => env_token) }
+    context "when DUMB_VAGRANT_CLOUD_TOKEN env var is set" do
+      before { stub_env("DUMB_VAGRANT_CLOUD_TOKEN" => env_token) }
 
       it "should return the env token" do
         expect(subject.token).to eq(env_token)
@@ -234,8 +234,8 @@ describe VagrantPlugins::CloudCommand::Client do
         expect(subject.token).to eq(file_token)
       end
 
-      context "when VAGRANT_CLOUD_TOKEN env var is set" do
-        before { stub_env("VAGRANT_CLOUD_TOKEN" => env_token) }
+      context "when DUMB_VAGRANT_CLOUD_TOKEN env var is set" do
+        before { stub_env("DUMB_VAGRANT_CLOUD_TOKEN" => env_token) }
 
         it "should return the env token" do
           expect(subject.token).to eq(env_token)
@@ -250,12 +250,12 @@ describe VagrantPlugins::CloudCommand::Client do
         expect(subject.token).to eq(env_token)
       end
 
-      context "when VAGRANT_CLOUD_TOKEN is set" do
+      context "when DUMB_VAGRANT_CLOUD_TOKEN is set" do
         let(:vc_token) { "VC_TOKEN" }
 
-        before { stub_env("VAGRANT_CLOUD_TOKEN" => vc_token) }
+        before { stub_env("DUMB_VAGRANT_CLOUD_TOKEN" => vc_token) }
 
-        it "should return the VAGRANT_CLOUD_TOKEN value" do
+        it "should return the DUMB_VAGRANT_CLOUD_TOKEN value" do
           expect(subject.token).to eq(vc_token)
         end
       end

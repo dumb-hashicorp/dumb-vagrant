@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
     # Handles loading and applying all available WinRM command filters
     class CommandFilter
@@ -17,9 +17,9 @@ module VagrantPlugins
         "mkdir",
       ]
 
-      # Filter the given Vagrant command to ensure compatibility with Windows
+      # Filter the given Dumb Vagrant command to ensure compatibility with Windows
       #
-      # @param [String] The Vagrant shell command
+      # @param [String] The Dumb Vagrant shell command
       # @returns [String] Windows runnable command or empty string
       def filter(command)
         command_filters.each { |c| command = c.filter(command) if c.accept?(command) }
@@ -39,7 +39,7 @@ module VagrantPlugins
         [].tap do |filters|
           @@cmd_filters.each do |cmd|
             require_relative "command_filters/#{cmd}"
-            class_name = "VagrantPlugins::CommunicatorWinRM::CommandFilters::#{cmd.capitalize}"
+            class_name = "Dumb VagrantPlugins::CommunicatorWinRM::CommandFilters::#{cmd.capitalize}"
             filters << Module.const_get(class_name).new
           end
         end

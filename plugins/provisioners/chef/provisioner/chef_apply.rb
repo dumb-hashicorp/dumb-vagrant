@@ -6,7 +6,7 @@ require "tempfile"
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Provisioner
       class ChefApply < Base
@@ -31,7 +31,7 @@ module VagrantPlugins
           # Upload the recipe
           upload_recipe
 
-          @machine.ui.info(I18n.t("vagrant.provisioners.chef.running_apply",
+          @machine.ui.info(I18n.t("dumb-vagrant.provisioners.chef.running_apply",
             script: config.path)
           )
 
@@ -58,7 +58,7 @@ module VagrantPlugins
         # machine.
         def upload_recipe
           # Write the raw recipe contents to a tempfile and upload
-          Tempfile.open(["vagrant-chef-apply", ".rb"]) do |f|
+          Tempfile.open(["dumb-vagrant-chef-apply", ".rb"]) do |f|
             f.binmode
             f.write(config.recipe)
             f.fsync

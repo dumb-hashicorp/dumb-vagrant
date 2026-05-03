@@ -3,21 +3,21 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
+describe "Dumb VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
   let(:caps) do
-    VagrantPlugins::ProviderVirtualBox::Plugin
+    Dumb VagrantPlugins::ProviderVirtualBox::Plugin
       .components
       .synced_folder_capabilities[:virtualbox]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
-  let(:mount_owner){ "vagrant" }
-  let(:mount_group){ "vagrant" }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:mount_owner){ "dumb-vagrant" }
+  let(:mount_group){ "dumb-vagrant" }
   let(:mount_uid){ "1000" }
   let(:mount_gid){ "1000" }
-  let(:mount_name){ "vagrant" }
-  let(:mount_guest_path){ "/vagrant" }
+  let(:mount_name){ "dumb-vagrant" }
+  let(:mount_guest_path){ "/dumb-vagrant" }
   let(:folder_options) do
     {
       owner: mount_owner,
@@ -45,7 +45,7 @@ describe "VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
     context "with owner user ID explicitly defined" do
 
       before do
-        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "vagrant:x:#{mount_gid}:")
+        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "dumb-vagrant:x:#{mount_gid}:")
       end
 
       context "with user ID provided as Integer" do
@@ -103,7 +103,7 @@ describe "VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
     context "with non-existent default owner group" do
       it "fetches the effective group ID of the user" do
         expect(comm).to receive(:execute).with("id -u #{mount_owner}", anything).and_yield(:stdout, mount_uid)
-        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_raise(Vagrant::Errors::VirtualBoxMountFailed, {command: '', output: ''})
+        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_raise(Dumb Vagrant::Errors::VirtualBoxMountFailed, {command: '', output: ''})
         expect(comm).to receive(:execute).with("id -g #{mount_owner}", anything).and_yield(:stdout, "1").and_return(0)
         out_mount_options, out_mount_uid, out_mount_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options)
         expect(out_mount_options).to eq("uid=#{mount_uid},gid=1,_netdev")
@@ -113,17 +113,17 @@ describe "VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
     context "with non-existent owner group" do
       it "raises an error" do
         expect(comm).to receive(:execute).with("id -u #{mount_owner}", anything).and_yield(:stdout, mount_uid)
-        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_raise(Vagrant::Errors::VirtualBoxMountFailed, {command: '', output: ''})
+        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_raise(Dumb Vagrant::Errors::VirtualBoxMountFailed, {command: '', output: ''})
         expect do
           cap.mount_options(machine, mount_name, mount_guest_path, folder_options)
-        end.to raise_error Vagrant::Errors::VirtualBoxMountFailed
+        end.to raise_error Dumb Vagrant::Errors::VirtualBoxMountFailed
       end
     end
 
     context "with read-only option defined" do
       it "does not chown mounted guest directory" do
         expect(comm).to receive(:execute).with("id -u #{mount_owner}", anything).and_yield(:stdout, mount_uid)
-        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "vagrant:x:#{mount_gid}:")
+        expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "dumb-vagrant:x:#{mount_gid}:")
         out_mount_options, out_mount_uid, out_mount_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options.merge(mount_options: ["ro"]))
         expect(out_mount_options).to eq("ro,uid=#{mount_uid},gid=#{mount_gid},_netdev")
         expect(out_mount_uid).to eq(mount_uid)
@@ -132,7 +132,7 @@ describe "VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
     end
 
     context "with custom mount options" do
-      let(:ui){ Vagrant::UI::Silent.new }
+      let(:ui){ Dumb Vagrant::UI::Silent.new }
       before do
         allow(machine).to receive(:ui).and_return(ui)
       end
@@ -142,7 +142,7 @@ describe "VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
 
         it "should only include uid defined within mount options" do
           expect(comm).not_to receive(:execute).with("id -u #{mount_owner}", anything).and_yield(:stdout, mount_uid)
-          expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "vagrant:x:#{mount_gid}:")
+          expect(comm).to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "dumb-vagrant:x:#{mount_gid}:")
           out_mount_options, out_mount_uid, out_mount_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options.merge(mount_options: ["uid=#{options_uid}"]) )
           expect(out_mount_options).to eq("uid=#{options_uid},gid=#{mount_gid},_netdev")
           expect(out_mount_uid).to eq(options_uid)
@@ -155,7 +155,7 @@ describe "VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
 
         it "should only include gid defined within mount options" do
           expect(comm).to receive(:execute).with("id -u #{mount_owner}", anything).and_yield(:stdout, mount_uid)
-          expect(comm).not_to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "vagrant:x:#{mount_gid}:")
+          expect(comm).not_to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "dumb-vagrant:x:#{mount_gid}:")
           out_mount_options, out_mount_uid, out_mount_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options.merge(mount_options: ["gid=#{options_gid}"]) )
           expect(out_mount_options).to eq("uid=#{mount_uid},gid=#{options_gid},_netdev")
           expect(out_mount_uid).to eq(mount_uid)
@@ -169,7 +169,7 @@ describe "VagrantPlugins::ProviderVirtualBox::Cap::MountOptions" do
 
         it "should only include uid and gid defined within mount options" do
           expect(comm).not_to receive(:execute).with("id -u #{mount_owner}", anything).and_yield(:stdout, mount_uid)
-          expect(comm).not_to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "vagrant:x:#{options_gid}:")
+          expect(comm).not_to receive(:execute).with("getent group #{mount_group}", anything).and_yield(:stdout, "dumb-vagrant:x:#{options_gid}:")
           out_mount_options, out_mount_uid, out_mount_gid = cap.mount_options(machine, mount_name, mount_guest_path, folder_options.merge(mount_options: ["uid=#{options_uid}", "gid=#{options_gid}"]) )
           expect(out_mount_options).to eq("uid=#{options_uid},gid=#{options_gid},_netdev")
           expect(out_mount_uid).to eq(options_uid)

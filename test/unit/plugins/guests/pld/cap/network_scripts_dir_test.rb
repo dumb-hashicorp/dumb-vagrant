@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestPld::Cap::NetworkScriptsDir" do
+describe "Dumb VagrantPlugins::GuestPld::Cap::NetworkScriptsDir" do
   let(:caps) do
-    VagrantPlugins::GuestPld::Plugin
+    Dumb VagrantPlugins::GuestPld::Plugin
       .components
       .guest_capabilities[:pld]
   end

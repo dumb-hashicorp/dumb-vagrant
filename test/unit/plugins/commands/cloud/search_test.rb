@@ -3,18 +3,18 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/search")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/search")
 
-describe VagrantPlugins::CloudCommand::Command::Search do
+describe Dumb VagrantPlugins::CloudCommand::Command::Search do
   include_context "unit"
 
   let(:token) { double("token") }
   let(:argv)     { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   subject { described_class.new(argv, iso_env) }
@@ -28,7 +28,7 @@ describe VagrantPlugins::CloudCommand::Command::Search do
     let(:boxes) { [] }
 
     before do
-      allow(VagrantCloud::Account).to receive(:new).
+      allow(Dumb VagrantCloud::Account).to receive(:new).
         with(custom_server: anything, access_token: token).and_return(account)
       allow(searcher).to receive(:search).and_return(results)
       allow(subject).to receive(:format_search_results)
@@ -110,10 +110,10 @@ describe VagrantPlugins::CloudCommand::Command::Search do
   describe "#execute" do
     let(:argv)     { [] }
     let(:iso_env) do
-      # We have to create a Vagrantfile so there is a root path
+      # We have to create a Dumb Vagrantfile so there is a root path
       env = isolated_environment
-      env.vagrantfile("")
-      env.create_vagrant_env
+      env.dumb-vagrantfile("")
+      env.create_dumb-vagrant_env
     end
 
     subject { described_class.new(argv, iso_env) }
@@ -132,7 +132,7 @@ describe VagrantPlugins::CloudCommand::Command::Search do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 

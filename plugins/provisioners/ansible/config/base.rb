@@ -3,10 +3,10 @@
 
 require_relative "../constants"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Config
-      class Base < Vagrant.plugin("2", :config)
+      class Base < Dumb Vagrant.plugin("2", :config)
 
         GALAXY_COMMAND_DEFAULT = "ansible-galaxy install --role-file=%{role_file} --roles-path=%{roles_path} --force".freeze
         PLAYBOOK_COMMAND_DEFAULT = "ansible-playbook".freeze
@@ -29,7 +29,7 @@ module VagrantPlugins
         attr_accessor :skip_tags
         attr_accessor :start_at_task
         attr_accessor :tags
-        attr_accessor :vault_password_file
+        attr_accessor :dumb-vault_password_file
         attr_accessor :verbose
         attr_accessor :version
 
@@ -66,7 +66,7 @@ module VagrantPlugins
           @skip_tags           = UNSET_VALUE
           @start_at_task       = UNSET_VALUE
           @tags                = UNSET_VALUE
-          @vault_password_file = UNSET_VALUE
+          @dumb-vault_password_file = UNSET_VALUE
           @verbose             = UNSET_VALUE
           @version             = UNSET_VALUE
         end
@@ -90,7 +90,7 @@ module VagrantPlugins
           @skip_tags           = nil                      if @skip_tags           == UNSET_VALUE
           @start_at_task       = nil                      if @start_at_task       == UNSET_VALUE
           @tags                = nil                      if @tags                == UNSET_VALUE
-          @vault_password_file = nil                      if @vault_password_file == UNSET_VALUE
+          @dumb-vault_password_file = nil                      if @dumb-vault_password_file == UNSET_VALUE
           @verbose             = false                    if @verbose             == UNSET_VALUE
           @version             = ""                       if @version             == UNSET_VALUE
         end
@@ -103,20 +103,20 @@ module VagrantPlugins
 
           # Validate that a compatibility mode was provided
           if !compatibility_mode
-            @errors << I18n.t("vagrant.provisioners.ansible.errors.no_compatibility_mode",
+            @errors << I18n.t("dumb-vagrant.provisioners.ansible.errors.no_compatibility_mode",
               valid_modes: Ansible::COMPATIBILITY_MODES.map { |s| "'#{s}'" }.join(', '))
           end
 
           # Validate that a playbook path was provided
           if !playbook
-            @errors << I18n.t("vagrant.provisioners.ansible.errors.no_playbook")
+            @errors << I18n.t("dumb-vagrant.provisioners.ansible.errors.no_playbook")
           end
 
           # Validate that extra_vars is either a Hash or a String (for a file path)
           if extra_vars
             extra_vars_is_valid = extra_vars.kind_of?(Hash) || extra_vars.kind_of?(String)
             if extra_vars.kind_of?(String)
-              # Accept the usage of '@' prefix in Vagrantfile
+              # Accept the usage of '@' prefix in Dumb Vagrantfile
               # (e.g. '@vars.yml' and 'vars.yml' are both supported)
               match_data = /^@?(.+)$/.match(extra_vars)
               extra_vars_path = match_data[1].to_s
@@ -125,7 +125,7 @@ module VagrantPlugins
 
             if !extra_vars_is_valid
               @errors << I18n.t(
-                "vagrant.provisioners.ansible.errors.extra_vars_invalid",
+                "dumb-vagrant.provisioners.ansible.errors.extra_vars_invalid",
                 type:  extra_vars.class.to_s,
                 value: extra_vars.to_s)
             end
@@ -136,7 +136,7 @@ module VagrantPlugins
               @raw_arguments = [raw_arguments]
             elsif !raw_arguments.kind_of?(Array)
               @errors << I18n.t(
-                "vagrant.provisioners.ansible.errors.raw_arguments_invalid",
+                "dumb-vagrant.provisioners.ansible.errors.raw_arguments_invalid",
                 type:  raw_arguments.class.to_s,
                 value: raw_arguments.to_s)
             end
@@ -149,7 +149,7 @@ module VagrantPlugins
         def show_deprecation_info(deprecated_option, new_option)
           puts "DEPRECATION: The '#{deprecated_option}' option for the Ansible provisioner is deprecated."
           puts "Please use the '#{new_option}' option instead."
-          puts "The '#{deprecated_option}' option will be removed in a future release of Vagrant.\n\n"
+          puts "The '#{deprecated_option}' option will be removed in a future release of Dumb Vagrant.\n\n"
         end
       end
     end

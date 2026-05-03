@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 en:
-  vagrant_sf_smb:
+  dumb-vagrant_sf_smb:
     mounting: |-
       Mounting SMB shared folders...
     mounting_single: |-
@@ -18,19 +18,19 @@ en:
 
     uac:
       prune_warning: |-
-        Vagrant requires administrator access for pruning SMB shares and
+        Dumb Vagrant requires administrator access for pruning SMB shares and
         may request access to complete removal of stale shares.
       create_warning: |-
-        Vagrant requires administrator access to create SMB shares and
+        Dumb Vagrant requires administrator access to create SMB shares and
         may request access to complete setup of configured shares.
     errors:
       not_supported: |-
         It appears your machine doesn't support SMB, has not been
         properly configured for SMB, or there is not an adapter to
-        enable SMB on this machine for Vagrant. Ensure SMB host
+        enable SMB on this machine for Dumb Vagrant. Ensure SMB host
         functionality is available on this machine and try again.
       start_failed: |-
-        Vagrant failed to automatically start the SMB service. Ensure the
+        Dumb Vagrant failed to automatically start the SMB service. Ensure the
         required services can be started and try again.
 
         Command: %{command}
@@ -39,11 +39,11 @@ en:
 
         Stdout: %{stdout}
       credentials_missing: |-
-        Vagrant SMB synced folders require the account password to be stored
+        Dumb Vagrant SMB synced folders require the account password to be stored
         in an NT compatible format. Please update your sharing settings to
         enable a Windows compatible password and try again.
       credentials_request_error: |-
-        Vagrant failed to receive credential information required for preparing
+        Dumb Vagrant failed to receive credential information required for preparing
         an SMB share.
       define_share_failed: |-
         Exporting an SMB share failed! Details about the failure are shown
@@ -64,7 +64,7 @@ en:
 
         Stdout: %{stdout}
       name_error: |-
-        Vagrant is unable to setup a requested SMB share. An SMB share already
+        Dumb Vagrant is unable to setup a requested SMB share. An SMB share already
         exists with the given name.
 
         Share name: %{name}
@@ -73,7 +73,7 @@ en:
 
         Requested path: %{path}
       list_failed: |-
-        Vagrant failed to generate a list of local SMB shares. Please try
+        Dumb Vagrant failed to generate a list of local SMB shares. Please try
         running the command again.
       no_routable_host_addr: |-
         We couldn't detect an IP address that was routable to this
@@ -88,11 +88,11 @@ en:
         to work on Windows. You have version: '%{version}'. Please update
         your PowerShell installation.
       windows_admin_required: |-
-        SMB shared folders require running Vagrant with administrative
+        SMB shared folders require running Dumb Vagrant with administrative
         privileges. This is a limitation of Windows, since creating new
         network shares requires admin privileges. Please try again in a
         console with proper permissions or use another synced folder type.
       windows_host_required: |-
-        SMB shared folders are only available when Vagrant is running
+        SMB shared folders are only available when Dumb Vagrant is running
         on Windows. The guest machine can be running non-Windows. Please use
         another synced folder type.

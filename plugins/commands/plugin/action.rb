@@ -3,28 +3,28 @@
 
 require "pathname"
 
-require "vagrant/action/builder"
+require "dumb-vagrant/action/builder"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Action
       # This middleware sequence will remove all plugins.
       def self.action_expunge
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ExpungePlugins
         end
       end
 
       # This middleware sequence will install a plugin.
       def self.action_install
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use InstallGem
         end
       end
 
       # This middleware sequence licenses paid addons.
       def self.action_license
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use PluginExistsCheck
           b.use LicensePlugin
         end
@@ -32,28 +32,28 @@ module VagrantPlugins
 
       # This middleware sequence will list all installed plugins.
       def self.action_list
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ListPlugins
         end
       end
 
       # This middleware sequence will repair installed plugins.
       def self.action_repair
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use RepairPlugins
         end
       end
 
       # This middleware sequence will repair installed local plugins.
       def self.action_repair_local
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use RepairPluginsLocal
         end
       end
 
       # This middleware sequence will uninstall a plugin.
       def self.action_uninstall
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use PluginExistsCheck
           b.use UninstallPlugin
         end
@@ -61,7 +61,7 @@ module VagrantPlugins
 
       # This middleware sequence will update a plugin.
       def self.action_update
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use UpdateGems
         end
       end

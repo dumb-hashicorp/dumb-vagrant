@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestBSD::Cap::Halt" do
+describe "Dumb VagrantPlugins::GuestBSD::Cap::Halt" do
   let(:caps) do
-    VagrantPlugins::GuestBSD::Plugin
+    Dumb VagrantPlugins::GuestBSD::Plugin
       .components
       .guest_capabilities[:bsd]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:shutdown_command) { "/sbin/shutdown -p now" }
 
   before do
@@ -37,8 +37,8 @@ describe "VagrantPlugins::GuestBSD::Cap::Halt" do
       }.to_not raise_error
     end
 
-    it "ignores a Vagrant::Errors::SSHDisconnected" do
-      comm.stub_command(shutdown_command, raise: Vagrant::Errors::SSHDisconnected)
+    it "ignores a Dumb Vagrant::Errors::SSHDisconnected" do
+      comm.stub_command(shutdown_command, raise: Dumb Vagrant::Errors::SSHDisconnected)
       expect {
         cap.halt(machine)
       }.to_not raise_error

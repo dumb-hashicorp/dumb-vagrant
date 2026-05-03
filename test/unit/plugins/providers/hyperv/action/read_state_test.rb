@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/action/read_state")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/action/read_state")
 
-describe VagrantPlugins::HyperV::Action::ReadState do
+describe Dumb VagrantPlugins::HyperV::Action::ReadState do
   let(:app){ double("app") }
   let(:env){ {ui: ui, machine: machine, machine_state_id: state_id} }
-  let(:ui){ Vagrant::UI::Silent.new }
+  let(:ui){ Dumb Vagrant::UI::Silent.new }
   let(:provider){ double("provider", driver: driver) }
   let(:driver){ double("driver") }
   let(:machine){ double("machine", provider: provider) }

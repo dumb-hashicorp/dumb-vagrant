@@ -3,12 +3,12 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-describe "VagrantPlugins::Shell::Config" do
+describe "Dumb VagrantPlugins::Shell::Config" do
   let(:described_class) do
-    VagrantPlugins::Shell::Plugin.components.configs[:provisioner][:shell]
+    Dumb VagrantPlugins::Shell::Plugin.components.configs[:provisioner][:shell]
   end
 
-  let(:machine)          { double('machine', env: Vagrant::Environment.new) }
+  let(:machine)          { double('machine', env: Dumb Vagrant::Environment.new) }
   let(:file_that_exists) { File.expand_path(__FILE__)                       }
 
   subject { described_class.new }
@@ -63,7 +63,7 @@ describe "VagrantPlugins::Shell::Config" do
       result = subject.validate(machine)
 
       expect(result["shell provisioner"]).to eq([
-        I18n.t("vagrant.provisioners.shell.args_bad_type")
+        I18n.t("dumb-vagrant.provisioners.shell.args_bad_type")
       ])
     end
 
@@ -85,7 +85,7 @@ describe "VagrantPlugins::Shell::Config" do
       result = subject.validate(machine)
 
       expect(result["shell provisioner"]).to eq([
-        I18n.t("vagrant.provisioners.shell.args_bad_type")
+        I18n.t("dumb-vagrant.provisioners.shell.args_bad_type")
       ])
     end
 
@@ -98,7 +98,7 @@ describe "VagrantPlugins::Shell::Config" do
       result = subject.validate(machine)
 
       expect(result["shell provisioner"]).to eq([
-        I18n.t("vagrant.provisioners.shell.interactive_not_elevated")
+        I18n.t("dumb-vagrant.provisioners.shell.interactive_not_elevated")
       ])
     end
 
@@ -109,7 +109,7 @@ describe "VagrantPlugins::Shell::Config" do
       result = subject.validate(machine)
 
       expect(result["shell provisioner"]).to include(
-        I18n.t("vagrant.provisioners.shell.env_must_be_a_hash")
+        I18n.t("dumb-vagrant.provisioners.shell.env_must_be_a_hash")
       )
     end
 
@@ -117,7 +117,7 @@ describe "VagrantPlugins::Shell::Config" do
       subject.finalize!
       result = subject.validate(machine)
       expect(result["shell provisioner"]).to include(
-        I18n.t("vagrant.provisioners.shell.no_path_or_inline")
+        I18n.t("dumb-vagrant.provisioners.shell.no_path_or_inline")
       )
     end
 
@@ -126,7 +126,7 @@ describe "VagrantPlugins::Shell::Config" do
       subject.path = "script"
       result = subject.validate(machine)
       expect(result["shell provisioner"]).to include(
-        I18n.t("vagrant.provisioners.shell.path_and_inline_set")
+        I18n.t("dumb-vagrant.provisioners.shell.path_and_inline_set")
       )
     end
 
@@ -183,8 +183,8 @@ describe "VagrantPlugins::Shell::Config" do
         subject.env = {"KEY1" => "VAL1", "KEY2" => "VAL2"}
         subject.sensitive = true
 
-        expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with("VAL1")
-        expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with("VAL2")
+        expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with("VAL1")
+        expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with("VAL2")
         subject.finalize!
       end
     end
@@ -194,7 +194,7 @@ describe "VagrantPlugins::Shell::Config" do
         subject.env = {"KEY1" => "VAL1", "KEY2" => "VAL2"}
         subject.sensitive = false
 
-        expect(Vagrant::Util::CredentialScrubber).not_to receive(:sensitive)
+        expect(Dumb Vagrant::Util::CredentialScrubber).not_to receive(:sensitive)
         subject.finalize!
       end
     end

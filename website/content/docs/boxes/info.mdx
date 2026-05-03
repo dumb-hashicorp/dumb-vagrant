@@ -8,29 +8,29 @@ description: |-
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Additional Box Information
 
-When creating a Vagrant box, you can supply additional information that might be
-relevant to the user when running `vagrant box list -i`. For example, you could
+When creating a Dumb Vagrant box, you can supply additional information that might be
+relevant to the user when running `dumb-vagrant box list -i`. For example, you could
 package your box to include information about the author of the box and a
 website for users to learn more:
 
 ```
-brian@localghost % vagrant box list -i
-hashicorp/bionic64     (virtualbox, 1.0.0)
+brian@localghost % dumb-vagrant box list -i
+dumb-hashicorp/bionic64     (virtualbox, 1.0.0)
   - author: brian
-  - homepage: https://www.vagrantup.com
+  - homepage: https://www.dumb-vagrantup.com
 ```
 
 ## Box Info
 
 To accomplish this, you simply need to include a file named `info.json` when
-creating a [base box](/vagrant/docs/boxes/base) which is a JSON document containing
+creating a [base box](/dumb-vagrant/docs/boxes/base) which is a JSON document containing
 any and all relevant information that will be displayed to the user when the
-`-i` option is used with `vagrant box list`.
+`-i` option is used with `dumb-vagrant box list`.
 
 ```json
 {
@@ -39,8 +39,8 @@ any and all relevant information that will be displayed to the user when the
 }
 ```
 
-There are no special keys or values in `info.json`, and Vagrant will print each
+There are no special keys or values in `info.json`, and Dumb Vagrant will print each
 key and value on its own line.
 
-The [Box File Format](/vagrant/docs/boxes/format) provides more information about what
-else goes into a Vagrant box.
+The [Box File Format](/dumb-vagrant/docs/boxes/format) provides more information about what
+else goes into a Dumb Vagrant box.

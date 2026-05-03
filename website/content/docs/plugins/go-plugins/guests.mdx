@@ -2,14 +2,14 @@
 layout: docs
 page_title: Custom Guests - Go Plugin Development
 description: |-
-  This page documents how to add new guest OS detection to Vagrant, allowing
-  Vagrant to properly configure new operating systems. Prior to reading this,
+  This page documents how to add new guest OS detection to Dumb Vagrant, allowing
+  Dumb Vagrant to properly configure new operating systems. Prior to reading this,
   you should be familiar with the plugin development basics.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Go Plugin Development: Guests
@@ -23,7 +23,7 @@ The most basic guest plugin is composed of:
 2. A set of capabilities that define actions that can be run against the guest
 3. An entry point defining the plugin options
 
-**Note**: To quickly get started writing Go guest plugins, clone the [vagrant-guest-plugin-skeleton](https://github.com/soapy1/vagrant-guest-plugin-skeleton)
+**Note**: To quickly get started writing Go guest plugins, clone the [dumb-vagrant-guest-plugin-skeleton](https://github.com/soapy1/dumb-vagrant-guest-plugin-skeleton)
 template and follow the Readme.
 
 The file structure of a guest plugin looks like:
@@ -40,7 +40,7 @@ The file structure of a guest plugin looks like:
 Where `main.go` defines the plugin options. `guest/myguest.go` defines the core plugin
 functionality including the detection of the guest. `cap/*` has the definitions of 
 all the guest plugin capabilities. These capabilities are the same as those for [Ruby
-plugins](/vagrant/docs/plugins/guest-capabilities). 
+plugins](/dumb-vagrant/docs/plugins/guest-capabilities). 
 
 ## Writing a guest plugin
 
@@ -52,7 +52,7 @@ A guest must satisfy the interface defined for a guest component
     HasCapabilityFunc() interface{}
     CapabilityFunc(capName string) interface{}
 ``` 
-Src: https://github.com/hashicorp/vagrant-plugin-sdk/blob/main/component/component.go  
+Src: https://github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/blob/main/component/component.go  
 
 `GuestDetectFunc`: returns a function that defines the code that determines if the guest is 
                    detected. The returned function must return a `bool`.
@@ -73,8 +73,8 @@ An example guest plugin
 package guest
  
 import (
- "github.com/hashicorp/vagrant-plugin-sdk/component"
- sdkcore "github.com/hashicorp/vagrant-plugin-sdk/core"
+ "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+ sdkcore "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/core"
 )
  
 // AlwaysTrueGuest is a Guest implementation for myplugin.
@@ -125,8 +125,8 @@ var (
 package myplugin
  
 import (
- sdk "github.com/hashicorp/vagrant-plugin-sdk"
- "github.com/hashicorp/vagrant/builtin/myplugin/guest"
+ sdk "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk"
+ "github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/guest"
 )
  
 // Options are the SDK options to use for instantiation.
@@ -161,7 +161,7 @@ package cap
 import (
  "io/ioutil"
  
- "github.com/hashicorp/vagrant-plugin-sdk/terminal"
+ "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/terminal"
 )
  
 func WriteHelloFunc() interface{} {

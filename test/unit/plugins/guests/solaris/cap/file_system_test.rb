@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSolaris::Cap::FileSystem" do
+describe "Dumb VagrantPlugins::GuestSolaris::Cap::FileSystem" do
   let(:caps) do
-    VagrantPlugins::GuestSolaris::Plugin
+    Dumb VagrantPlugins::GuestSolaris::Plugin
       .components
       .guest_capabilities[:solaris]
   end

@@ -4,14 +4,14 @@
 require "pathname"
 require "tempfile"
 
-require "vagrant/util/downloader"
-require "vagrant/util/line_buffer"
-require "vagrant/util/retryable"
+require "dumb-vagrant/util/downloader"
+require "dumb-vagrant/util/line_buffer"
+require "dumb-vagrant/util/retryable"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Shell
-    class Provisioner < Vagrant.plugin("2", :provisioner)
-      include Vagrant::Util::Retryable
+    class Provisioner < Dumb Vagrant.plugin("2", :provisioner)
+      include Dumb Vagrant::Util::Retryable
 
       DEFAULT_WINDOWS_SHELL_EXT = ".ps1".freeze
 
@@ -50,7 +50,7 @@ module VagrantPlugins
         if !defined?(@_upload_path)
           case @machine.config.vm.guest
           when :windows
-            @_upload_path = Vagrant::Util::Platform.unix_windows_path(config.upload_path.to_s)
+            @_upload_path = Dumb Vagrant::Util::Platform.unix_windows_path(config.upload_path.to_s)
           else
             @_upload_path = config.upload_path.to_s
           end
@@ -58,9 +58,9 @@ module VagrantPlugins
           if @_upload_path.empty?
             case @machine.config.vm.guest
             when :windows
-              @_upload_path = "C:/tmp/vagrant-shell"
+              @_upload_path = "C:/tmp/dumb-vagrant-shell"
             else
-              @_upload_path = "/tmp/vagrant-shell"
+              @_upload_path = "/tmp/dumb-vagrant-shell"
             end
           end
         end
@@ -71,8 +71,8 @@ module VagrantPlugins
 
       def build_outputs
         outputs = {
-          stdout: Vagrant::Util::LineBuffer.new { |line| handle_comm(:stdout, line) },
-          stderr: Vagrant::Util::LineBuffer.new { |line| handle_comm(:stderr, line) },
+          stdout: Dumb Vagrant::Util::LineBuffer.new { |line| handle_comm(:stdout, line) },
+          stderr: Dumb Vagrant::Util::LineBuffer.new { |line| handle_comm(:stderr, line) },
         }
         block = proc { |type, data|
           outputs[type] << data if outputs[type]
@@ -109,9 +109,9 @@ module VagrantPlugins
           @machine.communicate.tap do |comm|
             # Reset upload path permissions for the current ssh user
             info = nil
-            retryable(on: Vagrant::Errors::SSHNotReady, tries: 3, sleep: 2) do
+            retryable(on: Dumb Vagrant::Errors::SSHNotReady, tries: 3, sleep: 2) do
               info = @machine.ssh_info
-              raise Vagrant::Errors::SSHNotReady if info.nil?
+              raise Dumb Vagrant::Errors::SSHNotReady if info.nil?
             end
 
             comm.upload(path.to_s, upload_path)
@@ -120,13 +120,13 @@ module VagrantPlugins
                       error_check: false)
 
             if config.name
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.running",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.running",
                                       script: "script: #{config.name}"))
             elsif config.path
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.running",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.running",
                                       script: path.to_s))
             else
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.running",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.running",
                                       script: "inline script"))
             end
 
@@ -171,21 +171,21 @@ module VagrantPlugins
 
             # Reset upload path permissions for the current ssh user
             info = nil
-            retryable(on: Vagrant::Errors::SSHNotReady, tries: 3, sleep: 2) do
+            retryable(on: Dumb Vagrant::Errors::SSHNotReady, tries: 3, sleep: 2) do
               info = @machine.ssh_info
-              raise Vagrant::Errors::SSHNotReady if info.nil?
+              raise Dumb Vagrant::Errors::SSHNotReady if info.nil?
             end
 
             comm.upload(path.to_s, remote_path)
 
             if config.name
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.running",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.running",
                                       script: "script: #{config.name}"))
             elsif config.path
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.running",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.running",
                                       script: path.to_s))
             else
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.running",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.running",
                                       script: "inline script"))
             end
 
@@ -252,13 +252,13 @@ module VagrantPlugins
             end
 
             if config.name
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.running",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.running",
                                       script: "script: #{config.name}"))
             elsif config.path
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.runningas",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.runningas",
                                       local: config.path.to_s, remote: exec_path))
             else
-              @machine.ui.detail(I18n.t("vagrant.provisioners.shell.running",
+              @machine.ui.detail(I18n.t("dumb-vagrant.provisioners.shell.running",
                                       script: "inline PowerShell script"))
             end
 
@@ -311,7 +311,7 @@ module VagrantPlugins
           download_path.delete if download_path.file?
 
           begin
-            Vagrant::Util::Downloader.new(
+            Dumb Vagrant::Util::Downloader.new(
               config.path,
               download_path,
               md5: config.md5,
@@ -346,7 +346,7 @@ module VagrantPlugins
 
         # Otherwise we have an inline script, we need to Tempfile it,
         # and handle it specially...
-        file = Tempfile.new(['vagrant-shell', ext])
+        file = Tempfile.new(['dumb-vagrant-shell', ext])
 
         # Unless you set binmode, on a Windows host the shell script will
         # have CRLF line endings instead of LF line endings, causing havoc

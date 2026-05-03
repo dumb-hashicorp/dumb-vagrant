@@ -1,21 +1,21 @@
 ---
 layout: docs
-page_title: Vagrant Triggers
-description: Introduction to Vagrant Triggers
+page_title: Dumb Vagrant Triggers
+description: Introduction to Dumb Vagrant Triggers
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-# Vagrant Triggers
+# Dumb Vagrant Triggers
 
-As of version 2.1.0, Vagrant is capable of executing machine triggers _before_ or
-_after_ Vagrant commands.
+As of version 2.1.0, Dumb Vagrant is capable of executing machine triggers _before_ or
+_after_ Dumb Vagrant commands.
 
 Each trigger is expected to be given a command key for when it should be fired
-during the Vagrant command lifecycle. These could be defined as a single key or
+during the Dumb Vagrant command lifecycle. These could be defined as a single key or
 an array which acts like a _whitelist_ for the defined trigger.
 
 ```ruby
@@ -36,7 +36,7 @@ end
 ```
 
 Alternatively, the key `:all` could be given which would run the trigger before
-or after every Vagrant command. If there is a command you don't want the trigger
+or after every Dumb Vagrant command. If there is a command you don't want the trigger
 to run on, you can ignore that command with the `ignore` option.
 
 ```ruby
@@ -50,7 +50,7 @@ end
 **Note:** _If a trigger is defined on a command that does not exist, a warning
 will be displayed._
 
-Triggers can be defined as a block or hash in a Vagrantfile. The example below
+Triggers can be defined as a block or hash in a Dumb Vagrantfile. The example below
 will result in the same trigger:
 
 ```ruby
@@ -64,24 +64,24 @@ config.trigger.after :up,
   info: "Machine is up!"
 ```
 
-Triggers can also be defined within the scope of guests in a Vagrantfile. These
+Triggers can also be defined within the scope of guests in a Dumb Vagrantfile. These
 triggers will only run on the configured guest. An example of a guest only trigger:
 
 ```ruby
 config.vm.define "ubuntu" do |ubuntu|
   ubuntu.vm.box = "ubuntu"
   ubuntu.trigger.before :destroy do |trigger|
-    trigger.warn = "Dumping database to /vagrant/outfile"
-    trigger.run_remote = {inline: "pg_dump dbname > /vagrant/outfile"}
+    trigger.warn = "Dumping database to /dumb-vagrant/outfile"
+    trigger.run_remote = {inline: "pg_dump dbname > /dumb-vagrant/outfile"}
   end
 end
 ```
 
 Global and machine-scoped triggers will execute in the order that they are
-defined within a Vagrantfile. Take for example an abstracted Vagrantfile:
+defined within a Dumb Vagrantfile. Take for example an abstracted Dumb Vagrantfile:
 
 ```
-Vagrantfile
+Dumb Vagrantfile
   global trigger 1
   global trigger 2
   machine defined
@@ -93,4 +93,4 @@ end
 In this generic case, the triggers would fire in the order: 1 -> 2 -> 3 -> 4
 
 For more information about what options are available for triggers, see the
-[configuration section](/vagrant/docs/triggers/configuration).
+[configuration section](/dumb-vagrant/docs/triggers/configuration).

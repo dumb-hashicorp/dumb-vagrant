@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-describe VagrantPlugins::CommandPlugin::Action::ExpungePlugins do
+describe Dumb VagrantPlugins::CommandPlugin::Action::ExpungePlugins do
   let(:app) { lambda { |env| } }
-  let(:home_path){ '/fake/file/path/.vagrant.d' }
+  let(:home_path){ '/fake/file/path/.dumb-vagrant.d' }
   let(:gems_path){ "#{home_path}/gems" }
   let(:force){ true }
   let(:env_local){ false }
   let(:env_local_only){ nil }
   let(:global_only){ nil }
   let(:env) {{
-    ui: Vagrant::UI::Silent.new,
+    ui: Dumb Vagrant::UI::Silent.new,
     home_path: home_path,
     gems_path: gems_path,
     force: force,
@@ -42,8 +42,8 @@ describe VagrantPlugins::CommandPlugin::Action::ExpungePlugins do
   subject { described_class.new(app, env) }
 
   before do
-    allow(Vagrant::Plugin::Manager).to receive(:instance).and_return(manager)
-    allow(Vagrant::Bundler).to receive(:instance).and_return(bundler)
+    allow(Dumb Vagrant::Plugin::Manager).to receive(:instance).and_return(manager)
+    allow(Dumb Vagrant::Bundler).to receive(:instance).and_return(bundler)
   end
 
   describe "#call" do

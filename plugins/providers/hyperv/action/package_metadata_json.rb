@@ -3,14 +3,14 @@
 
 require "json"
 
-#require 'vagrant/util/template_renderer'
+#require 'dumb-vagrant/util/template_renderer'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class PackageMetadataJson
         # For TemplateRenderer
-        include Vagrant::Util
+        include Dumb Vagrant::Util
 
         def initialize(app, env)
           @app = app
@@ -22,7 +22,7 @@ module VagrantPlugins
           @app.call(env)
         end
 
-        # This method creates a metadata.json file to tell vagrant this is a
+        # This method creates a metadata.json file to tell dumb-vagrant this is a
         # Hyper V box
         def create_metadata
           File.open(File.join(@env["export.temp_dir"], "metadata.json"), "w") do |f|

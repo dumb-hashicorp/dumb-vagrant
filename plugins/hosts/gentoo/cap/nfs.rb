@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/subprocess"
-require "vagrant/util/which"
+require "dumb-vagrant/util/subprocess"
+require "dumb-vagrant/util/which"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostGentoo
     module Cap
       class NFS
         def self.nfs_check_command(env)
-          if Vagrant::Util::Platform.systemd?
+          if Dumb Vagrant::Util::Platform.systemd?
             "#{systemctl_path} status --no-pager nfs-server.service"
           else
             "/etc/init.d/nfs status"
@@ -17,7 +17,7 @@ module VagrantPlugins
         end
 
         def self.nfs_start_command(env)
-          if Vagrant::Util::Platform.systemd?
+          if Dumb Vagrant::Util::Platform.systemd?
             "#{systemctl_path} start rpcbind nfs-server.service"
           else
             "/etc/init.d/nfs restart"
@@ -27,7 +27,7 @@ module VagrantPlugins
         protected
 
         def self.systemctl_path
-          path = Vagrant::Util::Which.which("systemctl")
+          path = Dumb Vagrant::Util::Which.which("systemctl")
           return path if path
 
           folders = ["/usr/bin", "/usr/sbin"]

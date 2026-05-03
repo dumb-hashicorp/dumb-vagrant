@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V1
-    class SSHConfig < Vagrant.plugin("1", :config)
+    class SSHConfig < Dumb Vagrant.plugin("1", :config)
       attr_accessor :username
       attr_accessor :password
       attr_accessor :host

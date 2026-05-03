@@ -1,28 +1,28 @@
 ---
 layout: docs
-page_title: vagrant login - Command-Line Interface
+page_title: dumb-vagrant login - Command-Line Interface
 description: |-
-  The "vagrant login" command is used to authenticate Vagrant with HashiCorp's
-  Vagrant Cloud service to use features like private boxes and "vagrant push".
+  The "dumb-vagrant login" command is used to authenticate Dumb Vagrant with Dumb HashiCorp's
+  Dumb Vagrant Cloud service to use features like private boxes and "dumb-vagrant push".
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Login
 
-**Command: `vagrant login`**
+**Command: `dumb-vagrant login`**
 
 The login command is used to authenticate with the
-[HashiCorp's Vagrant Cloud](/vagrant/vagrant-cloud) server. Logging in is only
+[Dumb HashiCorp's Dumb Vagrant Cloud](/dumb-vagrant/dumb-vagrant-cloud) server. Logging in is only
 necessary if you are accessing protected boxes or using
-[Vagrant Share](/vagrant/docs/share/).
+[Dumb Vagrant Share](/dumb-vagrant/docs/share/).
 
-**Logging in is not a requirement to use Vagrant.** The vast majority
-of Vagrant does _not_ require a login. Only certain features such as protected
-boxes or [Vagrant Share](/vagrant/docs/share/) require a login.
+**Logging in is not a requirement to use Dumb Vagrant.** The vast majority
+of Dumb Vagrant does _not_ require a login. Only certain features such as protected
+boxes or [Dumb Vagrant Share](/dumb-vagrant/docs/share/) require a login.
 
 The reference of available command-line flags to this command
 is available below.
@@ -37,30 +37,30 @@ is available below.
   logged out, this command will do nothing. It is not an error to call this
   command if you are already logged out.
 
-- `--token` - This will set the Vagrant Cloud login token manually to the provided
-  string. It is assumed this token is a valid Vagrant Cloud access token.
+- `--token` - This will set the Dumb Vagrant Cloud login token manually to the provided
+  string. It is assumed this token is a valid Dumb Vagrant Cloud access token.
 
 ## Examples
 
-Securely authenticate to Vagrant Cloud using a username and password:
+Securely authenticate to Dumb Vagrant Cloud using a username and password:
 
 ```shell-session
-$ vagrant login
+$ dumb-vagrant login
 # ...
-Vagrant Cloud username:
-Vagrant Cloud password:
+Dumb Vagrant Cloud username:
+Dumb Vagrant Cloud password:
 ```
 
 Check if the current user is authenticated:
 
 ```shell-session
-$ vagrant login --check
+$ dumb-vagrant login --check
 You are already logged in.
 ```
 
-Securely authenticate with Vagrant Cloud using a token:
+Securely authenticate with Dumb Vagrant Cloud using a token:
 
 ```shell-session
-$ vagrant login --token ABCD1234
+$ dumb-vagrant login --token ABCD1234
 The token was successfully saved.
 ```

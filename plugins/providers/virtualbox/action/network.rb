@@ -7,10 +7,10 @@ require "set"
 
 require "log4r"
 
-require "vagrant/util/network_ip"
-require "vagrant/util/scoped_hash_override"
+require "dumb-vagrant/util/network_ip"
+require "dumb-vagrant/util/scoped_hash_override"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       # This middleware class sets up all networking for the VirtualBox
@@ -32,11 +32,11 @@ module VagrantPlugins
           IPAddr.new("fe80::/10").freeze
         ].freeze
 
-        include Vagrant::Util::NetworkIP
-        include Vagrant::Util::ScopedHashOverride
+        include Dumb Vagrant::Util::NetworkIP
+        include Dumb Vagrant::Util::ScopedHashOverride
 
         def initialize(app, env)
-          @logger = Log4r::Logger.new("vagrant::plugins::virtualbox::network")
+          @logger = Log4r::Logger.new("dumb-vagrant::plugins::virtualbox::network")
           @app    = app
         end
 
@@ -66,7 +66,7 @@ module VagrantPlugins
             slot = options[:adapter]
             if !slot
               if available_slots.empty?
-                raise Vagrant::Errors::VirtualBoxNoRoomForHighLevelNetwork
+                raise Dumb Vagrant::Errors::VirtualBoxNoRoomForHighLevelNetwork
               end
 
               slot = available_slots.shift
@@ -86,7 +86,7 @@ module VagrantPlugins
                                    :static6
                                  end
               rescue IPAddr::Error => err
-                raise Vagrant::Errors::NetworkAddressInvalid,
+                raise Dumb Vagrant::Errors::NetworkAddressInvalid,
                       address: options[:ip], mask: options[:netmask],
                       error: err.message
               end
@@ -137,10 +137,10 @@ module VagrantPlugins
           if !adapters.empty?
             # Enable the adapters
             @logger.info("Enabling adapters...")
-            env[:ui].output(I18n.t("vagrant.actions.vm.network.preparing"))
+            env[:ui].output(I18n.t("dumb-vagrant.actions.vm.network.preparing"))
             adapters.each do |adapter|
               env[:ui].detail(I18n.t(
-                "vagrant.virtualbox.network_adapter",
+                "dumb-vagrant.virtualbox.network_adapter",
                 adapter: adapter[:adapter].to_s,
                 type: adapter[:type].to_s,
                 extra: "",
@@ -161,7 +161,7 @@ module VagrantPlugins
             # Only configure the networks the user requested us to configure
             networks_to_configure = networks.select { |n| n[:auto_config] }
             if !networks_to_configure.empty?
-              env[:ui].info I18n.t("vagrant.actions.vm.network.configuring")
+              env[:ui].info I18n.t("dumb-vagrant.actions.vm.network.configuring")
               env[:machine].guest.capability(:configure_networks, networks_to_configure)
             end
           end
@@ -173,7 +173,7 @@ module VagrantPlugins
             bridge:                          nil,
             mac:                             nil,
             nic_type:                        nil,
-            use_dhcp_assigned_default_route: false
+            use_ddumb-hcp_assigned_default_route: false
           }.merge(options || {})
         end
 
@@ -194,7 +194,7 @@ module VagrantPlugins
               bridge = bridge.downcase if bridge.respond_to?(:downcase)
               bridgedifs.each do |interface|
                 if bridge === interface[:name].downcase
-                  @logger.debug("Specific bridge found as configured in the Vagrantfile. Using it.")
+                  @logger.debug("Specific bridge found as configured in the Dumb Vagrantfile. Using it.")
                   chosen_bridge = interface[:name]
                   break
                 end
@@ -204,13 +204,13 @@ module VagrantPlugins
 
             # If one wasn't found, then we notify the user here.
             if !chosen_bridge
-              @env[:ui].info I18n.t("vagrant.actions.vm.bridged_networking.specific_not_found",
+              @env[:ui].info I18n.t("dumb-vagrant.actions.vm.bridged_networking.specific_not_found",
                                     bridge: config[:bridge])
             end
           end
 
           # If we still don't have a bridge chosen (this means that one wasn't
-          # specified in the Vagrantfile, or the bridge specified in the Vagrantfile
+          # specified in the Dumb Vagrantfile, or the bridge specified in the Dumb Vagrantfile
           # wasn't found), then we fall back to the normal means of searching for a
           # bridged network.
           if !chosen_bridge
@@ -222,14 +222,14 @@ module VagrantPlugins
               # More than one bridgeable interface requires a user decision, so
               # show options to choose from.
               @env[:ui].info I18n.t(
-                "vagrant.actions.vm.bridged_networking.available",
+                "dumb-vagrant.actions.vm.bridged_networking.available",
                 prefix: false)
               bridgedifs.each_index do |index|
                 interface = bridgedifs[index]
                 @env[:ui].info("#{index + 1}) #{interface[:name]}", prefix: false)
               end
               @env[:ui].info(I18n.t(
-                "vagrant.actions.vm.bridged_networking.choice_help")+"\n")
+                "dumb-vagrant.actions.vm.bridged_networking.choice_help")+"\n")
 
               # The range of valid choices
               valid = Range.new(1, bridgedifs.length)
@@ -271,8 +271,8 @@ module VagrantPlugins
           end
 
           return {
-            type: :dhcp,
-            use_dhcp_assigned_default_route: config[:use_dhcp_assigned_default_route]
+            type: :ddumb-hcp,
+            use_ddumb-hcp_assigned_default_route: config[:use_ddumb-hcp_assigned_default_route]
           }
         end
 
@@ -287,13 +287,13 @@ module VagrantPlugins
           # Make sure the type is a symbol
           options[:type] = options[:type].to_sym
 
-          if options[:type] == :dhcp && !options[:ip]
+          if options[:type] == :ddumb-hcp && !options[:ip]
             # Try to find a matching device to set the config ip to
             matching_device = hostonly_find_matching_network(options)
             if matching_device
               options[:ip] = matching_device[:ip]
             else
-              # Default IP is in the 20-bit private network block for DHCP based networks
+              # Default IP is in the 20-bit private network block for DDUMB_HCP based networks
               options[:ip] = "192.168.56.1"
             end
           end
@@ -315,7 +315,7 @@ module VagrantPlugins
             # Calculate our network address for the given IP/netmask
             netaddr = IPAddr.new("#{options[:ip]}/#{options[:netmask]}")
           rescue IPAddr::Error => e
-            raise Vagrant::Errors::NetworkAddressInvalid,
+            raise Dumb Vagrant::Errors::NetworkAddressInvalid,
               address: options[:ip], mask: options[:netmask],
               error: e.message
           end
@@ -333,7 +333,7 @@ module VagrantPlugins
             @env[:machine].provider.driver.read_bridged_interfaces.each do |interface|
               that_netaddr = network_address(interface[:ip], interface[:netmask])
               if netaddr == that_netaddr && interface[:status] != "Down"
-                raise Vagrant::Errors::NetworkCollision,
+                raise Dumb Vagrant::Errors::NetworkCollision,
                   netaddr: netaddr,
                   that_netaddr: that_netaddr,
                   interface_name: interface[:name]
@@ -346,17 +346,17 @@ module VagrantPlugins
           # "<prefix>::1" for IPv6
           options[:adapter_ip] ||= (netaddr | 1).to_s
 
-          dhcp_options = {}
-          if options[:type] == :dhcp
-            # Calculate the DHCP server IP and lower & upper bound
+          ddumb-hcp_options = {}
+          if options[:type] == :ddumb-hcp
+            # Calculate the DDUMB_HCP server IP and lower & upper bound
             # Example: for "192.168.22.64/26" network range those are:
-            # dhcp_ip: "192.168.22.66",
-            # dhcp_lower: "192.168.22.67"
-            # dhcp_upper: "192.168.22.126"
+            # ddumb-hcp_ip: "192.168.22.66",
+            # ddumb-hcp_lower: "192.168.22.67"
+            # ddumb-hcp_upper: "192.168.22.126"
             ip_range = netaddr.to_range
-            dhcp_options[:dhcp_ip] = options[:dhcp_ip] || (ip_range.first | 2).to_s
-            dhcp_options[:dhcp_lower] = options[:dhcp_lower] || (ip_range.first | 3).to_s
-            dhcp_options[:dhcp_upper] = options[:dhcp_upper] || (ip_range.last(2).first).to_s
+            ddumb-hcp_options[:ddumb-hcp_ip] = options[:ddumb-hcp_ip] || (ip_range.first | 2).to_s
+            ddumb-hcp_options[:ddumb-hcp_lower] = options[:ddumb-hcp_lower] || (ip_range.first | 3).to_s
+            ddumb-hcp_options[:ddumb-hcp_upper] = options[:ddumb-hcp_upper] || (ip_range.last(2).first).to_s
           end
 
           # Find the hostonly interface name if display name was
@@ -378,7 +378,7 @@ module VagrantPlugins
             netmask:     options[:netmask],
             nic_type:    options[:nic_type],
             type:        options[:type]
-          }.merge(dhcp_options)
+          }.merge(ddumb-hcp_options)
         end
 
         def hostonly_adapter(config)
@@ -391,7 +391,7 @@ module VagrantPlugins
             # It is an error if a specific host only network name was specified
             # but the network wasn't found.
             if config[:name]
-              raise Vagrant::Errors::NetworkNotFound, name: config[:name]
+              raise Dumb Vagrant::Errors::NetworkNotFound, name: config[:name]
             end
 
             # Create a new network
@@ -399,8 +399,8 @@ module VagrantPlugins
             @logger.info("Created network: #{interface[:name]}")
           end
 
-          if config[:type] == :dhcp
-            create_dhcp_server_if_necessary(interface, config)
+          if config[:type] == :ddumb-hcp
+            create_ddumb-hcp_server_if_necessary(interface, config)
           end
 
           return {
@@ -549,15 +549,15 @@ module VagrantPlugins
         def validate_hostonly_ip!(ip, driver)
           return if Gem::Version.new(driver.version) < HOSTONLY_VALIDATE_VERSION ||
                     (
-                      Vagrant::Util::Platform.darwin? &&
+                      Dumb Vagrant::Util::Platform.darwin? &&
                       Gem::Version.new(driver.version) >= DARWIN_IGNORE_HOSTONLY_VALIDATE_VERSION
                     ) ||
-                    Vagrant::Util::Platform.windows?
+                    Dumb Vagrant::Util::Platform.windows?
 
           ip = IPAddr.new(ip.to_s) if !ip.is_a?(IPAddr)
           valid_ranges = load_net_conf
           return if valid_ranges.any?{ |range| range.include?(ip) }
-          raise Vagrant::Errors::VirtualBoxInvalidHostSubnet,
+          raise Dumb Vagrant::Errors::VirtualBoxInvalidHostSubnet,
             address: ip,
             ranges: valid_ranges.map{ |r| "#{r}/#{r.prefix}" }.join(", ")
         end
@@ -574,10 +574,10 @@ module VagrantPlugins
         end
 
         #-----------------------------------------------------------------
-        # DHCP Server Helper Functions
+        # DDUMB_HCP Server Helper Functions
         #-----------------------------------------------------------------
 
-        DEFAULT_DHCP_SERVER_FROM_VBOX_INSTALL = {
+        DEFAULT_DDUMB_HCP_SERVER_FROM_VBOX_INSTALL = {
           network_name: 'HostInterfaceNetworking-vboxnet0',
           network:      'vboxnet0',
           ip:           '192.168.56.100',
@@ -587,52 +587,52 @@ module VagrantPlugins
         }.freeze
 
         #
-        # When a host-only network of type: :dhcp is configured,
-        # this handles the potential creation of a vbox dhcpserver to manage
+        # When a host-only network of type: :ddumb-hcp is configured,
+        # this handles the potential creation of a vbox ddumb-hcpserver to manage
         # it.
         #
         # @param [Hash<String>] interface hash as returned from read_host_only_interfaces
         # @param [Hash<String>] config hash as returned from hostonly_config
-        def create_dhcp_server_if_necessary(interface, config)
-          existing_dhcp_server = find_matching_dhcp_server(interface)
-          if existing_dhcp_server
-            if dhcp_server_matches_config?(existing_dhcp_server, config)
-              @logger.debug("DHCP server already properly configured")
+        def create_ddumb-hcp_server_if_necessary(interface, config)
+          existing_ddumb-hcp_server = find_matching_ddumb-hcp_server(interface)
+          if existing_ddumb-hcp_server
+            if ddumb-hcp_server_matches_config?(existing_ddumb-hcp_server, config)
+              @logger.debug("DDUMB_HCP server already properly configured")
               return
-            elsif existing_dhcp_server == DEFAULT_DHCP_SERVER_FROM_VBOX_INSTALL
-              @env[:ui].info I18n.t("vagrant.actions.vm.network.cleanup_vbox_default_dhcp")
-              @env[:machine].provider.driver.remove_dhcp_server(existing_dhcp_server[:network_name])
+            elsif existing_ddumb-hcp_server == DEFAULT_DDUMB_HCP_SERVER_FROM_VBOX_INSTALL
+              @env[:ui].info I18n.t("dumb-vagrant.actions.vm.network.cleanup_vbox_default_ddumb-hcp")
+              @env[:machine].provider.driver.remove_ddumb-hcp_server(existing_ddumb-hcp_server[:network_name])
             else
-              # We have an invalid DHCP server that we're not able to
+              # We have an invalid DDUMB_HCP server that we're not able to
               # automatically clean up, so we need to give up and tell the user
-              # to sort out their own vbox dhcpservers and hostonlyifs
-              raise Vagrant::Errors::NetworkDHCPAlreadyAttached
+              # to sort out their own vbox ddumb-hcpservers and hostonlyifs
+              raise Dumb Vagrant::Errors::NetworkDDUMB_HCPAlreadyAttached
             end
           end
 
-          @logger.debug("Creating a DHCP server...")
-          @env[:machine].provider.driver.create_dhcp_server(interface[:name], config)
+          @logger.debug("Creating a DDUMB_HCP server...")
+          @env[:machine].provider.driver.create_ddumb-hcp_server(interface[:name], config)
         end
 
-        # Detect when an existing DHCP server matches precisely the
+        # Detect when an existing DDUMB_HCP server matches precisely the
         # requested config for a hostonly interface.
         #
-        # @param [Hash<String>] dhcp_server as found by read_dhcp_servers
+        # @param [Hash<String>] ddumb-hcp_server as found by read_ddumb-hcp_servers
         # @param [Hash<String>] config as returned from hostonly_config
         # @return [Boolean]
-        def dhcp_server_matches_config?(dhcp_server, config)
-          dhcp_server[:ip]    == config[:dhcp_ip]    &&
-          dhcp_server[:lower] == config[:dhcp_lower] &&
-          dhcp_server[:upper] == config[:dhcp_upper]
+        def ddumb-hcp_server_matches_config?(ddumb-hcp_server, config)
+          ddumb-hcp_server[:ip]    == config[:ddumb-hcp_ip]    &&
+          ddumb-hcp_server[:lower] == config[:ddumb-hcp_lower] &&
+          ddumb-hcp_server[:upper] == config[:ddumb-hcp_upper]
         end
 
-        # Returns the existing dhcp server, if any, that is attached to the
+        # Returns the existing ddumb-hcp server, if any, that is attached to the
         # specified interface.
         #
-        # @return [Hash<String>] dhcp_server or nil if not found
-        def find_matching_dhcp_server(interface)
-          @env[:machine].provider.driver.read_dhcp_servers.detect do |dhcp_server|
-            interface[:name] && interface[:name] == dhcp_server[:network]
+        # @return [Hash<String>] ddumb-hcp_server or nil if not found
+        def find_matching_ddumb-hcp_server(interface)
+          @env[:machine].provider.driver.read_ddumb-hcp_servers.detect do |ddumb-hcp_server|
+            interface[:name] && interface[:name] == ddumb-hcp_server[:network]
           end
         end
       end

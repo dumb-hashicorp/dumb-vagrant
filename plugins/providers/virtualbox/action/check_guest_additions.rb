@@ -3,13 +3,13 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class CheckGuestAdditions
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::plugins::virtualbox::check_guest_additions")
+          @logger = Log4r::Logger.new("dumb-vagrant::plugins::virtualbox::check_guest_additions")
         end
 
         def call(env)
@@ -18,13 +18,13 @@ module VagrantPlugins
             return @app.call(env)
           end
 
-          env[:ui].output(I18n.t("vagrant.virtualbox.checking_guest_additions"))
+          env[:ui].output(I18n.t("dumb-vagrant.virtualbox.checking_guest_additions"))
 
           # Use the raw interface for now, while the virtualbox gem
           # doesn't support guest properties (due to cross platform issues)
           version = env[:machine].provider.driver.read_guest_additions_version
           if !version
-            env[:ui].detail(I18n.t("vagrant.actions.vm.check_guest_additions.not_detected"))
+            env[:ui].detail(I18n.t("dumb-vagrant.actions.vm.check_guest_additions.not_detected"))
           else
             # Read the versions
             versions = [version, env[:machine].provider.driver.version]
@@ -42,7 +42,7 @@ module VagrantPlugins
             vb_version    = versions[1]
 
             if guest_version != vb_version
-              env[:ui].detail(I18n.t("vagrant.actions.vm.check_guest_additions.version_mismatch",
+              env[:ui].detail(I18n.t("dumb-vagrant.actions.vm.check_guest_additions.version_mismatch",
                                    guest_version: version,
                                    virtualbox_version: vb_version))
             end

@@ -3,45 +3,45 @@
 
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/presence"
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/presence"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
 require_relative "../installer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Provisioner
       # This class is a base class where the common functionality shared between
       # chef-solo and chef-client provisioning are stored. This is **not an actual
       # provisioner**. Instead, {ChefSolo} or {ChefServer} should be used.
-      class Base < Vagrant.plugin("2", :provisioner)
-        include Vagrant::Util
-        include Vagrant::Util::Presence
+      class Base < Dumb Vagrant.plugin("2", :provisioner)
+        include Dumb Vagrant::Util
+        include Dumb Vagrant::Util::Presence
 
-        class ChefError < Vagrant::Errors::VagrantError
-          error_namespace("vagrant.provisioners.chef")
+        class ChefError < Dumb Vagrant::Errors::Dumb VagrantError
+          error_namespace("dumb-vagrant.provisioners.chef")
         end
 
         def initialize(machine, config)
           super
 
-          @logger = Log4r::Logger.new("vagrant::provisioners::chef")
+          @logger = Log4r::Logger.new("dumb-vagrant::provisioners::chef")
 
           if @config.respond_to?(:node_name) && !present?(@config.node_name)
             # First attempt to get the node name from the hostname, and if that
             # is not present, generate/retrieve a random hostname.
             hostname = @machine.config.vm.hostname
             if present?(hostname)
-              @machine.ui.info I18n.t("vagrant.provisioners.chef.using_hostname_node_name",
+              @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.using_hostname_node_name",
                 hostname: hostname,
               )
               @config.node_name = hostname
             else
               cache = @machine.data_dir.join("chef_node_name")
               if !cache.exist?
-                @machine.ui.info I18n.t("vagrant.provisioners.chef.generating_node_name")
+                @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.generating_node_name")
                 cache.open("w+") do |f|
-                  f.write("vagrant-#{SecureRandom.hex(4)}")
+                  f.write("dumb-vagrant-#{SecureRandom.hex(4)}")
                 end
               end
 
@@ -146,7 +146,7 @@ module VagrantPlugins
           # Create a temporary file to store the data so we can upload it.
           remote_file = File.join(guest_provisioning_path, filename)
           @machine.communicate.sudo(remove_command(remote_file), error_check: false)
-          Tempfile.open("vagrant-chef-provisioner-config") do |f|
+          Tempfile.open("dumb-vagrant-chef-provisioner-config") do |f|
             f.binmode
             f.write(config_file)
             f.fsync
@@ -156,7 +156,7 @@ module VagrantPlugins
         end
 
         def setup_json
-          @machine.ui.info I18n.t("vagrant.provisioners.chef.json")
+          @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.json")
 
           # Get the JSON that we're going to expose to Chef
           json = @config.json
@@ -167,7 +167,7 @@ module VagrantPlugins
           # Create a temporary file to store the data so we can upload it.
           remote_file = File.join(guest_provisioning_path, "dna.json")
           @machine.communicate.sudo(remove_command(remote_file), error_check: false)
-          Tempfile.open("vagrant-chef-provisioner-config") do |f|
+          Tempfile.open("dumb-vagrant-chef-provisioner-config") do |f|
             f.binmode
             f.write(json)
             f.fsync
@@ -181,7 +181,7 @@ module VagrantPlugins
           return if !remote_file
 
           @machine.ui.info I18n.t(
-            "vagrant.provisioners.chef.upload_encrypted_data_bag_secret_key")
+            "dumb-vagrant.provisioners.chef.upload_encrypted_data_bag_secret_key")
 
           @machine.communicate.sudo(remove_command(remote_file), error_check: false)
           @machine.communicate.upload(encrypted_data_bag_secret_key_path, remote_file)
@@ -211,9 +211,9 @@ module VagrantPlugins
           end
 
           if windows?
-            "C:/vagrant-chef"
+            "C:/dumb-vagrant-chef"
           else
-            "/tmp/vagrant-chef"
+            "/tmp/dumb-vagrant-chef"
           end
         end
 

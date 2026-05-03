@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/provisioners/shell/provisioner")
+require Dumb Vagrant.source_root.join("plugins/provisioners/shell/provisioner")
 
-describe "Vagrant::Shell::Provisioner" do
+describe "Dumb Vagrant::Shell::Provisioner" do
   include_context "unit"
 
-  let(:default_win_path) { "C:/tmp/vagrant-shell" }
+  let(:default_win_path) { "C:/tmp/dumb-vagrant-shell" }
   let(:env){ isolated_environment }
   let(:machine) {
     double(:machine, env: env, id: "ID").tap { |machine|
@@ -42,7 +42,7 @@ describe "Vagrant::Shell::Provisioner" do
     }
 
     let(:vsp) {
-      VagrantPlugins::Shell::Provisioner.new(machine, config)
+      Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
     }
 
     before {
@@ -90,7 +90,7 @@ describe "Vagrant::Shell::Provisioner" do
     }
 
     let(:vsp) {
-      VagrantPlugins::Shell::Provisioner.new(machine, config)
+      Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
     }
 
     before {
@@ -138,7 +138,7 @@ describe "Vagrant::Shell::Provisioner" do
     }
 
     it "does not raise an exception when normalizing newlines" do
-      vsp = VagrantPlugins::Shell::Provisioner.new(machine, config)
+      vsp = Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
 
       expect {
         vsp.provision
@@ -168,7 +168,7 @@ describe "Vagrant::Shell::Provisioner" do
     }
 
     it "does not raise an exception" do
-      vsp = VagrantPlugins::Shell::Provisioner.new(machine, config)
+      vsp = Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
 
       RSpec::Expectations.configuration.on_potential_false_positives = :nothing
       # This test should be fine, since we are specifically looking for the
@@ -185,7 +185,7 @@ describe "Vagrant::Shell::Provisioner" do
 
     before do
       allow(FileChecksum).to receive(:new).and_return(filechecksum)
-      allow_any_instance_of(Vagrant::Util::Downloader).to receive(:execute_curl).and_return(true)
+      allow_any_instance_of(Dumb Vagrant::Util::Downloader).to receive(:execute_curl).and_return(true)
     end
 
     context "that does not have matching sha1 checksum" do
@@ -210,9 +210,9 @@ describe "Vagrant::Shell::Provisioner" do
       }
 
       it "should raise an exception" do
-        vsp = VagrantPlugins::Shell::Provisioner.new(machine, config)
+        vsp = Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
 
-        expect{ vsp.provision }.to raise_error(Vagrant::Errors::DownloaderChecksumError)
+        expect{ vsp.provision }.to raise_error(Dumb Vagrant::Errors::DownloaderChecksumError)
       end
     end
 
@@ -238,9 +238,9 @@ describe "Vagrant::Shell::Provisioner" do
       }
 
       it "should raise an exception" do
-        vsp = VagrantPlugins::Shell::Provisioner.new(machine, config)
+        vsp = Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
 
-        expect{ vsp.provision }.to raise_error(Vagrant::Errors::DownloaderChecksumError)
+        expect{ vsp.provision }.to raise_error(Dumb Vagrant::Errors::DownloaderChecksumError)
       end
     end
 
@@ -266,9 +266,9 @@ describe "Vagrant::Shell::Provisioner" do
       }
 
       it "should raise an exception" do
-        vsp = VagrantPlugins::Shell::Provisioner.new(machine, config)
+        vsp = Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
 
-        expect{ vsp.provision }.to raise_error(Vagrant::Errors::DownloaderChecksumError)
+        expect{ vsp.provision }.to raise_error(Dumb Vagrant::Errors::DownloaderChecksumError)
       end
     end
 
@@ -294,9 +294,9 @@ describe "Vagrant::Shell::Provisioner" do
       }
 
       it "should raise an exception" do
-        vsp = VagrantPlugins::Shell::Provisioner.new(machine, config)
+        vsp = Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
 
-        expect{ vsp.provision }.to raise_error(Vagrant::Errors::DownloaderChecksumError)
+        expect{ vsp.provision }.to raise_error(Dumb Vagrant::Errors::DownloaderChecksumError)
       end
     end
 
@@ -322,9 +322,9 @@ describe "Vagrant::Shell::Provisioner" do
       }
 
       it "should raise an exception" do
-        vsp = VagrantPlugins::Shell::Provisioner.new(machine, config)
+        vsp = Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
 
-        expect{ vsp.provision }.to raise_error(Vagrant::Errors::DownloaderChecksumError)
+        expect{ vsp.provision }.to raise_error(Dumb Vagrant::Errors::DownloaderChecksumError)
       end
     end
   end
@@ -332,7 +332,7 @@ describe "Vagrant::Shell::Provisioner" do
   describe "#upload_path" do
     context "when upload path is not set" do
       let(:vsp) {
-        VagrantPlugins::Shell::Provisioner.new(machine, config)
+        Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
       }
 
       let(:config) {
@@ -350,8 +350,8 @@ describe "Vagrant::Shell::Provisioner" do
         )
       }
 
-      it "should default to /tmp/vagrant-shell" do
-        expect(vsp.upload_path).to eq("/tmp/vagrant-shell")
+      it "should default to /tmp/dumb-vagrant-shell" do
+        expect(vsp.upload_path).to eq("/tmp/dumb-vagrant-shell")
       end
 
       context "windows" do
@@ -359,8 +359,8 @@ describe "Vagrant::Shell::Provisioner" do
           allow(machine).to receive_message_chain(:config, :vm, :guest).and_return(:windows)
         end
 
-        it "should default to C:/tmp/vagrant-shell" do
-          expect(vsp.upload_path).to eq("C:/tmp/vagrant-shell")
+        it "should default to C:/tmp/dumb-vagrant-shell" do
+          expect(vsp.upload_path).to eq("C:/tmp/dumb-vagrant-shell")
         end
       end
     end
@@ -384,7 +384,7 @@ describe "Vagrant::Shell::Provisioner" do
       }
 
       let(:vsp) {
-        VagrantPlugins::Shell::Provisioner.new(machine, config)
+        Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
       }
 
       it "should use the value from from config" do
@@ -408,7 +408,7 @@ describe "Vagrant::Shell::Provisioner" do
       let(:config) { double(:config) }
 
       let(:vsp) {
-        VagrantPlugins::Shell::Provisioner.new(machine, config)
+        Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
       }
 
       before do
@@ -447,12 +447,12 @@ describe "Vagrant::Shell::Provisioner" do
     }
 
     let(:vsp) {
-      VagrantPlugins::Shell::Provisioner.new(machine, config)
+      Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
     }
 
     let(:communicator) { double("communicator") }
     let(:guest) { double("guest") }
-    let(:ui) { Vagrant::UI::Silent.new }
+    let(:ui) { Dumb Vagrant::UI::Silent.new }
 
     before {
       allow(guest).to receive(:capability?).with(:wait_for_reboot).and_return(false)
@@ -527,8 +527,8 @@ describe "Vagrant::Shell::Provisioner" do
       it "creates an executable with an extension" do
         allow(machine).to receive_message_chain(:config, :winssh, :shell).and_return(nil)
         allow(vsp).to receive(:with_script_file).and_yield(default_win_path)
-        allow(communicator).to receive(:upload).with(default_win_path, /vagrant-shell/)
-        expect(communicator).to receive(:sudo).with(/vagrant-shell.ps1/, anything)
+        allow(communicator).to receive(:upload).with(default_win_path, /dumb-vagrant-shell/)
+        expect(communicator).to receive(:sudo).with(/dumb-vagrant-shell.ps1/, anything)
         vsp.send(:provision_winrm, "")
       end
     end
@@ -561,12 +561,12 @@ describe "Vagrant::Shell::Provisioner" do
     }
 
     let(:vsp) {
-      VagrantPlugins::Shell::Provisioner.new(machine, config)
+      Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
     }
 
     let(:communicator) { double("communicator") }
     let(:guest) { double("guest") }
-    let(:ui) { Vagrant::UI::Silent.new }
+    let(:ui) { Dumb Vagrant::UI::Silent.new }
 
     before {
       allow(guest).to receive(:capability?).with(:wait_for_reboot).and_return(false)
@@ -630,7 +630,7 @@ describe "Vagrant::Shell::Provisioner" do
 
       context "when upload path has a .ps1 extension" do
         before do
-          allow(config).to receive(:upload_path).and_return("c:/tmp/vagrant-shell.ps1")
+          allow(config).to receive(:upload_path).and_return("c:/tmp/dumb-vagrant-shell.ps1")
         end
 
         it "executes the remote script with powershell" do
@@ -642,7 +642,7 @@ describe "Vagrant::Shell::Provisioner" do
 
       context "when upload path has a .bat extension" do
         before do
-          allow(config).to receive(:upload_path).and_return("c:/tmp/vagrant-shell.bat")
+          allow(config).to receive(:upload_path).and_return("c:/tmp/dumb-vagrant-shell.bat")
         end
 
         it "executes the remote script with cmd" do
@@ -654,7 +654,7 @@ describe "Vagrant::Shell::Provisioner" do
 
       context "when upload path has no extension" do
         before do
-          allow(config).to receive(:upload_path).and_return("c:/tmp/vagrant-shell")
+          allow(config).to receive(:upload_path).and_return("c:/tmp/dumb-vagrant-shell")
         end
 
         context "when winssh shell is cmd" do
@@ -685,7 +685,7 @@ describe "Vagrant::Shell::Provisioner" do
   end
 
   describe "#handle_comm" do
-    let(:ui) { Vagrant::UI::Silent.new }
+    let(:ui) { Dumb Vagrant::UI::Silent.new }
     let(:keep_color) { false }
     let(:config) {
       double(
@@ -696,7 +696,7 @@ describe "Vagrant::Shell::Provisioner" do
     let(:env){ isolated_environment }
     let(:machine) { double(:machine, env: env, id: "ID") }
     let(:vsp) {
-      VagrantPlugins::Shell::Provisioner.new(machine, config)
+      Dumb VagrantPlugins::Shell::Provisioner.new(machine, config)
     }
 
     before do

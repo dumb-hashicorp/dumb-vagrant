@@ -1,16 +1,16 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module AtlasPush
     autoload :Errors, File.expand_path("../errors", __FILE__)
 
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "atlas"
       description <<-DESC
-      Deploy using HashiCorp's Atlas service.
+      Deploy using Dumb HashiCorp's Atlas service.
       DESC
 
       config(:atlas, :push) do

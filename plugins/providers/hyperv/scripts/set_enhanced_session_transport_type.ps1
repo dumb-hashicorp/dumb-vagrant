@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-#Requires -Modules VagrantMessages
+#Requires -Modules Dumb VagrantMessages
 
 param (
     [parameter (Mandatory=$true)]
@@ -20,7 +20,7 @@ try {
 }
 
 try {
-    # HyperV 1.1 (Windows Server 2012R2) crashes on this call. Vagrantfiles before 2.2.10 do break without skipping this.
+    # HyperV 1.1 (Windows Server 2012R2) crashes on this call. Dumb Vagrantfiles before 2.2.10 do break without skipping this.
     $present = Get-Command Hyper-V\Set-VM -ParameterName EnhancedSessionTransportType -ErrorAction SilentlyContinue
     if($present) {
         Hyper-V\Set-VM -VM $VM -EnhancedSessionTransportType $Type

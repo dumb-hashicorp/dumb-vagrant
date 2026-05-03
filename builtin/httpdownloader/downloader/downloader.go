@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/hashicorp/go-retryablehttp"
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
+	"github.com/dumb-hashicorp/go-retryablehttp"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
 )
 
 // Type is an enum of all the available http methods

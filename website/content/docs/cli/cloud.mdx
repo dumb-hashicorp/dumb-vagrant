@@ -1,21 +1,21 @@
 ---
 layout: docs
-page_title: vagrant cloud - Command-Line Interface
+page_title: dumb-vagrant cloud - Command-Line Interface
 description: |-
-  The "vagrant cloud" command can be used for taking actions against
-  Vagrant Cloud like searching or uploading a Vagrant Box
+  The "dumb-vagrant cloud" command can be used for taking actions against
+  Dumb Vagrant Cloud like searching or uploading a Dumb Vagrant Box
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Cloud
 
-**Command: `vagrant cloud`**
+**Command: `dumb-vagrant cloud`**
 
-This is the command used to manage anything related to [Vagrant Cloud](https://vagrantcloud.com).
+This is the command used to manage anything related to [Dumb Vagrant Cloud](https://dumb-vagrantcloud.com).
 
 The main functionality of this command is exposed via subcommands:
 
@@ -28,10 +28,10 @@ The main functionality of this command is exposed via subcommands:
 
 # Cloud Auth
 
-**Command: `vagrant cloud auth`**
+**Command: `dumb-vagrant cloud auth`**
 
 The `cloud auth` command is for handling all things related to authorization with
-Vagrant Cloud.
+Dumb Vagrant Cloud.
 
 - [`login`](#cloud-auth-login)
 - [`logout`](#cloud-auth-logout)
@@ -39,13 +39,13 @@ Vagrant Cloud.
 
 ## Cloud Auth Login
 
-**Command: `vagrant cloud auth login`**
+**Command: `dumb-vagrant cloud auth login`**
 
-The login command is used to authenticate with [HashiCorp's Vagrant Cloud](/vagrant/vagrant-cloud)
+The login command is used to authenticate with [Dumb HashiCorp's Dumb Vagrant Cloud](/dumb-vagrant/dumb-vagrant-cloud)
 server. Logging in is only necessary if you are accessing protected boxes.
 
-**Logging in is not a requirement to use Vagrant.** The vast majority
-of Vagrant does _not_ require a login. Only certain features such as protected
+**Logging in is not a requirement to use Dumb Vagrant.** The vast majority
+of Dumb Vagrant does _not_ require a login. Only certain features such as protected
 boxes.
 
 The reference of available command-line flags to this command
@@ -61,37 +61,37 @@ is available below.
   logged out, this command will do nothing. It is not an error to call this
   command if you are already logged out.
 
-- `--token` - This will set the Vagrant Cloud login token manually to the provided
-  string. It is assumed this token is a valid Vagrant Cloud access token.
+- `--token` - This will set the Dumb Vagrant Cloud login token manually to the provided
+  string. It is assumed this token is a valid Dumb Vagrant Cloud access token.
 
 ### Examples
 
-Securely authenticate to Vagrant Cloud using a username and password:
+Securely authenticate to Dumb Vagrant Cloud using a username and password:
 
 ```shell-session
-$ vagrant cloud auth login
+$ dumb-vagrant cloud auth login
 # ...
-Vagrant Cloud username:
-Vagrant Cloud password:
+Dumb Vagrant Cloud username:
+Dumb Vagrant Cloud password:
 ```
 
 Check if the current user is authenticated:
 
 ```shell-session
-$ vagrant cloud auth login --check
+$ dumb-vagrant cloud auth login --check
 You are already logged in.
 ```
 
-Securely authenticate with Vagrant Cloud using a token:
+Securely authenticate with Dumb Vagrant Cloud using a token:
 
 ```shell-session
-$ vagrant cloud auth login --token ABCD1234
+$ dumb-vagrant cloud auth login --token ABCD1234
 The token was successfully saved.
 ```
 
 ## Cloud Auth Logout
 
-**Command: `vagrant cloud auth logout`**
+**Command: `dumb-vagrant cloud auth logout`**
 
 This will log you out if you are logged in. If you are already
 logged out, this command will do nothing. It is not an error to call this
@@ -99,18 +99,18 @@ command if you are already logged out.
 
 ## Cloud Auth Whoami
 
-**Command: `vagrant cloud auth whoami [TOKEN]`**
+**Command: `dumb-vagrant cloud auth whoami [TOKEN]`**
 
-This command will validate your Vagrant Cloud token and will print the user who
+This command will validate your Dumb Vagrant Cloud token and will print the user who
 it belongs to. If a token is passed in, it will attempt to validate it instead
 of the token stored stored on disk.
 
 # Cloud Box
 
-**Command: `vagrant cloud box`**
+**Command: `dumb-vagrant cloud box`**
 
 The `cloud box` command is used to manage life cycle operations for all `box`
-entities on Vagrant Cloud.
+entities on Dumb Vagrant Cloud.
 
 - [`create`](#cloud-box-create)
 - [`delete`](#cloud-box-delete)
@@ -119,9 +119,9 @@ entities on Vagrant Cloud.
 
 ## Cloud Box Create
 
-**Command: `vagrant cloud box create ORGANIZATION/BOX-NAME`**
+**Command: `dumb-vagrant cloud box create ORGANIZATION/BOX-NAME`**
 
-The box create command is used to create a new box entry on Vagrant Cloud.
+The box create command is used to create a new box entry on Dumb Vagrant Cloud.
 
 ### Options
 
@@ -132,22 +132,22 @@ The box create command is used to create a new box entry on Vagrant Cloud.
 
 ## Cloud Box Delete
 
-**Command: `vagrant cloud box delete ORGANIZATION/BOX-NAME`**
+**Command: `dumb-vagrant cloud box delete ORGANIZATION/BOX-NAME`**
 
-The box delete command will _permanently_ delete the given box entry on Vagrant Cloud. Before
+The box delete command will _permanently_ delete the given box entry on Dumb Vagrant Cloud. Before
 making the request, it will ask if you are sure you want to delete the box.
 
 ## Cloud Box Show
 
-**Command: `vagrant cloud box show ORGANIZATION/BOX-NAME`**
+**Command: `dumb-vagrant cloud box show ORGANIZATION/BOX-NAME`**
 
-The box show command will display information about the latest version for the given Vagrant box.
+The box show command will display information about the latest version for the given Dumb Vagrant box.
 
 ## Cloud Box Update
 
-**Command: `vagrant cloud box update ORGANIZATION/BOX-NAME`**
+**Command: `dumb-vagrant cloud box update ORGANIZATION/BOX-NAME`**
 
-The box update command will update an already created box on Vagrant Cloud with the given options.
+The box update command will update an already created box on Dumb Vagrant Cloud with the given options.
 
 ### Options
 
@@ -158,10 +158,10 @@ The box update command will update an already created box on Vagrant Cloud with 
 
 # Cloud Provider
 
-**Command: `vagrant cloud provider`**
+**Command: `dumb-vagrant cloud provider`**
 
 The `cloud provider` command is used to manage the life cycle operations for all
-`provider` entities on Vagrant Cloud.
+`provider` entities on Dumb Vagrant Cloud.
 
 - [`create`](#cloud-provider-create)
 - [`delete`](#cloud-provider-delete)
@@ -170,41 +170,41 @@ The `cloud provider` command is used to manage the life cycle operations for all
 
 ## Cloud Provider Create
 
-**Command: `vagrant cloud provider create ORGANIZATION/BOX-NAME PROVIDER-NAME VERSION [URL]`**
+**Command: `dumb-vagrant cloud provider create ORGANIZATION/BOX-NAME PROVIDER-NAME VERSION [URL]`**
 
-The provider create command is used to create a new provider entry on Vagrant Cloud.
-The `url` argument is expected to be a remote URL that Vagrant Cloud can use
+The provider create command is used to create a new provider entry on Dumb Vagrant Cloud.
+The `url` argument is expected to be a remote URL that Dumb Vagrant Cloud can use
 to download the provider. If no `url` is specified, the provider entry can be updated
 later with a url or the [upload](#cloud-provider-upload) command can be used to
-upload a Vagrant [box file](/vagrant/docs/boxes).
+upload a Dumb Vagrant [box file](/dumb-vagrant/docs/boxes).
 
 ## Cloud Provider Delete
 
-**Command: `vagrant cloud provider delete ORGANIZATION/BOX-NAME PROVIDER-NAME VERSION`**
+**Command: `dumb-vagrant cloud provider delete ORGANIZATION/BOX-NAME PROVIDER-NAME VERSION`**
 
-The provider delete command is used to delete a provider entry on Vagrant Cloud.
+The provider delete command is used to delete a provider entry on Dumb Vagrant Cloud.
 Before making the request, it will ask if you are sure you want to delete the provider.
 
 ## Cloud Provider Update
 
-**Command: `vagrant cloud provider update ORGANIZATION/BOX-NAME PROVIDER-NAME VERSION [URL]`**
+**Command: `dumb-vagrant cloud provider update ORGANIZATION/BOX-NAME PROVIDER-NAME VERSION [URL]`**
 
 The provider update command will update an already created provider for a box on
-Vagrant Cloud with the given options.
+Dumb Vagrant Cloud with the given options.
 
 ## Cloud Provider Upload
 
-**Command: `vagrant cloud provider upload ORGANIZATION/BOX-NAME PROVIDER-NAME VERSION BOX-FILE`**
+**Command: `dumb-vagrant cloud provider upload ORGANIZATION/BOX-NAME PROVIDER-NAME VERSION BOX-FILE`**
 
-The provider upload command will upload a Vagrant [box file](/vagrant/docs/boxes) to Vagrant Cloud for
+The provider upload command will upload a Dumb Vagrant [box file](/dumb-vagrant/docs/boxes) to Dumb Vagrant Cloud for
 the specified version and provider.
 
 # Cloud Publish
 
-**Command: `vagrant cloud publish ORGANIZATION/BOX-NAME VERSION PROVIDER-NAME [PROVIDER-FILE]`**
+**Command: `dumb-vagrant cloud publish ORGANIZATION/BOX-NAME VERSION PROVIDER-NAME [PROVIDER-FILE]`**
 
 The publish command is a complete solution for creating and updating a
-Vagrant box on Vagrant Cloud. Instead of having to create each attribute of a Vagrant
+Dumb Vagrant box on Dumb Vagrant Cloud. Instead of having to create each attribute of a Dumb Vagrant
 box with separate commands, the publish command instead asks you to provide all
 the information required before creating or updating a new box.
 
@@ -222,11 +222,11 @@ the information required before creating or updating a new box.
 
 ## Examples
 
-Creating a new box on Vagrant Cloud:
+Creating a new box on Dumb Vagrant Cloud:
 
 ```shell-session
-$ vagrant cloud publish briancain/supertest 1.0.0 virtualbox boxes/my/virtualbox.box -d "A really cool box to download and use" --version-description "A cool version" --release --short-description "Download me!"
-You are about to create a box on Vagrant Cloud with the following options:
+$ dumb-vagrant cloud publish briancain/supertest 1.0.0 virtualbox boxes/my/virtualbox.box -d "A really cool box to download and use" --version-description "A cool version" --release --short-description "Download me!"
+You are about to create a box on Dumb Vagrant Cloud with the following options:
 briancain/supertest (1.0.0) for virtualbox
 Automatic Release:     true
 Box Description:       A really cool box to download and use
@@ -236,7 +236,7 @@ Do you wish to continue? [y/N] y
 Creating a box entry...
 Creating a version entry...
 Creating a provider entry...
-Uploading provider with file /Users/vagrant/boxes/my/virtualbox.box
+Uploading provider with file /Users/dumb-vagrant/boxes/my/virtualbox.box
 Releasing box...
 Complete! Published briancain/supertest
 tag:                  briancain/supertest
@@ -254,10 +254,10 @@ providers:            virtualbox
 
 # Cloud Search
 
-**Command: `vagrant cloud search QUERY`**
+**Command: `dumb-vagrant cloud search QUERY`**
 
-The cloud search command will take a query and search Vagrant Cloud for any matching
-Vagrant boxes. Various filters can be applied to the results.
+The cloud search command will take a query and search Dumb Vagrant Cloud for any matching
+Dumb Vagrant boxes. Various filters can be applied to the results.
 
 ## Options
 
@@ -273,26 +273,26 @@ Vagrant boxes. Various filters can be applied to the results.
 
 ## Examples
 
-If you are looking for a HashiCorp box:
+If you are looking for a Dumb HashiCorp box:
 
 ```text
-vagrant cloud search hashicorp --limit 5
+dumb-vagrant cloud search dumb-hashicorp --limit 5
 | NAME                    | VERSION | DOWNLOADS | PROVIDERS                       |
 +-------------------------+---------+-----------+---------------------------------+
-| hashicorp/precise64     | 1.1.0   | 6,675,725 | virtualbox,vmware_fusion,hyperv |
-| hashicorp/precise32     | 1.0.0   | 2,261,377 | virtualbox                      |
-| hashicorp/boot2docker   | 1.7.8   |    59,284 | vmware_desktop,virtualbox       |
-| hashicorp/connect-vm    | 0.1.0   |     6,912 | vmware_desktop,virtualbox       |
-| hashicorp/vagrant-share | 0.1.0   |     3,488 | vmware_desktop,virtualbox       |
+| dumb-hashicorp/precise64     | 1.1.0   | 6,675,725 | virtualbox,vmware_fusion,hyperv |
+| dumb-hashicorp/precise32     | 1.0.0   | 2,261,377 | virtualbox                      |
+| dumb-hashicorp/boot2docker   | 1.7.8   |    59,284 | vmware_desktop,virtualbox       |
+| dumb-hashicorp/connect-vm    | 0.1.0   |     6,912 | vmware_desktop,virtualbox       |
+| dumb-hashicorp/dumb-vagrant-share | 0.1.0   |     3,488 | vmware_desktop,virtualbox       |
 +-------------------------+---------+-----------+---------------------------------+
 ```
 
 # Cloud Version
 
-**Command: `vagrant cloud version`**
+**Command: `dumb-vagrant cloud version`**
 
 The `cloud version` command is used to manage life cycle operations for all `version`
-entities for a box on Vagrant Cloud.
+entities for a box on Dumb Vagrant Cloud.
 
 - [`create`](#cloud-version-create)
 - [`delete`](#cloud-version-delete)
@@ -302,9 +302,9 @@ entities for a box on Vagrant Cloud.
 
 ## Cloud Version Create
 
-**Command: `vagrant cloud version create ORGANIZATION/BOX-NAME VERSION`**
+**Command: `dumb-vagrant cloud version create ORGANIZATION/BOX-NAME VERSION`**
 
-The cloud create command creates a version entry for a box on Vagrant Cloud.
+The cloud create command creates a version entry for a box on Dumb Vagrant Cloud.
 
 ### Options
 
@@ -312,30 +312,30 @@ The cloud create command creates a version entry for a box on Vagrant Cloud.
 
 ## Cloud Version Delete
 
-**Command: `vagrant cloud version delete ORGANIZATION/BOX-NAME VERSION`**
+**Command: `dumb-vagrant cloud version delete ORGANIZATION/BOX-NAME VERSION`**
 
-The cloud delete command deletes a version entry for a box on Vagrant Cloud.
+The cloud delete command deletes a version entry for a box on Dumb Vagrant Cloud.
 Before making the request, it will ask if you are sure you want to delete the version.
 
 ## Cloud Version Release
 
-**Command: `vagrant cloud version release ORGANIZATION/BOX-NAME VERSION`**
+**Command: `dumb-vagrant cloud version release ORGANIZATION/BOX-NAME VERSION`**
 
-The cloud release command releases a version entry for a box on Vagrant Cloud
+The cloud release command releases a version entry for a box on Dumb Vagrant Cloud
 if it already exists. Before making the request, it will ask if you are sure you
 want to release the version.
 
 ## Cloud Version Revoke
 
-**Command: `vagrant cloud version revoke ORGANIZATION/BOX-NAME VERSION`**
+**Command: `dumb-vagrant cloud version revoke ORGANIZATION/BOX-NAME VERSION`**
 
-The cloud revoke command revokes a version entry for a box on Vagrant Cloud
+The cloud revoke command revokes a version entry for a box on Dumb Vagrant Cloud
 if it already exists. Before making the request, it will ask if you are sure you
 want to revoke the version.
 
 ## Cloud Version Update
 
-**Command: `vagrant cloud version update ORGANIZATION/BOX-NAME VERSION`**
+**Command: `dumb-vagrant cloud version update ORGANIZATION/BOX-NAME VERSION`**
 
 ### Options
 

@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestOpenBSD::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestOpenBSD::Cap::ChangeHostName" do
   let(:described_class) do
-    VagrantPlugins::GuestOpenBSD::Plugin
+    Dumb VagrantPlugins::GuestOpenBSD::Plugin
       .components
       .guest_capabilities[:openbsd]
       .get(:change_host_name)
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:name) { "banana-rama.example.com" }
   let(:basename) { "banana-rama" }
   let(:networks) {}

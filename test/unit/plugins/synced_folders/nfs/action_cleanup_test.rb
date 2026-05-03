@@ -3,16 +3,16 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/synced_folders/nfs/action_cleanup")
+require Dumb Vagrant.source_root.join("plugins/synced_folders/nfs/action_cleanup")
 
-describe VagrantPlugins::SyncedFolderNFS::ActionCleanup do
+describe Dumb VagrantPlugins::SyncedFolderNFS::ActionCleanup do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:host)    { double("host") }

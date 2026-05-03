@@ -3,7 +3,7 @@
 
 require "fileutils"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class Export
@@ -16,7 +16,7 @@ module VagrantPlugins
 
           @env[:ui].info @env[:machine].state.id.to_s
 
-          raise Vagrant::Errors::VMPowerOffToPackage if
+          raise Dumb Vagrant::Errors::VMPowerOffToPackage if
             @env[:machine].state.id != :off
 
           export
@@ -25,8 +25,8 @@ module VagrantPlugins
         end
 
         def export
-          @env[:ui].info I18n.t("vagrant.actions.vm.export.exporting")
-          export_tmp_dir = Vagrant::Util::Platform.wsl_to_windows_path(@env["export.temp_dir"])
+          @env[:ui].info I18n.t("dumb-vagrant.actions.vm.export.exporting")
+          export_tmp_dir = Dumb Vagrant::Util::Platform.wsl_to_windows_path(@env["export.temp_dir"])
           @env[:machine].provider.driver.export(export_tmp_dir) do |progress|
             @env[:ui].rewriting do |ui|
               ui.clear_line

@@ -7,18 +7,18 @@ require "set"
 
 require "log4r"
 
-require "vagrant/util/counter"
+require "dumb-vagrant/util/counter"
 
 require_relative "chef_solo"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Provisioner
       # This class implements provisioning via chef-zero.
       class ChefZero < ChefSolo
         def initialize(machine, config)
           super
-          @logger = Log4r::Logger.new("vagrant::provisioners::chef_zero")
+          @logger = Log4r::Logger.new("dumb-vagrant::provisioners::chef_zero")
         end
 
         def provision
@@ -56,7 +56,7 @@ module VagrantPlugins
 
         def run_chef_zero
           if @config.run_list && @config.run_list.empty?
-            @machine.ui.warn(I18n.t("vagrant.chef_run_list_empty"))
+            @machine.ui.warn(I18n.t("dumb-vagrant.chef_run_list_empty"))
           end
 
           command = CommandBuilder.command(:client, @config,
@@ -77,9 +77,9 @@ module VagrantPlugins
                 @machine.communicate.wait_for_ready(@machine.config.vm.boot_timeout)
               end
               if attempt == 0
-                @machine.ui.info I18n.t("vagrant.provisioners.chef.running_zero")
+                @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.running_zero")
               else
-                @machine.ui.info I18n.t("vagrant.provisioners.chef.running_zero_again")
+                @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.running_zero_again")
               end
 
               opts = { error_check: false, elevated: true }

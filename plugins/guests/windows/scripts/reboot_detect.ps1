@@ -7,7 +7,7 @@ function ShuttingDown {
 using System;
 using System.Runtime.InteropServices;
 
-namespace Vagrant {
+namespace Dumb Vagrant {
     public static class RemoteManager {
         private const int SM_SHUTTINGDOWN = 0x2000;
 

@@ -3,17 +3,17 @@
 
 require 'optparse'
 
-require Vagrant.source_root.join("plugins/commands/up/start_mixins")
+require Dumb Vagrant.source_root.join("plugins/commands/up/start_mixins")
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandResume
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       # We assume that the `up` plugin exists and that we'll have access
       # to this.
-      include VagrantPlugins::CommandUp::StartMixins
+      include Dumb VagrantPlugins::CommandUp::StartMixins
 
       def self.synopsis
-        "resume a suspended vagrant machine"
+        "resume a suspended dumb-vagrant machine"
       end
 
       def execute
@@ -21,7 +21,7 @@ module VagrantPlugins
         options[:provision_ignore_sentinel] = false
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant resume [vm-name]"
+          o.banner = "Usage: dumb-vagrant resume [vm-name]"
           o.separator ""
           build_start_options(o, options)
         end

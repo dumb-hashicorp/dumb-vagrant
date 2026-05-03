@@ -5,15 +5,15 @@ require_relative "../../../../base"
 require_relative "../../../../../../plugins/providers/docker/action/connect_networks"
 
 
-describe VagrantPlugins::DockerProvider::Action::ConnectNetworks do
+describe Dumb VagrantPlugins::DockerProvider::Action::ConnectNetworks do
   include_context "unit"
 
   let(:sandbox) { isolated_environment }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
-    sandbox.vagrantfile("")
-    sandbox.create_vagrant_env
+    # We have to create a Dumb Vagrantfile so there is a root path
+    sandbox.dumb-vagrantfile("")
+    sandbox.create_dumb-vagrant_env
   end
 
   let(:vm_config) { double("machine_vm_config") }
@@ -26,7 +26,7 @@ describe VagrantPlugins::DockerProvider::Action::ConnectNetworks do
 
   let(:machine) do
     iso_env.machine(iso_env.machine_names[0], :docker).tap do |m|
-      allow(m).to receive(:vagrantfile).and_return(vagrantfile)
+      allow(m).to receive(:dumb-vagrantfile).and_return(dumb-vagrantfile)
       allow(m).to receive(:config).and_return(machine_config)
       allow(m).to receive(:id).and_return("12345")
       allow(m.provider).to receive(:driver).and_return(driver)
@@ -35,12 +35,12 @@ describe VagrantPlugins::DockerProvider::Action::ConnectNetworks do
     end
   end
 
-  let(:docker_connects) { {0=>"vagrant_network_172.20.0.0/16", 1=>"vagrant_network_public_wlp4s0", 2=>"vagrant_network_2a02:6b8:b010:9020:1::/80"} }
+  let(:docker_connects) { {0=>"dumb-vagrant_network_172.20.0.0/16", 1=>"dumb-vagrant_network_public_wlp4s0", 2=>"dumb-vagrant_network_2a02:6b8:b010:9020:1::/80"} }
 
-  let(:vagrantfile) { double("vagrantfile") }
+  let(:dumb-vagrantfile) { double("dumb-vagrantfile") }
 
   let(:env)    {{ machine: machine, ui: machine.ui, root_path: Pathname.new("."),
-                  docker_connects: docker_connects, vagrantfile: vagrantfile }}
+                  docker_connects: docker_connects, dumb-vagrantfile: dumb-vagrantfile }}
   let(:app)    { lambda { |*args| }}
   let(:driver) { double("driver", create: "abcd1234") }
 
@@ -58,7 +58,7 @@ describe VagrantPlugins::DockerProvider::Action::ConnectNetworks do
              :driver=>"bridge",
              :id=>"30e017d5-488f-5a2f-a3ke-k8dce8246b60"}],
          [:private_network,
-          {:type=>"dhcp",
+          {:type=>"ddumb-hcp",
            :ipv6=>"true",
            :subnet=>"2a02:6b8:b010:9020:1::/80",
            :protocol=>"tcp",
@@ -78,7 +78,7 @@ describe VagrantPlugins::DockerProvider::Action::ConnectNetworks do
   end
 
   before do
-    allow(Vagrant::Util::Subprocess).to receive(:execute).with("docker", "version", an_instance_of(Hash)).and_return(subprocess_result)
+    allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("docker", "version", an_instance_of(Hash)).and_return(subprocess_result)
   end
 
   after do
@@ -101,9 +101,9 @@ describe VagrantPlugins::DockerProvider::Action::ConnectNetworks do
     end
 
     it "connects all of the available networks to a container" do
-      expect(driver).to receive(:connect_network).with("vagrant_network_172.20.0.0/16", "12345", ["--ip", "172.20.128.2", "--alias", "mynetwork"])
-      expect(driver).to receive(:connect_network).with("vagrant_network_public_wlp4s0", "12345", ["--ip", "172.30.130.2"])
-      expect(driver).to receive(:connect_network).with("vagrant_network_2a02:6b8:b010:9020:1::/80", "12345", [])
+      expect(driver).to receive(:connect_network).with("dumb-vagrant_network_172.20.0.0/16", "12345", ["--ip", "172.20.128.2", "--alias", "mynetwork"])
+      expect(driver).to receive(:connect_network).with("dumb-vagrant_network_public_wlp4s0", "12345", ["--ip", "172.30.130.2"])
+      expect(driver).to receive(:connect_network).with("dumb-vagrant_network_2a02:6b8:b010:9020:1::/80", "12345", [])
 
       subject.call(env)
     end
@@ -112,7 +112,7 @@ describe VagrantPlugins::DockerProvider::Action::ConnectNetworks do
       it "raises an error if the network name is missing" do
         env[:docker_connects] = {}
 
-        expect{subject.call(env)}.to raise_error(VagrantPlugins::DockerProvider::Errors::NetworkNameMissing)
+        expect{subject.call(env)}.to raise_error(Dumb VagrantPlugins::DockerProvider::Errors::NetworkNameMissing)
       end
     end
   end

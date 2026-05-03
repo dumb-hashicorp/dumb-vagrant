@@ -5,15 +5,15 @@ require_relative "../../../../base"
 require_relative "../../../../../../plugins/providers/docker/action/login"
 
 
-describe VagrantPlugins::DockerProvider::Action::Login do
+describe Dumb VagrantPlugins::DockerProvider::Action::Login do
   include_context "unit"
 
   let(:sandbox) { isolated_environment }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
-    sandbox.vagrantfile("")
-    sandbox.create_vagrant_env
+    # We have to create a Dumb Vagrantfile so there is a root path
+    sandbox.dumb-vagrantfile("")
+    sandbox.create_dumb-vagrant_env
   end
 
   let(:provider_config) { double("provider_config", username: "docker", password: "") }
@@ -31,15 +31,15 @@ describe VagrantPlugins::DockerProvider::Action::Login do
       allow(m).to receive(:id).and_return("12345")
       allow(m).to receive(:config).and_return(machine_config)
       allow(m).to receive(:provider_config).and_return(provider_config)
-      allow(m).to receive(:vagrantfile).and_return(vagrantfile)
+      allow(m).to receive(:dumb-vagrantfile).and_return(dumb-vagrantfile)
       allow(m.provider).to receive(:driver).and_return(driver)
       allow(m.provider).to receive(:host_vm?).and_return(false)
     end
   end
 
-  let(:vagrantfile) { double("vagrantfile") }
+  let(:dumb-vagrantfile) { double("dumb-vagrantfile") }
 
-  let(:env)    {{ machine: machine, ui: machine.ui, root_path: Pathname.new("."), vagrantfile: vagrantfile }}
+  let(:env)    {{ machine: machine, ui: machine.ui, root_path: Pathname.new("."), dumb-vagrantfile: dumb-vagrantfile }}
   let(:app)    { lambda { |*args| }}
   let(:driver) { double("driver", create: "abcd1234") }
 
@@ -55,7 +55,7 @@ describe VagrantPlugins::DockerProvider::Action::Login do
   end
 
   before do
-    allow(Vagrant::Util::Subprocess).to receive(:execute).with("docker", "version", an_instance_of(Hash)).and_return(subprocess_result)
+    allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("docker", "version", an_instance_of(Hash)).and_return(subprocess_result)
   end
 
   after do

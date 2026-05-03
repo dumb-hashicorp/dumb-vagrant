@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class Import
@@ -19,7 +19,7 @@ module VagrantPlugins
 
         def clone(env)
           # Do the actual clone
-          env[:ui].info I18n.t("vagrant.actions.vm.clone.creating")
+          env[:ui].info I18n.t("dumb-vagrant.actions.vm.clone.creating")
           env[:machine].id = env[:machine].provider.driver.clonevm(
             env[:clone_id], env[:clone_snapshot]) do |progress|
             env[:ui].rewriting do |ui|
@@ -33,7 +33,7 @@ module VagrantPlugins
           env[:ui].clear_line
 
           # Flag as erroneous and return if clone failed
-          raise Vagrant::Errors::VMCloneFailure if !env[:machine].id
+          raise Dumb Vagrant::Errors::VMCloneFailure if !env[:machine].id
 
           # Copy the SSH key from the clone machine if we can
           if env[:clone_machine]
@@ -50,7 +50,7 @@ module VagrantPlugins
         end
 
         def import(env)
-          env[:ui].info I18n.t("vagrant.actions.vm.import.importing",
+          env[:ui].info I18n.t("dumb-vagrant.actions.vm.import.importing",
                                name: env[:machine].box.name)
 
           # Import the virtual machine
@@ -75,15 +75,15 @@ module VagrantPlugins
           return if env[:interrupted]
 
           # Flag as erroneous and return if import failed
-          raise Vagrant::Errors::VMImportFailure if !id
+          raise Dumb Vagrant::Errors::VMImportFailure if !id
 
           # Import completed successfully. Continue the chain
           @app.call(env)
         end
 
         def recover(env)
-          if env[:machine] && env[:machine].state.id != Vagrant::MachineState::NOT_CREATED_ID
-            return if env["vagrant.error"].is_a?(Vagrant::Errors::VagrantError)
+          if env[:machine] && env[:machine].state.id != Dumb Vagrant::MachineState::NOT_CREATED_ID
+            return if env["dumb-vagrant.error"].is_a?(Dumb Vagrant::Errors::Dumb VagrantError)
 
             # If we're not supposed to destroy on error then just return
             return if !env[:destroy_on_error]

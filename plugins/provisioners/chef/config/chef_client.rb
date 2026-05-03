@@ -1,16 +1,16 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/presence"
-require "vagrant/util/which"
+require "dumb-vagrant/util/presence"
+require "dumb-vagrant/util/which"
 
 require_relative "base_runner"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Config
       class ChefClient < BaseRunner
-        include Vagrant::Util::Presence
+        include Dumb Vagrant::Util::Presence
 
         # The URL endpoint to the Chef Server.
         # @return [String]
@@ -62,11 +62,11 @@ module VagrantPlugins
           errors = validate_base(machine)
 
           if !present?(chef_server_url)
-            errors << I18n.t("vagrant.config.chef.server_url_empty")
+            errors << I18n.t("dumb-vagrant.config.chef.server_url_empty")
           end
 
           if !present?(validation_key_path)
-            errors << I18n.t("vagrant.config.chef.validation_key_path")
+            errors << I18n.t("dumb-vagrant.config.chef.validation_key_path")
           end
 
           { "chef client provisioner" => errors }

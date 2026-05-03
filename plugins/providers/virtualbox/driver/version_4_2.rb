@@ -3,11 +3,11 @@
 
 require 'log4r'
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
 require File.expand_path("../base", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Driver
       # Driver for VirtualBox 4.2.x
@@ -15,7 +15,7 @@ module VagrantPlugins
         def initialize(uuid)
           super()
 
-          @logger = Log4r::Logger.new("vagrant::provider::virtualbox_4_2")
+          @logger = Log4r::Logger.new("dumb-vagrant::provider::virtualbox_4_2")
           @uuid = uuid
         end
 
@@ -37,12 +37,12 @@ module VagrantPlugins
           end
         end
 
-        def create_dhcp_server(network, options)
-          execute("dhcpserver", "add", "--ifname", network,
-                  "--ip", options[:dhcp_ip],
+        def create_ddumb-hcp_server(network, options)
+          execute("ddumb-hcpserver", "add", "--ifname", network,
+                  "--ip", options[:ddumb-hcp_ip],
                   "--netmask", options[:netmask],
-                  "--lowerip", options[:dhcp_lower],
-                  "--upperip", options[:dhcp_upper],
+                  "--lowerip", options[:ddumb-hcp_lower],
+                  "--upperip", options[:ddumb-hcp_upper],
                   "--enable")
         end
 
@@ -70,7 +70,7 @@ module VagrantPlugins
             name: name,
             ip:   options[:adapter_ip],
             netmask: options[:netmask],
-            dhcp: nil
+            ddumb-hcp: nil
           }
         end
 
@@ -93,7 +93,7 @@ module VagrantPlugins
                     networks.delete($1.to_s)
                   end
                 end
-              rescue Vagrant::Errors::VBoxManageError => e
+              rescue Dumb Vagrant::Errors::VBoxManageError => e
                 raise if !e.extra_data[:stderr].include?("VBOX_E_OBJECT_NOT_FOUND")
 
                 # VirtualBox could not find the vm. It may have been deleted
@@ -103,10 +103,10 @@ module VagrantPlugins
           end
 
           networks.each do |name|
-            # First try to remove any DHCP servers attached. We use `raw` because
-            # it is okay if this fails. It usually means that a DHCP server was
+            # First try to remove any DDUMB_HCP servers attached. We use `raw` because
+            # it is okay if this fails. It usually means that a DDUMB_HCP server was
             # never attached.
-            raw("dhcpserver", "remove", "--ifname", name)
+            raw("ddumb-hcpserver", "remove", "--ifname", name)
 
             # Delete the actual host only network interface.
             execute("hostonlyif", "remove", name)
@@ -180,7 +180,7 @@ module VagrantPlugins
         end
 
         def import(ovf)
-          ovf = Vagrant::Util::Platform.cygwin_windows_path(ovf)
+          ovf = Dumb Vagrant::Util::Platform.cygwin_windows_path(ovf)
 
           output = ""
           total = ""
@@ -204,7 +204,7 @@ module VagrantPlugins
             disk_params << "--unit"
             disk_params << unit_num
             disk_params << "--disk"
-            if Vagrant::Util::Platform.windows?
+            if Dumb Vagrant::Util::Platform.windows?
               # we use the block form of sub here to ensure that if the specified_name happens to end with a number (which is fairly likely) then
               # we won't end up having the character sequence of a \ followed by a number be interpreted as a back reference.  For example, if
               # specified_name were "abc123", then "\\abc123\\".reverse would be "\\321cba\\", and the \3 would be treated as a back reference by the sub
@@ -302,8 +302,8 @@ module VagrantPlugins
           end
         end
 
-        def read_dhcp_servers
-          execute("list", "dhcpservers", retryable: true).split("\n\n").collect do |block|
+        def read_ddumb-hcp_servers
+          execute("list", "ddumb-hcpservers", retryable: true).split("\n\n").collect do |block|
             info = {}
 
             block.split("\n").each do |line|
@@ -349,7 +349,7 @@ module VagrantPlugins
         def read_guest_ip(adapter_number)
           ip = read_guest_property("/VirtualBox/GuestInfo/Net/#{adapter_number}/V4/IP")
           if !valid_ip_address?(ip)
-            raise Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: "/VirtualBox/GuestInfo/Net/#{adapter_number}/V4/IP"
+            raise Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: "/VirtualBox/GuestInfo/Net/#{adapter_number}/V4/IP"
           end
 
           return ip
@@ -360,7 +360,7 @@ module VagrantPlugins
           if output =~ /^Value: (.+?)$/
             $1.to_s
           else
-            raise Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: property
+            raise Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: property
           end
         end
 
@@ -474,7 +474,7 @@ module VagrantPlugins
                 read_forwarded_ports(uuid, true).each do |_, _, hostport, _|
                   ports << hostport
                 end
-              rescue Vagrant::Errors::VBoxManageError => e
+              rescue Dumb Vagrant::Errors::VBoxManageError => e
                 raise if !e.extra_data[:stderr].include?("VBOX_E_OBJECT_NOT_FOUND")
 
                 # VirtualBox could not find the vm. It may have been deleted
@@ -502,8 +502,8 @@ module VagrantPlugins
                   "--ipv6", interface[:ipv6])
         end
 
-        def remove_dhcp_server(network_name)
-          execute("dhcpserver", "remove", "--netname", network_name)
+        def remove_ddumb-hcp_server(network_name)
+          execute("ddumb-hcpserver", "remove", "--netname", network_name)
         end
 
         def set_mac_address(mac)
@@ -559,7 +559,7 @@ module VagrantPlugins
           end
 
           # If we reached this point then it didn't work out.
-          raise Vagrant::Errors::VBoxManageError,
+          raise Dumb Vagrant::Errors::VBoxManageError,
             command: command.inspect,
             stderr: r.stderr
         end
@@ -579,7 +579,7 @@ module VagrantPlugins
             execute(
               "setextradata", @uuid,
               "VBoxInternal2/SharedFoldersEnableSymlinksCreate/#{name}")
-            rescue Vagrant::Errors::VBoxManageError => e
+            rescue Dumb Vagrant::Errors::VBoxManageError => e
               if e.extra_data[:stderr].include?("VBOX_E_FILE_ERROR")
                 # The folder doesn't exist. ignore.
               else
@@ -676,7 +676,7 @@ module VagrantPlugins
           end
 
           result.sort
-        rescue Vagrant::Errors::VBoxManageError => e
+        rescue Dumb Vagrant::Errors::VBoxManageError => e
           d = e.extra_data
           return [] if d[:stderr].include?("does not have") || d[:stdout].include?("does not have")
           raise

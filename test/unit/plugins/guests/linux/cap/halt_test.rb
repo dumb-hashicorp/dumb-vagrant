@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestLinux::Cap::Halt" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::Halt" do
   let(:caps) do
-    VagrantPlugins::GuestLinux::Plugin
+    Dumb VagrantPlugins::GuestLinux::Plugin
       .components
       .guest_capabilities[:linux]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   context "systemd not enabled" do
     before do
@@ -39,7 +39,7 @@ describe "VagrantPlugins::GuestLinux::Cap::Halt" do
       end
 
       it "does not raise a SSHDisconnected" do
-        comm.stub_command("shutdown -h now", raise: Vagrant::Errors::SSHDisconnected)
+        comm.stub_command("shutdown -h now", raise: Dumb Vagrant::Errors::SSHDisconnected)
         expect {
           cap.halt(machine)
         }.to_not raise_error

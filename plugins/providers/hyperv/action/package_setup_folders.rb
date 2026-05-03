@@ -3,12 +3,12 @@
 
 require "fileutils"
 
-require_relative "../../../../lib/vagrant/action/general/package_setup_folders"
+require_relative "../../../../lib/dumb-vagrant/action/general/package_setup_folders"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
-      class PackageSetupFolders < Vagrant::Action::General::PackageSetupFolders
+      class PackageSetupFolders < Dumb Vagrant::Action::General::PackageSetupFolders
         # Doing this so that we can test that the parent is properly
         # called in the unit tests.
         alias_method :general_call, :call

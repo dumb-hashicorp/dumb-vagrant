@@ -3,9 +3,9 @@
 
 require "pathname"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CFEngine
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       attr_accessor :am_policy_hub
       attr_accessor :extra_agent_args
       attr_accessor :classes
@@ -75,7 +75,7 @@ module VagrantPlugins
           @repo_gpg_key_url = "https://cfengine.com/pub/gpg.key"
         end
 
-        @upload_path = "/tmp/vagrant-cfengine-file" if @upload_path == UNSET_VALUE
+        @upload_path = "/tmp/dumb-vagrant-cfengine-file" if @upload_path == UNSET_VALUE
 
         if @yum_repo_file == UNSET_VALUE
           @yum_repo_file = "/etc/yum.repos.d/cfengine-community.repo"
@@ -94,29 +94,29 @@ module VagrantPlugins
         errors = _detected_errors
 
         valid_modes = [:bootstrap, :single_run]
-        errors << I18n.t("vagrant.cfengine_config.invalid_mode") if !valid_modes.include?(@mode)
+        errors << I18n.t("dumb-vagrant.cfengine_config.invalid_mode") if !valid_modes.include?(@mode)
 
         if @mode == :bootstrap
           if !@policy_server_address && !@am_policy_hub
-            errors << I18n.t("vagrant.cfengine_config.policy_server_address")
+            errors << I18n.t("dumb-vagrant.cfengine_config.policy_server_address")
           end
         end
 
         if @classes && !@classes.is_a?(Array)
-          errors << I18n.t("vagrant.cfengine_config.classes_array")
+          errors << I18n.t("dumb-vagrant.cfengine_config.classes_array")
         end
 
         if @files_path
           expanded = Pathname.new(@files_path).expand_path(machine.env.root_path)
           if !expanded.directory?
-            errors << I18n.t("vagrant.cfengine_config.files_path_not_directory")
+            errors << I18n.t("dumb-vagrant.cfengine_config.files_path_not_directory")
           end
         end
 
         if @run_file
           expanded = Pathname.new(@run_file).expand_path(machine.env.root_path)
           if !expanded.file?
-            errors << I18n.t("vagrant.cfengine_config.run_file_not_found")
+            errors << I18n.t("dumb-vagrant.cfengine_config.run_file_not_found")
           end
         end
 

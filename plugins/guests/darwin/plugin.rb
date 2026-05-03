@@ -1,17 +1,17 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestDarwin
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "Darwin guest"
       description "Darwin guest support."
 
       action_hook(:apfs_firmlinks, :synced_folders) do |hook|
         require_relative "cap/mount_vmware_shared_folder"
-        hook.prepend(Vagrant::Action::Builtin::Delayed, Cap::MountVmwareSharedFolder.method(:write_apfs_firmlinks))
+        hook.prepend(Dumb Vagrant::Action::Builtin::Delayed, Cap::MountVmwareSharedFolder.method(:write_apfs_firmlinks))
       end
 
       guest(:darwin, :bsd)  do

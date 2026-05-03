@@ -3,13 +3,13 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class DestroyBuildImage
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::docker::destroybuildimage")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::destroybuildimage")
         end
 
         def call(env)

@@ -7,10 +7,10 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	"github.com/hashicorp/vagrant-plugin-sdk/core"
-	"github.com/hashicorp/vagrant-plugin-sdk/proto/vagrant_plugin_sdk"
-	"github.com/hashicorp/vagrant-plugin-sdk/terminal"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/core"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/proto/dumb-vagrant_plugin_sdk"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/terminal"
 	"google.golang.org/protobuf/types/known/structpb"
 )
 
@@ -53,8 +53,8 @@ func (e *Encouragement) Push(ui terminal.UI, proj core.Project) error {
 // findPushConfig finds the relevant PushConfig for the name given.
 //
 // For now, there are no config related helpers, so each push plugin needs to
-// walk its way down to its relevant config in the Vagrantfile.
-func findPushConfig(proj core.Project, name string) (*vagrant_plugin_sdk.Vagrantfile_PushConfig, error) {
+// walk its way down to its relevant config in the Dumb Vagrantfile.
+func findPushConfig(proj core.Project, name string) (*dumb-vagrant_plugin_sdk.Dumb Vagrantfile_PushConfig, error) {
 	return nil, fmt.Errorf("unimplemented")
 	// v, err := proj.Config()
 	// if err != nil {
@@ -73,7 +73,7 @@ func findPushConfig(proj core.Project, name string) (*vagrant_plugin_sdk.Vagrant
 // For now, there are no config related helpers, so each push plugin needs to
 // unpack from a generic struct into whatever types it might need. For this
 // demo plugin we're just leaving it untyped.
-func unpackConfig(pc *vagrant_plugin_sdk.Vagrantfile_PushConfig) (map[string]interface{}, error) {
+func unpackConfig(pc *dumb-vagrant_plugin_sdk.Dumb Vagrantfile_PushConfig) (map[string]interface{}, error) {
 	gc := pc.GetConfig()
 	s := &structpb.Struct{}
 	err := gc.GetConfig().UnmarshalTo(s)

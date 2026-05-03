@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class IsHostMachineCreated
@@ -17,7 +17,7 @@ module VagrantPlugins
 
           host_machine = env[:machine].provider.host_vm
           env[:result] =
-            host_machine.state.id != Vagrant::MachineState::NOT_CREATED_ID
+            host_machine.state.id != Dumb Vagrant::MachineState::NOT_CREATED_ID
 
           # If the host machine isn't created, neither are we. It is
           # important we set this to nil here so that global-status

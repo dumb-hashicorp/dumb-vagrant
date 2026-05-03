@@ -3,19 +3,19 @@
 
 require 'pathname'
 
-require 'vagrant'
-require 'vagrant/util/presence'
-require 'vagrant/util/subprocess'
+require 'dumb-vagrant'
+require 'dumb-vagrant/util/presence'
+require 'dumb-vagrant/util/subprocess'
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Provisioner
       # This class implements provisioning via chef-client, allowing provisioning
       # with a chef server.
       class ChefClient < Base
-        include Vagrant::Util::Presence
+        include Dumb Vagrant::Util::Presence
 
         def configure(root_config)
           raise ChefError, :server_validation_key_required if @config.validation_key_path.nil?
@@ -47,7 +47,7 @@ module VagrantPlugins
         end
 
         def create_client_key_folder
-          @machine.ui.info I18n.t("vagrant.provisioners.chef.client_key_folder")
+          @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.client_key_folder")
           path = Pathname.new(guest_client_key_path)
 
           if windows?
@@ -58,7 +58,7 @@ module VagrantPlugins
         end
 
         def upload_validation_key
-          @machine.ui.info I18n.t("vagrant.provisioners.chef.upload_validation_key")
+          @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.upload_validation_key")
           @machine.communicate.upload(validation_key_path, guest_validation_key_path)
         end
 
@@ -73,7 +73,7 @@ module VagrantPlugins
 
         def run_chef_client
           if @config.run_list && @config.run_list.empty?
-            @machine.ui.warn(I18n.t("vagrant.chef_run_list_empty"))
+            @machine.ui.warn(I18n.t("dumb-vagrant.chef_run_list_empty"))
           end
 
           command = CommandBuilder.command(:client, @config,
@@ -93,9 +93,9 @@ module VagrantPlugins
                 @machine.communicate.wait_for_ready(@machine.config.vm.boot_timeout)
               end
               if attempt == 0
-                @machine.ui.info I18n.t("vagrant.provisioners.chef.running_client")
+                @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.running_client")
               else
-                @machine.ui.info I18n.t("vagrant.provisioners.chef.running_client_again")
+                @machine.ui.info I18n.t("dumb-vagrant.provisioners.chef.running_client_again")
               end
 
               opts = { error_check: false, elevated: true }
@@ -146,13 +146,13 @@ module VagrantPlugins
           node_name = @config.node_name
 
           if !present?(node_name)
-            @machine.ui.warn(I18n.t("vagrant.provisioners.chef.missing_node_name",
+            @machine.ui.warn(I18n.t("dumb-vagrant.provisioners.chef.missing_node_name",
               deletable: deletable,
             ))
             return
           end
 
-          @machine.ui.info(I18n.t("vagrant.provisioners.chef.deleting_from_server",
+          @machine.ui.info(I18n.t("dumb-vagrant.provisioners.chef.deleting_from_server",
             deletable: deletable, name: node_name))
 
           command =  "knife #{deletable} delete #{node_name}"
@@ -169,7 +169,7 @@ module VagrantPlugins
             @machine.ui.error("")
             @machine.ui.error(output.join("\n"))
             @machine.ui.error("")
-            @machine.ui.error("Vagrant will continue destroying the virtual machine, but you may need")
+            @machine.ui.error("Dumb Vagrant will continue destroying the virtual machine, but you may need")
             @machine.ui.error("to manually delete the #{deletable} from the Chef Server!")
           end
         end

@@ -3,13 +3,13 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class SetName
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::hyperv::set_name")
+          @logger = Log4r::Logger.new("dumb-vagrant::hyperv::set_name")
         end
 
         def call(env)
@@ -28,7 +28,7 @@ module VagrantPlugins
             prefix.gsub!(/[^-a-z0-9_]/i, "")
 
             # milliseconds + random number suffix to allow for simultaneous
-            # `vagrant up` of the same box in different dirs
+            # `dumb-vagrant up` of the same box in different dirs
             name = prefix + "_#{(Time.now.to_f * 1000.0).to_i}_#{rand(100000)}"
           end
 

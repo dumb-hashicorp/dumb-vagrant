@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSmartos::Cap::InsertPublicKey" do
+describe "Dumb VagrantPlugins::GuestSmartos::Cap::InsertPublicKey" do
   let(:caps) do
-    VagrantPlugins::GuestSmartos::Plugin
+    Dumb VagrantPlugins::GuestSmartos::Plugin
         .components
         .guest_capabilities[:smartos]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)

@@ -3,11 +3,11 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::VagrantPlugins::Cap::ConfigureNetworks" do
-  let(:plugin) { VagrantPlugins::GuestSmartos::Plugin.components.guest_capabilities[:smartos].get(:configure_networks) }
+describe "Dumb VagrantPlugins::Dumb VagrantPlugins::Cap::ConfigureNetworks" do
+  let(:plugin) { Dumb VagrantPlugins::GuestSmartos::Plugin.components.guest_capabilities[:smartos].get(:configure_networks) }
   let(:machine) { double("machine") }
-  let(:config) { double("config", smartos: VagrantPlugins::GuestSmartos::Config.new) }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:config) { double("config", smartos: Dumb VagrantPlugins::GuestSmartos::Config.new) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(communicator)
@@ -22,16 +22,16 @@ describe "VagrantPlugins::VagrantPlugins::Cap::ConfigureNetworks" do
     let(:interface) { "eth0" }
     let(:device) { "e1000g#{interface}" }
 
-    describe 'dhcp' do
-      let(:network) { {interface: interface, type: :dhcp} }
+    describe 'ddumb-hcp' do
+      let(:network) { {interface: interface, type: :ddumb-hcp} }
 
       it "plumbs the device" do
         communicator.expect_command(%Q(pfexec /sbin/ifconfig #{device} plumb))
         plugin.configure_networks(machine, [network])
       end
 
-      it "starts dhcp for the device" do
-        communicator.expect_command(%Q(pfexec /sbin/ifconfig #{device} dhcp start))
+      it "starts ddumb-hcp for the device" do
+        communicator.expect_command(%Q(pfexec /sbin/ifconfig #{device} ddumb-hcp start))
         plugin.configure_networks(machine, [network])
       end
     end

@@ -3,17 +3,17 @@
 
 require_relative "../../../base"
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
-require Vagrant.source_root.join("plugins/providers/docker/config")
+require Dumb Vagrant.source_root.join("plugins/providers/docker/config")
 
-describe VagrantPlugins::DockerProvider::Config do
+describe Dumb VagrantPlugins::DockerProvider::Config do
   include_context "unit"
 
   let(:machine) { double("machine") }
 
   let(:build_dir) do
-    Dir.mktmpdir("vagrant-test-docker-provider-build-dir").tap do |dir|
+    Dir.mktmpdir("dumb-vagrant-test-docker-provider-build-dir").tap do |dir|
       File.open(File.join(dir, "Dockerfile"), "wb+") do |f|
         f.write("Hello")
       end
@@ -56,8 +56,8 @@ describe VagrantPlugins::DockerProvider::Config do
     its(:name) { should be_nil }
     its(:privileged) { should be(false) }
     its(:stop_timeout) { should eq(1) }
-    its(:vagrant_machine) { should be_nil }
-    its(:vagrant_vagrantfile) { should be_nil }
+    its(:dumb-vagrant_machine) { should be_nil }
+    its(:dumb-vagrant_dumb-vagrantfile) { should be_nil }
 
     its(:auth_server) { should be_nil }
     its(:email) { should eq("") }
@@ -67,8 +67,8 @@ describe VagrantPlugins::DockerProvider::Config do
 
   before do
     # By default lets be Linux for validations
-    allow(Vagrant::Util::Platform).to receive(:linux).and_return(true)
-    allow(Vagrant::Util::Platform).to receive(:linux?).and_return(true)
+    allow(Dumb Vagrant::Util::Platform).to receive(:linux).and_return(true)
+    allow(Dumb Vagrant::Util::Platform).to receive(:linux?).and_return(true)
   end
 
   describe "should be invalid if any two or more of build dir, git repo and image are set" do
@@ -367,28 +367,28 @@ describe VagrantPlugins::DockerProvider::Config do
     end
   end
 
-  describe "#vagrant_machine" do
+  describe "#dumb-vagrant_machine" do
     before { valid_defaults }
 
     it "should convert to a symbol" do
-      subject.vagrant_machine = "foo"
+      subject.dumb-vagrant_machine = "foo"
       subject.finalize!
       assert_valid
-      expect(subject.vagrant_machine).to eq(:foo)
+      expect(subject.dumb-vagrant_machine).to eq(:foo)
     end
   end
 
-  describe "#vagrant_vagrantfile" do
+  describe "#dumb-vagrant_dumb-vagrantfile" do
     before { valid_defaults }
 
     it "should be valid if set to a file" do
-      subject.vagrant_vagrantfile = temporary_file.to_s
+      subject.dumb-vagrant_dumb-vagrantfile = temporary_file.to_s
       subject.finalize!
       assert_valid
     end
 
     it "should not be valid if set to a non-existent place" do
-      subject.vagrant_vagrantfile = "/i/shouldnt/exist"
+      subject.dumb-vagrant_dumb-vagrantfile = "/i/shouldnt/exist"
       subject.finalize!
       assert_invalid
     end

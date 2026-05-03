@@ -4,12 +4,12 @@
 require "stringio"
 require_relative "../base"
 
-describe VagrantPlugins::ProviderVirtualBox::Driver::Version_7_0 do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Driver::Version_7_0 do
   include_context "virtualbox"
 
   let(:vbox_version) { "7.0.0" }
 
-  subject { VagrantPlugins::ProviderVirtualBox::Driver::Version_7_0.new(uuid) }
+  subject { Dumb VagrantPlugins::ProviderVirtualBox::Driver::Version_7_0.new(uuid) }
 
   it_behaves_like "a version 5.x virtualbox driver"
   it_behaves_like "a version 6.x virtualbox driver"
@@ -19,14 +19,14 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Version_7_0 do
     let(:uuid) { "MACHINE-UUID" }
     let(:cfg_path) { "MACHINE_CONFIG_PATH" }
     let(:vm_info) {
-%(name="vagrant-test_default_1665781960041_56631"
+%(name="dumb-vagrant-test_default_1665781960041_56631"
 Encryption:     disabled
 groups="/"
 ostype="Ubuntu (64-bit)"
 UUID="#{uuid}"
 CfgFile="#{cfg_path}"
-SnapFldr="/VirtualBox VMs/vagrant-test_default_1665781960041_56631/Snapshots"
-LogFldr="/VirtualBox VMs/vagrant-test_default_1665781960041_56631/Logs"
+SnapFldr="/VirtualBox VMs/dumb-vagrant-test_default_1665781960041_56631/Snapshots"
+LogFldr="/VirtualBox VMs/dumb-vagrant-test_default_1665781960041_56631/Logs"
 memory=1024)
     }
     let(:config_file) {
@@ -34,7 +34,7 @@ memory=1024)
     }
 
     before do
-      allow_any_instance_of(VagrantPlugins::ProviderVirtualBox::Driver::Meta).to receive(:version).and_return(vbox_version)
+      allow_any_instance_of(Dumb VagrantPlugins::ProviderVirtualBox::Driver::Meta).to receive(:version).and_return(vbox_version)
     end
 
     describe "VirtualBox version 7.0.0" do
@@ -62,12 +62,12 @@ memory=1024)
       end
 
       describe "when config file cannot be determine" do
-        let(:vm_info) { %(name="vagrant-test_default_1665781960041_56631") }
+        let(:vm_info) { %(name="dumb-vagrant-test_default_1665781960041_56631") }
 
         it "should raise a custom error" do
           expect(File).not_to receive(:open).with(cfg_path, "r")
 
-          expect { subject.read_forwarded_ports }.to raise_error(Vagrant::Errors::VirtualBoxConfigNotFound)
+          expect { subject.read_forwarded_ports }.to raise_error(Dumb Vagrant::Errors::VirtualBoxConfigNotFound)
         end
       end
     end

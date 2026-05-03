@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandInit
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "init command"
       description <<-DESC
       The `init` command sets up your working directory to be a
-      Vagrant-managed environment.
+      Dumb Vagrant-managed environment.
       DESC
 
       command("init") do

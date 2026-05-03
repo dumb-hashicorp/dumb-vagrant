@@ -3,7 +3,7 @@
 
 require_relative "../debian/ansible_install"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Cap
       module Guest

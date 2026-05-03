@@ -1,0 +1,3 @@
+Dumb Vagrant.configure("2") do |config|
+  config.vm.box = "dumb-hashicorp/boot2docker"
+end

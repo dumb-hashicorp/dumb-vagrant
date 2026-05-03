@@ -2,16 +2,16 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "fileutils"
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
-    class SyncedFolder < Vagrant.plugin("2", :synced_folder)
+    class SyncedFolder < Dumb Vagrant.plugin("2", :synced_folder)
       def usable?(machine, raise_errors=false)
         # These synced folders only work if the provider if VirtualBox
         return false if machine.provider_name != :virtualbox
 
-        # This only happens with `vagrant package --base`. Sigh.
+        # This only happens with `dumb-vagrant package --base`. Sigh.
         return true if !machine.provider_config
 
         machine.provider_config.functional_vboxsf
@@ -35,12 +35,12 @@ module VagrantPlugins
         end
 
         # Go through each folder and mount
-        machine.ui.output(I18n.t("vagrant.actions.vm.share_folders.mounting"))
+        machine.ui.output(I18n.t("dumb-vagrant.actions.vm.share_folders.mounting"))
         fstab_folders = []
         folders.each do |id, data|
           if data[:guestpath]
             # Guest path specified, so mount the folder to specified point
-            machine.ui.detail(I18n.t("vagrant.actions.vm.share_folders.mounting_entry",
+            machine.ui.detail(I18n.t("dumb-vagrant.actions.vm.share_folders.mounting_entry",
                                   guestpath: data[:guestpath],
                                   hostpath: data[:hostpath]))
 
@@ -58,7 +58,7 @@ module VagrantPlugins
               os_friendly_id(id), data[:guestpath], data)
           else
             # If no guest path is specified, then automounting is disabled
-            machine.ui.detail(I18n.t("vagrant.actions.vm.share_folders.nomount_entry",
+            machine.ui.detail(I18n.t("dumb-vagrant.actions.vm.share_folders.nomount_entry",
                                   hostpath: data[:hostpath]))
           end
         end
@@ -107,12 +107,12 @@ module VagrantPlugins
         folders.each do |id, data|
           hostpath = data[:hostpath]
           if !data[:hostpath_exact]
-            hostpath = Vagrant::Util::Platform.cygwin_windows_path(hostpath)
+            hostpath = Dumb Vagrant::Util::Platform.cygwin_windows_path(hostpath)
           end
 
           enable_symlink_create = true
 
-          if ENV['VAGRANT_DISABLE_VBOXSYMLINKCREATE']
+          if ENV['DUMB_VAGRANT_DISABLE_VBOXSYMLINKCREATE']
             enable_symlink_create = false
           end
 
@@ -145,7 +145,7 @@ module VagrantPlugins
         d_file = env.data_dir.join("vbox_symlink_create_warning")
         if !d_file.exist?
           FileUtils.touch(d_file.to_path)
-          env.ui.warn(I18n.t("vagrant.virtualbox.warning.shared_folder_symlink_create"))
+          env.ui.warn(I18n.t("dumb-vagrant.virtualbox.warning.shared_folder_symlink_create"))
         end
       end
     end

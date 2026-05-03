@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSolaris::Cap::Halt" do
+describe "Dumb VagrantPlugins::GuestSolaris::Cap::Halt" do
   let(:caps) do
-    VagrantPlugins::GuestSolaris::Plugin
+    Dumb VagrantPlugins::GuestSolaris::Plugin
       .components
       .guest_capabilities[:solaris]
   end
 
   let(:shutdown_command){ "sudo /usr/sbin/shutdown -y -i5 -g0" }
   let(:machine) { double("machine", config: double("config", solaris: double("solaris", suexec_cmd: 'sudo'))) }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -37,8 +37,8 @@ describe "VagrantPlugins::GuestSolaris::Cap::Halt" do
       }.to_not raise_error
     end
 
-    it "ignores a Vagrant::Errors::SSHDisconnected" do
-      comm.stub_command(shutdown_command, raise: Vagrant::Errors::SSHDisconnected)
+    it "ignores a Dumb Vagrant::Errors::SSHDisconnected" do
+      comm.stub_command(shutdown_command, raise: Dumb Vagrant::Errors::SSHDisconnected)
       expect {
         cap.halt(machine)
       }.to_not raise_error

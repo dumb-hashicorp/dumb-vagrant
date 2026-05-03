@@ -3,9 +3,9 @@
 
 require 'pathname'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostVoid
-    class Host < Vagrant.plugin("2", :host)
+    class Host < Dumb Vagrant.plugin("2", :host)
       def detect?(env)
         os_file = Pathname.new("/etc/os-release")
 

@@ -4,7 +4,7 @@
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/hosts/bsd/cap/path"
 
-describe VagrantPlugins::HostBSD::Cap::Path do
+describe Dumb VagrantPlugins::HostBSD::Cap::Path do
   describe ".resolve_host_path" do
     let(:env) { double("environment") }
     let(:path) { double("path") }

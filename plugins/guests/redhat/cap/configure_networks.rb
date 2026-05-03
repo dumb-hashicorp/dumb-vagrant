@@ -4,18 +4,18 @@
 require "tempfile"
 require "securerandom"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestRedHat
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
-        extend Vagrant::Util::GuestInspection::Linux
-        extend Vagrant::Util::GuestNetworks::Linux
+        include Dumb Vagrant::Util
+        extend Dumb Vagrant::Util::GuestInspection::Linux
+        extend Dumb Vagrant::Util::GuestNetworks::Linux
 
         def self.configure_networks(machine, networks)
-          @logger = Log4r::Logger.new("vagrant::guest::redhat::configurenetworks")
+          @logger = Log4r::Logger.new("dumb-vagrant::guest::redhat::configurenetworks")
 
           # Start with the scripts directory to determine how to configure
           network_scripts_dir = machine.guest.capability(:network_scripts_dir)
@@ -68,7 +68,7 @@ module VagrantPlugins
                                       end
 
             if extra_opts[:nm_controlled] == "yes" && !nmcli_installed
-              raise Vagrant::Errors::NetworkManagerNotInstalled, device: network[:device]
+              raise Dumb Vagrant::Errors::NetworkManagerNotInstalled, device: network[:device]
             end
 
             # Render a new configuration
@@ -77,8 +77,8 @@ module VagrantPlugins
             )
 
             # Upload the new configuration
-            remote_path = "/tmp/vagrant-network-entry-#{network[:device]}-#{Time.now.to_i}-#{i}"
-            Tempfile.open("vagrant-redhat-configure-networks") do |f|
+            remote_path = "/tmp/dumb-vagrant-network-entry-#{network[:device]}-#{Time.now.to_i}-#{i}"
+            Tempfile.open("dumb-vagrant-redhat-configure-networks") do |f|
               f.binmode
               f.write(entry)
               f.fsync

@@ -5,10 +5,10 @@ require 'optparse'
 
 require_relative 'download_mixins'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandBox
     module Command
-      class Outdated < Vagrant.plugin("2", :command)
+      class Outdated < Dumb Vagrant.plugin("2", :command)
         include DownloadMixins
 
         def execute
@@ -16,7 +16,7 @@ module VagrantPlugins
           download_options = {}
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant box outdated [options]"
+            o.banner = "Usage: dumb-vagrant box outdated [options]"
             o.separator ""
             o.separator "Checks if there is a new version available for the box"
             o.separator "that you are using. If you pass in the --global flag,"
@@ -46,7 +46,7 @@ module VagrantPlugins
           end
 
           with_target_vms(argv) do |machine|
-            @env.action_runner.run(Vagrant::Action.action_box_outdated, {
+            @env.action_runner.run(Dumb Vagrant::Action.action_box_outdated, {
               box_outdated_force: options[:force],
               box_outdated_refresh: true,
               box_outdated_success_ui: true,
@@ -61,7 +61,7 @@ module VagrantPlugins
             box = @env.boxes.find(name, provider, version)
             if !box&.metadata_url
               @env.ui.output(I18n.t(
-                "vagrant.box_outdated_no_metadata",
+                "dumb-vagrant.box_outdated_no_metadata",
                 name: name,
                 provider: provider))
               next
@@ -70,9 +70,9 @@ module VagrantPlugins
             md = nil
             begin
               md = box.load_metadata(download_options)
-            rescue Vagrant::Errors::BoxMetadataDownloadError => e
+            rescue Dumb Vagrant::Errors::BoxMetadataDownloadError => e
               @env.ui.error(I18n.t(
-                "vagrant.box_outdated_metadata_error",
+                "dumb-vagrant.box_outdated_metadata_error",
                 name: box.name,
                 provider: box.provider,
                 message: e.extra_data[:message]))
@@ -89,13 +89,13 @@ module VagrantPlugins
 
             if !md.compatible_version_update?(box.version, latest_box_version, provider: box.provider, architecture: box.architecture)
               @env.ui.success(I18n.t(
-                "vagrant.box_up_to_date",
+                "dumb-vagrant.box_up_to_date",
                 name: box.name,
                 provider: box.provider,
                 version: box.version))
             else
               @env.ui.warn(I18n.t(
-                "vagrant.box_outdated",
+                "dumb-vagrant.box_outdated",
                 name: box.name,
                 provider: box.provider,
                 current: box.version,

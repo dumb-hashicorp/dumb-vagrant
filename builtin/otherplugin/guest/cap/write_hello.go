@@ -6,7 +6,7 @@ package cap
 import (
 	"io/ioutil"
 
-	plugincore "github.com/hashicorp/vagrant-plugin-sdk/core"
+	plugincore "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/core"
 )
 
 func WriteHello(machine plugincore.Machine) (err error) {

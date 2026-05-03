@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/communicators/winrm/shell")
-require Vagrant.source_root.join("plugins/communicators/winrm/config")
+require Dumb Vagrant.source_root.join("plugins/communicators/winrm/shell")
+require Dumb Vagrant.source_root.join("plugins/communicators/winrm/config")
 
-describe VagrantPlugins::CommunicatorWinRM::WinRMShell do
+describe Dumb VagrantPlugins::CommunicatorWinRM::WinRMShell do
   include_context "unit"
 
   let(:connection) { double("winrm_connection") }
   let(:shell) { double("winrm_shell") }
   let(:port) { config.transport == :ssl ? 5986 : 5985 }
   let(:config)  {
-    VagrantPlugins::CommunicatorWinRM::Config.new.tap do |c|
+    Dumb VagrantPlugins::CommunicatorWinRM::Config.new.tap do |c|
       c.username = 'username'
       c.password = 'password'
       c.max_tries = 3
@@ -98,7 +98,7 @@ describe VagrantPlugins::CommunicatorWinRM::WinRMShell do
       expect(shell).to receive(:run).with("dir").and_raise(
         StandardError.new("Oh no! a 500 SOAP error!"))
       expect { subject.powershell("dir") }.to raise_error(
-        VagrantPlugins::CommunicatorWinRM::Errors::ExecutionError)
+        Dumb VagrantPlugins::CommunicatorWinRM::Errors::ExecutionError)
     end
   end
 
@@ -133,7 +133,7 @@ describe VagrantPlugins::CommunicatorWinRM::WinRMShell do
       expect(shell).to receive(:run).with("dir").and_raise(
         StandardError.new("Oh no! a 500 SOAP error!"))
       expect { subject.powershell("dir") }.to raise_error(
-        VagrantPlugins::CommunicatorWinRM::Errors::ExecutionError)
+        Dumb VagrantPlugins::CommunicatorWinRM::Errors::ExecutionError)
     end
 
     it "should use elevated username and retry on username failure" do
@@ -161,7 +161,7 @@ describe VagrantPlugins::CommunicatorWinRM::WinRMShell do
 
     context "when codepage is given" do
       let(:config)  {
-        VagrantPlugins::CommunicatorWinRM::Config.new.tap do |c|
+        Dumb VagrantPlugins::CommunicatorWinRM::Config.new.tap do |c|
           c.codepage = 800
           c.finalize!
         end
@@ -177,7 +177,7 @@ describe VagrantPlugins::CommunicatorWinRM::WinRMShell do
     it "should catch timeout errors" do
       expect(connection).to receive(:shell).with(:cmd, { })
       expect(shell).to receive(:run).with("hostname").and_raise(IO::TimeoutError)
-      expect { subject.cmd("hostname") }.to raise_error(VagrantPlugins::CommunicatorWinRM::Errors::ConnectionTimeout)
+      expect { subject.cmd("hostname") }.to raise_error(Dumb VagrantPlugins::CommunicatorWinRM::Errors::ConnectionTimeout)
     end
   end
 
@@ -195,14 +195,14 @@ describe VagrantPlugins::CommunicatorWinRM::WinRMShell do
         WinRM::WinRMAuthorizationError.new("Oh no!! Unauthorized")
       )
       expect { subject.wql("select * from Win32_OperatingSystem") }.to raise_error(
-        VagrantPlugins::CommunicatorWinRM::Errors::AuthenticationFailed)
+        Dumb VagrantPlugins::CommunicatorWinRM::Errors::AuthenticationFailed)
     end
   end
 
   describe ".endpoint" do
     context 'when transport is :ssl' do
       let(:config)  {
-        VagrantPlugins::CommunicatorWinRM::Config.new.tap do |c|
+        Dumb VagrantPlugins::CommunicatorWinRM::Config.new.tap do |c|
           c.transport = :ssl
           c.finalize!
         end
@@ -220,7 +220,7 @@ describe VagrantPlugins::CommunicatorWinRM::WinRMShell do
 
     context "when transport is :plaintext" do
       let(:config)  {
-        VagrantPlugins::CommunicatorWinRM::Config.new.tap do |c|
+        Dumb VagrantPlugins::CommunicatorWinRM::Config.new.tap do |c|
           c.transport = :plaintext
           c.finalize!
         end

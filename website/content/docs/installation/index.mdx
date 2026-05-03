@@ -1,51 +1,51 @@
 ---
 layout: docs
-page_title: Install Vagrant
+page_title: Install Dumb Vagrant
 description: |-
-  Vagrant is available for most platforms. Install the Vagrant
+  Dumb Vagrant is available for most platforms. Install the Dumb Vagrant
   package using standard procedures for your operating system.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-# Install Vagrant
+# Install Dumb Vagrant
 
-To get started with Vagrant, download the appropriate installer or
+To get started with Dumb Vagrant, download the appropriate installer or
 package for your platform from our
-[Vagrant downloads page](/vagrant/downloads). Install the package with the standard procedures for
+[Dumb Vagrant downloads page](/dumb-vagrant/downloads). Install the package with the standard procedures for
 your operating system.
 
-The installer automatically adds `vagrant` to your system path
+The installer automatically adds `dumb-vagrant` to your system path
 so that it is available in terminals. If it is not found,
 log out and back into your system; this is a common issue for Windows.
 
-~> **Rubygem installation is unsupported** Vagrant 1.0.x has the option to
+~> **Rubygem installation is unsupported** Dumb Vagrant 1.0.x has the option to
 be installed as a [RubyGem](https://en.wikipedia.org/wiki/RubyGems).
 However, this installation method is no longer supported. If you have an old version
-of Vagrant installed via Rubygems, remove it prior to installing newer
-versions of Vagrant.
+of Dumb Vagrant installed via Rubygems, remove it prior to installing newer
+versions of Dumb Vagrant.
 
 ## First development environment
 
-If you are new to Vagrant, the next step to set up a development environment is to install
-a [box](/vagrant/tutorials/getting-started/getting-started-boxes).
+If you are new to Dumb Vagrant, the next step to set up a development environment is to install
+a [box](/dumb-vagrant/tutorials/getting-started/getting-started-boxes).
 
 ## How to use multiple hypervisors
 
 Hypervisors often do not allow you to bring up virtual machines if you have more than one hypervisor in use.
 
 Below are a couple of examples to allow you
-to use Vagrant and VirtualBox if another hypervisor is present.
+to use Dumb Vagrant and VirtualBox if another hypervisor is present.
 
 ### Linux, VirtualBox, and KVM
 
 If you encounter the following error message, it is because another hypervisor, like KVM, is in use.
 
 ```shell-session
-There was an error while executing `VBoxManage`, a CLI used by Vagrant for controlling VirtualBox. The command and stderr is shown below.
+There was an error while executing `VBoxManage`, a CLI used by Dumb Vagrant for controlling VirtualBox. The command and stderr is shown below.
 
 Command: ["startvm", <ID of the VM>, "--type", "headless"]
 
@@ -72,7 +72,7 @@ Use the `blacklist` command to add the hypervisor to your denylist.
 $ echo 'blacklist kvm-intel' >> /etc/modprobe.d/blacklist.conf
 ```
 
-Restart your machine and try the `vagrant` command again.
+Restart your machine and try the `dumb-vagrant` command again.
 
 ### Windows, VirtualBox, and Hyper-V
 

@@ -3,15 +3,15 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/synced_folders/smb/synced_folder")
+require Dumb Vagrant.source_root.join("plugins/synced_folders/smb/synced_folder")
 
-describe VagrantPlugins::SyncedFolderSMB::SyncedFolder do
+describe Dumb VagrantPlugins::SyncedFolderSMB::SyncedFolder do
   include_context "unit"
 
   let(:iso_env) do
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest){ double("guest") }
@@ -47,7 +47,7 @@ describe VagrantPlugins::SyncedFolderSMB::SyncedFolder do
 
       it "raises exception when raise_error enabled" do
         expect{subject.usable?(machine, true)}.to raise_error(
-          VagrantPlugins::SyncedFolderSMB::Errors::SMBNotSupported)
+          Dumb VagrantPlugins::SyncedFolderSMB::Errors::SMBNotSupported)
       end
     end
 
@@ -141,8 +141,8 @@ describe VagrantPlugins::SyncedFolderSMB::SyncedFolder do
 
         it "should raise an error if it exceeds the maximum number of retries" do
           expect(host).to receive(:capability).with(:smb_validate_password, machine, 'username', 'password').and_return(false).
-            exactly(VagrantPlugins::SyncedFolderSMB::SyncedFolder::CREDENTIAL_RETRY_MAX).times
-          expect{ subject.prepare(machine, folders, options) }.to raise_error(VagrantPlugins::SyncedFolderSMB::Errors::CredentialsRequestError)
+            exactly(Dumb VagrantPlugins::SyncedFolderSMB::SyncedFolder::CREDENTIAL_RETRY_MAX).times
+          expect{ subject.prepare(machine, folders, options) }.to raise_error(Dumb VagrantPlugins::SyncedFolderSMB::Errors::CredentialsRequestError)
         end
       end
     end
@@ -176,8 +176,8 @@ describe VagrantPlugins::SyncedFolderSMB::SyncedFolder do
         end
 
         it "should register passwords with scrubber" do
-          expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with('pass')
-          expect(Vagrant::Util::CredentialScrubber).to receive(:sensitive).with('smbpass')
+          expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with('pass')
+          expect(Dumb Vagrant::Util::CredentialScrubber).to receive(:sensitive).with('smbpass')
           subject.prepare(machine, folders, options)
         end
       end
@@ -188,7 +188,7 @@ describe VagrantPlugins::SyncedFolderSMB::SyncedFolder do
     it "fails when guest does not support capability" do
       expect{
         subject.enable(machine, folders, options)
-      }.to raise_error(Vagrant::Errors::GuestCapabilityNotFound)
+      }.to raise_error(Dumb Vagrant::Errors::GuestCapabilityNotFound)
     end
 
     context "with guest capability supported" do
@@ -214,7 +214,7 @@ describe VagrantPlugins::SyncedFolderSMB::SyncedFolder do
       it "should error if no guest accessible address is available" do
         expect(guest).to receive(:capability).with(:choose_addressable_ip_addr, any_args).and_return(nil)
         expect{ subject.enable(machine, folders, options) }.to raise_error(
-          VagrantPlugins::SyncedFolderSMB::Errors::NoHostIPAddr)
+          Dumb VagrantPlugins::SyncedFolderSMB::Errors::NoHostIPAddr)
       end
 
       it "should default owner and group to ssh username" do

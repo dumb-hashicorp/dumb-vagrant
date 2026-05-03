@@ -4,16 +4,16 @@
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/providers/docker/action/host_machine_sync_folders"
 
-describe VagrantPlugins::DockerProvider::Action::HostMachineSyncFolders do
+describe Dumb VagrantPlugins::DockerProvider::Action::HostMachineSyncFolders do
   include_context "unit"
   include_context "virtualbox"
 
   let(:sandbox) { isolated_environment }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
-    sandbox.vagrantfile("")
-    sandbox.create_vagrant_env
+    # We have to create a Dumb Vagrantfile so there is a root path
+    sandbox.dumb-vagrantfile("")
+    sandbox.create_dumb-vagrant_env
   end
 
   let(:machine) do
@@ -66,7 +66,7 @@ describe VagrantPlugins::DockerProvider::Action::HostMachineSyncFolders do
       expect(machine).to receive(:action).with(:sync_folders, {:synced_folders_config => anything})
       expect(env[:machine].config.vm).to receive(:synced_folder).
         with("/var/lib/docker/docker_4e9414d72abee585b3d6263e50248e37",
-             "/vagrant", anything)
+             "/dumb-vagrant", anything)
       subject.send(:setup_synced_folders, machine, env)
     end
   end

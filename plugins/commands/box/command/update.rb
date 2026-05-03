@@ -5,10 +5,10 @@ require 'optparse'
 
 require_relative 'download_mixins'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandBox
     module Command
-      class Update < Vagrant.plugin("2", :command)
+      class Update < Dumb Vagrant.plugin("2", :command)
         include DownloadMixins
 
         def execute
@@ -16,13 +16,13 @@ module VagrantPlugins
           download_options = {}
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant box update [options]"
+            o.banner = "Usage: dumb-vagrant box update [options]"
             o.separator ""
-            o.separator "Updates the box that is in use in the current Vagrant environment,"
+            o.separator "Updates the box that is in use in the current Dumb Vagrant environment,"
             o.separator "if there any updates available. This does not destroy/recreate the"
             o.separator "machine, so you'll have to do that to see changes."
             o.separator ""
-            o.separator "To update a specific box (not tied to a Vagrant environment), use the"
+            o.separator "To update a specific box (not tied to a Dumb Vagrant environment), use the"
             o.separator "--box flag."
             o.separator ""
             o.separator "Options:"
@@ -60,28 +60,28 @@ module VagrantPlugins
         end
 
         def update_specific(name, provider, architecture, download_options, force)
-          box_info = Vagrant::Util::HashWithIndifferentAccess.new
+          box_info = Dumb Vagrant::Util::HashWithIndifferentAccess.new
           @env.boxes.all.each do |box_name, box_version, box_provider, box_architecture|
             next if name != box_name
-            box_info[box_provider] ||= Vagrant::Util::HashWithIndifferentAccess.new
+            box_info[box_provider] ||= Dumb Vagrant::Util::HashWithIndifferentAccess.new
             box_info[box_provider][box_version] ||= []
             box_info[box_provider][box_version].push(box_architecture.to_s).uniq!
           end
 
           if box_info.empty?
-            raise Vagrant::Errors::BoxNotFound, name: name.to_s
+            raise Dumb Vagrant::Errors::BoxNotFound, name: name.to_s
           end
 
           if !provider
             if box_info.size > 1
-              raise Vagrant::Errors::BoxUpdateMultiProvider,
+              raise Dumb Vagrant::Errors::BoxUpdateMultiProvider,
                 name: name.to_s,
                 providers: box_info.keys.map(&:to_s).sort.join(", ")
             end
 
             provider = box_info.keys.first
           elsif !box_info[provider]
-            raise Vagrant::Errors::BoxNotFoundWithProvider,
+            raise Dumb Vagrant::Errors::BoxNotFoundWithProvider,
               name: name.to_s,
               provider: provider.to_s,
               providers: box_info.keys.map(&:to_s).sort.join(", ")
@@ -92,7 +92,7 @@ module VagrantPlugins
 
           if !architecture
             if architecture_list.size > 1
-              raise Vagrant::Errors::BoxUpdateMultiArchitecture,
+              raise Dumb Vagrant::Errors::BoxUpdateMultiArchitecture,
                 name: name.to_s,
                 provider: provider.to_s,
                 version: version.to_s,
@@ -101,7 +101,7 @@ module VagrantPlugins
 
             architecture = architecture_list.first
           elsif !architecture_list.include?(architecture)
-            raise Vagrant::Errors::BoxNotFoundWithProviderArchitecture,
+            raise Dumb Vagrant::Errors::BoxNotFoundWithProviderArchitecture,
               name: name.to_s,
               provider: provider.to_s,
               version: version.to_s,
@@ -123,16 +123,16 @@ module VagrantPlugins
           with_target_vms(argv, provider: provider) do |machine|
             if !machine.config.vm.box
               machine.ui.output(I18n.t(
-                "vagrant.errors.box_update_no_name"))
+                "dumb-vagrant.errors.box_update_no_name"))
               next
             end
 
             if !machine.box
-              collection = Vagrant::BoxCollection.new(@env.boxes_path)
+              collection = Dumb Vagrant::BoxCollection.new(@env.boxes_path)
               machine.box = collection.find(machine.config.vm.box, provider || machine.provider_name || @env.default_provider, "> 0")
               if !machine.box
                 machine.ui.output(I18n.t(
-                  "vagrant.errors.box_update_no_box",
+                  "dumb-vagrant.errors.box_update_no_box",
                   name: machine.config.vm.box))
                 next
               end
@@ -159,7 +159,7 @@ module VagrantPlugins
 
             begin
               box_update(box, version, machine.ui, download_options, force)
-            rescue Vagrant::Errors::BoxUpdateNoMetadata => e
+            rescue Dumb Vagrant::Errors::BoxUpdateNoMetadata => e
               machine.ui.warn(e)
               next
             end
@@ -167,7 +167,7 @@ module VagrantPlugins
         end
 
         def box_update(box, version, ui, download_options, force)
-          ui.output(I18n.t("vagrant.box_update_checking", name: box.name))
+          ui.output(I18n.t("dumb-vagrant.box_update_checking", name: box.name))
           ui.detail("Latest installed version: #{box.version}")
           ui.detail("Version constraints: #{version}")
           ui.detail("Provider: #{box.provider}")
@@ -176,18 +176,18 @@ module VagrantPlugins
           update = box.has_update?(version, download_options: download_options)
           if !update
             ui.success(I18n.t(
-              "vagrant.box_up_to_date_single",
+              "dumb-vagrant.box_up_to_date_single",
               name: box.name, version: box.version))
             return
           end
 
           ui.output(I18n.t(
-            "vagrant.box_updating",
+            "dumb-vagrant.box_updating",
             name: update[0].name,
             provider: update[2].name,
             old: box.version,
             new: update[1].version))
-          @env.action_runner.run(Vagrant::Action.action_box_add, {
+          @env.action_runner.run(Dumb Vagrant::Action.action_box_add, {
             box_url: box.metadata_url,
             box_provider: update[2].name,
             box_version: update[1].version,

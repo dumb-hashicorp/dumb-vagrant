@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestFreeBSD::Cap::ConfigureNetworks" do
+describe "Dumb VagrantPlugins::GuestFreeBSD::Cap::ConfigureNetworks" do
   let(:described_class) do
-    VagrantPlugins::GuestFreeBSD::Plugin
+    Dumb VagrantPlugins::GuestFreeBSD::Plugin
       .components
       .guest_capabilities[:freebsd]
       .get(:configure_networks)
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -27,7 +27,7 @@ describe "VagrantPlugins::GuestFreeBSD::Cap::ConfigureNetworks" do
     let(:network_1) do
       {
         interface: 0,
-        type: "dhcp",
+        type: "ddumb-hcp",
       }
     end
 
@@ -43,10 +43,10 @@ describe "VagrantPlugins::GuestFreeBSD::Cap::ConfigureNetworks" do
 
     it "creates and starts the networks" do
       described_class.configure_networks(machine, [network_1, network_2])
-      expect(comm.received_commands[1]).to match(/dhclient 'em1'/)
+      expect(comm.received_commands[1]).to match(/ddumb-hclient 'em1'/)
       expect(comm.received_commands[1]).to match(/\/etc\/rc.d\/netif restart 'em1'/)
 
-      expect(comm.received_commands[1]).to_not match(/dhclient 'em2'/)
+      expect(comm.received_commands[1]).to_not match(/ddumb-hclient 'em2'/)
       expect(comm.received_commands[1]).to match(/\/etc\/rc.d\/netif restart 'em2'/)
     end
   end

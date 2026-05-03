@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/action/export")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/action/export")
 
-describe VagrantPlugins::HyperV::Action::Export do
+describe Dumb VagrantPlugins::HyperV::Action::Export do
   let(:app){ double("app") }
   let(:env){ {ui: ui, machine: machine} }
-  let(:ui){ Vagrant::UI::Silent.new }
+  let(:ui){ Dumb Vagrant::UI::Silent.new }
   let(:provider){ double("provider", driver: driver) }
   let(:driver){ double("driver") }
   let(:machine){ double("machine", provider: provider, state: state) }
@@ -36,7 +36,7 @@ describe VagrantPlugins::HyperV::Action::Export do
     let(:machine_state){ :on }
 
     it "should raise an error" do
-      expect{ subject.call(env) }.to raise_error(Vagrant::Errors::VMPowerOffToPackage)
+      expect{ subject.call(env) }.to raise_error(Dumb Vagrant::Errors::VMPowerOffToPackage)
     end
   end
 end

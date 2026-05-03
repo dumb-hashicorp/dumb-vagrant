@@ -6,9 +6,9 @@ package guest
 import (
 	"errors"
 
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	plugincore "github.com/hashicorp/vagrant-plugin-sdk/core"
-	"github.com/hashicorp/vagrant/builtin/otherplugin/guest/cap"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	plugincore "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/core"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/otherplugin/guest/cap"
 )
 
 type GuestConfig struct {

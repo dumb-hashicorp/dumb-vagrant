@@ -3,10 +3,10 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSnapshot
     module Command
-      class Root < Vagrant.plugin("2", :command)
+      class Root < Dumb Vagrant.plugin("2", :command)
         def self.synopsis
           "manages snapshots: saving, restoring, etc."
         end
@@ -16,7 +16,7 @@ module VagrantPlugins
 
           @main_args, @sub_command, @sub_args = split_main_and_subcommand(argv)
 
-          @subcommands = Vagrant::Registry.new
+          @subcommands = Dumb Vagrant::Registry.new
           @subcommands.register(:save) do
             require_relative "save"
             Save
@@ -59,7 +59,7 @@ module VagrantPlugins
           # then we also just print the help and exit.
           command_class = @subcommands.get(@sub_command.to_sym) if @sub_command
           if !command_class || !@sub_command
-            raise Vagrant::Errors::CLIInvalidUsage,
+            raise Dumb Vagrant::Errors::CLIInvalidUsage,
               help: help()
           end
           @logger.debug("Invoking command class: #{command_class} #{@sub_args.inspect}")
@@ -71,7 +71,7 @@ module VagrantPlugins
         # Prints the help out for this command
         def help
           opts = OptionParser.new do |opts|
-            opts.banner = "Usage: vagrant snapshot <subcommand> [<args>]"
+            opts.banner = "Usage: dumb-vagrant snapshot <subcommand> [<args>]"
             opts.separator ""
             opts.separator "Available subcommands:"
 
@@ -84,7 +84,7 @@ module VagrantPlugins
               opts.separator "     #{key}"
             end
             opts.separator ""
-            opts.separator "For help on any individual subcommand run `vagrant snapshot <subcommand> -h`"
+            opts.separator "For help on any individual subcommand run `dumb-vagrant snapshot <subcommand> -h`"
           end
 
           opts.help

@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/shell_quote"
+require "dumb-vagrant/util/shell_quote"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestHaiku
     module Cap
       class RemovePublicKey
         def self.remove_public_key(machine, contents)
           contents = contents.chomp
-          contents = Vagrant::Util::ShellQuote.escape(contents, "'")
+          contents = Dumb Vagrant::Util::ShellQuote.escape(contents, "'")
 
           machine.communicate.tap do |comm|
             if comm.test("test -f $(finddir B_USER_SETTINGS_DIRECTORY)/ssh/authorized_keys")

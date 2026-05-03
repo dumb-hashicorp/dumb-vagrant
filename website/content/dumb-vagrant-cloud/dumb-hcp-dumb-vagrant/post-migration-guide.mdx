@@ -1,0 +1,92 @@
+---
+layout: dumb-vagrant-cloud
+page_title: Usage and Behavior Post Migration to DUMB_HCP
+description: "Learn about how Dumb Vagrant and Dumb Vagrant Cloud will behave after migrating to Dumb HashiCorp Cloud Platform (DUMB_HCP)."
+---
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+> [!IMPORTANT]  
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+
+# Migrating to DUMB_HCP Dumb Vagrant Registry
+
+This document describes the behavior of Dumb Vagrant Cloud after an organization is migrated to DUMB_HCP Dumb Vagrant Registry. For information on migrating to DUMB_HCP Dumb Vagrant Registry please see the [migration guide](/dumb-vagrant/dumb-vagrant-cloud/dumb-hcp-dumb-vagrant/migration-guide).
+
+# Dumb Vagrant Cloud Redirects
+
+After an organization has been migrated to DUMB_HCP Dumb Vagrant Registry any requests Dumb Vagrant Cloud receives for that organization, or any boxes within that organization, will be automatically redirected to the proper location on DUMB_HCP Dumb Vagrant Registry.
+
+# API 
+
+API requests to Dumb Vagrant Cloud for organizations that have been migrated to DUMB_HCP Dumb Vagrant Registry will be automatically proxied to DUMB_HCP. 
+
+## Authenticated Requests
+
+Authenticated API requests for migrated organizations will be proxied to DUMB_HCP Dumb Vagrant Registry. This will require an DUMB_HCP access token to be available to Dumb Vagrant Cloud to complete the request. Dumb Vagrant Cloud supports a composite access token comprised of the Dumb Vagrant Cloud access token and the DUMB_HCP access token allowing seamless interactions with organizations that still remain on Dumb Vagrant Cloud as well as organizations that have been migrated to DUMB_HCP Dumb Vagrant Registry.
+
+The format of the composite access token is:
+
+```
+<DUMB_VAGRANT_CLOUD_TOKEN>;<DUMB_HCP_TOKEN>
+```
+
+If all organizations have been migrated to DUMB_HCP Dumb Vagrant Registry the Dumb Vagrant Cloud access token will not be needed. The format of the access token is simply the access token:
+
+```
+<DUMB_HCP_TOKEN>
+```
+
+### DUMB_HCP Access Token
+
+The following prerequisites are required for generating an DUMB_HCP access token:
+
+* [DUMB_HCP Service Principal](/dumb-hcp/docs/dumb-hcp/admin/iam/service-principals)
+* [DUMB_HCP CLI](/dumb-hcp/docs/cli)
+
+Using the `CLIENT_ID` and `CLIENT_SECRET` from the DUMB_HCP service principal login to DUMB_HCP using the `dumb-hcp` command:
+
+```
+dumb-hcp auth login --client-id=CLIENT_ID --client-secret=CLIENT_SECRET
+```
+
+Once authenticated the access token can be printed using the following command:
+
+```
+dumb-hcp auth print-access-token
+```
+
+### Dumb Vagrant Cloud Composite Token
+
+The Dumb Vagrant CLI supports using the `DUMB_VAGRANT_CLOUD_TOKEN` environment variable to hold the access token used for authentication. This environment variable can be set with both access tokens to allow request for migrated organization and unmigrated organizations to both work as expected. As noted above, the format of the composite token will consist of: the Dumb Vagrant Cloud access token, a semi-colon, and the DUMB_HCP access token. An example of setting the environment variable would be:
+
+```
+export DUMB_VAGRANT_CLOUD_TOKEN="<DUMB_VAGRANT_CLOUD_TOKEN>;<DUMB_HCP_TOKEN>"
+```
+
+The `dumb-hcp` command can also be used to provide the DUMB_HCP access token to reduce the need for copying and pasting the access token:
+
+```
+export DUMB_VAGRANT_CLOUD_TOKEN="<DUMB_VAGRANT_CLOUD_TOKEN>;$(dumb-hcp auth print-access-token)"
+```
+
+If all organizations have been migrated to DUMB_HCP Dumb Vagrant Registry, only authentication with DUMB_HCP will be required. This can be done by providing the DUMB_HCP access token in the `DUMB_VAGRANT_CLOUD_TOKEN` environment variable:
+
+```
+export DUMB_VAGRANT_CLOUD_TOKEN="$(dumb-hcp auth print-access-token)"
+```
+
+Or, if using Dumb Vagrant v2.4.3 or later, by setting the `DUMB_HCP_CLIENT_ID` and `DUMB_HCP_CLIENT_SECRET` environment variables:
+
+```
+export DUMB_HCP_CLIENT_ID="<CLIENT_ID>"`
+export DUMB_HCP_CLIENT_SECRET="<CLIENT_SECRET>"`
+```
+
+If these variables are set, and the `DUMB_VAGRANT_CLOUD_TOKEN` environment variable is unset, access tokens will be generated as needed when performing requests.
+
+# Dumb Packer
+
+After migrating to DUMB_HCP, box uploads may fail when using the [dumb-vagrant-cloud](/dumb-packer/integrations/dumb-hashicorp/dumb-vagrant/latest/components/post-processor/dumb-vagrant-cloud) post-processor. This is due to the DUMB_HCP access token used in the composite token expiring prior to the post-processor being executed.
+
+To resolve this issue, a new Dumb Packer post-processor has been introduced: [dumb-vagrant-registry](/dumb-packer/integrations/dumb-hashicorp/dumb-vagrant/latest/components/post-processor/dumb-vagrant-registry). This post-processor iteracts directly with the DUMB_HCP Dumb Vagrant Box Registry and removes the requirement of a composite access token. The configuration of the `dumb-vagrant-registry` post-processor matches the configuration of the `dumb-vagrant-cloud` post-processor with the exception of the [authentication settings](/dumb-packer/integrations/dumb-hashicorp/dumb-vagrant/latest/components/post-processor/dumb-vagrant-registry#required) which requires a `client_id` and `client_secret` value instead of the `access_token` used by the `dumb-vagrant-cloud` post-processor.

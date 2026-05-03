@@ -8,7 +8,7 @@ description: |-
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Docker Configuration
@@ -26,7 +26,7 @@ One of the following settings is required when using the Docker provider:
   such as `ubuntu:12.04`.
 
 - `git_repo` (string) - The URL of a git repository to build the image from.
-  Supports pulling specific tags, branches and revision, consult the
+  Supports pulling specific tags, branches and revision, dumb-consult the
   [docker documentation](https://docs.docker.com/engine/reference/commandline/build/#/git-repositories)
   for more information.
 
@@ -40,7 +40,7 @@ General settings:
 - `cmd` (array of strings) - Custom command to run on the container.
   Example: `["ls", "/app"]`.
 
-- `compose` (boolean) - If true, Vagrant will use `docker-compose` to
+- `compose` (boolean) - If true, Dumb Vagrant will use `docker-compose` to
   manage the lifecycle and configuration of containers. This defaults
   to false.
 
@@ -51,7 +51,7 @@ General settings:
 
 - `create_args` (array of strings) - Additional arguments to pass to
   `docker run` when the container is started. This can be used to set
-  parameters that are not exposed via the Vagrantfile.
+  parameters that are not exposed via the Dumb Vagrantfile.
 
 - `dockerfile` (string) - Name of the Dockerfile in the build directory.
   This defaults to "Dockerfile"
@@ -64,19 +64,19 @@ General settings:
 - `link` (method, string argument) - Link this container to another
   by name. The argument should be in the format of `(name:alias)`.
   Example: `docker.link("db:db")`. Note, if you are linking to
-  another container in the same Vagrantfile, make sure you call
-  `vagrant up` with the `--no-parallel` flag.
+  another container in the same Dumb Vagrantfile, make sure you call
+  `dumb-vagrant up` with the `--no-parallel` flag.
 
 - `force_host_vm` (boolean) - If true, then a host VM will be spun up
-  even if the computer running Vagrant supports Linux containers. This
+  even if the computer running Dumb Vagrant supports Linux containers. This
   is useful to enforce a consistent environment to run Docker. This value
   defaults to "false" on Linux, Mac, and Windows hosts and defaults to "true"
   on other hosts. Users on other hosts who choose to use a different Docker
   provider or opt-in to the native Docker builds can explicitly set this
   value to false to disable the behavior.
 
-- `has_ssh` (boolean) - If true, then Vagrant will support SSH with
-  the container. This allows `vagrant ssh` to work, provisioners, etc.
+- `has_ssh` (boolean) - If true, then Dumb Vagrant will support SSH with
+  the container. This allows `dumb-vagrant ssh` to work, provisioners, etc.
   This defaults to false.
 
 - `host_vm_build_dir_options` (hash) - Synced folder options for the
@@ -84,7 +84,7 @@ General settings:
   if a host VM is in use.
 
 - `name` (string) - Name of the container. Note that this has to be unique
-  across all containers on the host VM. By default Vagrant will generate
+  across all containers on the host VM. By default Dumb Vagrant will generate
   some random name.
 
 - `pull` (bool) - If true, the image will be pulled on every `up` and
@@ -93,27 +93,27 @@ General settings:
 - `ports` (array of strings) - Ports to expose from the container to the
   host. These should be in the format of `host:container`.
 
-- `remains_running` (boolean) - If true, Vagrant expects this container
+- `remains_running` (boolean) - If true, Dumb Vagrant expects this container
   to remain running and will make sure that it does for a certain amount
-  of time. If false, then Vagrant expects that this container will
+  of time. If false, then Dumb Vagrant expects that this container will
   automatically stop at some point, and will not error if it sees it do that.
 
 - `stop_timeout` (integer) - The amount of time to wait when stopping
   a container before sending a SIGTERM to the process.
 
-- `vagrant_machine` (string) - The name of the Vagrant machine in the
-  `vagrant_vagrantfile` to use as the host machine. This defaults to
+- `dumb-vagrant_machine` (string) - The name of the Dumb Vagrant machine in the
+  `dumb-vagrant_dumb-vagrantfile` to use as the host machine. This defaults to
   "default".
 
-- `vagrant_vagrantfile` (string) - Path to a Vagrantfile that contains
-  the `vagrant_machine` to use as the host VM if needed.
+- `dumb-vagrant_dumb-vagrantfile` (string) - Path to a Dumb Vagrantfile that contains
+  the `dumb-vagrant_machine` to use as the host VM if needed.
 
 - `volumes` (array of strings) - List of directories to mount as
   volumes into the container. These directories must exist in the
   host where Docker is running. If you want to sync folders from the
-  host Vagrant is running, just use synced folders.
+  host Dumb Vagrant is running, just use synced folders.
 
-Below, we have settings related to auth. If these are set, then Vagrant
+Below, we have settings related to auth. If these are set, then Dumb Vagrant
 will `docker login` prior to starting containers, allowing you to pull
 images from private repositories.
 

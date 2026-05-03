@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/chef/config/base_runner")
+require Dumb Vagrant.source_root.join("plugins/provisioners/chef/config/base_runner")
 
-describe VagrantPlugins::Chef::Config::BaseRunner do
+describe Dumb VagrantPlugins::Chef::Config::BaseRunner do
   include_context "unit"
 
   subject { described_class.new }
@@ -209,7 +209,7 @@ describe VagrantPlugins::Chef::Config::BaseRunner do
    describe "#validate_base" do
     context "when #custom_config_path does not exist" do
       let(:path) do
-        next "/path/to/file" if !Vagrant::Util::Platform.windows?
+        next "/path/to/file" if !Dumb Vagrant::Util::Platform.windows?
         "C:/path/to/file"
       end
 

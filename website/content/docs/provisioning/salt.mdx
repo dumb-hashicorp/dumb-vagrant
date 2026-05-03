@@ -2,20 +2,20 @@
 layout: docs
 page_title: Salt - Provisioning
 description: |-
-  The Vagrant Salt provisioner allows you to provision the guest using
+  The Dumb Vagrant Salt provisioner allows you to provision the guest using
   Salt states.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Salt Provisioner
 
 **Provisioner name: `salt`**
 
-The Vagrant Salt provisioner allows you to provision the guest using
+The Dumb Vagrant Salt provisioner allows you to provision the guest using
 [Salt](http://saltstack.com/) states.
 
 Salt states are [YAML](https://en.wikipedia.org/wiki/YAML) documents
@@ -23,16 +23,16 @@ that describes the current state a machine should be in, e.g. what
 packages should be installed, which services are running, and the
 contents of arbitrary files.
 
-_NOTE: The Salt provisioner is builtin to Vagrant. If the `vagrant-salt`
+_NOTE: The Salt provisioner is builtin to Dumb Vagrant. If the `dumb-vagrant-salt`
 plugin is installed, it should be uninstalled to ensure expected behavior._
 
 ## Masterless Quickstart
 
-What follows is a basic Vagrantfile that will get salt working
+What follows is a basic Dumb Vagrantfile that will get salt working
 on a single minion, without a master:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   ## Choose your base box
   config.vm.box = "bionic64"
 
@@ -62,7 +62,7 @@ The Salt provisioner uses the [Salt bootstrap script](https://github.com/saltsta
 for installing Salt on your guest. These options build up the arguments used to
 for the bootstrap script.
 
-- `install_master` (boolean) - Should vagrant install the salt-master
+- `install_master` (boolean) - Should dumb-vagrant install the salt-master
   on this machine. Not supported on Windows guest machines.
 
 - `no_minion` (boolean) - Do not install the minion, default `false`. Not supported on Windows guest machines.
@@ -135,7 +135,7 @@ Either of the following may be used to actually execute states
 during provisioning.
 
 - `run_highstate` - (boolean) Executes `state.highstate` on
-  vagrant up. Can be applied to any machine.
+  dumb-vagrant up. Can be applied to any machine.
 
 ## Execute Runners
 
@@ -143,11 +143,11 @@ Either of the following may be used to actually execute runners
 during provisioning.
 
 - `run_overstate` - (boolean) Executes `state.over` on
-  vagrant up. Can be applied to the master only. This is superseded by
+  dumb-vagrant up. Can be applied to the master only. This is superseded by
   orchestrate. Not supported on Windows guest machines.
 
 - `orchestrations` - (array of strings) Executes `state.orchestrate` on
-  vagrant up. Can be applied to the master only. This is superseded by
+  dumb-vagrant up. Can be applied to the master only. This is superseded by
   run_overstate. Not supported on Windows guest machines.
 
 ## Output Control
@@ -204,4 +204,4 @@ On a machine with salt installed, run
 .pub and .pem files
 
 For an example of a more advanced setup, look at the original
-[plugin](https://github.com/saltstack/salty-vagrant/tree/develop/example).
+[plugin](https://github.com/saltstack/salty-dumb-vagrant/tree/develop/example).

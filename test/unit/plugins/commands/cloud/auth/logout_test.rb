@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/auth/logout")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/auth/logout")
 
-describe VagrantPlugins::CloudCommand::AuthCommand::Command::Logout do
+describe Dumb VagrantPlugins::CloudCommand::AuthCommand::Command::Logout do
   include_context "unit"
 
   let(:argv)     { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
   let(:client) { double("client") }
 
@@ -22,7 +22,7 @@ describe VagrantPlugins::CloudCommand::AuthCommand::Command::Logout do
   let(:action_runner) { double("action_runner") }
 
   before do
-    allow(VagrantPlugins::CloudCommand::Client).to receive(:new).and_return(client)
+    allow(Dumb VagrantPlugins::CloudCommand::Client).to receive(:new).and_return(client)
     allow(iso_env).to receive(:action_runner).and_return(action_runner)
   end
 
@@ -31,7 +31,7 @@ describe VagrantPlugins::CloudCommand::AuthCommand::Command::Logout do
 
     it "shows the help" do
       expect { subject.execute }.
-        to raise_error(Vagrant::Errors::CLIInvalidUsage)
+        to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
     end
   end
 

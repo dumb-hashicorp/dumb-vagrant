@@ -3,7 +3,7 @@
 
 require 'log4r'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class DestroyNetwork
@@ -12,7 +12,7 @@ module VagrantPlugins
 
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new('vagrant::plugins::docker::network')
+          @logger = Log4r::Logger.new('dumb-vagrant::plugins::docker::network')
         end
 
         def call(env)
@@ -28,11 +28,11 @@ module VagrantPlugins
               machine.config.vm.networks.each do |type, options|
                 next if type != :private_network && type != :public_network
 
-                vagrant_networks = machine.provider.driver.list_network_names.find_all do |n|
-                  n.start_with?("vagrant_network")
+                dumb-vagrant_networks = machine.provider.driver.list_network_names.find_all do |n|
+                  n.start_with?("dumb-vagrant_network")
                 end
 
-                vagrant_networks.each do |network_name|
+                dumb-vagrant_networks.each do |network_name|
                   if machine.provider.driver.existing_named_network?(network_name) &&
                       !machine.provider.driver.network_used?(network_name)
                     env[:ui].info(I18n.t("docker_provider.network_destroy", network_name: network_name))

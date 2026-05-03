@@ -3,12 +3,12 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderNFS
     class ActionCleanup
       def initialize(app, env)
         @app    = app
-        @logger = Log4r::Logger.new("vagrant::synced_folders::nfs")
+        @logger = Log4r::Logger.new("dumb-vagrant::synced_folders::nfs")
       end
 
       def call(env)

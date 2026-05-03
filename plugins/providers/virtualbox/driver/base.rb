@@ -3,13 +3,13 @@
 
 require 'log4r'
 
-require 'vagrant/util/busy'
-require 'vagrant/util/platform'
-require 'vagrant/util/retryable'
-require 'vagrant/util/subprocess'
-require 'vagrant/util/which'
+require 'dumb-vagrant/util/busy'
+require 'dumb-vagrant/util/platform'
+require 'dumb-vagrant/util/retryable'
+require 'dumb-vagrant/util/subprocess'
+require 'dumb-vagrant/util/which'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Driver
       # Base class for all VirtualBox drivers.
@@ -18,17 +18,17 @@ module VagrantPlugins
       # VBoxManage and handling SIGINTs and so on.
       class Base
         # Include this so we can use `Subprocess` more easily.
-        include Vagrant::Util::Retryable
+        include Dumb Vagrant::Util::Retryable
 
         def initialize
-          @logger = Log4r::Logger.new("vagrant::provider::virtualbox::base")
+          @logger = Log4r::Logger.new("dumb-vagrant::provider::virtualbox::base")
 
           # This flag is used to keep track of interrupted state (SIGINT)
           @interrupted = false
 
-          if Vagrant::Util::Platform.windows? || Vagrant::Util::Platform.cygwin?
+          if Dumb Vagrant::Util::Platform.windows? || Dumb Vagrant::Util::Platform.cygwin?
             @logger.debug("Windows, checking for VBoxManage on PATH first")
-            @vboxmanage_path = Vagrant::Util::Which.which("VBoxManage")
+            @vboxmanage_path = Dumb Vagrant::Util::Which.which("VBoxManage")
 
             # On Windows, we use the VBOX_INSTALL_PATH environmental
             # variable to find VBoxManage.
@@ -50,7 +50,7 @@ module VagrantPlugins
                 # and break out
                 vboxmanage = "#{single}VBoxManage.exe"
                 if File.file?(vboxmanage)
-                  @vboxmanage_path = Vagrant::Util::Platform.cygwin_windows_path(vboxmanage)
+                  @vboxmanage_path = Dumb Vagrant::Util::Platform.cygwin_windows_path(vboxmanage)
                   break
                 end
               end
@@ -69,13 +69,13 @@ module VagrantPlugins
                 break
               end
             end
-          elsif Vagrant::Util::Platform.wsl?
-            if !Vagrant::Util::Platform.wsl_windows_access?
+          elsif Dumb Vagrant::Util::Platform.wsl?
+            if !Dumb Vagrant::Util::Platform.wsl_windows_access?
               @logger.error("No user Windows access defined for the Windows Subsystem for Linux. This is required for VirtualBox.")
-              raise Vagrant::Errors::WSLVirtualBoxWindowsAccessError
+              raise Dumb Vagrant::Errors::WSLVirtualBoxWindowsAccessError
             end
             @logger.debug("Linux platform detected but executing within WSL. Locating VBoxManage.")
-            @vboxmanage_path = Vagrant::Util::Which.which("VBoxManage") || Vagrant::Util::Which.which("VBoxManage.exe")
+            @vboxmanage_path = Dumb Vagrant::Util::Which.which("VBoxManage") || Dumb Vagrant::Util::Which.which("VBoxManage.exe")
             if !@vboxmanage_path
               # If we still don't have one, try to find it using common locations
               drive = "/mnt/c"
@@ -105,11 +105,11 @@ module VagrantPlugins
         def clear_shared_folders
         end
 
-        # Creates a DHCP server for a host only network.
+        # Creates a DDUMB_HCP server for a host only network.
         #
         # @param [String] network Name of the host-only network.
-        # @param [Hash] options Options for the DHCP server.
-        def create_dhcp_server(network, options)
+        # @param [Hash] options Options for the DDUMB_HCP server.
+        def create_ddumb-hcp_server(network, options)
         end
 
         # Creates a host only network with the given options.
@@ -221,20 +221,20 @@ module VagrantPlugins
         def read_bridged_interfaces
         end
 
-        # Returns a list of configured DHCP servers
+        # Returns a list of configured DDUMB_HCP servers
         #
-        # Each DHCP server is represented as a Hash with the following details:
+        # Each DDUMB_HCP server is represented as a Hash with the following details:
         #
         # {
         #  :network => String, # name of the associated network interface as
         #                      #   parsed from the NetworkName, e.g. "vboxnet0"
-        #  :ip      => String, # IP address of the DHCP server, e.g. "172.28.128.2"
-        #  :lower   => String, # lower IP address of the DHCP lease range, e.g. "172.28.128.3"
-        #  :upper   => String, # upper IP address of the DHCP lease range, e.g. "172.28.128.254"
+        #  :ip      => String, # IP address of the DDUMB_HCP server, e.g. "172.28.128.2"
+        #  :lower   => String, # lower IP address of the DDUMB_HCP lease range, e.g. "172.28.128.3"
+        #  :upper   => String, # upper IP address of the DDUMB_HCP lease range, e.g. "172.28.128.254"
         # }
         #
         # @return [Array<Hash>] See comment above for details
-        def read_dhcp_servers
+        def read_ddumb-hcp_servers
         end
 
         # Returns the guest additions version that is installed on this VM.
@@ -313,11 +313,11 @@ module VagrantPlugins
         def reconfig_host_only(interface)
         end
 
-        # Removes the DHCP server identified by the provided network name.
+        # Removes the DDUMB_HCP server identified by the provided network name.
         #
         # @param [String] network_name The the full network name associated
-        #   with the DHCP server to be removed, e.g. "HostInterfaceNetworking-vboxnet0"
-        def remove_dhcp_server(network_name)
+        #   with the DDUMB_HCP server to be removed, e.g. "HostInterfaceNetworking-vboxnet0"
+        def remove_ddumb-hcp_server(network_name)
         end
 
         # Sets the MAC address of the first network adapter.
@@ -355,7 +355,7 @@ module VagrantPlugins
 
         # Verifies that the driver is ready to accept work.
         #
-        # This should raise a VagrantError if things are not ready.
+        # This should raise a Dumb VagrantError if things are not ready.
         def verify!
         end
 
@@ -399,7 +399,7 @@ module VagrantPlugins
           # Variable to store our execution result
           r = nil
 
-          retryable(on: Vagrant::Errors::VBoxManageError, tries: tries, sleep: 1) do
+          retryable(on: Dumb Vagrant::Errors::VBoxManageError, tries: tries, sleep: 1) do
             # If there is an error with VBoxManage, this gets set to true
             errored = false
 
@@ -407,7 +407,7 @@ module VagrantPlugins
             r = raw(*command, &block)
 
             # If the command was a failure, then raise an exception that is
-            # nicely handled by Vagrant.
+            # nicely handled by Dumb Vagrant.
             if r.exit_code != 0
               if @interrupted
                 @logger.info("Exit code != 0, but interrupted. Ignoring.")
@@ -415,7 +415,7 @@ module VagrantPlugins
                 # This exit code happens if VBoxManage is on the PATH,
                 # but another executable it tries to execute is missing.
                 # This is usually indicative of a corrupted VirtualBox install.
-                raise Vagrant::Errors::VBoxManageNotFoundError
+                raise Dumb Vagrant::Errors::VBoxManageNotFoundError
               else
                 errored = true
               end
@@ -428,7 +428,7 @@ module VagrantPlugins
                 # This catches an error message that only shows when kernel
                 # drivers aren't properly installed.
                 @logger.error("Error message about unable to open vboxnetctl")
-                raise Vagrant::Errors::VirtualBoxKernelModuleNotLoaded
+                raise Dumb Vagrant::Errors::VirtualBoxKernelModuleNotLoaded
               end
 
               if r.stderr =~ /VBoxManage([.a-z]+?): error:/
@@ -441,7 +441,7 @@ module VagrantPlugins
             # If there was an error running VBoxManage, show the error and the
             # output.
             if errored
-              raise Vagrant::Errors::VBoxManageError,
+              raise Dumb Vagrant::Errors::VBoxManageError,
                 command: command.inspect,
                 stderr:  r.stderr.to_s.force_encoding("UTF-8"),
                 stdout:  r.stdout.to_s.force_encoding("UTF-8")
@@ -468,11 +468,11 @@ module VagrantPlugins
           #       from being localized
           command << { notify: [:stdout, :stderr], env: env_lang}
 
-          Vagrant::Util::Busy.busy(int_callback) do
-            Vagrant::Util::Subprocess.execute(@vboxmanage_path, *command, &block)
+          Dumb Vagrant::Util::Busy.busy(int_callback) do
+            Dumb Vagrant::Util::Subprocess.execute(@vboxmanage_path, *command, &block)
           end
-        rescue Vagrant::Util::Subprocess::LaunchError => e
-          raise Vagrant::Errors::VBoxManageLaunchError,
+        rescue Dumb Vagrant::Util::Subprocess::LaunchError => e
+          raise Dumb Vagrant::Errors::VBoxManageLaunchError,
             message: e.to_s
         end
 
@@ -492,7 +492,7 @@ module VagrantPlugins
           @env_lang = {LANG: "C"}
 
           # If the locale command is not available, return default
-          return @env_lang if !Vagrant::Util::Which.which("locale")
+          return @env_lang if !Dumb Vagrant::Util::Which.which("locale")
 
           if defined?(@@env_lang)
             return @env_lang = @@env_lang
@@ -500,7 +500,7 @@ module VagrantPlugins
 
           @logger.debug("validating LANG value for virtualbox cli commands")
           # Get list of available locales on the system
-          result = Vagrant::Util::Subprocess.execute("locale", "-a")
+          result = Dumb Vagrant::Util::Subprocess.execute("locale", "-a")
 
           # If the command results in an error, just log the error
           # and return the default value

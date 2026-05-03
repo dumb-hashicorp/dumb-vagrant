@@ -3,22 +3,22 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module ProviderCommand
       module Command
-        class Create < Vagrant.plugin("2", :command)
+        class Create < Dumb Vagrant.plugin("2", :command)
           include Util
 
           def execute
             options = {
-              architecture: Vagrant::Util::Platform.architecture,
+              architecture: Dumb Vagrant::Util::Platform.architecture,
             }
 
             opts = OptionParser.new do |o|
-              o.banner = "Usage: vagrant cloud provider create [options] organization/box-name provider-name version [url]"
+              o.banner = "Usage: dumb-vagrant cloud provider create [options] organization/box-name provider-name version [url]"
               o.separator ""
-              o.separator "Creates a provider entry on Vagrant Cloud"
+              o.separator "Creates a provider entry on Dumb Vagrant Cloud"
               o.separator ""
               o.separator "Options:"
               o.separator ""
@@ -41,7 +41,7 @@ module VagrantPlugins
             argv = parse_options(opts)
             return if !argv
             if argv.count < 3 || argv.count > 4
-              raise Vagrant::Errors::CLIInvalidUsage,
+              raise Dumb Vagrant::Errors::CLIInvalidUsage,
                 help: opts.help.chomp
             end
 
@@ -62,7 +62,7 @@ module VagrantPlugins
           # @param [String] version Box version
           # @param [String] provider Provider name
           # @param [String] url Provider asset URL
-          # @param [String] access_token User Vagrant Cloud access token
+          # @param [String] access_token User Dumb Vagrant Cloud access token
           # @param [Hash] options
           # @option options [String] :architecture Architecture of guest box
           # @option options [String] :checksum Checksum of the box asset
@@ -73,7 +73,7 @@ module VagrantPlugins
             if !url
               @env.ui.warn(I18n.t("cloud_command.upload.no_url"))
             end
-            account = VagrantCloud::Account.new(
+            account = Dumb VagrantCloud::Account.new(
               custom_server: api_server_url,
               access_token: access_token
             )
@@ -92,7 +92,7 @@ module VagrantPlugins
               format_box_results(provider, @env)
               0
             end
-          rescue VagrantCloud::Error => e
+          rescue Dumb VagrantCloud::Error => e
             @env.ui.error(I18n.t("cloud_command.errors.provider.create_fail",
               architecture: options[:architecture], provider: provider.name, org: org, box_name: box, version: version))
             @env.ui.error(e.message)

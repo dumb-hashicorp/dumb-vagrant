@@ -6,11 +6,11 @@ package provider
 import (
 	"context"
 
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	"github.com/hashicorp/vagrant-plugin-sdk/core"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/core"
 )
 
-// Happy is a provider that is just happy to be backing your vagrant VMs.
+// Happy is a provider that is just happy to be backing your dumb-vagrant VMs.
 type Happy struct{}
 
 func (p *Happy) Action(name string, args ...interface{}) error {

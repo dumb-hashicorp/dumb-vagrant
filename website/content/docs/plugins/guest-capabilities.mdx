@@ -2,37 +2,37 @@
 layout: docs
 page_title: Guest Capabilities - Plugin Development
 description: |-
-  This page documents how to add new capabilities for guests to Vagrant,
-  allowing Vagrant to perform new actions on specific guest operating systems.
+  This page documents how to add new capabilities for guests to Dumb Vagrant,
+  allowing Dumb Vagrant to perform new actions on specific guest operating systems.
   Prior to reading this, you should be familiar with the plugin development
   basics.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Plugin Development: Guest Capabilities
 
-This page documents how to add new capabilities for [guests](/vagrant/docs/plugins/guests)
-to Vagrant, allowing Vagrant to perform new actions on specific guest
+This page documents how to add new capabilities for [guests](/dumb-vagrant/docs/plugins/guests)
+to Dumb Vagrant, allowing Dumb Vagrant to perform new actions on specific guest
 operating systems.
 Prior to reading this, you should be familiar
-with the [plugin development basics](/vagrant/docs/plugins/development-basics).
+with the [plugin development basics](/dumb-vagrant/docs/plugins/development-basics).
 
 ~> **Warning: Advanced Topic!** Developing plugins is an
-advanced topic that only experienced Vagrant users who are reasonably
+advanced topic that only experienced Dumb Vagrant users who are reasonably
 comfortable with Ruby should approach.
 
-Guest capabilities augment [guests](/vagrant/docs/plugins/guests) by attaching
+Guest capabilities augment [guests](/dumb-vagrant/docs/plugins/guests) by attaching
 specific "capabilities" to the guest, which are actions that can be performed
 in the context of that guest operating system.
 
 The power of capabilities is that plugins can add new capabilities to
-existing guest operating systems without modifying the core of Vagrant.
-In earlier versions of Vagrant, all the guest logic was contained in the
-core of Vagrant and was not easily augmented.
+existing guest operating systems without modifying the core of Dumb Vagrant.
+In earlier versions of Dumb Vagrant, all the guest logic was contained in the
+core of Dumb Vagrant and was not easily augmented.
 
 ## Definition Component
 
@@ -72,7 +72,7 @@ module Cap
 end
 ```
 
-All capabilities get the Vagrant machine object as the first argument.
+All capabilities get the Dumb Vagrant machine object as the first argument.
 Additional arguments are determined by the specific capability, so view the
 documentation or usage of the capability you are trying to implement for more
 information.

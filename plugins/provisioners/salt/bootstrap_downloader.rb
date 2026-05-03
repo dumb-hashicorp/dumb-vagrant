@@ -6,7 +6,7 @@ require 'digest'
 
 require_relative "./errors"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Salt
     class BootstrapDownloader
       WINDOWS_URL = "﻿https://github.com/saltstack/salt-bootstrap/releases/latest/download/bootstrap-salt.ps1"
@@ -15,7 +15,7 @@ module VagrantPlugins
 
       def initialize(guest)
         @guest = guest
-        @logger  = Log4r::Logger.new("vagrant::salt::bootstrap_downloader")
+        @logger  = Log4r::Logger.new("dumb-vagrant::salt::bootstrap_downloader")
       end
 
       def source_url 

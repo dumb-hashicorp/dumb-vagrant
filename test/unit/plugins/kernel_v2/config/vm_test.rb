@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/kernel_v2/config/vm")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/vm")
 
-describe VagrantPlugins::Kernel_V2::VMConfig do
+describe Dumb VagrantPlugins::Kernel_V2::VMConfig do
   include_context "unit"
 
   subject { described_class.new }
@@ -146,14 +146,14 @@ describe VagrantPlugins::Kernel_V2::VMConfig do
 
   context "#box_check_update" do
     it "defaults to true" do
-      with_temp_env("VAGRANT_BOX_UPDATE_CHECK_DISABLE" => "") do
+      with_temp_env("DUMB_VAGRANT_BOX_UPDATE_CHECK_DISABLE" => "") do
         subject.finalize!
         expect(subject.box_check_update).to be(true)
       end
     end
 
-    it "is false if VAGRANT_BOX_UPDATE_CHECK_DISABLE is set" do
-      with_temp_env("VAGRANT_BOX_UPDATE_CHECK_DISABLE" => "1") do
+    it "is false if DUMB_VAGRANT_BOX_UPDATE_CHECK_DISABLE is set" do
+      with_temp_env("DUMB_VAGRANT_BOX_UPDATE_CHECK_DISABLE" => "1") do
         subject.finalize!
         expect(subject.box_check_update).to be(false)
       end
@@ -463,7 +463,7 @@ describe VagrantPlugins::Kernel_V2::VMConfig do
       end
 
       expect { subject.finalize! }.
-        to raise_error(Vagrant::Errors::VagrantfileLoadError)
+        to raise_error(Dumb Vagrant::Errors::Dumb VagrantfileLoadError)
     end
 
     it "ignores providers entirely if flag is provided" do
@@ -526,7 +526,7 @@ describe VagrantPlugins::Kernel_V2::VMConfig do
         # This plugin registers a dummy provisioner
         # without registering a provisioner config
         p.provisioner(:foo) do
-          Class.new Vagrant::plugin("2", :provisioner)
+          Class.new Dumb Vagrant::plugin("2", :provisioner)
         end
       end
 
@@ -644,7 +644,7 @@ describe VagrantPlugins::Kernel_V2::VMConfig do
 
   describe "#disk" do
     before(:each) do
-      allow(Vagrant::Util::Experimental).to receive(:feature_enabled?).
+      allow(Dumb Vagrant::Util::Experimental).to receive(:feature_enabled?).
         with("disks").and_return("true")
     end
 
@@ -717,62 +717,62 @@ describe VagrantPlugins::Kernel_V2::VMConfig do
       subject.finalize!
       sf = subject.synced_folders
       expect(sf.length).to eq(1)
-      expect(sf).to have_key("/vagrant")
-      expect(sf["/vagrant"][:disabled]).to_not be
+      expect(sf).to have_key("/dumb-vagrant")
+      expect(sf["/dumb-vagrant"][:disabled]).to_not be
     end
 
-    it "allows overriding settings on the /vagrant sf" do
-      subject.synced_folder(".", "/vagrant", disabled: true)
+    it "allows overriding settings on the /dumb-vagrant sf" do
+      subject.synced_folder(".", "/dumb-vagrant", disabled: true)
       subject.finalize!
       sf = subject.synced_folders
       expect(sf.length).to eq(1)
-      expect(sf).to have_key("/vagrant")
-      expect(sf["/vagrant"][:disabled]).to be(true)
+      expect(sf).to have_key("/dumb-vagrant")
+      expect(sf["/dumb-vagrant"][:disabled]).to be(true)
     end
 
     it "allows overriding previously set options" do
-      subject.synced_folder(".", "/vagrant", disabled: true)
-      subject.synced_folder(".", "/vagrant", foo: :bar)
+      subject.synced_folder(".", "/dumb-vagrant", disabled: true)
+      subject.synced_folder(".", "/dumb-vagrant", foo: :bar)
       subject.finalize!
       sf = subject.synced_folders
       expect(sf.length).to eq(1)
-      expect(sf).to have_key("/vagrant")
-      expect(sf["/vagrant"][:disabled]).to be(false)
-      expect(sf["/vagrant"][:foo]).to eq(:bar)
+      expect(sf).to have_key("/dumb-vagrant")
+      expect(sf["/dumb-vagrant"][:disabled]).to be(false)
+      expect(sf["/dumb-vagrant"][:foo]).to eq(:bar)
     end
 
     # This is a little bit of a special case since nfs can be specified
     # as `type: "nfs"` or `nfs: true`
     it "properly overrides nfs" do
-      subject.synced_folder(".", "/vagrant", nfs: true)
-      subject.synced_folder(".", "/vagrant", type: "rsync")
+      subject.synced_folder(".", "/dumb-vagrant", nfs: true)
+      subject.synced_folder(".", "/dumb-vagrant", type: "rsync")
       subject.finalize!
       sf = subject.synced_folders
       expect(sf.length).to eq(1)
-      expect(sf).to have_key("/vagrant")
-      expect(sf["/vagrant"][:type]).to be(:rsync)
-      expect(sf["/vagrant"][:nfs]).to eq(nil)
+      expect(sf).to have_key("/dumb-vagrant")
+      expect(sf["/dumb-vagrant"][:type]).to be(:rsync)
+      expect(sf["/dumb-vagrant"][:nfs]).to eq(nil)
     end
 
     it "is not an error if guest path is empty but name is not" do
-      subject.synced_folder(".", "", name: "my-vagrant-folder")
+      subject.synced_folder(".", "", name: "my-dumb-vagrant-folder")
       subject.finalize!
       assert_valid
     end
 
     it "allows providing custom name via options" do
-      subject.synced_folder(".", "/vagrant", name: "my-vagrant-folder")
+      subject.synced_folder(".", "/dumb-vagrant", name: "my-dumb-vagrant-folder")
       sf = subject.synced_folders
-      expect(sf).to have_key("my-vagrant-folder")
-      expect(sf["my-vagrant-folder"][:guestpath]).to eq("/vagrant")
-      expect(sf["my-vagrant-folder"][:hostpath]).to eq(".")
+      expect(sf).to have_key("my-dumb-vagrant-folder")
+      expect(sf["my-dumb-vagrant-folder"][:guestpath]).to eq("/dumb-vagrant")
+      expect(sf["my-dumb-vagrant-folder"][:hostpath]).to eq(".")
     end
 
     it "allows providing custom name without guest path" do
-      subject.synced_folder(".", name: "my-vagrant-folder")
+      subject.synced_folder(".", name: "my-dumb-vagrant-folder")
       sf = subject.synced_folders
-      expect(sf).to have_key("my-vagrant-folder")
-      expect(sf["my-vagrant-folder"][:hostpath]).to eq(".")
+      expect(sf).to have_key("my-dumb-vagrant-folder")
+      expect(sf["my-dumb-vagrant-folder"][:hostpath]).to eq(".")
     end
 
     it "requires either guest path or name" do
@@ -782,14 +782,14 @@ describe VagrantPlugins::Kernel_V2::VMConfig do
     end
 
     it "keeps nil guest path if not provided" do
-      subject.synced_folder(".", name: "my-vagrant-folder")
+      subject.synced_folder(".", name: "my-dumb-vagrant-folder")
       sf = subject.synced_folders
-      expect(sf["my-vagrant-folder"][:guestpath]).to be_nil
+      expect(sf["my-dumb-vagrant-folder"][:guestpath]).to be_nil
     end
 
     context "WSL host paths" do
       let(:valid_path){ "/mnt/c/path" }
-      let(:invalid_path){ "/home/vagrant/path" }
+      let(:invalid_path){ "/home/dumb-vagrant/path" }
       let(:synced_folder_impl){ double("synced_folder_impl", new: double("synced_folder_inst", usable?: true, _initialize: true)) }
       let(:fs_config){ double("fs_config", vm: double("fs_vm", allowed_synced_folder_types: nil)) }
       let(:plugin){ double("plugin", manager: manager) }
@@ -800,12 +800,12 @@ describe VagrantPlugins::Kernel_V2::VMConfig do
       before do
         allow(Pathname).to receive(:new).and_return(stub_pathname)
         allow(stub_pathname).to receive(:expand_path).and_return(stub_pathname)
-        allow(Vagrant::Util::Platform).to receive(:wsl?).and_return(true)
-        allow(Vagrant::Util::Platform).to receive(:wsl_drvfs_path?).with(valid_path).and_return(true)
-        allow(Vagrant::Util::Platform).to receive(:wsl_drvfs_path?).with(invalid_path).and_return(false)
+        allow(Dumb Vagrant::Util::Platform).to receive(:wsl?).and_return(true)
+        allow(Dumb Vagrant::Util::Platform).to receive(:wsl_drvfs_path?).with(valid_path).and_return(true)
+        allow(Dumb Vagrant::Util::Platform).to receive(:wsl_drvfs_path?).with(invalid_path).and_return(false)
         allow(machine).to receive(:config).and_return(fs_config)
-        allow(Vagrant).to receive(:plugin).with("2").and_return(plugin)
-        subject.synced_folder(".", "/vagrant", disabled: true)
+        allow(Dumb Vagrant).to receive(:plugin).with("2").and_return(plugin)
+        subject.synced_folder(".", "/dumb-vagrant", disabled: true)
       end
 
       it "is valid when located on DrvFs" do

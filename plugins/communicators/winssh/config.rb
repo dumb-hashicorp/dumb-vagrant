@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../kernel_v2/config/ssh", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinSSH
-    class Config < VagrantPlugins::Kernel_V2::SSHConfig
+    class Config < Dumb VagrantPlugins::Kernel_V2::SSHConfig
 
       attr_accessor :upload_directory
 

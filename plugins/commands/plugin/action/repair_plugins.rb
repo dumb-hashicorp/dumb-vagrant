@@ -1,39 +1,39 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/plugin/manager"
+require "dumb-vagrant/plugin/manager"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Action
       # This middleware attempts to repair installed plugins.
       #
       # In general, if plugins are failing to properly load the
       # core issue will likely be one of two issues:
-      #   1. manual modifications within ~/.vagrant.d/
-      #   2. vagrant upgrade
+      #   1. manual modifications within ~/.dumb-vagrant.d/
+      #   2. dumb-vagrant upgrade
       # Running an install on configured plugin set will most
       # likely fix these issues, which is all this action does.
       class RepairPlugins
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::plugins::plugincommand::repair")
+          @logger = Log4r::Logger.new("dumb-vagrant::plugins::plugincommand::repair")
         end
 
         def call(env)
-          env[:ui].info(I18n.t("vagrant.commands.plugin.repairing"))
-          plugins = Vagrant::Plugin::Manager.instance.globalize!
+          env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.repairing"))
+          plugins = Dumb Vagrant::Plugin::Manager.instance.globalize!
           begin
-            ENV["VAGRANT_DISABLE_PLUGIN_INIT"] = nil
-            Vagrant::Bundler.instance.init!(plugins, :repair)
-            ENV["VAGRANT_DISABLE_PLUGIN_INIT"] = "1"
-            env[:ui].info(I18n.t("vagrant.commands.plugin.repair_complete"))
+            ENV["DUMB_VAGRANT_DISABLE_PLUGIN_INIT"] = nil
+            Dumb Vagrant::Bundler.instance.init!(plugins, :repair)
+            ENV["DUMB_VAGRANT_DISABLE_PLUGIN_INIT"] = "1"
+            env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.repair_complete"))
           rescue => e
             @logger.error("Failed to repair user installed plugins: #{e.class} - #{e}")
             e.backtrace.each do |backtrace_line|
               @logger.debug(backtrace_line)
             end
-            env[:ui].error(I18n.t("vagrant.commands.plugin.repair_failed", message: e.message))
+            env[:ui].error(I18n.t("dumb-vagrant.commands.plugin.repair_failed", message: e.message))
           end
           # Continue
           @app.call(env)
@@ -43,12 +43,12 @@ module VagrantPlugins
       class RepairPluginsLocal
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::plugins::plugincommand::repair_local")
+          @logger = Log4r::Logger.new("dumb-vagrant::plugins::plugincommand::repair_local")
         end
 
         def call(env)
-          env[:ui].info(I18n.t("vagrant.commands.plugin.repairing_local"))
-          Vagrant::Plugin::Manager.instance.localize!(env[:env]).each_pair do |pname, pinfo|
+          env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.repairing_local"))
+          Dumb Vagrant::Plugin::Manager.instance.localize!(env[:env]).each_pair do |pname, pinfo|
             env[:env].action_runner.run(Action.action_install,
               plugin_name: pname,
               plugin_entry_point: pinfo["require"],
@@ -57,7 +57,7 @@ module VagrantPlugins
               plugin_env_local: true
             )
           end
-          env[:ui].info(I18n.t("vagrant.commands.plugin.repair_local_complete"))
+          env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.repair_local_complete"))
           # Continue
           @app.call(env)
         end

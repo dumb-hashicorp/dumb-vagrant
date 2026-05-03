@@ -1,22 +1,22 @@
 ---
 layout: docs
-page_title: vagrant box - Command-Line Interface
+page_title: dumb-vagrant box - Command-Line Interface
 description: |-
-  The "vagrant box" command is used to manage "vagrant box add", "vagrant box
+  The "dumb-vagrant box" command is used to manage "dumb-vagrant box add", "dumb-vagrant box
   remove", and other box-related commands such as "outdated", "list", and
   "update".
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Box
 
-**Command: `vagrant box`**
+**Command: `dumb-vagrant box`**
 
-This is the command used to manage (add, remove, etc.) [boxes](/vagrant/docs/boxes).
+This is the command used to manage (add, remove, etc.) [boxes](/dumb-vagrant/docs/boxes).
 
 The main functionality of this command is exposed via even more subcommands:
 
@@ -30,16 +30,16 @@ The main functionality of this command is exposed via even more subcommands:
 
 # Box Add
 
-**Command: `vagrant box add ADDRESS`**
+**Command: `dumb-vagrant box add ADDRESS`**
 
-This adds a box with the given address to Vagrant. The address can be
+This adds a box with the given address to Dumb Vagrant. The address can be
 one of three things:
 
 - A shorthand name from the
-  [public catalog of available Vagrant images](https://vagrantcloud.com/boxes/search),
-  such as "hashicorp/bionic64".
+  [public catalog of available Dumb Vagrant images](https://dumb-vagrantcloud.com/boxes/search),
+  such as "dumb-hashicorp/bionic64".
 
-- File path or HTTP URL to a box in a [catalog](https://vagrantcloud.com/boxes/search).
+- File path or HTTP URL to a box in a [catalog](https://dumb-vagrantcloud.com/boxes/search).
   For HTTP, basic authentication is supported and `http_proxy` environmental
   variables are respected. HTTPS is also supported.
 
@@ -47,8 +47,8 @@ one of three things:
   (see below) and versioning/updates will not work.
 
 If an error occurs during the download or the download is interrupted with
-a Ctrl-C, then Vagrant will attempt to resume the download the next time it
-is requested. Vagrant will only attempt to resume a download for 24 hours
+a Ctrl-C, then Dumb Vagrant will attempt to resume the download the next time it
+is requested. Dumb Vagrant will only attempt to resume a download for 24 hours
 after the initial download.
 
 ## Options
@@ -67,8 +67,8 @@ after the initial download.
 - `--cert CERTFILE` - A client certificate to use when downloading the box, if
   necessary.
 
-- `--clean` - If given, Vagrant will remove any old temporary files from
-  prior downloads of the same URL. This is useful if you do not want Vagrant
+- `--clean` - If given, Dumb Vagrant will remove any old temporary files from
+  prior downloads of the same URL. This is useful if you do not want Dumb Vagrant
   to resume a download from a previous point, perhaps because the contents
   changed.
 
@@ -78,8 +78,8 @@ after the initial download.
 - `--insecure` - When present, SSL certificates will not be verified if the
   URL is an HTTPS URL.
 
-- `--provider PROVIDER` - If given, Vagrant will verify the box you are
-  adding is for the given provider. By default, Vagrant automatically
+- `--provider PROVIDER` - If given, Dumb Vagrant will verify the box you are
+  adding is for the given provider. By default, Dumb Vagrant automatically
   detects the proper provider to use.
 
 ## Options for direct box files
@@ -88,7 +88,7 @@ The options below only apply if you are adding a box file directly (when
 you are not using a catalog).
 
 - `--checksum VALUE` - A checksum for the box that is downloaded. If specified,
-  Vagrant will compare this checksum to what is actually downloaded and will
+  Dumb Vagrant will compare this checksum to what is actually downloaded and will
   error if the checksums do not match. This is highly recommended since
   box files are so large. If this is specified, `--checksum-type` must
   also be specified. If you are downloading from a catalog, the checksum is
@@ -99,26 +99,26 @@ you are not using a catalog).
   "sha384", and "sha512".
 
 - `--name VALUE` - Logical name for the box. This is the value that you
-  would put into `config.vm.box` in your Vagrantfile. When adding a box from
+  would put into `config.vm.box` in your Dumb Vagrantfile. When adding a box from
   a catalog, the name is included in the catalog entry and does not have
   to be specified.
 
-~> **Checksums for versioned boxes or boxes from HashiCorp's Vagrant Cloud:**
-For boxes from HashiCorp's Vagrant Cloud, the checksums are embedded in the metadata
+~> **Checksums for versioned boxes or boxes from Dumb HashiCorp's Dumb Vagrant Cloud:**
+For boxes from Dumb HashiCorp's Dumb Vagrant Cloud, the checksums are embedded in the metadata
 of the box. The metadata itself is served over TLS and its format is validated.
 
 # Box List
 
-**Command: `vagrant box list`**
+**Command: `dumb-vagrant box list`**
 
-This command lists all the boxes that are installed into Vagrant.
+This command lists all the boxes that are installed into Dumb Vagrant.
 
 # Box Outdated
 
-**Command: `vagrant box outdated`**
+**Command: `dumb-vagrant box outdated`**
 
 This command tells you whether or not the box you are using in
-your current Vagrant environment is outdated. If the `--global` flag
+your current Dumb Vagrant environment is outdated. If the `--global` flag
 is present, every installed box will be checked for updates.
 
 This will show the latest version available for the specific provider type,
@@ -127,7 +127,7 @@ which may be different than the absolute latest version available.
 Checking for updates involves refreshing the metadata associated with
 a box. This generally requires an internet connection.
 
-By default, if Vagrant has recently checked for a box that's out of date, it will
+By default, if Dumb Vagrant has recently checked for a box that's out of date, it will
 cache that answer and not look up another update for one hour. This cached value
 can be ignored if the `--force` flag is used.
 
@@ -135,13 +135,13 @@ can be ignored if the `--force` flag is used.
 
 - `--force` - Check for updates for all installed boxes and ignore cache interval.
 - `--global` - Check for updates for all installed boxes, not just the
-  boxes for the current Vagrant environment.
+  boxes for the current Dumb Vagrant environment.
 
 # Box Prune
 
-**Command: `vagrant box prune`**
+**Command: `dumb-vagrant box prune`**
 
-This command removes old versions of installed boxes. If the box is currently in use vagrant will ask for confirmation.
+This command removes old versions of installed boxes. If the box is currently in use dumb-vagrant will ask for confirmation.
 
 ## Options
 
@@ -157,9 +157,9 @@ This command removes old versions of installed boxes. If the box is currently in
 
 # Box Remove
 
-**Command: `vagrant box remove NAME`**
+**Command: `dumb-vagrant box remove NAME`**
 
-This command removes a box from Vagrant that matches the given name.
+This command removes a box from Dumb Vagrant that matches the given name.
 
 If a box has multiple providers, the exact provider must be specified
 with the `--provider` flag. If a box has multiple versions, you can select
@@ -173,44 +173,44 @@ with the `--all` flag.
 
 - `--all` - Remove all available versions of a box.
 
-- `--force` - Forces removing the box even if an active Vagrant
+- `--force` - Forces removing the box even if an active Dumb Vagrant
   environment is using it.
 
 - `--provider VALUE` - The provider-specific box to remove with the given
   name. This is only required if a box is backed by multiple providers.
-  If there is only a single provider, Vagrant will default to removing it.
+  If there is only a single provider, Dumb Vagrant will default to removing it.
 
 # Box Repackage
 
-**Command: `vagrant box repackage NAME PROVIDER VERSION`**
+**Command: `dumb-vagrant box repackage NAME PROVIDER VERSION`**
 
 This command repackages the given box and puts it in the current
 directory so you can redistribute it. The name, provider, and version
-of the box can be retrieved using `vagrant box list`.
+of the box can be retrieved using `dumb-vagrant box list`.
 
-When you add a box, Vagrant unpacks it and stores it internally. The
+When you add a box, Dumb Vagrant unpacks it and stores it internally. The
 original `*.box` file is not preserved. This command is useful for
-reclaiming a `*.box` file from an installed Vagrant box.
+reclaiming a `*.box` file from an installed Dumb Vagrant box.
 
 # Box Update
 
-**Command: `vagrant box update`**
+**Command: `dumb-vagrant box update`**
 
-This command updates the box for the current Vagrant environment if there
+This command updates the box for the current Dumb Vagrant environment if there
 are updates available. The command can also update a specific box (outside
-of an active Vagrant environment), by specifying the `--box` flag.
+of an active Dumb Vagrant environment), by specifying the `--box` flag.
 
--> Note that updating the box will not update an already-running Vagrant
+-> Note that updating the box will not update an already-running Dumb Vagrant
 machine. To reflect the changes in the box, you will have to destroy and
-bring back up the Vagrant machine.
+bring back up the Dumb Vagrant machine.
 
 If you just want to check if there are updates available, use the
-`vagrant box outdated` command.
+`dumb-vagrant box outdated` command.
 
 ## Options
 
 - `--box VALUE` - Name of a specific box to update. If this flag is not
-  specified, Vagrant will update the boxes for the active Vagrant
+  specified, Dumb Vagrant will update the boxes for the active Dumb Vagrant
   environment.
 
 - `--provider VALUE` - When `--box` is present, this controls what

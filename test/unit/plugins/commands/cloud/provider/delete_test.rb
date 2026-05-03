@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/commands/cloud/provider/delete")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/provider/delete")
 
-describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
+describe Dumb VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
   include_context "unit"
 
   let(:access_token) { double("token") }
@@ -22,12 +22,12 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
   describe "#delete_provider" do
     let(:options) { {} }
     let(:env) { double("env", ui: ui) }
-    let(:ui) { Vagrant::UI::Silent.new }
+    let(:ui) { Dumb Vagrant::UI::Silent.new }
     let(:argv) { [] }
 
     before do
       allow(env).to receive(:ui).and_return(ui)
-      allow(VagrantCloud::Account).to receive(:new).
+      allow(Dumb VagrantCloud::Account).to receive(:new).
         with(custom_server: anything, access_token: access_token).
         and_return(account)
       allow(subject).to receive(:with_provider).
@@ -56,7 +56,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
 
     context "when error is encountered" do
       before do
-        expect(provider).to receive(:delete).and_raise(VagrantCloud::Error)
+        expect(provider).to receive(:delete).and_raise(Dumb VagrantCloud::Error)
       end
 
       it "should return non-zero" do
@@ -70,10 +70,10 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
   describe "#execute" do
     let(:argv) { [] }
     let(:iso_env) do
-      # We have to create a Vagrantfile so there is a root path
+      # We have to create a Dumb Vagrantfile so there is a root path
       env = isolated_environment
-      env.vagrantfile("")
-      env.create_vagrant_env
+      env.dumb-vagrantfile("")
+      env.create_dumb-vagrant_env
     end
 
     subject { described_class.new(argv, iso_env) }
@@ -82,7 +82,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
     let(:client) { double("client", token: access_token) }
 
     before do
-      allow(VagrantCloud::Account).to receive(:new).and_return(account)
+      allow(Dumb VagrantCloud::Account).to receive(:new).and_return(account)
       allow(account).to receive(:organization).with(name: org_name).
         and_return(organization)
       allow(iso_env).to receive(:action_runner).and_return(action_runner)
@@ -98,7 +98,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
@@ -107,7 +107,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
 
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
 
       context "with provider argument" do
@@ -117,7 +117,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Delete do
 
         it "shows help" do
           expect { subject.execute }.
-            to raise_error(Vagrant::Errors::CLIInvalidUsage)
+            to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
         end
 
         context "with version argument" do

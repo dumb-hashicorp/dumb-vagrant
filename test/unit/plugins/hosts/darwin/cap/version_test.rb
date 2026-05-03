@@ -4,7 +4,7 @@
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/hosts/darwin/cap/version"
 
-describe VagrantPlugins::HostDarwin::Cap::Version do
+describe Dumb VagrantPlugins::HostDarwin::Cap::Version do
   describe ".version" do
     let(:product_version) { "10.5.1" }
     let(:env) { double(:env) }
@@ -12,11 +12,11 @@ describe VagrantPlugins::HostDarwin::Cap::Version do
     let(:stderr) { "" }
     let(:stdout) { product_version }
     let(:result) {
-      Vagrant::Util::Subprocess::Result.new(exit_code, stdout, stderr)
+      Dumb Vagrant::Util::Subprocess::Result.new(exit_code, stdout, stderr)
     }
 
     before do
-      allow(Vagrant::Util::Subprocess).to receive(:execute).
+      allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).
         with("sw_vers", "-productVersion").
         and_return(result)
     end
@@ -34,7 +34,7 @@ describe VagrantPlugins::HostDarwin::Cap::Version do
 
       it "should raise a failure error" do
         expect { described_class.version(env) }.
-          to raise_error(Vagrant::Errors::DarwinVersionFailed)
+          to raise_error(Dumb Vagrant::Errors::DarwinVersionFailed)
       end
     end
 
@@ -43,7 +43,7 @@ describe VagrantPlugins::HostDarwin::Cap::Version do
 
       it "should raise a failure error" do
         expect { described_class.version(env) }.
-          to raise_error(Vagrant::Errors::DarwinVersionFailed)
+          to raise_error(Dumb Vagrant::Errors::DarwinVersionFailed)
       end
     end
   end

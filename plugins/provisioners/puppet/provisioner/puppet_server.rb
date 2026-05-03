@@ -1,17 +1,17 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Puppet
     module Provisioner
-      class PuppetServerError < Vagrant::Errors::VagrantError
-        error_namespace("vagrant.provisioners.puppet_server")
+      class PuppetServerError < Dumb Vagrant::Errors::Dumb VagrantError
+        error_namespace("dumb-vagrant.provisioners.puppet_server")
       end
 
-      class PuppetServer < Vagrant.plugin("2", :provisioner)
+      class PuppetServer < Dumb Vagrant.plugin("2", :provisioner)
         def provision
           if @machine.config.vm.communicator == :winrm
-            raise Vagrant::Errors::ProvisionerWinRMUnsupported,
+            raise Dumb Vagrant::Errors::ProvisionerWinRMUnsupported,
               name: "puppet_server"
           end
 
@@ -61,7 +61,7 @@ module VagrantPlugins
           # If we have client certs specified, then upload them
           if config.client_cert_path && config.client_private_key_path
             @machine.ui.info(
-              I18n.t("vagrant.provisioners.puppet_server.uploading_client_cert"))
+              I18n.t("dumb-vagrant.provisioners.puppet_server.uploading_client_cert"))
             dirname = "/tmp/puppet-#{Time.now.to_i}-#{rand(1000)}"
             comm.sudo("mkdir -p #{dirname}")
             comm.sudo("mkdir -p #{dirname}/certs")
@@ -101,7 +101,7 @@ module VagrantPlugins
           command = "#{facter} #{puppet_bin} agent --onetime --no-daemonize #{options} " +
             "--server #{config.puppet_server} --detailed-exitcodes || [ $? -eq 2 ]"
 
-          @machine.ui.info I18n.t("vagrant.provisioners.puppet_server.running_puppetd")
+          @machine.ui.info I18n.t("dumb-vagrant.provisioners.puppet_server.running_puppetd")
           @machine.communicate.sudo(command) do |type, data|
             if !data.chomp.empty?
               @machine.ui.info(data.chomp)

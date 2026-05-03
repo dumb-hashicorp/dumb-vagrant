@@ -3,16 +3,16 @@
 
 require_relative "../base"
 
-require Vagrant.source_root.join("plugins/providers/virtualbox/cap/cleanup_disks")
+require Dumb Vagrant.source_root.join("plugins/providers/virtualbox/cap/cleanup_disks")
 
-describe VagrantPlugins::ProviderVirtualBox::Cap::CleanupDisks do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Cap::CleanupDisks do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:driver) { double("driver") }
@@ -41,7 +41,7 @@ describe VagrantPlugins::ProviderVirtualBox::Cap::CleanupDisks do
   let(:storage_controllers) { double("storage controllers") }
 
   before do
-    allow(Vagrant::Util::Experimental).to receive(:feature_enabled?).and_return(true)
+    allow(Dumb Vagrant::Util::Experimental).to receive(:feature_enabled?).and_return(true)
     allow(controller).to receive(:get_attachment).with(port: "0", device: "0").and_return(attachments[0])
     allow(controller).to receive(:get_attachment).with(uuid: "12345").and_return(attachments[0])
     allow(controller).to receive(:get_attachment).with(uuid: "67890").and_return(attachments[1])
@@ -69,10 +69,10 @@ describe VagrantPlugins::ProviderVirtualBox::Cap::CleanupDisks do
       end
 
       it "raises an error if primary disk can't be found" do
-        allow(storage_controllers).to receive(:get_primary_attachment).and_raise(Vagrant::Errors::VirtualBoxDisksPrimaryNotFound)
+        allow(storage_controllers).to receive(:get_primary_attachment).and_raise(Dumb Vagrant::Errors::VirtualBoxDisksPrimaryNotFound)
 
         expect { subject.cleanup_disks(machine, defined_disks, disk_meta_file) }.
-          to raise_error(Vagrant::Errors::VirtualBoxDisksPrimaryNotFound)
+          to raise_error(Dumb Vagrant::Errors::VirtualBoxDisksPrimaryNotFound)
       end
     end
 

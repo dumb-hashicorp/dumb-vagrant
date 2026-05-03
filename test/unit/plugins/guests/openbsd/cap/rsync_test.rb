@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestOpenBSD::Cap::RSync" do
+describe "Dumb VagrantPlugins::GuestOpenBSD::Cap::RSync" do
   let(:caps) do
-    VagrantPlugins::GuestOpenBSD::Plugin
+    Dumb VagrantPlugins::GuestOpenBSD::Plugin
       .components
       .guest_capabilities[:openbsd]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -34,11 +34,11 @@ describe "VagrantPlugins::GuestOpenBSD::Cap::RSync" do
 
     describe "failure installation" do
       before do
-        expect(comm).to receive(:execute).and_raise(Vagrant::Errors::RSyncNotInstalledInGuest, {command: '', output: ''})
+        expect(comm).to receive(:execute).and_raise(Dumb Vagrant::Errors::RSyncNotInstalledInGuest, {command: '', output: ''})
       end
 
       it "raises custom exception" do
-        expect{ cap.rsync_install(machine) }.to raise_error(Vagrant::Errors::RSyncNotInstalledInGuest)
+        expect{ cap.rsync_install(machine) }.to raise_error(Dumb Vagrant::Errors::RSyncNotInstalledInGuest)
       end
     end
   end

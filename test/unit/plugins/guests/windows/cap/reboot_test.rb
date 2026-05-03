@@ -3,18 +3,18 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/guests/windows/cap/reboot")
+require Dumb Vagrant.source_root.join("plugins/guests/windows/cap/reboot")
 
-describe "VagrantPlugins::GuestWindows::Cap::Reboot" do
+describe "Dumb VagrantPlugins::GuestWindows::Cap::Reboot" do
   let(:described_class) do
-    VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:wait_for_reboot)
+    Dumb VagrantPlugins::GuestWindows::Plugin.components.guest_capabilities[:windows].get(:wait_for_reboot)
   end
   let(:vm) { double("vm") }
   let(:config) { double("config") }
   let(:machine) { double("machine", ui: ui) }
   let(:guest) { double("guest") }
   let(:communicator) { double("communicator") }
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
 
   before do
     allow(machine).to receive(:communicate).and_return(communicator)
@@ -138,7 +138,7 @@ describe "VagrantPlugins::GuestWindows::Cap::Reboot" do
       let(:max_retries) { (duration / described_class::WAIT_SLEEP_TIME) + 2 }
 
       before do
-        expect(ENV).to receive(:fetch).with("VAGRANT_MAX_REBOOT_RETRY_DURATION", anything).and_return(duration)
+        expect(ENV).to receive(:fetch).with("DUMB_VAGRANT_MAX_REBOOT_RETRY_DURATION", anything).and_return(duration)
       end
 
       it "should receive expected number of wait_for_reboot calls" do

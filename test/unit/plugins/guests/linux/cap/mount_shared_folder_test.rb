@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestLinux::Cap::MountSharedFolder" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::MountSharedFolder" do
   let(:machine) { double("machine") }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:guest) { double("guest") }
 
   before do

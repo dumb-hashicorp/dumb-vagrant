@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestAmazon::Cap::ConfigureNetworks" do
+describe "Dumb VagrantPlugins::GuestAmazon::Cap::ConfigureNetworks" do
   let(:caps) do
-    VagrantPlugins::GuestAmazon::Plugin
+    Dumb VagrantPlugins::GuestAmazon::Plugin
       .components
       .guest_capabilities[:amazon]
   end
@@ -25,7 +25,7 @@ describe "VagrantPlugins::GuestAmazon::Cap::ConfigureNetworks" do
       let(:is_networkd) { true  }
 
       it "should call the debian capability" do
-        expect(VagrantPlugins::GuestDebian::Cap::ConfigureNetworks).
+        expect(Dumb VagrantPlugins::GuestDebian::Cap::ConfigureNetworks).
           to receive(:configure_networks).with(machine, networks)
 
         cap.configure_networks(machine, networks)
@@ -36,7 +36,7 @@ describe "VagrantPlugins::GuestAmazon::Cap::ConfigureNetworks" do
       let(:is_networkd) { false }
 
       it "should call the redhat capability" do
-        expect(VagrantPlugins::GuestRedHat::Cap::ConfigureNetworks).
+        expect(Dumb VagrantPlugins::GuestRedHat::Cap::ConfigureNetworks).
           to receive(:configure_networks).with(machine, networks)
 
         cap.configure_networks(machine, networks)

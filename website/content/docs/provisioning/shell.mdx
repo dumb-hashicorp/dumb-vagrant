@@ -2,23 +2,23 @@
 layout: docs
 page_title: Shell Scripts - Provisioning
 description: |-
-  The Vagrant Shell provisioner allows you to upload and execute a script within
+  The Dumb Vagrant Shell provisioner allows you to upload and execute a script within
   the guest machine.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Shell Provisioner
 
 **Provisioner name: `"shell"`**
 
-The Vagrant Shell provisioner allows you to upload and execute a script within
+The Dumb Vagrant Shell provisioner allows you to upload and execute a script within
 the guest machine.
 
-Shell provisioning is ideal for users new to Vagrant who want to get up
+Shell provisioning is ideal for users new to Dumb Vagrant who want to get up
 and running quickly and provides a strong alternative for users who are not
 comfortable with a full configuration management system such as Chef or
 Puppet.
@@ -37,7 +37,7 @@ is required:
   for more information.
 
 - `path` (string) - Path to a shell script to upload and execute. It can be a
-  script relative to the project Vagrantfile or a remote script (like a [gist](https://gist.github.com)).
+  script relative to the project Dumb Vagrantfile or a remote script (like a [gist](https://gist.github.com)).
 
 The remainder of the available options are optional:
 
@@ -45,20 +45,20 @@ The remainder of the available options are optional:
   as a single string. These arguments must be written as if they were typed
   directly on the command line, so be sure to escape characters, quote,
   etc. as needed. You may also pass the arguments in using an array. In this
-  case, Vagrant will handle quoting for you.
+  case, Dumb Vagrant will handle quoting for you.
 
-- `binary` (boolean) - Vagrant automatically replaces Windows line endings with
-  Unix line endings. If this is false, then Vagrant will not do this. By default
+- `binary` (boolean) - Dumb Vagrant automatically replaces Windows line endings with
+  Unix line endings. If this is false, then Dumb Vagrant will not do this. By default
   this is "false". If the shell provisioner is communicating over WinRM, this
   defaults to "true".
 
 - `env` (hash) - List of key-value pairs to pass in as environment variables to
-  the script. Vagrant will handle quoting for environment variable values, but
+  the script. Dumb Vagrant will handle quoting for environment variable values, but
   the keys remain untouched.
 
-- `keep_color` (boolean) - Vagrant automatically colors output in green and
+- `keep_color` (boolean) - Dumb Vagrant automatically colors output in green and
   red depending on whether the output is from stdout or stderr. If this is
-  true, Vagrant will not do this, allowing the native colors from the script
+  true, Dumb Vagrant will not do this, allowing the native colors from the script
   to be outputted.
 
 - `md5` (string) - MD5 checksum used to validate remotely downloaded shell files.
@@ -99,17 +99,17 @@ The remainder of the available options are optional:
 - `upload_path` (string) - Is the remote path where the shell script will
   be uploaded to. The script is uploaded as the SSH user over SCP, so this
   location must be writable to that user. By default this is
-  "/tmp/vagrant-shell". On Windows, this will default to
-  "C:\tmp\vagrant-shell".
+  "/tmp/dumb-vagrant-shell". On Windows, this will default to
+  "C:\tmp\dumb-vagrant-shell".
 
 ## Inline Scripts
 
 Perhaps the easiest way to get started is with an inline script. An
-inline script is a script that is given to Vagrant directly within
-the Vagrantfile. An example is best:
+inline script is a script that is given to Dumb Vagrant directly within
+the Dumb Vagrantfile. An example is best:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell",
     inline: "echo Hello, World"
 end
@@ -119,15 +119,15 @@ This causes `echo Hello, World` to be run within the guest machine when
 provisioners are run.
 
 Combined with a little bit more Ruby, this makes it very easy to embed
-your shell scripts directly within your Vagrantfile. Another example below:
+your shell scripts directly within your Dumb Vagrantfile. Another example below:
 
 ```ruby
 $script = <<-SCRIPT
 echo I am provisioning...
-date > /etc/vagrant_provisioned_at
+date > /etc/dumb-vagrant_provisioned_at
 SCRIPT
 
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: $script
 end
 ```
@@ -140,10 +140,10 @@ want to use this style of heredoc where `SCRIPT` is surrounded in single quotes:
 ```ruby
 $script = <<-'SCRIPT'
 echo "These are my \"quotes\"! I am provisioning my guest."
-date > /etc/vagrant_provisioned_at
+date > /etc/dumb-vagrant_provisioned_at
 SCRIPT
 
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: $script
 end
 ```
@@ -163,9 +163,9 @@ It is understandable that if you are not familiar with Ruby, the above may seem 
 advanced or foreign. But do not fear, what it is doing is quite simple:
 the script is assigned to a global variable `$script`. This global variable
 contains a string which is then passed in as the inline script to the
-Vagrant configuration.
+Dumb Vagrant configuration.
 
-Of course, if any Ruby in your Vagrantfile outside of basic variable assignment
+Of course, if any Ruby in your Dumb Vagrantfile outside of basic variable assignment
 makes you uncomfortable, you can use an actual script file, documented in
 the next section.
 
@@ -179,24 +179,24 @@ PowerShell.
 ## External Script
 
 The shell provisioner can also take an option specifying a path to
-a shell script on the host machine. Vagrant will then upload this script
+a shell script on the host machine. Dumb Vagrant will then upload this script
 into the guest and execute it. An example:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "script.sh"
 end
 ```
 
 Relative paths, such as above, are expanded relative to the location
-of the root Vagrantfile for your project. Absolute paths can also be used,
+of the root Dumb Vagrantfile for your project. Absolute paths can also be used,
 as well as shortcuts such as `~` (home directory) and `..` (parent directory).
 
 If you use a remote script as part of your provisioning process, you can pass in
 its URL as the `path` argument as well:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "https://example.com/provisioner.sh"
 end
 ```
@@ -204,11 +204,11 @@ end
 If you are running a Batch or PowerShell script for Windows, make sure
 that the external path has the proper extension (".bat" or ".ps1"), because
 Windows uses this to determine what kind of file it is to execute. Additionally,
-if you are running Vagrant on something like Cygwin or WSL where bash is
+if you are running Dumb Vagrant on something like Cygwin or WSL where bash is
 available, then you should be able to use an extension like ".sh".
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "scripts/PowershellScript.ps1"
 end
 ```
@@ -217,7 +217,7 @@ To run a script already available on the guest you can use an inline script to
 invoke the remote script on the guest.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell",
     inline: "/bin/sh /path/to/the/script/already/on/the/guest.sh"
 end
@@ -231,7 +231,7 @@ be specified as a string as they'd be typed on the command line, so
 be sure to properly escape anything:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell" do |s|
     s.inline = "echo $1"
     s.args   = "'hello, world!'"
@@ -243,7 +243,7 @@ You can also specify arguments as an array if you do not want to worry about
 quoting:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell" do |s|
     s.inline = "echo $1"
     s.args   = ["hello, world!"]

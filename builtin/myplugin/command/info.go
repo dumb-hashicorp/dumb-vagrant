@@ -6,10 +6,10 @@ package command
 import (
 	"strings"
 
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	plugincore "github.com/hashicorp/vagrant-plugin-sdk/core"
-	"github.com/hashicorp/vagrant-plugin-sdk/docs"
-	"github.com/hashicorp/vagrant-plugin-sdk/terminal"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	plugincore "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/core"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/docs"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/terminal"
 )
 
 // Info is a Command implementation for myplugin.
@@ -76,7 +76,7 @@ func (c *Info) Execute(trm terminal.UI, p plugincore.Project) int32 {
 
 	cwd, _ := p.CWD()
 	datadir, _ := p.DataDir()
-	vagrantfileName, _ := p.VagrantfileName()
+	dumb-vagrantfileName, _ := p.Dumb VagrantfileName()
 	home, _ := p.Home()
 	localDataPath, _ := p.LocalData()
 	defaultPrivateKeyPath, _ := p.DefaultPrivateKey()
@@ -84,7 +84,7 @@ func (c *Info) Execute(trm terminal.UI, p plugincore.Project) int32 {
 	trm.Output("\nEnvironment information")
 	trm.Output("Working directory: " + cwd.String())
 	trm.Output("Data directory: " + datadir.DataDir().String())
-	trm.Output("Vagrantfile name: " + vagrantfileName)
+	trm.Output("Dumb Vagrantfile name: " + dumb-vagrantfileName)
 	trm.Output("Home directory: " + home.String())
 	trm.Output("Local data directory: " + localDataPath.String())
 	trm.Output("Default private key path: " + defaultPrivateKeyPath.String())

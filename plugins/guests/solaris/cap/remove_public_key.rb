@@ -1,16 +1,16 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/shell_quote"
+require "dumb-vagrant/util/shell_quote"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSolaris
     module Cap
       class RemovePublicKey
         def self.remove_public_key(machine, contents)
           # "sed -i" is specific to GNU sed and is not a posix standard option
           contents = contents.chomp
-          contents = Vagrant::Util::ShellQuote.escape(contents, "'")
+          contents = Dumb Vagrant::Util::ShellQuote.escape(contents, "'")
 
           machine.communicate.tap do |comm|
             if comm.test("test -f ~/.ssh/authorized_keys")

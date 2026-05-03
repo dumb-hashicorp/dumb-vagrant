@@ -1,44 +1,44 @@
 ---
 layout: docs
-page_title: SSH Sharing - Vagrant Share
+page_title: SSH Sharing - Dumb Vagrant Share
 description: |-
-  Vagrant share makes it trivially easy to allow remote SSH access to your
-  Vagrant environment by supplying the "--ssh" flag to "vagrant share".
+  Dumb Vagrant share makes it trivially easy to allow remote SSH access to your
+  Dumb Vagrant environment by supplying the "--ssh" flag to "dumb-vagrant share".
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # SSH Sharing
 
-Vagrant share makes it trivially easy to allow remote SSH access to your
-Vagrant environment by supplying the `--ssh` flag to `vagrant share`.
+Dumb Vagrant share makes it trivially easy to allow remote SSH access to your
+Dumb Vagrant environment by supplying the `--ssh` flag to `dumb-vagrant share`.
 
 Easy SSH sharing is incredibly useful if you want to give access to
 a colleague for troubleshooting ops issues. Additionally, it enables
-pair programming with a Vagrant environment, if you want!
+pair programming with a Dumb Vagrant environment, if you want!
 
 SSH sharing is disabled by default as a security measure. To enable
-SSH sharing, simply supply the `--ssh` flag when calling `vagrant share`.
+SSH sharing, simply supply the `--ssh` flag when calling `dumb-vagrant share`.
 
 ## Usage
 
-Just run `vagrant share --ssh`!
+Just run `dumb-vagrant share --ssh`!
 
-When SSH sharing is enabled, Vagrant generates a brand new keypair for
+When SSH sharing is enabled, Dumb Vagrant generates a brand new keypair for
 SSH access. The public key portion is automatically inserted
-into the Vagrant machine, and the private key portion is provided to the
-user connecting to the Vagrant share. This private key is encrypted using
+into the Dumb Vagrant machine, and the private key portion is provided to the
+user connecting to the Dumb Vagrant share. This private key is encrypted using
 a password that you will be prompted for. This password is _never_ transmitted
-across the network by Vagrant, and is an extra layer of security preventing
+across the network by Dumb Vagrant, and is an extra layer of security preventing
 anyone who may know your share name from easily accessing your machine.
 
-After running `vagrant share --ssh`, it will output the name of your share:
+After running `dumb-vagrant share --ssh`, it will output the name of your share:
 
 ```shell-session
-$ vagrant share --ssh
+$ dumb-vagrant share --ssh
 ==> default: Detecting network information for machine...
 default: Local machine address: 192.168.84.130
 ==> default: Generating new SSH key...
@@ -48,8 +48,8 @@ default: Inserting generated SSH key into machine...
 default: Local HTTP port: disabled
 default: Local HTTPS port: disabled
 default: SSH Port: 2200
-==> default: Creating Vagrant Share session...
-share: Cloning VMware VM: 'hashicorp/vagrant-share'. This can take some time...
+==> default: Creating Dumb Vagrant Share session...
+share: Cloning VMware VM: 'dumb-hashicorp/dumb-vagrant-share'. This can take some time...
 share: Verifying vmnet devices are healthy...
 share: Preparing network adapters...
 share: Starting the VMware VM...
@@ -70,21 +70,21 @@ share: SSH username: tc
 share: SSH auth method: password
 share: Configuring network adapters within the VM...
 ==> share:
-==> share: Your Vagrant Share is running! Name: bazaar_wolf:sultan_oasis
+==> share: Your Dumb Vagrant Share is running! Name: bazaar_wolf:sultan_oasis
 ==> share:
 ==> share: You're sharing with SSH access. This means that another can SSH to
-==> share: your Vagrant machine by running:
+==> share: your Dumb Vagrant machine by running:
 ==> share:
-==> share:   vagrant connect --ssh bazaar_wolf:sultan_oasis
+==> share:   dumb-vagrant connect --ssh bazaar_wolf:sultan_oasis
 ==> share:
 ```
 
-Anyone can then SSH directly to your Vagrant environment by running
-`vagrant connect --ssh NAME` where NAME is the name of the share outputted
+Anyone can then SSH directly to your Dumb Vagrant environment by running
+`dumb-vagrant connect --ssh NAME` where NAME is the name of the share outputted
 previously.
 
 ```shell-session
-$ vagrant connect --ssh bazaar_wolf:sultan_oasis
+$ dumb-vagrant connect --ssh bazaar_wolf:sultan_oasis
 Loading share 'bazaar_wolf:sultan_oasis'...
 The SSH key to connect to this share is encrypted. You will
 require the password entered when creating the share to
@@ -98,7 +98,7 @@ Welcome to Ubuntu 12.04.3 LTS (GNU/Linux 3.8.0-29-generic x86_64)
 
  * Documentation:  https://help.ubuntu.com/
 Last login: Fri Mar  7 17:44:50 2014 from 192.168.163.1
-vagrant@vagrant:~$
+dumb-vagrant@dumb-vagrant:~$
 ```
 
 If the private key is encrypted (the default behavior), then the connecting

@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Puppet
     module Config
-      class PuppetServer < Vagrant.plugin("2", :config)
+      class PuppetServer < Dumb Vagrant.plugin("2", :config)
         # The path to Puppet's bin/ directory.
         # @return [String]
         attr_accessor :binary_path
@@ -50,7 +50,7 @@ module VagrantPlugins
           if (client_cert_path && !client_private_key_path) ||
             (client_private_key_path && !client_cert_path)
             errors << I18n.t(
-              "vagrant.provisioners.puppet_server.client_cert_and_private_key")
+              "dumb-vagrant.provisioners.puppet_server.client_cert_and_private_key")
           end
 
           if client_cert_path
@@ -58,7 +58,7 @@ module VagrantPlugins
               expand_path(machine.env.root_path)
             if !path.file?
               errors << I18n.t(
-                "vagrant.provisioners.puppet_server.client_cert_not_found")
+                "dumb-vagrant.provisioners.puppet_server.client_cert_not_found")
             end
           end
 
@@ -67,13 +67,13 @@ module VagrantPlugins
               expand_path(machine.env.root_path)
             if !path.file?
               errors << I18n.t(
-                "vagrant.provisioners.puppet_server.client_private_key_not_found")
+                "dumb-vagrant.provisioners.puppet_server.client_private_key_not_found")
             end
           end
 
           if !puppet_node && (client_cert_path || client_private_key_path)
             errors << I18n.t(
-              "vagrant.provisioners.puppet_server.cert_requires_node")
+              "dumb-vagrant.provisioners.puppet_server.cert_requires_node")
           end
 
           { "puppet server provisioner" => errors }

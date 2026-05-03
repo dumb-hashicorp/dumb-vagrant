@@ -1,4 +1,4 @@
-#VAGRANT-BEGIN
+#DUMB_VAGRANT-BEGIN
 template='interface'
 ipaddr='<%= options[:ip] %>/<%= options[:netmask] %>'
 <% [:gateway, :nameservers, :domain, :route, :gateway6, :route6, :mtu].each do |key| %>
@@ -6,4 +6,4 @@ ipaddr='<%= options[:ip] %>/<%= options[:netmask] %>'
 <%= key %>='<%= options[key] %>'
 <% end %>
 <% end %>
-#VAGRANT-END
+#DUMB_VAGRANT-END

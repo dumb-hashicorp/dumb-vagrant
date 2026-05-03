@@ -3,7 +3,7 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestWindows
     module Cap
       class Reboot
@@ -11,8 +11,8 @@ module VagrantPlugins
         WAIT_SLEEP_TIME = 5
 
         def self.reboot(machine)
-          @logger = Log4r::Logger.new("vagrant::windows::reboot")
-          reboot_script = "shutdown /r /t 5 /f /d p:4:1 /c \"Vagrant Reboot Computer\""
+          @logger = Log4r::Logger.new("dumb-vagrant::windows::reboot")
+          reboot_script = "shutdown /r /t 5 /f /d p:4:1 /c \"Dumb Vagrant Reboot Computer\""
 
           comm = machine.communicate
 
@@ -25,11 +25,11 @@ module VagrantPlugins
             @logger.debug("A reboot is already in progress")
           end
 
-          machine.ui.info(I18n.t("vagrant.guests.capabilities.rebooting"))
+          machine.ui.info(I18n.t("dumb-vagrant.guests.capabilities.rebooting"))
 
           @logger.debug("Waiting for machine to finish rebooting")
 
-          wait_remaining = ENV.fetch("VAGRANT_MAX_REBOOT_RETRY_DURATION",
+          wait_remaining = ENV.fetch("DUMB_VAGRANT_MAX_REBOOT_RETRY_DURATION",
             DEFAULT_MAX_REBOOT_RETRY_DURATION).to_i
           wait_remaining = DEFAULT_MAX_REBOOT_RETRY_DURATION if wait_remaining < 1
 

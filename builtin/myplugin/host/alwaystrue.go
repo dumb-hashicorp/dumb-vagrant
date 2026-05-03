@@ -6,9 +6,9 @@ package host
 import (
 	"fmt"
 
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	"github.com/hashicorp/vagrant-plugin-sdk/terminal"
-	"github.com/hashicorp/vagrant/builtin/myplugin/host/cap"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/terminal"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/host/cap"
 )
 
 type HostConfig struct {

@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-describe 'VagrantPlugins::GuestAlpine::Cap::ChangeHostname' do
+describe 'Dumb VagrantPlugins::GuestAlpine::Cap::ChangeHostname' do
   let(:described_class) do
-    VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:change_host_name)
+    Dumb VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:change_host_name)
   end
   let(:machine) { double('machine') }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:old_hostname) { 'oldhostname.olddomain.tld' }
   let(:networks) {[
     [:forwarded_port, {:guest=>22, :host=>2222, :host_ip=>"127.0.0.1", :id=>"ssh", :auto_correct=>true, :protocol=>"tcp"}]
@@ -41,7 +41,7 @@ describe 'VagrantPlugins::GuestAlpine::Cap::ChangeHostname' do
       described_class.change_host_name(machine, 'newhostname.newdomain.tld')
     end
 
-    it 'renews dhcp on the system with the new hostname' do
+    it 'renews ddumb-hcp on the system with the new hostname' do
       communicator.expect_command('ifdown -a; ifup -a; ifup eth0')
       described_class.change_host_name(machine, 'newhostname.newdomain.tld')
     end

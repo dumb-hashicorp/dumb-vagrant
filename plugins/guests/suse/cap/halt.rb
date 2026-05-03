@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSUSE
     module Cap
       class Halt
@@ -12,7 +12,7 @@ module VagrantPlugins
             else
               machine.communicate.sudo("/sbin/shutdown -h now &")
             end
-          rescue IOError, Vagrant::Errors::SSHDisconnected
+          rescue IOError, Dumb Vagrant::Errors::SSHDisconnected
             # Do nothing, because it probably means the machine shut down
             # and SSH connection was lost.
           end

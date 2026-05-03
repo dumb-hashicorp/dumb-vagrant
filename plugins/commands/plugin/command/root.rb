@@ -3,10 +3,10 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
-      class Root < Vagrant.plugin("2", :command)
+      class Root < Dumb Vagrant.plugin("2", :command)
         def self.synopsis
           "manages plugins: install, uninstall, update, etc."
         end
@@ -16,7 +16,7 @@ module VagrantPlugins
 
           @main_args, @sub_command, @sub_args = split_main_and_subcommand(argv)
 
-          @subcommands = Vagrant::Registry.new
+          @subcommands = Dumb Vagrant::Registry.new
           @subcommands.register(:expunge) do
             require_relative "expunge"
             Expunge
@@ -72,7 +72,7 @@ module VagrantPlugins
         # Prints the help out for this command
         def help
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant plugin <command> [<args>]"
+            o.banner = "Usage: dumb-vagrant plugin <command> [<args>]"
             o.separator ""
             o.separator "Available subcommands:"
 
@@ -85,7 +85,7 @@ module VagrantPlugins
               o.separator "     #{key}"
             end
             o.separator ""
-            o.separator "For help on any individual command run `vagrant plugin COMMAND -h`"
+            o.separator "For help on any individual command run `dumb-vagrant plugin COMMAND -h`"
           end
 
           @env.ui.info(opts.help, prefix: false)

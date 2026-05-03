@@ -4,7 +4,7 @@
 require_relative "../facts"
 require_relative "../pip/pip"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Cap
       module Guest

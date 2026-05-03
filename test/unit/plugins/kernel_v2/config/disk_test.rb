@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/kernel_v2/config/disk")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/disk")
 
-describe VagrantPlugins::Kernel_V2::VagrantConfigDisk do
+describe Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigDisk do
   include_context "unit"
 
   let(:type) { :disk }
 
   subject { described_class.new(type) }
 
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
   let(:env) { double("env", ui: ui) }
   let(:provider) { double("provider") }
   let(:machine) { double("machine", name: "name", provider: provider, env: env,

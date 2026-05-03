@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.26.0
 // 	protoc        v3.19.4
-// source: vagrant-ruby/builtin/myplugin/proto/plugin.proto
+// source: dumb-vagrant-ruby/builtin/myplugin/proto/plugin.proto
 
 package proto
 
@@ -29,7 +29,7 @@ type UpResult struct {
 func (x *UpResult) Reset() {
 	*x = UpResult{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[0]
+		mi := &file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -42,7 +42,7 @@ func (x *UpResult) String() string {
 func (*UpResult) ProtoMessage() {}
 
 func (x *UpResult) ProtoReflect() protoreflect.Message {
-	mi := &file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[0]
+	mi := &file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -55,7 +55,7 @@ func (x *UpResult) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpResult.ProtoReflect.Descriptor instead.
 func (*UpResult) Descriptor() ([]byte, []int) {
-	return file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescGZIP(), []int{0}
+	return file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescGZIP(), []int{0}
 }
 
 type CommunicatorOptions struct {
@@ -70,7 +70,7 @@ type CommunicatorOptions struct {
 func (x *CommunicatorOptions) Reset() {
 	*x = CommunicatorOptions{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[1]
+		mi := &file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -83,7 +83,7 @@ func (x *CommunicatorOptions) String() string {
 func (*CommunicatorOptions) ProtoMessage() {}
 
 func (x *CommunicatorOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[1]
+	mi := &file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -96,7 +96,7 @@ func (x *CommunicatorOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CommunicatorOptions.ProtoReflect.Descriptor instead.
 func (*CommunicatorOptions) Descriptor() ([]byte, []int) {
-	return file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescGZIP(), []int{1}
+	return file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *CommunicatorOptions) GetKeepAlive() string {
@@ -113,9 +113,9 @@ func (x *CommunicatorOptions) GetTimeout() int64 {
 	return 0
 }
 
-var File_vagrant_ruby_builtin_myplugin_proto_plugin_proto protoreflect.FileDescriptor
+var File_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto protoreflect.FileDescriptor
 
-var file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc = []byte{
+var file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc = []byte{
 	0x0a, 0x30, 0x76, 0x61, 0x67, 0x72, 0x61, 0x6e, 0x74, 0x2d, 0x72, 0x75, 0x62, 0x79, 0x2f, 0x62,
 	0x75, 0x69, 0x6c, 0x74, 0x69, 0x6e, 0x2f, 0x6d, 0x79, 0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x2f,
 	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x70, 0x6c, 0x75, 0x67, 0x69, 0x6e, 0x2e, 0x70, 0x72, 0x6f,
@@ -132,23 +132,23 @@ var file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc = []byte{
 }
 
 var (
-	file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescOnce sync.Once
-	file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescData = file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc
+	file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescOnce sync.Once
+	file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescData = file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc
 )
 
-func file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescGZIP() []byte {
-	file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescOnce.Do(func() {
-		file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescData = protoimpl.X.CompressGZIP(file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescData)
+func file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescGZIP() []byte {
+	file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescOnce.Do(func() {
+		file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescData = protoimpl.X.CompressGZIP(file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescData)
 	})
-	return file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescData
+	return file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDescData
 }
 
-var file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
-var file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_goTypes = []interface{}{
+var file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_goTypes = []interface{}{
 	(*UpResult)(nil),            // 0: myplugin.UpResult
 	(*CommunicatorOptions)(nil), // 1: myplugin.CommunicatorOptions
 }
-var file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_depIdxs = []int32{
+var file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
 	0, // [0:0] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -156,13 +156,13 @@ var file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_init() }
-func file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_init() {
-	if File_vagrant_ruby_builtin_myplugin_proto_plugin_proto != nil {
+func init() { file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_init() }
+func file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_init() {
+	if File_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto != nil {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
+		file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpResult); i {
 			case 0:
 				return &v.state
@@ -174,7 +174,7 @@ func file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_init() {
 				return nil
 			}
 		}
-		file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+		file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CommunicatorOptions); i {
 			case 0:
 				return &v.state
@@ -191,18 +191,18 @@ func file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_init() {
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc,
+			RawDescriptor: file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc,
 			NumEnums:      0,
 			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_goTypes,
-		DependencyIndexes: file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_depIdxs,
-		MessageInfos:      file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes,
+		GoTypes:           file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_goTypes,
+		DependencyIndexes: file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_depIdxs,
+		MessageInfos:      file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_msgTypes,
 	}.Build()
-	File_vagrant_ruby_builtin_myplugin_proto_plugin_proto = out.File
-	file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc = nil
-	file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_goTypes = nil
-	file_vagrant_ruby_builtin_myplugin_proto_plugin_proto_depIdxs = nil
+	File_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto = out.File
+	file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_rawDesc = nil
+	file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_goTypes = nil
+	file_dumb-vagrant_ruby_builtin_myplugin_proto_plugin_proto_depIdxs = nil
 }

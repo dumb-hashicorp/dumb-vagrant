@@ -5,7 +5,7 @@ require 'optparse'
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
       class Repair < Base
@@ -13,7 +13,7 @@ module VagrantPlugins
           options = {}
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant plugin repair [-h]"
+            o.banner = "Usage: dumb-vagrant plugin repair [-h]"
 
             o.on("--local", "Repair plugins in local project") do |l|
               options[:env_local] = l
@@ -23,9 +23,9 @@ module VagrantPlugins
           # Parse the options
           argv = parse_options(opts)
           return if !argv
-          raise Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if argv.length > 0
+          raise Dumb Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if argv.length > 0
 
-          if Vagrant::Plugin::Manager.instance.local_file
+          if Dumb Vagrant::Plugin::Manager.instance.local_file
             action(Action.action_repair_local, env: @env)
           end
 

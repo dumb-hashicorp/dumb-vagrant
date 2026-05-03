@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/kernel_v2/config/cloud_init")
+require Dumb Vagrant.source_root.join("plugins/kernel_v2/config/cloud_init")
 
-describe VagrantPlugins::Kernel_V2::VagrantConfigCloudInit do
+describe Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigCloudInit do
   include_context "unit"
 
   subject { described_class.new(:user_data) }
 
   let(:provider) { double("provider") }
   let(:machine) { double("machine", name: "rspec", provider: provider,
-                         env: Vagrant::Environment.new) }
+                         env: Dumb Vagrant::Environment.new) }
 
 
   def assert_invalid

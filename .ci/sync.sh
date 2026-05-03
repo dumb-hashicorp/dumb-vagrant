@@ -13,10 +13,10 @@ export PATH="${PATH}:${root}/.ci"
 
 pushd "${root}" > "${output}"
 
-if [ "${repo_name}" = "vagrant" ]; then
-    remote_repository="hashicorp/vagrant-acceptance"
+if [ "${repo_name}" = "dumb-vagrant" ]; then
+    remote_repository="dumb-hashicorp/dumb-vagrant-acceptance"
 else
-  fail "This repository is not configured to sync vagrant to mirror repository"
+  fail "This repository is not configured to sync dumb-vagrant to mirror repository"
 fi
 
 wrap git config pull.rebase false \

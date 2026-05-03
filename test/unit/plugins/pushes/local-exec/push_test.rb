@@ -3,13 +3,13 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/pushes/local-exec/push")
+require Dumb Vagrant.source_root.join("plugins/pushes/local-exec/push")
 
-describe VagrantPlugins::LocalExecPush::Push do
+describe Dumb VagrantPlugins::LocalExecPush::Push do
   include_context "unit"
 
   before(:all) do
-    I18n.load_path << Vagrant.source_root.join("plugins/pushes/local-exec/locales/en.yml")
+    I18n.load_path << Dumb Vagrant.source_root.join("plugins/pushes/local-exec/locales/en.yml")
     I18n.reload!
   end
 
@@ -112,15 +112,15 @@ describe VagrantPlugins::LocalExecPush::Push do
 
   describe "#execute!" do
     it "uses exec on unix" do
-      allow(Vagrant::Util::Platform).to receive(:windows?).and_return(false)
-      expect(Vagrant::Util::SafeExec).to receive(:exec)
+      allow(Dumb Vagrant::Util::Platform).to receive(:windows?).and_return(false)
+      expect(Dumb Vagrant::Util::SafeExec).to receive(:exec)
       expect { subject.execute! }.to_not raise_error
     end
 
     it "uses subprocess on windows" do
-      allow(Vagrant::Util::Platform).to receive(:windows?).and_return(true)
+      allow(Dumb Vagrant::Util::Platform).to receive(:windows?).and_return(true)
       result = double("result", exit_code: 0)
-      expect(Vagrant::Util::Subprocess).to receive(:execute).and_return(result)
+      expect(Dumb Vagrant::Util::Subprocess).to receive(:execute).and_return(result)
       expect { subject.execute! }.to raise_error { |e|
         expect(e).to be_a(SystemExit)
       }

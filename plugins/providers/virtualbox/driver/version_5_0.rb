@@ -3,11 +3,11 @@
 
 require 'log4r'
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
 require File.expand_path("../base", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Driver
       # Driver for VirtualBox 5.0.x
@@ -15,7 +15,7 @@ module VagrantPlugins
         def initialize(uuid)
           super()
 
-          @logger = Log4r::Logger.new("vagrant::provider::virtualbox_5_0")
+          @logger = Log4r::Logger.new("dumb-vagrant::provider::virtualbox_5_0")
           @uuid = uuid
         end
 
@@ -32,7 +32,7 @@ module VagrantPlugins
         # @param [String] file - disk file path
         # @param [Hash]   opts -  additional options
         def attach_disk(controller_name, port, device, type, file, **opts)
-          comment = "This disk is managed externally by Vagrant. Removing or adjusting settings could potentially cause issues with Vagrant."
+          comment = "This disk is managed externally by Dumb Vagrant. Removing or adjusting settings could potentially cause issues with Dumb Vagrant."
 
           execute('storageattach', @uuid,
                   '--storagectl', controller_name,
@@ -44,7 +44,7 @@ module VagrantPlugins
         end
 
         def clear_forwarded_ports
-          retryable(on: Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
+          retryable(on: Dumb Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
             args = []
             read_forwarded_ports(@uuid).each do |nic, name, _, _|
               args.concat(["--natpf#{nic}", "delete", name])
@@ -55,7 +55,7 @@ module VagrantPlugins
         end
 
         def clear_shared_folders
-          retryable(on: Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
+          retryable(on: Dumb Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
             info = execute("showvminfo", @uuid, "--machinereadable", retryable: true)
             info.split("\n").each do |line|
               if line =~ /^SharedFolderNameMachineMapping\d+="(.+?)"$/
@@ -91,17 +91,17 @@ module VagrantPlugins
           execute("closemedium", disk_uuid, '--delete')
         end
 
-        def create_dhcp_server(network, options)
-          retryable(on: Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
+        def create_ddumb-hcp_server(network, options)
+          retryable(on: Dumb Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
             begin
-              execute("dhcpserver", "add", "--ifname", network,
-                      "--ip", options[:dhcp_ip],
+              execute("ddumb-hcpserver", "add", "--ifname", network,
+                      "--ip", options[:ddumb-hcp_ip],
                       "--netmask", options[:netmask],
-                      "--lowerip", options[:dhcp_lower],
-                      "--upperip", options[:dhcp_upper],
+                      "--lowerip", options[:ddumb-hcp_lower],
+                      "--upperip", options[:ddumb-hcp_upper],
                       "--enable")
-            rescue Vagrant::Errors::VBoxManageError => e
-              return if e.extra_data[:stderr] == 'VBoxManage: error: DHCP server already exists'
+            rescue Dumb Vagrant::Errors::VBoxManageError => e
+              return if e.extra_data[:stderr] == 'VBoxManage: error: DDUMB_HCP server already exists'
               raise
             end
           end
@@ -146,7 +146,7 @@ module VagrantPlugins
             name: name,
             ip:   options[:adapter_ip],
             netmask: options[:netmask],
-            dhcp: nil
+            ddumb-hcp: nil
           }
         end
 
@@ -223,7 +223,7 @@ module VagrantPlugins
           end
 
           result.sort
-        rescue Vagrant::Errors::VBoxManageError => e
+        rescue Dumb Vagrant::Errors::VBoxManageError => e
           d = e.extra_data
           return [] if d[:stderr].include?("does not have") || d[:stdout].include?("does not have")
           raise
@@ -294,7 +294,7 @@ module VagrantPlugins
                     networks.delete($1.to_s)
                   end
                 end
-              rescue Vagrant::Errors::VBoxManageError => e
+              rescue Dumb Vagrant::Errors::VBoxManageError => e
                 raise if !e.extra_data[:stderr].include?("VBOX_E_OBJECT_NOT_FOUND")
 
                 # VirtualBox could not find the vm. It may have been deleted
@@ -304,10 +304,10 @@ module VagrantPlugins
           end
 
           networks.each do |name|
-            # First try to remove any DHCP servers attached. We use `raw` because
-            # it is okay if this fails. It usually means that a DHCP server was
+            # First try to remove any DDUMB_HCP servers attached. We use `raw` because
+            # it is okay if this fails. It usually means that a DDUMB_HCP server was
             # never attached.
-            raw("dhcpserver", "remove", "--ifname", name)
+            raw("ddumb-hcpserver", "remove", "--ifname", name)
 
             # Delete the actual host only network interface.
             execute("hostonlyif", "remove", name, retryable: true)
@@ -356,14 +356,14 @@ module VagrantPlugins
         end
 
         def export(path)
-          retryable(on: Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
+          retryable(on: Dumb Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
             begin
               execute("export", @uuid, "--output", path.to_s)
-            rescue Vagrant::Errors::VBoxManageError => e
+            rescue Dumb Vagrant::Errors::VBoxManageError => e
               raise if !e.extra_data[:stderr].include?("VERR_E_FILE_ERROR")
 
               # If the file already exists we'll throw a custom error
-              raise Vagrant::Errors::VirtualBoxFileExists,
+              raise Dumb Vagrant::Errors::VirtualBoxFileExists,
                     stderr: e.extra_data[:stderr]
             end
           end
@@ -420,7 +420,7 @@ module VagrantPlugins
         end
 
         def import(ovf)
-          ovf = Vagrant::Util::Platform.windows_path(ovf)
+          ovf = Dumb Vagrant::Util::Platform.windows_path(ovf)
 
           output = ""
           total = ""
@@ -431,7 +431,7 @@ module VagrantPlugins
           output = execute("import", "-n", ovf)
           result = /Suggested VM name "(.+?)"/.match(output)
           if !result
-            raise Vagrant::Errors::VirtualBoxNoName, output: output
+            raise Dumb Vagrant::Errors::VirtualBoxNoName, output: output
           end
           suggested_name = result[1].to_s
 
@@ -455,7 +455,7 @@ module VagrantPlugins
             disk_params << "--unit"
             disk_params << unit_num
             disk_params << "--disk"
-            if Vagrant::Util::Platform.windows?
+            if Dumb Vagrant::Util::Platform.windows?
               # we use the block form of sub here to ensure that if the specified_name happens to end with a number (which is fairly likely) then
               # we won't end up having the character sequence of a \ followed by a number be interpreted as a back reference.  For example, if
               # specified_name were "abc123", then "\\abc123\\".reverse would be "\\321cba\\", and the \3 would be treated as a back reference by the sub
@@ -550,8 +550,8 @@ module VagrantPlugins
           end
         end
 
-        def read_dhcp_servers
-          execute("list", "dhcpservers", retryable: true).split("\n\n").collect do |block|
+        def read_ddumb-hcp_servers
+          execute("list", "ddumb-hcpservers", retryable: true).split("\n\n").collect do |block|
             info = {}
 
             block.split("\n").each do |line|
@@ -597,12 +597,12 @@ module VagrantPlugins
         def read_guest_ip(adapter_number)
           ip = read_guest_property("/VirtualBox/GuestInfo/Net/#{adapter_number}/V4/IP")
           if ip.end_with?(".1")
-            @logger.warn("VBoxManage guest property returned: #{ip}. Result resembles IP of DHCP server and is being ignored.")
+            @logger.warn("VBoxManage guest property returned: #{ip}. Result resembles IP of DDUMB_HCP server and is being ignored.")
             ip = nil
           end
 
           if !valid_ip_address?(ip)
-            raise Vagrant::Errors::VirtualBoxGuestPropertyNotFound,
+            raise Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound,
                   guest_property: "/VirtualBox/GuestInfo/Net/#{adapter_number}/V4/IP"
           end
 
@@ -614,7 +614,7 @@ module VagrantPlugins
           if output =~ /^Value: (.+?)$/
             $1.to_s
           else
-            raise Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: property
+            raise Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound, guest_property: property
           end
         end
 
@@ -677,7 +677,7 @@ module VagrantPlugins
           @logger.warn("failed to determine machine folder from system properties")
           @logger.debug("processed output for machine folder lookup:\n#{info}")
 
-          raise Vagrant::Errors::VirtualBoxMachineFolderNotFound
+          raise Dumb Vagrant::Errors::VirtualBoxMachineFolderNotFound
         end
 
         def read_network_interfaces
@@ -733,7 +733,7 @@ module VagrantPlugins
                   hostip = '*' if hostip.nil? || hostip.empty?
                   used_ports[hostport].add?(hostip)
                 end
-              rescue Vagrant::Errors::VBoxManageError => e
+              rescue Dumb Vagrant::Errors::VBoxManageError => e
                 raise if !e.extra_data[:stderr].include?("VBOX_E_OBJECT_NOT_FOUND")
 
                 # VirtualBox could not find the vm. It may have been deleted
@@ -761,8 +761,8 @@ module VagrantPlugins
                   "--ipv6", interface[:ipv6], retryable: true)
         end
 
-        def remove_dhcp_server(network_name)
-          execute("dhcpserver", "remove", "--netname", network_name, retryable: true)
+        def remove_ddumb-hcp_server(network_name)
+          execute("ddumb-hcpserver", "remove", "--netname", network_name, retryable: true)
         end
 
         def set_mac_address(mac)
@@ -771,15 +771,15 @@ module VagrantPlugins
         end
 
         def set_name(name)
-          retryable(on: Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
+          retryable(on: Dumb Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
             begin
               execute("modifyvm", @uuid, "--name", name)
-            rescue Vagrant::Errors::VBoxManageError => e
+            rescue Dumb Vagrant::Errors::VBoxManageError => e
               raise if !e.extra_data[:stderr].include?("VERR_ALREADY_EXISTS")
 
               # We got VERR_ALREADY_EXISTS. This means that we're renaming to
               # a VM name that already exists. Raise a custom error.
-              raise Vagrant::Errors::VirtualBoxNameExists,
+              raise Dumb Vagrant::Errors::VirtualBoxNameExists,
                     stderr: e.extra_data[:stderr]
             end
           end
@@ -797,7 +797,7 @@ module VagrantPlugins
             if is_solaris
               hostpath = folder[:hostpath]
             else
-              hostpath = Vagrant::Util::Platform.windows_path(folder[:hostpath])
+              hostpath = Dumb Vagrant::Util::Platform.windows_path(folder[:hostpath])
             end
             args = ["--name",
                     folder[:name],
@@ -864,7 +864,7 @@ module VagrantPlugins
 
         def start(mode)
           command = ["startvm", @uuid, "--type", mode.to_s]
-          retryable(on: Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
+          retryable(on: Dumb Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
             r = raw(*command)
 
             if r.exit_code == 0 || r.stdout =~ /VM ".+?" has been successfully started/
@@ -874,7 +874,7 @@ module VagrantPlugins
             end
 
             # If we reached this point then it didn't work out.
-            raise Vagrant::Errors::VBoxManageError,
+            raise Dumb Vagrant::Errors::VBoxManageError,
                   command: command.inspect,
                   stderr: r.stderr
           end
@@ -886,7 +886,7 @@ module VagrantPlugins
 
         def unshare_folders(names)
           names.each do |name|
-            retryable(on: Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
+            retryable(on: Dumb Vagrant::Errors::VBoxManageError, tries: 3, sleep: 1) do
               begin
                 execute(
                   "sharedfolder", "remove", @uuid,
@@ -896,7 +896,7 @@ module VagrantPlugins
                 execute(
                   "setextradata", @uuid,
                   "VBoxInternal2/SharedFoldersEnableSymlinksCreate/#{name}")
-              rescue Vagrant::Errors::VBoxManageError => e
+              rescue Dumb Vagrant::Errors::VBoxManageError => e
                 raise if !e.extra_data[:stderr].include?("VBOX_E_FILE_ERROR")
               end
             end
@@ -934,7 +934,7 @@ module VagrantPlugins
           return true
         end
 
-        # @param [VagrantPlugins::VirtualboxProvider::Driver] driver
+        # @param [Dumb VagrantPlugins::VirtualboxProvider::Driver] driver
         # @param [String] defined_disk_path
         # @return [String] destination - The cloned disk
         def vmdk_to_vdi(defined_disk_path)
@@ -946,7 +946,7 @@ module VagrantPlugins
           destination
         end
 
-        # @param [VagrantPlugins::VirtualboxProvider::Driver] driver
+        # @param [Dumb VagrantPlugins::VirtualboxProvider::Driver] driver
         # @param [String] defined_disk_path
         # @return [String] destination - The cloned disk
         def vdi_to_vmdk(defined_disk_path)
@@ -961,7 +961,7 @@ module VagrantPlugins
         # Helper method to get a list of storage controllers added to the
         # current VM
         #
-        # @return [VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray]
+        # @return [Dumb VagrantPlugins::ProviderVirtualBox::Model::StorageControllerArray]
         def read_storage_controllers
           vm_info = show_vm_info
           count = vm_info.count { |key, value| key.match(/^storagecontrollername\d+$/) }

@@ -1,26 +1,26 @@
 ---
 layout: docs
-page_title: Vagrant Push
+page_title: Dumb Vagrant Push
 description: |-
-  Vagrant Push is a revolutionary feature that allows users to push the code in
-  their Vagrant environment to a remote location.
+  Dumb Vagrant Push is a revolutionary feature that allows users to push the code in
+  their Dumb Vagrant environment to a remote location.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-# Vagrant Push
+# Dumb Vagrant Push
 
-As of version 1.7, Vagrant is capable of deploying or "pushing" application code
-in the same directory as your Vagrantfile to a remote such as an FTP server.
+As of version 1.7, Dumb Vagrant is capable of deploying or "pushing" application code
+in the same directory as your Dumb Vagrantfile to a remote such as an FTP server.
 
-Pushes are defined in an application's `Vagrantfile` and are invoked using the
-`vagrant push` subcommand. Much like other components of Vagrant, each Vagrant
-Push plugin has its own configuration options. Please consult the documentation
-for your Vagrant Push plugin for more information. Here is an example Vagrant
-Push configuration section in a `Vagrantfile`:
+Pushes are defined in an application's `Dumb Vagrantfile` and are invoked using the
+`dumb-vagrant push` subcommand. Much like other components of Dumb Vagrant, each Dumb Vagrant
+Push plugin has its own configuration options. Please dumb-consult the documentation
+for your Dumb Vagrant Push plugin for more information. Here is an example Dumb Vagrant
+Push configuration section in a `Dumb Vagrantfile`:
 
 ```ruby
 config.push.define "ftp" do |push|
@@ -34,10 +34,10 @@ When the application is ready to be deployed to the FTP server, just run a
 single command:
 
 ```shell-session
-$ vagrant push
+$ dumb-vagrant push
 ```
 
-Much like [Vagrant Providers][], Vagrant Push also supports multiple backend
+Much like [Dumb Vagrant Providers][], Dumb Vagrant Push also supports multiple backend
 declarations. Consider the common scenario of a staging and QA environment:
 
 ```ruby
@@ -50,14 +50,14 @@ config.push.define "qa", strategy: "ftp" do |push|
 end
 ```
 
-In this scenario, the user must pass the name of the Vagrant Push to the
+In this scenario, the user must pass the name of the Dumb Vagrant Push to the
 subcommand:
 
 ```shell-session
-$ vagrant push staging
+$ dumb-vagrant push staging
 ```
 
-Vagrant Push is the easiest way to deploy your application. You can read more
+Dumb Vagrant Push is the easiest way to deploy your application. You can read more
 in the documentation links on the sidebar.
 
-[vagrant providers]: /vagrant/docs/providers/ 'Vagrant Providers'
+[dumb-vagrant providers]: /dumb-vagrant/docs/providers/ 'Dumb Vagrant Providers'

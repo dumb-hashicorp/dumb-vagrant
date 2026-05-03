@@ -4,7 +4,7 @@
 en:
   docker_provider:
     already_built: |-
-      Image is already built from the Dockerfile. `vagrant reload` to rebuild.
+      Image is already built from the Dockerfile. `dumb-vagrant reload` to rebuild.
     build_image_destroy: |-
       Removing built image...
     build_image_destroy_in_use: |-
@@ -38,15 +38,15 @@ en:
     host_machine_ready: |-
       Docker host VM is already ready.
     host_machine_starting: |-
-      Vagrant will now create or start a local VM to act as the Docker
-      host. You'll see the output of the `vagrant up` for this VM below.
+      Dumb Vagrant will now create or start a local VM to act as the Docker
+      host. You'll see the output of the `dumb-vagrant up` for this VM below.
     host_machine_syncing_folders: |-
       Syncing folders to the host VM...
     logging_in: |-
       Logging in to Docker server...
     logs_host_state_unknown: |-
       This container requires a host VM, and the state of that VM
-      is unknown. Run `vagrant up` to verify that the container and
+      is unknown. Run `dumb-vagrant up` to verify that the container and
       its host VM is running, then try again.
     network_bridge_gateway_invalid: |-
       The provided gateway IP address is invalid (%{gateway}). Please
@@ -60,7 +60,7 @@ en:
     network_bridge_iprange_info: |-
       When an explicit address is not provided to a container attached
       to this bridged network, docker will supply an address to the
-      container. This is independent of the local DHCP service that
+      container. This is independent of the local DDUMB_HCP service that
       may be available on the network.
     network_bridge_iprange_invalid: |-
       The provided IP address range is invalid (%{range}). Please
@@ -84,12 +84,12 @@ en:
     pull: |-
       Pulling image '%{image}'...
     run_command_required: |-
-      `vagrant docker-run` requires a command to execute. This command
+      `dumb-vagrant docker-run` requires a command to execute. This command
       must be specified after a `--` in the command line. This is used
       to separate possible machine names and options from the actual
       command to execute. An example is shown below:
 
-        vagrant docker-run web -- rails new .
+        dumb-vagrant docker-run web -- rails new .
 
     running: |-
       Container is starting. Output will stream in below...
@@ -102,13 +102,13 @@ en:
       A network called '%{network_name}' using subnet '%{subnet}' is already in use.
       Using '%{network_name}' instead of creating a new network...
     synced_folders_changed: |-
-      Vagrant has noticed that the synced folder definitions have changed.
+      Dumb Vagrant has noticed that the synced folder definitions have changed.
       With Docker, these synced folder changes won't take effect until you
       destroy the container and recreate it.
     waiting_for_running: |-
       Waiting for container to enter "running" state...
     volume_path_not_expanded: |-
-      Host path `%{host}` exists as a `volumes` key and is a folder on disk. Vagrant
+      Host path `%{host}` exists as a `volumes` key and is a folder on disk. Dumb Vagrant
       will not expand this key like it used to and instead leave it as is defined.
       If this folder is intended to be used, make sure its full path is defined
       in your `volumes` config. More information can be found on volumes in the
@@ -120,7 +120,7 @@ en:
       not_created: |-
         The container hasn't been created yet.
       not_created_original: |-
-        The original container hasn't been created yet. Run `vagrant up`
+        The original container hasn't been created yet. Run `dumb-vagrant up`
         for this machine first.
       not_running: |-
         The container is not currently running.
@@ -145,36 +145,36 @@ en:
       host_state_unknown: |-
         The host VM for the Docker containers appears to not be running
         or is currently inaccessible. Because of this, we can't determine
-        the state of the containers on that host. Run `vagrant up` to
+        the state of the containers on that host. Run `dumb-vagrant up` to
         bring up the host VM again.
       not_created: |-
-        The environment has not yet been created. Run `vagrant up` to
+        The environment has not yet been created. Run `dumb-vagrant up` to
         create the environment. If a machine is not created, only the
         default provider will be shown. So if a provider is not listed,
         then the machine is not created for that environment.
       preparing: |-
-        Vagrant is preparing to start this Docker container. Run `vagrant up`
+        Dumb Vagrant is preparing to start this Docker container. Run `dumb-vagrant up`
         to continue.
       running: |-
         The container is created and running. You can stop it using
-        `vagrant halt`, see logs with `vagrant docker-logs`, and
-        kill/destroy it with `vagrant destroy`.
+        `dumb-vagrant halt`, see logs with `dumb-vagrant docker-logs`, and
+        kill/destroy it with `dumb-vagrant destroy`.
       stopped: |-
         The container is created but not running. You can run it again
-        with `vagrant up`. If the container always goes to "stopped"
+        with `dumb-vagrant up`. If the container always goes to "stopped"
         right away after being started, it is because the command being
         run exits and doesn't keep running.
 
     errors:
       build_error: |-
-        Vagrant received unknown output from `docker build` while building a container: %{result}
+        Dumb Vagrant received unknown output from `docker build` while building a container: %{result}
       compose_lock_timeout: |-
-        Vagrant encountered a timeout waiting for the docker compose driver
+        Dumb Vagrant encountered a timeout waiting for the docker compose driver
         to become available. Please try to run your command again. If you
         continue to experience this error it may be resolved by disabling
         parallel execution.
       docker_compose_not_installed: |-
-        Vagrant has been instructed to use to use the Compose driver for the
+        Dumb Vagrant has been instructed to use to use the Compose driver for the
         Docker plugin but was unable to locate the `docker-compose` executable.
         Ensure that `docker-compose` is installed and available on the PATH.
       not_created: |-
@@ -184,7 +184,7 @@ en:
       communicator_non_docker: |-
         The "docker_hostvm" communicator was specified on a machine that
         is not provided by the Docker provider. This is a bug with your
-        Vagrantfile. Please contact the creator of your Vagrant environment
+        Dumb Vagrantfile. Please contact the creator of your Dumb Vagrant environment
         and notify them to not use this communicator for anything except the
         "docker" provider.
       config:
@@ -206,17 +206,17 @@ en:
           "create_args" must be an array
         invalid_link: |-
           Invalid link (should be 'name:alias'): "%{link}"
-        invalid_vagrantfile: |-
-          "vagrant_vagrantfile" must point to a Vagrantfile that exists.
+        invalid_dumb-vagrantfile: |-
+          "dumb-vagrant_dumb-vagrantfile" must point to a Dumb Vagrantfile that exists.
       docker_provider_nfs_without_privileged: |-
         You've configured a NFS synced folder but didn't enable privileged
         mode for the container. Please set the `privileged` option to true
-        on the provider block from your Vagrantfile, recreate the container
+        on the provider block from your Dumb Vagrantfile, recreate the container
         and try again.
       docker_provider_image_not_configured: |-
         The base Docker image has not been set for the '%{name}' VM!
       execute_error: |-
-        A Docker command executed by Vagrant didn't complete successfully!
+        A Docker command executed by Dumb Vagrant didn't complete successfully!
         The command run along with the output from the command is shown
         below.
 
@@ -231,13 +231,13 @@ en:
         separate machine name and options from the actual command to execute.
         An example is show below:
 
-          $ vagrant docker-exec -t nginx -- bash
+          $ dumb-vagrant docker-exec -t nginx -- bash
 
       host_vm_communicator_not_ready: |-
         The Docker provider was able to bring up the host VM successfully
         but the host VM is still reporting that SSH is unavailable. This
         sometimes happens with certain providers due to bugs in the
-        underlying hypervisor, and can be fixed with a `vagrant reload`.
+        underlying hypervisor, and can be fixed with a `dumb-vagrant reload`.
         The ID for the host VM is shown below for convenience.
 
         If this does not fix it, please verify that the host VM provider
@@ -252,10 +252,10 @@ en:
           Configured address: %{address}
           Network name:       %{network_name}
       network_address_required: |-
-        An IP address is required if not using `type: "dhcp"` or not specifying a `subnet`.
+        An IP address is required if not using `type: "ddumb-hcp"` or not specifying a `subnet`.
       network_invalid_option: |-
         Invalid option given for docker network for guest "%{container}". Must specify either
-        a `subnet` or use `type: "dhcp"`.
+        a `subnet` or use `type: "ddumb-hcp"`.
       network_name_missing: |-
         The Docker provider is unable to connect the container to the
         defined network due to a missing network name. Please validate
@@ -310,12 +310,12 @@ en:
         The "suspend" command is not supported with the Docker provider.
         Docker containers don't natively support suspend. If you're using
         a host machine, you can suspend the host machine by finding it
-        in `vagrant global-status` and using `vagrant suspend <id>`.
+        in `dumb-vagrant global-status` and using `dumb-vagrant suspend <id>`.
       synced_folder_non_docker: |-
         The "docker" synced folder type can't be used because the  provider
         in use is not Docker. This synced folder type only works with the
         Docker provider. The provider this machine is using is: %{provider}
-      vagrantfile_not_found: |-
-        The configured host VM Vagrantfile could not be found. Please fix
-        the Vagrantfile for this Docker environment to point to a valid
+      dumb-vagrantfile_not_found: |-
+        The configured host VM Dumb Vagrantfile could not be found. Please fix
+        the Dumb Vagrantfile for this Docker environment to point to a valid
         host VM.

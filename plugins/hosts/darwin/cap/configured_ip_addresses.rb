@@ -3,7 +3,7 @@
 
 require "socket"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostDarwin
     module Cap
       class ConfiguredIPAddresses

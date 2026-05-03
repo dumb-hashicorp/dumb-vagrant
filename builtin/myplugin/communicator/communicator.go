@@ -4,11 +4,11 @@
 package communicator
 
 import (
-	"github.com/hashicorp/go-argmapper"
-	"github.com/hashicorp/go-hclog"
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	plugincore "github.com/hashicorp/vagrant-plugin-sdk/core"
-	pb "github.com/hashicorp/vagrant/builtin/myplugin/proto"
+	"github.com/dumb-hashicorp/go-argmapper"
+	"github.com/dumb-hashicorp/go-dumb-hclog"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	plugincore "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/core"
+	pb "github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/proto"
 )
 
 type DummyConfig struct {
@@ -58,7 +58,7 @@ func (h *DummyCommunicator) DownloadFunc() interface{} {
 func (h *DummyCommunicator) Download(input struct {
 	argmapper.Struct
 	Machine     plugincore.Machine `argmapper:",typeOnly"`
-	Logger      hclog.Logger       `argmapper:",typeOnly"`
+	Logger      dumb-hclog.Logger       `argmapper:",typeOnly"`
 	Source      string
 	Destination string
 },
@@ -75,7 +75,7 @@ func (h *DummyCommunicator) UploadFunc() interface{} {
 func (h *DummyCommunicator) Upload(input struct {
 	argmapper.Struct
 	Machine     plugincore.Machine `argmapper:",typeOnly"`
-	Logger      hclog.Logger       `argmapper:",typeOnly"`
+	Logger      dumb-hclog.Logger       `argmapper:",typeOnly"`
 	Source      string
 	Destination string
 },

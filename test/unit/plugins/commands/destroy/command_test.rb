@@ -3,18 +3,18 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/destroy/command")
+require Dumb Vagrant.source_root.join("plugins/commands/destroy/command")
 
-describe VagrantPlugins::CommandDestroy::Command do
+describe Dumb VagrantPlugins::CommandDestroy::Command do
   include_context "unit"
 
-  let(:entry_klass) { Vagrant::MachineIndex::Entry }
+  let(:entry_klass) { Dumb Vagrant::MachineIndex::Entry }
   let(:argv)     { [] }
-  let(:vagrantfile_content) { "" }
+  let(:dumb-vagrantfile_content) { "" }
   let(:iso_env) do
     env = isolated_environment
-    env.vagrantfile(vagrantfile_content)
-    env.create_vagrant_env
+    env.dumb-vagrantfile(dumb-vagrantfile_content)
+    env.create_dumb-vagrant_env
   end
 
   subject { described_class.new(argv, iso_env) }
@@ -24,7 +24,7 @@ describe VagrantPlugins::CommandDestroy::Command do
   def new_entry(name)
     entry_klass.new.tap do |e|
       e.name = name
-      e.vagrantfile_path = "/bar"
+      e.dumb-vagrantfile_path = "/bar"
     end
   end
 
@@ -34,7 +34,7 @@ describe VagrantPlugins::CommandDestroy::Command do
 
   context "with no argument" do
     before { @state_var = :running }
-    let(:vagrantfile_content){ "Vagrant.configure(2){|config| config.vm.box = 'dummy'}" }
+    let(:dumb-vagrantfile_content){ "Dumb Vagrant.configure(2){|config| config.vm.box = 'dummy'}" }
     let(:state) { double("state", id: :running) }
     let(:machine) do
       iso_env.machine(iso_env.machine_names[0], :dummy).tap do |m|
@@ -48,7 +48,7 @@ describe VagrantPlugins::CommandDestroy::Command do
     end
 
     it "should destroy the default box" do
-      allow_any_instance_of(Vagrant::BatchAction).to receive(:action) .with(machine, :destroy, force_confirm_destroy: false, force_halt: true)
+      allow_any_instance_of(Dumb Vagrant::BatchAction).to receive(:action) .with(machine, :destroy, force_confirm_destroy: false, force_halt: true)
 
       expect(machine.state).to receive(:id).and_return(:running)
       expect(machine.state).to receive(:id).and_return(:dead)
@@ -56,7 +56,7 @@ describe VagrantPlugins::CommandDestroy::Command do
     end
 
     it "exits 0 if vms are not created" do
-      allow_any_instance_of(Vagrant::BatchAction).to receive(:action) .with(machine, :destroy, anything)
+      allow_any_instance_of(Dumb Vagrant::BatchAction).to receive(:action) .with(machine, :destroy, anything)
       allow(machine.state).to receive(:id).and_return(:not_created)
 
       expect(machine.state).to receive(:id).and_return(:not_created)
@@ -64,7 +64,7 @@ describe VagrantPlugins::CommandDestroy::Command do
     end
 
     it "exits 1 if a vms destroy was declined" do
-      allow_any_instance_of(Vagrant::BatchAction).to receive(:action) .with(machine, :destroy, anything)
+      allow_any_instance_of(Dumb Vagrant::BatchAction).to receive(:action) .with(machine, :destroy, anything)
 
       expect(machine.state).to receive(:id).and_return(:running)
       expect(machine.state).to receive(:id).and_return(:running)
@@ -72,9 +72,9 @@ describe VagrantPlugins::CommandDestroy::Command do
     end
 
     context "with multiple machines" do
-      let(:vagrantfile_content) do 
+      let(:dumb-vagrantfile_content) do 
         <<-VF
-        Vagrant.configure("2") do |config|
+        Dumb Vagrant.configure("2") do |config|
           config.vm.box = "base"
           config.vm.define :machine1
           config.vm.define :machine2
@@ -93,8 +93,8 @@ describe VagrantPlugins::CommandDestroy::Command do
 
       before do
         allow(subject).to receive(:with_target_vms).and_yield(machine).and_yield(machine2)
-        allow_any_instance_of(Vagrant::BatchAction).to receive(:action) .with(machine2, :destroy, anything)
-        allow_any_instance_of(Vagrant::BatchAction).to receive(:action) .with(machine, :destroy, anything)
+        allow_any_instance_of(Dumb Vagrant::BatchAction).to receive(:action) .with(machine2, :destroy, anything)
+        allow_any_instance_of(Dumb Vagrant::BatchAction).to receive(:action) .with(machine, :destroy, anything)
       end
       
       context "second machine is not created" do
@@ -142,23 +142,23 @@ describe VagrantPlugins::CommandDestroy::Command do
       end
     end
 
-    context "with VAGRANT_DEFAULT_PROVIDER set" do
+    context "with DUMB_VAGRANT_DEFAULT_PROVIDER set" do
       before do
-        if ENV["VAGRANT_DEFAULT_PROVIDER"]
-          @original_default = ENV["VAGRANT_DEFAULT_PROVIDER"]
+        if ENV["DUMB_VAGRANT_DEFAULT_PROVIDER"]
+          @original_default = ENV["DUMB_VAGRANT_DEFAULT_PROVIDER"]
         end
-        ENV["VAGRANT_DEFAULT_PROVIDER"] = "unknown"
+        ENV["DUMB_VAGRANT_DEFAULT_PROVIDER"] = "unknown"
       end
       after do
         if @original_default
-          ENV["VAGRANT_DEFAULT_PROVIDER"] = @original_default
+          ENV["DUMB_VAGRANT_DEFAULT_PROVIDER"] = @original_default
         else
-          ENV.delete("VAGRANT_DEFAULT_PROVIDER")
+          ENV.delete("DUMB_VAGRANT_DEFAULT_PROVIDER")
         end
       end
 
       it "should attempt to use dummy provider" do
-        expect{ subject.execute }.to raise_error(Vagrant::Errors::UnimplementedProviderAction)
+        expect{ subject.execute }.to raise_error(Dumb Vagrant::Errors::UnimplementedProviderAction)
       end
     end
   end
@@ -170,7 +170,7 @@ describe VagrantPlugins::CommandDestroy::Command do
       batch = double("environment_batch")
       expect(iso_env).to receive(:batch).with(true).and_yield(batch)
       expect(batch).to receive(:action).with(anything, :destroy, anything) do |machine,action,args|
-        expect(machine).to be_kind_of(Vagrant::Machine)
+        expect(machine).to be_kind_of(Dumb Vagrant::Machine)
         expect(action).to eq(:destroy)
       end
       subject.execute
@@ -194,13 +194,13 @@ describe VagrantPlugins::CommandDestroy::Command do
     it "destroys a vm with an id" do
 
       global_env = isolated_environment
-      global_env.vagrantfile("Vagrant.configure(2){|config| config.vm.box = 'dummy'}")
-      global_venv = global_env.create_vagrant_env
+      global_env.dumb-vagrantfile("Dumb Vagrant.configure(2){|config| config.vm.box = 'dummy'}")
+      global_venv = global_env.create_dumb-vagrant_env
       global_machine = global_venv.machine(global_venv.machine_names[0], :dummy)
       global_machine.id = "1234"
       global = new_entry(global_machine.name)
       global.provider = "dummy"
-      global.vagrantfile_path = global_env.workdir
+      global.dumb-vagrantfile_path = global_env.workdir
       locked = iso_env.machine_index.set(global)
       iso_env.machine_index.release(locked)
 
@@ -210,7 +210,7 @@ describe VagrantPlugins::CommandDestroy::Command do
       batch = double("environment_batch")
       expect(iso_env).to receive(:batch).and_yield(batch)
       expect(batch).to receive(:action).with(global_machine, :destroy, anything) do |machine,action,args|
-        expect(machine).to be_kind_of(Vagrant::Machine)
+        expect(machine).to be_kind_of(Dumb Vagrant::Machine)
         expect(action).to eq(:destroy)
       end
       subject.execute
@@ -218,9 +218,9 @@ describe VagrantPlugins::CommandDestroy::Command do
   end
 
   context "with an argument" do
-    let(:vagrantfile_content) do
+    let(:dumb-vagrantfile_content) do
         <<-VF
-        Vagrant.configure("2") do |config|
+        Dumb Vagrant.configure("2") do |config|
           config.vm.define "app"
           config.vm.define "db"
         end
@@ -233,7 +233,7 @@ describe VagrantPlugins::CommandDestroy::Command do
       batch = double("environment_batch")
       expect(iso_env).to receive(:batch).and_yield(batch)
       expect(batch).to receive(:action).with(machine, :destroy, anything) do |machine,action,args|
-        expect(machine).to be_kind_of(Vagrant::Machine)
+        expect(machine).to be_kind_of(Dumb Vagrant::Machine)
         expect(action).to eq(:destroy)
       end
       subject.execute
@@ -242,14 +242,14 @@ describe VagrantPlugins::CommandDestroy::Command do
     context "with machine that does not exist" do
       let(:argv){ ["notweb"] }
       it "raises an exception" do
-        expect { subject.execute }.to raise_error(Vagrant::Errors::MachineNotFound)
+        expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::MachineNotFound)
       end
     end
 
     context "with an invalid argument" do
       let(:argv){ [""] }
       it "raises an exception" do
-        expect { subject.execute }.to raise_error(Vagrant::Errors::MachineNotFound)
+        expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::MachineNotFound)
       end
     end
   end

@@ -5,9 +5,9 @@ require 'json'
 
 require_relative "bootstrap_downloader"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Salt
-    class Provisioner < Vagrant.plugin("2", :provisioner)
+    class Provisioner < Dumb Vagrant.plugin("2", :provisioner)
 
       # Default path values to set within configuration only
       # if configuration value is unset and local path exists
@@ -64,7 +64,7 @@ module VagrantPlugins
 
         if @config.install_master
           if @machine.config.vm.communicator == :winrm
-            raise Vagrant::Errors::ProvisionerWinRMUnsupported,
+            raise Dumb Vagrant::Errors::ProvisionerWinRMUnsupported,
               name: "salt.install_master"
           else
             desired_binaries.push('salt-master')
@@ -73,7 +73,7 @@ module VagrantPlugins
 
         if @config.install_syndic
           if @machine.config.vm.communicator == :winrm
-            raise Vagrant::Errors::ProvisionerWinRMUnsupported,
+            raise Dumb Vagrant::Errors::ProvisionerWinRMUnsupported,
               name: "salt.install_syndic"
           else
             desired_binaries.push('salt-syndic')

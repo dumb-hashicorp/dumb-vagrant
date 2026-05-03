@@ -4,13 +4,13 @@
 require "ipaddr"
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestNixos
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
+        include Dumb Vagrant::Util
 
         def self.configure_networks(machine, networks)
           # set the prefix length.
@@ -23,7 +23,7 @@ module VagrantPlugins
 
           # upload the config file
           network_module = TemplateRenderer.render("guests/nixos/network", networks: networks)
-          upload(machine, network_module, "/etc/nixos/vagrant-network.nix")
+          upload(machine, network_module, "/etc/nixos/dumb-vagrant-network.nix")
         end
 
         # Set :device on each network.
@@ -70,7 +70,7 @@ module VagrantPlugins
         def self.upload(machine, content, remote_path)
           remote_temp = mktemp(machine)
 
-          Tempfile.open("vagrant-nixos-configure-networks") do |f|
+          Tempfile.open("dumb-vagrant-nixos-configure-networks") do |f|
             f.binmode
             f.write(content)
             f.fsync
@@ -85,7 +85,7 @@ module VagrantPlugins
         def self.mktemp(machine)
           path = nil
 
-          machine.communicate.execute("mktemp --suffix -vagrant-upload") do |type, result|
+          machine.communicate.execute("mktemp --suffix -dumb-vagrant-upload") do |type, result|
             path = result.chomp if type == :stdout
           end
           path

@@ -3,7 +3,7 @@
 
 require_relative "../../../synced_folders/unix_mount_helpers"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestTinyCore
     module Cap
       class MountNFS
@@ -11,7 +11,7 @@ module VagrantPlugins
 
         def self.mount_nfs_folder(machine, ip, folders)
           folders.each do |name, opts|
-            # Expand the guest path so we can handle things like "~/vagrant"
+            # Expand the guest path so we can handle things like "~/dumb-vagrant"
             expanded_guest_path = machine.guest.capability(
               :shell_expand_guest_path, opts[:guestpath])
 
@@ -30,9 +30,9 @@ module VagrantPlugins
             end
 
             mount_command = "mount.nfs -o '#{mount_opts.join(",")}' #{ip}:'#{hostpath}' #{expanded_guest_path}"
-            retryable(on: Vagrant::Errors::NFSMountFailed, tries: 8, sleep: 3) do
+            retryable(on: Dumb Vagrant::Errors::NFSMountFailed, tries: 8, sleep: 3) do
               machine.communicate.sudo(mount_command,
-                                       error_class: Vagrant::Errors::NFSMountFailed)
+                                       error_class: Dumb Vagrant::Errors::NFSMountFailed)
             end
 
             emit_upstart_notification(machine, expanded_guest_path)

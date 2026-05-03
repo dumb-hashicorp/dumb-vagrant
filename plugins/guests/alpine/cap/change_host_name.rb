@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant/util/guest_hosts'
+require 'dumb-vagrant/util/guest_hosts'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestAlpine
     module Cap
       class ChangeHostName
-        include Vagrant::Util::GuestHosts::Linux
+        include Dumb Vagrant::Util::GuestHosts::Linux
 
         def self.change_host_name(machine, name)
           new(machine, name).change!
@@ -27,7 +27,7 @@ module VagrantPlugins
           update_etc_hostname
           refresh_hostname_service
           update_mailname
-          renew_dhcp
+          renew_ddumb-hcp
         end
 
         def should_change?
@@ -72,7 +72,7 @@ module VagrantPlugins
           machine.communicate.sudo('hostname -f > /etc/mailname')
         end
 
-        def renew_dhcp
+        def renew_ddumb-hcp
           machine.communicate.sudo('ifdown -a; ifup -a; ifup eth0')
         end
 

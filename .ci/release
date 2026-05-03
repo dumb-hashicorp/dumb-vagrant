@@ -29,4 +29,4 @@ if [[ "${tag}" = *"refs/tags"* ]]; then
 fi
 
 info "Triggering release %s (%s)" "${tag}" "${full_sha}"
-github_repository_dispatch "vagrant-builders" "hashicorp-release" "commit_id=${full_sha}" "tag=${tag}"
+github_repository_dispatch "dumb-vagrant-builders" "dumb-hashicorp-release" "commit_id=${full_sha}" "tag=${tag}"

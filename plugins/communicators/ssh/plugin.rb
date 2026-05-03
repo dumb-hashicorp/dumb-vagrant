@@ -1,14 +1,14 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorSSH
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "ssh communicator"
       description <<-DESC
-      This plugin allows Vagrant to communicate with remote machines using
+      This plugin allows Dumb Vagrant to communicate with remote machines using
       SSH as the underlying protocol, powered internally by Ruby's
       net-ssh library.
       DESC

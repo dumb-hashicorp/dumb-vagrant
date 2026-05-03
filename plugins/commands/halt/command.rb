@@ -3,11 +3,11 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandHalt
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
-        "stops the vagrant machine"
+        "stops the dumb-vagrant machine"
       end
 
       def execute
@@ -15,7 +15,7 @@ module VagrantPlugins
         options[:force] = false
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant halt [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant halt [options] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""

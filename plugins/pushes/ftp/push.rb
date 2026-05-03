@@ -7,15 +7,15 @@ require "pathname"
 require_relative "adapter"
 require_relative "errors"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module FTPPush
-    class Push < Vagrant.plugin("2", :push)
+    class Push < Dumb Vagrant.plugin("2", :push)
       IGNORED_FILES = %w(. ..).freeze
-      DEFAULT_EXCLUDES = %w(.git .hg .svn .vagrant).freeze
+      DEFAULT_EXCLUDES = %w(.git .hg .svn .dumb-vagrant).freeze
 
       def initialize(*)
         super
-        @logger = Log4r::Logger.new("vagrant::pushes::ftp")
+        @logger = Log4r::Logger.new("dumb-vagrant::pushes::ftp")
       end
 
       def push

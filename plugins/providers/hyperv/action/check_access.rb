@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class CheckAccess
@@ -12,7 +12,7 @@ module VagrantPlugins
         def call(env)
           env[:ui].output("Verifying Hyper-V is accessible...")
           result = env[:machine].provider.driver.execute(:check_hyperv_access,
-            "Path" => Vagrant::Util::Platform.wsl_to_windows_path(env[:machine].data_dir).gsub("/", "\\")
+            "Path" => Dumb Vagrant::Util::Platform.wsl_to_windows_path(env[:machine].data_dir).gsub("/", "\\")
           )
           if !result["result"]
             raise Errors::SystemAccessRequired,

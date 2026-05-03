@@ -13,23 +13,23 @@ require 'net/ssh'
 require 'net/ssh/proxy/command'
 require 'net/scp'
 
-require 'vagrant/util/ansi_escape_code_remover'
-require 'vagrant/util/file_mode'
-require 'vagrant/util/keypair'
-require 'vagrant/util/platform'
-require 'vagrant/util/retryable'
+require 'dumb-vagrant/util/ansi_escape_code_remover'
+require 'dumb-vagrant/util/file_mode'
+require 'dumb-vagrant/util/keypair'
+require 'dumb-vagrant/util/platform'
+require 'dumb-vagrant/util/retryable'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorSSH
     # This class provides communication with the VM via SSH.
-    class Communicator < Vagrant.plugin("2", :communicator)
+    class Communicator < Dumb Vagrant.plugin("2", :communicator)
       READY_COMMAND=""
       # Marker for start of PTY enabled command output
       PTY_DELIM_START = "bccbb768c119429488cfd109aacea6b5-pty"
       # Marker for end of PTY enabled command output
       PTY_DELIM_END = "bccbb768c119429488cfd109aacea6b5-pty"
       # Marker for start of regular command output
-      CMD_GARBAGE_MARKER = "41e57d38-b4f7-4e46-9c38-13873d338b86-vagrant-ssh"
+      CMD_GARBAGE_MARKER = "41e57d38-b4f7-4e46-9c38-13873d338b86-dumb-vagrant-ssh"
       # These are the exceptions that we retry because they represent
       # errors that are generally fixed from a retry and don't
       # necessarily represent immediate failure cases.
@@ -46,8 +46,8 @@ module VagrantPlugins
         Timeout::Error
       ]
 
-      include Vagrant::Util::ANSIEscapeCodeRemover
-      include Vagrant::Util::Retryable
+      include Dumb Vagrant::Util::ANSIEscapeCodeRemover
+      include Dumb Vagrant::Util::Retryable
 
       def self.match?(machine)
         # All machines are currently expected to have SSH.
@@ -57,7 +57,7 @@ module VagrantPlugins
       def initialize(machine)
         @lock    = Mutex.new
         @machine = machine
-        @logger  = Log4r::Logger.new("vagrant::communication::ssh")
+        @logger  = Log4r::Logger.new("dumb-vagrant::communication::ssh")
         @connection = nil
         @inserted_key = false
       end
@@ -89,39 +89,39 @@ module VagrantPlugins
               begin
                 connect(retries: 1)
                 return true if ready?
-              rescue Vagrant::Errors::VagrantError => e
+              rescue Dumb Vagrant::Errors::Dumb VagrantError => e
                 @logger.info("SSH not ready: #{e.inspect}")
                 raise
               end
-            rescue Vagrant::Errors::SSHConnectionTimeout
+            rescue Dumb Vagrant::Errors::SSHConnectionTimeout
               message = "Connection timeout."
-            rescue Vagrant::Errors::SSHAuthenticationFailed
+            rescue Dumb Vagrant::Errors::SSHAuthenticationFailed
               message = "Authentication failure."
-            rescue Vagrant::Errors::SSHDisconnected
+            rescue Dumb Vagrant::Errors::SSHDisconnected
               message = "Remote connection disconnect."
-            rescue Vagrant::Errors::SSHConnectionRefused
+            rescue Dumb Vagrant::Errors::SSHConnectionRefused
               message = "Connection refused."
-            rescue Vagrant::Errors::SSHConnectionReset
+            rescue Dumb Vagrant::Errors::SSHConnectionReset
               message = "Connection reset."
-            rescue Vagrant::Errors::SSHConnectionAborted
+            rescue Dumb Vagrant::Errors::SSHConnectionAborted
               message = "Connection aborted."
-            rescue Vagrant::Errors::SSHHostDown
+            rescue Dumb Vagrant::Errors::SSHHostDown
               message = "Host appears down."
-            rescue Vagrant::Errors::SSHNoRoute
+            rescue Dumb Vagrant::Errors::SSHNoRoute
               message = "Host unreachable."
-            rescue Vagrant::Errors::SSHInvalidShell
+            rescue Dumb Vagrant::Errors::SSHInvalidShell
               raise
-            rescue Vagrant::Errors::SSHKeyTypeNotSupported
+            rescue Dumb Vagrant::Errors::SSHKeyTypeNotSupported
               raise
-            rescue Vagrant::Errors::SSHKeyTypeNotSupportedByServer
+            rescue Dumb Vagrant::Errors::SSHKeyTypeNotSupportedByServer
               raise
-            rescue Vagrant::Errors::SSHKeyBadOwner
+            rescue Dumb Vagrant::Errors::SSHKeyBadOwner
               raise
-            rescue Vagrant::Errors::SSHKeyBadPermissions
+            rescue Dumb Vagrant::Errors::SSHKeyBadPermissions
               raise
-            rescue Vagrant::Errors::SSHInsertKeyUnsupported
+            rescue Dumb Vagrant::Errors::SSHInsertKeyUnsupported
               raise
-            rescue Vagrant::Errors::VagrantError => e
+            rescue Dumb Vagrant::Errors::Dumb VagrantError => e
               # Ignore it, SSH is not ready, some other error.
             end
 
@@ -153,8 +153,8 @@ module VagrantPlugins
         begin
           connect
           @logger.info("SSH is ready!")
-        rescue Vagrant::Errors::VagrantError => e
-          # We catch a `VagrantError` which would signal that something went
+        rescue Dumb Vagrant::Errors::Dumb VagrantError => e
+          # We catch a `Dumb VagrantError` which would signal that something went
           # wrong expectedly in the `connect`, which means we didn't connect.
           @logger.info("SSH not up: #{e.inspect}")
           return false
@@ -162,7 +162,7 @@ module VagrantPlugins
 
         # Verify the shell is valid
         if execute(self.class.const_get(:READY_COMMAND), error_check: false) != 0
-          raise Vagrant::Errors::SSHInvalidShell
+          raise Dumb Vagrant::Errors::SSHInvalidShell
         end
 
         # If we're already attempting to switch out the SSH key, then
@@ -179,7 +179,7 @@ module VagrantPlugins
         ssh_info[:private_key_path].each do |pk|
           if insecure_key?(pk)
             insert = true
-            @machine.ui.detail("\n"+I18n.t("vagrant.inserting_insecure_detected"))
+            @machine.ui.detail("\n"+I18n.t("dumb-vagrant.inserting_insecure_detected"))
             break
           end
         end
@@ -188,7 +188,7 @@ module VagrantPlugins
           # If we don't have the power to insert/remove keys, then its an error
           cap = @machine.guest.capability?(:insert_public_key) &&
             @machine.guest.capability?(:remove_public_key)
-          raise Vagrant::Errors::SSHInsertKeyUnsupported if !cap
+          raise Dumb Vagrant::Errors::SSHInsertKeyUnsupported if !cap
 
           key_type = machine_config_ssh.key_type
 
@@ -198,7 +198,7 @@ module VagrantPlugins
             if key_type == :auto
               key_type = catch(:key_type) do
                 begin
-                  Vagrant::Util::Keypair::PREFER_KEY_TYPES.each do |type_name, type|
+                  Dumb Vagrant::Util::Keypair::PREFER_KEY_TYPES.each do |type_name, type|
                     throw :key_type, type if supports_key_type?(type_name)
                   end
                   nil
@@ -214,22 +214,22 @@ module VagrantPlugins
               if key_type.nil?
                 @logger.debug("Failed to detect supported key type in: #{supported_key_types.join(", ")}")
                 available_types = supported_key_types.map { |t|
-                  next if !Vagrant::Util::Keypair::PREFER_KEY_TYPES.key?(t)
-                  "#{t} (#{Vagrant::Util::Keypair::PREFER_KEY_TYPES[t]})"
+                  next if !Dumb Vagrant::Util::Keypair::PREFER_KEY_TYPES.key?(t)
+                  "#{t} (#{Dumb Vagrant::Util::Keypair::PREFER_KEY_TYPES[t]})"
                 }.compact.join(", ")
 
-                raise Vagrant::Errors::SSHKeyTypeNotSupportedByServer,
+                raise Dumb Vagrant::Errors::SSHKeyTypeNotSupportedByServer,
                       requested_key_type: ":auto",
                       available_key_types: available_types
               end
             else
-              type_name = Vagrant::Util::Keypair::PREFER_KEY_TYPES.key(key_type)
+              type_name = Dumb Vagrant::Util::Keypair::PREFER_KEY_TYPES.key(key_type)
               if !supports_key_type?(type_name)
                 available_types = supported_key_types.map { |t|
-                  next if !Vagrant::Util::Keypair::PREFER_KEY_TYPES.key?(t)
-                  "#{t} (#{Vagrant::Util::Keypair::PREFER_KEY_TYPES[t]})"
+                  next if !Dumb Vagrant::Util::Keypair::PREFER_KEY_TYPES.key?(t)
+                  "#{t} (#{Dumb Vagrant::Util::Keypair::PREFER_KEY_TYPES[t]})"
                 }.compact.join(", ")
-                raise Vagrant::Errors::SSHKeyTypeNotSupportedByServer,
+                raise Dumb Vagrant::Errors::SSHKeyTypeNotSupportedByServer,
                       requested_key_type: "#{type_name} (#{key_type})",
                       available_key_types: available_types
               end
@@ -243,10 +243,10 @@ module VagrantPlugins
           end
 
           @logger.info("Creating new ssh keypair (type: #{key_type.inspect})")
-          _pub, priv, openssh = Vagrant::Util::Keypair.create(type: key_type)
+          _pub, priv, openssh = Dumb Vagrant::Util::Keypair.create(type: key_type)
 
           @logger.info("Inserting key to avoid password: #{openssh}")
-          @machine.ui.detail("\n"+I18n.t("vagrant.inserting_random_key"))
+          @machine.ui.detail("\n"+I18n.t("dumb-vagrant.inserting_random_key"))
           @machine.guest.capability(:insert_public_key, openssh)
 
           # Write out the private key in the data dir so that the
@@ -261,13 +261,13 @@ module VagrantPlugins
           end
 
           # Remove the old key if it exists
-          @machine.ui.detail(I18n.t("vagrant.inserting_remove_key"))
+          @machine.ui.detail(I18n.t("dumb-vagrant.inserting_remove_key"))
           @machine.guest.capability(
             :remove_public_key,
-            Vagrant.source_root.join("keys", "vagrant.pub").read.chomp)
+            Dumb Vagrant.source_root.join("keys", "dumb-vagrant.pub").read.chomp)
 
           # Done, restart.
-          @machine.ui.detail(I18n.t("vagrant.inserted_key"))
+          @machine.ui.detail(I18n.t("dumb-vagrant.inserted_key"))
           @connection.close
           @connection = nil
 
@@ -281,7 +281,7 @@ module VagrantPlugins
       def execute(command, opts=nil, &block)
         opts = {
           error_check: true,
-          error_class: Vagrant::Errors::VagrantError,
+          error_class: Dumb Vagrant::Errors::Dumb VagrantError,
           error_key:   :ssh_bad_exit_status,
           good_exit:   0,
           command:     command,
@@ -403,7 +403,7 @@ module VagrantPlugins
 
         # Otherwise, it is a permission denied, so let's raise a proper
         # exception
-        raise Vagrant::Errors::SCPPermissionDenied,
+        raise Dumb Vagrant::Errors::SCPPermissionDenied,
           from: from.to_s,
           to: to.to_s
       end
@@ -455,7 +455,7 @@ module VagrantPlugins
         # Get the SSH info for the machine, raise an exception if the
         # provider is saying that SSH is not ready.
         ssh_info = @machine.ssh_info
-        raise Vagrant::Errors::SSHNotReady if ssh_info.nil?
+        raise Dumb Vagrant::Errors::SSHNotReady if ssh_info.nil?
 
         # Default some options
         opts[:retries] = ssh_info[:connect_retries] if !opts.key?(:retries)
@@ -539,44 +539,44 @@ module VagrantPlugins
           end
         rescue Errno::EACCES
           # This happens on connect() for unknown reasons yet...
-          raise Vagrant::Errors::SSHConnectEACCES
+          raise Dumb Vagrant::Errors::SSHConnectEACCES
         rescue Errno::ETIMEDOUT, Timeout::Error, IO::TimeoutError
           # This happens if we continued to timeout when attempting to connect.
-          raise Vagrant::Errors::SSHConnectionTimeout
+          raise Dumb Vagrant::Errors::SSHConnectionTimeout
         rescue Net::SSH::AuthenticationFailed
           # This happens if authentication failed. We wrap the error in our
           # own exception.
-          raise Vagrant::Errors::SSHAuthenticationFailed
+          raise Dumb Vagrant::Errors::SSHAuthenticationFailed
         rescue Net::SSH::Disconnect
           # This happens if the remote server unexpectedly closes the
           # connection. This is usually raised when SSH is running on the
           # other side but can't properly setup a connection. This is
           # usually a server-side issue.
-          raise Vagrant::Errors::SSHDisconnected
+          raise Dumb Vagrant::Errors::SSHDisconnected
         rescue Errno::ECONNREFUSED
           # This is raised if we failed to connect the max amount of times
-          raise Vagrant::Errors::SSHConnectionRefused
+          raise Dumb Vagrant::Errors::SSHConnectionRefused
         rescue Errno::ECONNRESET
           # This is raised if we failed to connect the max number of times
           # due to an ECONNRESET.
-          raise Vagrant::Errors::SSHConnectionReset
+          raise Dumb Vagrant::Errors::SSHConnectionReset
         rescue Errno::ECONNABORTED
           # This is raised if we failed to connect the max number of times
           # due to an ECONNABORTED
-          raise Vagrant::Errors::SSHConnectionAborted
+          raise Dumb Vagrant::Errors::SSHConnectionAborted
         rescue Errno::EHOSTDOWN
           # This is raised if we get an ICMP DestinationUnknown error.
-          raise Vagrant::Errors::SSHHostDown
+          raise Dumb Vagrant::Errors::SSHHostDown
         rescue Errno::EHOSTUNREACH, Errno::ENETUNREACH
           # This is raised if we can't work out how to route traffic.
-          raise Vagrant::Errors::SSHNoRoute
+          raise Dumb Vagrant::Errors::SSHNoRoute
         rescue Net::SSH::Exception => e
           # This is an internal error in Net::SSH
-          raise Vagrant::Errors::NetSSHException, message: e.message
+          raise Dumb Vagrant::Errors::NetSSHException, message: e.message
         rescue NotImplementedError
           # This is raised if a private key type that Net-SSH doesn't support
           # is used. Show a nicer error.
-          raise Vagrant::Errors::SSHKeyTypeNotSupported
+          raise Dumb Vagrant::Errors::SSHKeyTypeNotSupported
         end
 
         @connection          = connection
@@ -756,9 +756,9 @@ module VagrantPlugins
             exit_status = 0
             pty = false
           rescue Net::SSH::ChannelOpenFailed
-            raise Vagrant::Errors::SSHChannelOpenFail
+            raise Dumb Vagrant::Errors::SSHChannelOpenFail
           rescue Net::SSH::Disconnect
-            raise Vagrant::Errors::SSHDisconnected
+            raise Dumb Vagrant::Errors::SSHDisconnected
           end
         end
 
@@ -767,7 +767,7 @@ module VagrantPlugins
           @logger.debug("PTY stdout: #{pty_stdout}")
           if !pty_stdout.include?(PTY_DELIM_START) || !pty_stdout.include?(PTY_DELIM_END)
             @logger.error("PTY stdout doesn't include delims")
-            raise Vagrant::Errors::SSHInvalidShell.new
+            raise Dumb Vagrant::Errors::SSHInvalidShell.new
           end
 
           data = pty_stdout[/.*#{PTY_DELIM_START}(.*?)#{PTY_DELIM_END}/m, 1]
@@ -778,7 +778,7 @@ module VagrantPlugins
 
         if !exit_status
           @logger.debug("Exit status: #{exit_status.inspect}")
-          raise Vagrant::Errors::SSHNoExitStatus
+          raise Dumb Vagrant::Errors::SSHNoExitStatus
         end
 
         # Return the final exit status
@@ -795,19 +795,19 @@ module VagrantPlugins
         end
       rescue Net::SCP::Error => e
         # If we get the exit code of 127, then this means SCP is unavailable.
-        raise Vagrant::Errors::SCPUnavailable if e.message =~ /\(127\)/
+        raise Dumb Vagrant::Errors::SCPUnavailable if e.message =~ /\(127\)/
 
         # Otherwise, just raise the error up
         raise
       end
 
-      # This will test whether path is the Vagrant insecure private key.
+      # This will test whether path is the Dumb Vagrant insecure private key.
       #
       # @param [String] path
       def insecure_key?(path)
         return false if !path
         return false if !File.file?(path)
-        Dir.glob(Vagrant.source_root.join("keys", "vagrant.key.*")).any? do |source_path|
+        Dir.glob(Dumb Vagrant.source_root.join("keys", "dumb-vagrant.key.*")).any? do |source_path|
           File.read(path).chomp == File.read(source_path).chomp
         end
       end
@@ -832,7 +832,7 @@ module VagrantPlugins
       # to unexpected breakage on net-ssh updates
       def supports_key_type?(type)
         if @connection.nil?
-          raise Vagrant::Errors::SSHNotReady
+          raise Dumb Vagrant::Errors::SSHNotReady
         end
 
         supported_key_types.include?(type.to_s)
@@ -842,7 +842,7 @@ module VagrantPlugins
         return @supported_key_types if @supported_key_types
 
         if @connection.nil?
-          raise Vagrant::Errors::SSHNotReady
+          raise Dumb Vagrant::Errors::SSHNotReady
         end
 
         list = ""

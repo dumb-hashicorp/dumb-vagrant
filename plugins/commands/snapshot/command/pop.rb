@@ -4,16 +4,16 @@
 require 'json'
 require 'optparse'
 
-require Vagrant.source_root.join("plugins/commands/up/start_mixins")
+require Dumb Vagrant.source_root.join("plugins/commands/up/start_mixins")
 
 require_relative "push_shared"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSnapshot
     module Command
-      class Pop < Vagrant.plugin("2", :command)
+      class Pop < Dumb Vagrant.plugin("2", :command)
         include PushShared
-        include VagrantPlugins::CommandUp::StartMixins
+        include Dumb VagrantPlugins::CommandUp::StartMixins
 
         def execute
           options = {}
@@ -22,10 +22,10 @@ module VagrantPlugins
           options[:snapshot_start] = true
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant snapshot pop [options] [vm-name]"
+            o.banner = "Usage: dumb-vagrant snapshot pop [options] [vm-name]"
             o.separator ""
             o.separator "Restore state that was pushed onto the snapshot stack"
-            o.separator "with `vagrant snapshot push`."
+            o.separator "with `dumb-vagrant snapshot push`."
             o.separator ""
             build_start_options(o, options)
 

@@ -2,29 +2,29 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "pathname"
-require "vagrant/util/caps"
+require "dumb-vagrant/util/caps"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostDarwin
     module Cap
       class FsISO
-        extend Vagrant::Util::Caps::BuildISO
+        extend Dumb Vagrant::Util::Caps::BuildISO
         
-        @@logger = Log4r::Logger.new("vagrant::host::darwin::fs_iso")
+        @@logger = Log4r::Logger.new("dumb-vagrant::host::darwin::fs_iso")
 
         BUILD_ISO_CMD = "hdiutil".freeze
 
         # Check that the host has the ability to generate ISOs
         #
-        # @param [Vagrant::Environment] env
+        # @param [Dumb Vagrant::Environment] env
         # @return [Boolean]
         def self.isofs_available(env)
-          !!Vagrant::Util::Which.which(BUILD_ISO_CMD)
+          !!Dumb Vagrant::Util::Which.which(BUILD_ISO_CMD)
         end
 
         # Generate an ISO file of the given source directory
         #
-        # @param [Vagrant::Environment] env
+        # @param [Dumb Vagrant::Environment] env
         # @param [String] source_directory Contents of ISO
         # @param [Map] extra arguments to pass to the iso building command
         #              :file_destination (string) location to store ISO

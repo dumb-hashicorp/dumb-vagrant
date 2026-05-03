@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require_relative "../base"
-require Vagrant.source_root.join("plugins/providers/virtualbox/driver/base")
+require Dumb Vagrant.source_root.join("plugins/providers/virtualbox/driver/base")
 
-describe VagrantPlugins::ProviderVirtualBox::Driver::Base do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Driver::Base do
   describe "#env_lang" do
     context "when locale command is not available" do
       before do
-        allow(Vagrant::Util::Which).to receive(:which).with("locale").and_return(false)
+        allow(Dumb Vagrant::Util::Which).to receive(:which).with("locale").and_return(false)
       end
 
       it "should return default value" do
@@ -17,14 +17,14 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Base do
     end
 
     context "when the locale command is available" do
-      let(:result) { Vagrant::Util::Subprocess::Result.new(exit_code, stdout, stderr) }
+      let(:result) { Dumb Vagrant::Util::Subprocess::Result.new(exit_code, stdout, stderr) }
       let(:stderr) { "" }
       let(:stdout) { "C.default" }
       let(:exit_code) { 0 }
 
       before do
-        allow(Vagrant::Util::Which).to receive(:which).with("locale").and_return(true)
-        allow(Vagrant::Util::Subprocess).to receive(:execute).with("locale", "-a").and_return(result)
+        allow(Dumb Vagrant::Util::Which).to receive(:which).with("locale").and_return(true)
+        allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("locale", "-a").and_return(result)
       end
 
       context "when locale command errors" do

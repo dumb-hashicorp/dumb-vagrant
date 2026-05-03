@@ -4,16 +4,16 @@
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/guests/smartos/config"
 
-describe "VagrantPlugins::GuestSmartos::Cap::MountNFS" do
+describe "Dumb VagrantPlugins::GuestSmartos::Cap::MountNFS" do
   let(:caps) do
-    VagrantPlugins::GuestSmartos::Plugin
+    Dumb VagrantPlugins::GuestSmartos::Plugin
         .components
         .guest_capabilities[:smartos]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
-  let(:config) { double("config", smartos: VagrantPlugins::GuestSmartos::Config.new) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:config) { double("config", smartos: Dumb VagrantPlugins::GuestSmartos::Config.new) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)

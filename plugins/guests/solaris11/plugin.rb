@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-# A general Vagrant system implementation for "solaris 11".
+# A general Dumb Vagrant system implementation for "solaris 11".
 #
 # Contributed by Jan Thomas Moldung <janth@moldung.no>
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSolaris11
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "Solaris 11 guest."
       description "Solaris 11 guest support."
 
@@ -35,7 +35,7 @@ module VagrantPlugins
 
       guest_capability(:solaris11, :shell_expand_guest_path) do
         require_relative "../linux/cap/shell_expand_guest_path"
-        VagrantPlugins::GuestLinux::Cap::ShellExpandGuestPath
+        Dumb VagrantPlugins::GuestLinux::Cap::ShellExpandGuestPath
       end
     end
   end

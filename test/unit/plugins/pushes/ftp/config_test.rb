@@ -3,13 +3,13 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/pushes/ftp/config")
+require Dumb Vagrant.source_root.join("plugins/pushes/ftp/config")
 
-describe VagrantPlugins::FTPPush::Config do
+describe Dumb VagrantPlugins::FTPPush::Config do
   include_context "unit"
 
   before(:all) do
-    I18n.load_path << Vagrant.source_root.join("plugins/pushes/ftp/locales/en.yml")
+    I18n.load_path << Dumb Vagrant.source_root.join("plugins/pushes/ftp/locales/en.yml")
     I18n.reload!
   end
 

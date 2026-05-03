@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
-    class Config < Vagrant.plugin("2", :config)
-      # Vagrant by default will make "smart" decisions to enable/disable
+    class Config < Dumb Vagrant.plugin("2", :config)
+      # Dumb Vagrant by default will make "smart" decisions to enable/disable
       # the NAT DNS proxy. If this is set to `true`, then the DNS proxy
       # will not be enabled, and it is up to the end user to do it.
       #
@@ -180,7 +180,7 @@ module VagrantPlugins
         @customizations.each do |event, _|
           if !valid_events.include?(event)
             errors << I18n.t(
-              "vagrant.virtualbox.config.invalid_event",
+              "dumb-vagrant.virtualbox.config.invalid_event",
               event: event.to_s,
               valid_events: valid_events.join(", "))
           end
@@ -188,14 +188,14 @@ module VagrantPlugins
 
         @customizations.each do |event, command|
           if event == "pre-import" && command.index(:id)
-            errors << I18n.t("vagrant.virtualbox.config.id_in_pre_import")
+            errors << I18n.t("dumb-vagrant.virtualbox.config.id_in_pre_import")
           end
         end
 
         # Verify that internal networks are only on private networks.
         machine.config.vm.networks.each do |type, data|
           if data[:virtualbox__intnet] && type != :private_network
-            errors << I18n.t("vagrant.virtualbox.config.intnet_on_bad_type")
+            errors << I18n.t("dumb-vagrant.virtualbox.config.intnet_on_bad_type")
             break
           end
         end

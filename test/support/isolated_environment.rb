@@ -7,13 +7,13 @@ require "tmpdir"
 
 require "log4r"
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
-# This class manages an isolated environment for Vagrant to
+# This class manages an isolated environment for Dumb Vagrant to
 # run in. It creates a temporary directory to act as the
 # working directory as well as sets a custom home directory.
 #
-# This class also provides various helpers to create Vagrantfiles,
+# This class also provides various helpers to create Dumb Vagrantfiles,
 # boxes, etc.
 class IsolatedEnvironment
   attr_reader :homedir
@@ -23,7 +23,7 @@ class IsolatedEnvironment
   # options here to configure running custom applications in place
   # of others as well as specifying environmental variables.
   #
-  # @param [Hash] apps A mapping of application name (such as "vagrant")
+  # @param [Hash] apps A mapping of application name (such as "dumb-vagrant")
   #   to an alternate full path to the binary to run.
   # @param [Hash] env Additional environmental variables to inject
   #   into the execution environments.
@@ -31,7 +31,7 @@ class IsolatedEnvironment
     @logger = Log4r::Logger.new("test::isolated_environment")
 
     # Create a temporary directory for our work
-    @tempdir = Vagrant::Util::Platform.fs_real_path(Dir.mktmpdir("vagrant-iso-env"))
+    @tempdir = Dumb Vagrant::Util::Platform.fs_real_path(Dir.mktmpdir("dumb-vagrant-iso-env"))
     @logger.info("Initialize isolated environment: #{@tempdir}")
 
     # Setup the home and working directories

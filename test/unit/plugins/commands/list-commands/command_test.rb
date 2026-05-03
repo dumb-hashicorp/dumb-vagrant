@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/list-commands/command")
+require Dumb Vagrant.source_root.join("plugins/commands/list-commands/command")
 
-describe VagrantPlugins::CommandListCommands::Command do
+describe Dumb VagrantPlugins::CommandListCommands::Command do
   include_context "unit"
   include_context "command plugin helpers"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:argv)     { [] }
@@ -22,7 +22,7 @@ describe VagrantPlugins::CommandListCommands::Command do
   subject { described_class.new(argv, iso_env) }
 
   before do
-    allow(Vagrant.plugin("2").manager).to receive(:commands).and_return(commands)
+    allow(Dumb Vagrant.plugin("2").manager).to receive(:commands).and_return(commands)
   end
 
   describe "execute" do

@@ -5,21 +5,21 @@ require_relative "../../../../base"
 require_relative "../../support/shared/config"
 require_relative "shared"
 
-require Vagrant.source_root.join("plugins/provisioners/ansible/config/host")
+require Dumb Vagrant.source_root.join("plugins/provisioners/ansible/config/host")
 
-describe VagrantPlugins::Ansible::Config::Host, :skip_windows => true do
+describe Dumb VagrantPlugins::Ansible::Config::Host, :skip_windows => true do
   include_context "unit"
 
   subject { described_class.new }
 
-  let(:machine) { double("machine", env: Vagrant::Environment.new) }
+  let(:machine) { double("machine", env: Dumb Vagrant::Environment.new) }
   let(:existing_file) { File.expand_path(__FILE__) }
 
   it "supports a list of options" do
     supported_options = %w(
                             ask_become_pass
                             ask_sudo_pass
-                            ask_vault_pass
+                            ask_dumb-vault_pass
                             become
                             become_user
                             compatibility_mode
@@ -43,7 +43,7 @@ describe VagrantPlugins::Ansible::Config::Host, :skip_windows => true do
                             sudo
                             sudo_user
                             tags
-                            vault_password_file
+                            dumb-vault_password_file
                             verbose
                             version
                           )
@@ -59,7 +59,7 @@ describe VagrantPlugins::Ansible::Config::Host, :skip_windows => true do
 
       expect(subject.ask_become_pass).to be(false)
       expect(subject.ask_sudo_pass).to be(false)      # deprecated
-      expect(subject.ask_vault_pass).to be(false)
+      expect(subject.ask_dumb-vault_pass).to be(false)
       expect(subject.force_remote_user).to be(true)
       expect(subject.host_key_checking).to be(false)
       expect(subject.raw_ssh_args).to be_nil
@@ -67,24 +67,24 @@ describe VagrantPlugins::Ansible::Config::Host, :skip_windows => true do
   end
 
   describe "force_remote_user option" do
-    it_behaves_like "any VagrantConfigProvisioner strict boolean attribute", :force_remote_user, true
+    it_behaves_like "any Dumb VagrantConfigProvisioner strict boolean attribute", :force_remote_user, true
   end
   describe "host_key_checking option" do
-    it_behaves_like "any VagrantConfigProvisioner strict boolean attribute", :host_key_checking, false
+    it_behaves_like "any Dumb VagrantConfigProvisioner strict boolean attribute", :host_key_checking, false
   end
   describe "ask_become_pass option" do
-    it_behaves_like "any VagrantConfigProvisioner strict boolean attribute", :ask_become_pass, false
+    it_behaves_like "any Dumb VagrantConfigProvisioner strict boolean attribute", :ask_become_pass, false
   end
   describe "ask_sudo_pass option" do
     before do
       # Filter the deprecation notice
       allow($stdout).to receive(:puts)
     end
-    it_behaves_like "any VagrantConfigProvisioner strict boolean attribute", :ask_sudo_pass, false
+    it_behaves_like "any Dumb VagrantConfigProvisioner strict boolean attribute", :ask_sudo_pass, false
     it_behaves_like "any deprecated option", :ask_sudo_pass, :ask_become_pass, true
   end
-  describe "ask_vault_pass option" do
-    it_behaves_like "any VagrantConfigProvisioner strict boolean attribute", :ask_vault_pass, false
+  describe "ask_dumb-vault_pass option" do
+    it_behaves_like "any Dumb VagrantConfigProvisioner strict boolean attribute", :ask_dumb-vault_pass, false
   end
 
   describe "#validate" do
@@ -100,7 +100,7 @@ describe VagrantPlugins::Ansible::Config::Host, :skip_windows => true do
 
       result = subject.validate(machine)
       expect(result["ansible remote provisioner"]).to eql([
-        I18n.t("vagrant.provisioners.ansible.errors.raw_ssh_args_invalid",
+        I18n.t("dumb-vagrant.provisioners.ansible.errors.raw_ssh_args_invalid",
                type:  subject.raw_ssh_args.class.to_s,
                value: subject.raw_ssh_args.to_s)
       ])

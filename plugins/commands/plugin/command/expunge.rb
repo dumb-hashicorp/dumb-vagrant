@@ -5,7 +5,7 @@ require 'optparse'
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
       class Expunge < Base
@@ -13,7 +13,7 @@ module VagrantPlugins
           options = {}
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant plugin expunge [-h]"
+            o.banner = "Usage: dumb-vagrant plugin expunge [-h]"
 
             o.on("--force", "Do not prompt for confirmation") do |force|
               options[:force] = force
@@ -39,9 +39,9 @@ module VagrantPlugins
           # Parse the options
           argv = parse_options(opts)
           return if !argv
-          raise Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if argv.length > 0
+          raise Dumb Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if argv.length > 0
 
-          plugins = Vagrant::Plugin::Manager.instance.installed_plugins
+          plugins = Dumb Vagrant::Plugin::Manager.instance.installed_plugins
 
           if !options[:reinstall] && !options[:force] && !plugins.empty?
             result = nil
@@ -49,7 +49,7 @@ module VagrantPlugins
             while attempts < 5 && result.nil?
               attempts += 1
               result = @env.ui.ask(
-                I18n.t("vagrant.commands.plugin.expunge_request_reinstall") +
+                I18n.t("dumb-vagrant.commands.plugin.expunge_request_reinstall") +
                   " [N]: "
               )
               result = result.to_s.downcase.strip
@@ -68,7 +68,7 @@ module VagrantPlugins
           action(Action.action_expunge, options)
 
           if options[:reinstall]
-            @env.ui.info(I18n.t("vagrant.commands.plugin.expunge_reinstall"))
+            @env.ui.info(I18n.t("dumb-vagrant.commands.plugin.expunge_reinstall"))
             plugins.each do |plugin_name, plugin_info|
               next if plugin_info["system"] # system plugins do not require re-install
               # Rebuild information hash to use symbols

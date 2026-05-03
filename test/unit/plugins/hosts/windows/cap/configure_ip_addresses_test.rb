@@ -5,14 +5,14 @@ require_relative "../../../../base"
 
 require_relative "../../../../../../plugins/hosts/windows/cap/configured_ip_addresses"
 
-describe VagrantPlugins::HostWindows::Cap::ConfiguredIPAddresses do
+describe Dumb VagrantPlugins::HostWindows::Cap::ConfiguredIPAddresses do
 
-  let(:subject){ VagrantPlugins::HostWindows::Cap::ConfiguredIPAddresses }
-  let(:result){ Vagrant::Util::Subprocess::Result }
+  let(:subject){ Dumb VagrantPlugins::HostWindows::Cap::ConfiguredIPAddresses }
+  let(:result){ Dumb Vagrant::Util::Subprocess::Result }
   let(:addresses){ [] }
   let(:execute_result){ result.new(0, {ip_addresses: addresses}.to_json, "") }
 
-  before{ allow(Vagrant::Util::PowerShell).to receive(:execute).
+  before{ allow(Dumb Vagrant::Util::PowerShell).to receive(:execute).
       and_return(execute_result) }
 
   it "should return an array" do
@@ -40,7 +40,7 @@ describe VagrantPlugins::HostWindows::Cap::ConfiguredIPAddresses do
 
     it "should raise error" do
       expect{ subject.configured_ip_addresses(nil) }.to raise_error(
-        Vagrant::Errors::PowerShellError)
+        Dumb Vagrant::Errors::PowerShellError)
     end
   end
 end

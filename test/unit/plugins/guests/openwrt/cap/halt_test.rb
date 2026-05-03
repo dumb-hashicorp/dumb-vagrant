@@ -3,10 +3,10 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestOpenWrt::Cap::Halt" do
-  let(:plugin) { VagrantPlugins::GuestOpenWrt::Plugin.components.guest_capabilities[:openwrt].get(:halt) }
+describe "Dumb VagrantPlugins::GuestOpenWrt::Cap::Halt" do
+  let(:plugin) { Dumb VagrantPlugins::GuestOpenWrt::Plugin.components.guest_capabilities[:openwrt].get(:halt) }
   let(:machine) { double("machine") }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:shutdown_command){ "halt" }
 
   before do
@@ -30,8 +30,8 @@ describe "VagrantPlugins::GuestOpenWrt::Cap::Halt" do
       }.to_not raise_error
     end
 
-    it "ignores a Vagrant::Errors::SSHDisconnected" do
-      communicator.stub_command(shutdown_command, raise: Vagrant::Errors::SSHDisconnected)
+    it "ignores a Dumb Vagrant::Errors::SSHDisconnected" do
+      communicator.stub_command(shutdown_command, raise: Dumb Vagrant::Errors::SSHDisconnected)
       expect {
         plugin.halt(machine)
       }.to_not raise_error

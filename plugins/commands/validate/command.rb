@@ -3,20 +3,20 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandValidate
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
-        "validates the Vagrantfile"
+        "validates the Dumb Vagrantfile"
       end
 
       def execute
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant validate [options]"
+          o.banner = "Usage: dumb-vagrant validate [options]"
           o.separator ""
-          o.separator "Validates a Vagrantfile config"
+          o.separator "Validates a Dumb Vagrantfile config"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -38,10 +38,10 @@ module VagrantPlugins
 
         # Validate the configuration of all machines
         with_target_vms() do |machine|
-          machine.action_raw(:config_validate, Vagrant::Action::Builtin::ConfigValidate, action_env)
+          machine.action_raw(:config_validate, Dumb Vagrant::Action::Builtin::ConfigValidate, action_env)
         end
 
-        @env.ui.info(I18n.t("vagrant.commands.validate.success"))
+        @env.ui.info(I18n.t("dumb-vagrant.commands.validate.success"))
 
         # Success, exit status 0
         0
@@ -52,31 +52,31 @@ module VagrantPlugins
       protected
 
       # This method is required to bypass some of the provider checks that would
-      # otherwise raise exceptions before Vagrant could load and validate a config.
+      # otherwise raise exceptions before Dumb Vagrant could load and validate a config.
       # It essentially ignores that there are no installed or usable prodivers so
-      # that Vagrant can go along and validate the rest of the Vagrantfile and ignore
+      # that Dumb Vagrant can go along and validate the rest of the Dumb Vagrantfile and ignore
       # any provider blocks.
       #
       # return [String] tmp_data_dir - Temporary dir used to store guest metadata during validation
       def mockup_providers!
         require 'log4r'
-        logger = Log4r::Logger.new("vagrant::validate")
+        logger = Log4r::Logger.new("dumb-vagrant::validate")
         logger.debug("Overriding all registered provider classes for validate")
 
-        # Without setting up a tmp Environment, Vagrant will completely
+        # Without setting up a tmp Environment, Dumb Vagrant will completely
         # erase the local data dotfile and you can lose state after the
         # validate command completes.
-        tmp_data_dir = Dir.mktmpdir("vagrant-validate-")
-        @env = Vagrant::Environment.new(
+        tmp_data_dir = Dir.mktmpdir("dumb-vagrant-validate-")
+        @env = Dumb Vagrant::Environment.new(
           cwd: @env.cwd,
           home_path: @env.home_path,
           ui_class: @env.ui_class,
-          vagrantfile_name: @env.vagrantfile_name,
+          dumb-vagrantfile_name: @env.dumb-vagrantfile_name,
           local_data_path: tmp_data_dir,
           data_dir: tmp_data_dir
         )
 
-        Vagrant.plugin("2").manager.providers.each do |key, data|
+        Dumb Vagrant.plugin("2").manager.providers.each do |key, data|
           data[0].class_eval do
             def initialize(machine)
             end
@@ -93,10 +93,10 @@ module VagrantPlugins
             end
 
             def state
-              state_id = Vagrant::MachineState::NOT_CREATED_ID
+              state_id = Dumb Vagrant::MachineState::NOT_CREATED_ID
               short = :not_created
               long = :not_created
-              Vagrant::MachineState.new(state_id, short, long)
+              Dumb Vagrant::MachineState.new(state_id, short, long)
             end
           end
         end

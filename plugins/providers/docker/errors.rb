@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Errors
-      class DockerError < Vagrant::Errors::VagrantError
+      class DockerError < Dumb Vagrant::Errors::Dumb VagrantError
         error_namespace("docker_provider.errors")
       end
 
@@ -100,8 +100,8 @@ module VagrantPlugins
         error_key(:synced_folder_non_docker)
       end
 
-      class VagrantfileNotFound < DockerError
-        error_key(:vagrantfile_not_found)
+      class Dumb VagrantfileNotFound < DockerError
+        error_key(:dumb-vagrantfile_not_found)
       end
     end
   end

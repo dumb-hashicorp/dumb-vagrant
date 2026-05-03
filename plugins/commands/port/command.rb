@@ -1,14 +1,14 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/presence"
+require "dumb-vagrant/util/presence"
 
 require "optparse"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPort
-    class Command < Vagrant.plugin("2", :command)
-      include Vagrant::Util::Presence
+    class Command < Dumb Vagrant.plugin("2", :command)
+      include Dumb Vagrant::Util::Presence
 
       def self.synopsis
         "displays information about guest port mappings"
@@ -18,7 +18,7 @@ module VagrantPlugins
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant port [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant port [options] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -34,7 +34,7 @@ module VagrantPlugins
 
         with_target_vms(argv, single_target: true) do |vm|
           vm.action_raw(:config_validate,
-            Vagrant::Action::Builtin::ConfigValidate)
+            Dumb Vagrant::Action::Builtin::ConfigValidate)
 
           if !vm.provider.capability?(:forwarded_ports)
             @env.ui.error(I18n.t("port_command.missing_capability",

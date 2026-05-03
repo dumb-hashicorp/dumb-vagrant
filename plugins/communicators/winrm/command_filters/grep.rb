@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
     module CommandFilters
       # Converts a *nix 'grep' command to a PowerShell equivalent (none)
@@ -12,7 +12,7 @@ module VagrantPlugins
           # grep Funtoo /etc/gentoo-release
           # grep Gentoo /etc/gentoo-release
 
-          # grep is often used to detect the guest type in Vagrant, so don't bother running
+          # grep is often used to detect the guest type in Dumb Vagrant, so don't bother running
           # to speed up OS detection
           ''
         end

@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-#Requires -Modules VagrantVM, VagrantMessages
+#Requires -Modules Dumb VagrantVM, Dumb VagrantMessages
 
 param (
     [parameter (Mandatory=$true)]
@@ -22,7 +22,7 @@ try {
 }
 
 try {
-    Set-VagrantVMService -VM $VM -Id $Id -Enable $Enable
+    Set-Dumb VagrantVMService -VM $VM -Id $Id -Enable $Enable
 } catch {
     if($Enable){ $action = "enable" } else { $action = "disable" }
     Write-ErrorMessage "Failed to ${action} VM integration service id ${Id}: ${PSItem}"

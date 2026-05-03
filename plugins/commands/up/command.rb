@@ -6,13 +6,13 @@ require 'set'
 
 require File.expand_path("../start_mixins", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandUp
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       include StartMixins
 
       def self.synopsis
-        "starts and provisions the vagrant environment"
+        "starts and provisions the dumb-vagrant environment"
       end
 
       def execute
@@ -23,7 +23,7 @@ module VagrantPlugins
         options[:provision_ignore_sentinel] = false
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant up [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant up [options] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -65,7 +65,7 @@ module VagrantPlugins
         names = argv
         if names.empty?
           autostart = false
-          @env.vagrantfile.machine_names_and_options.each do |n, o|
+          @env.dumb-vagrantfile.machine_names_and_options.each do |n, o|
             autostart = true if o.key?(:autostart)
             o[:autostart] = true if !o.key?(:autostart)
             names << n.to_s if o[:autostart]
@@ -79,7 +79,7 @@ module VagrantPlugins
         # Build up the batch job of what we'll do
         machines = []
         if names
-          # To prevent vagrant from attempting to validate a global vms config
+          # To prevent dumb-vagrant from attempting to validate a global vms config
           # (which doesn't exist within the local dir) when attempting to
           # install a machines provider, this check below will disable the
           # install_providers function if a user gives us a machine id instead
@@ -98,7 +98,7 @@ module VagrantPlugins
           @env.batch(options[:parallel]) do |batch|
             with_target_vms(names, provider: options[:provider]) do |machine|
               @env.ui.info(I18n.t(
-                "vagrant.commands.up.upping",
+                "dumb-vagrant.commands.up.upping",
                 name: machine.name,
                 provider: machine.provider_name))
 
@@ -110,7 +110,7 @@ module VagrantPlugins
         end
 
         if machines.empty?
-          @env.ui.info(I18n.t("vagrant.up_no_machines"))
+          @env.ui.info(I18n.t("dumb-vagrant.up_no_machines"))
           return 0
         end
 
@@ -123,7 +123,7 @@ module VagrantPlugins
           @env.ui.info("", prefix: false)
 
           m.ui.success(I18n.t(
-            "vagrant.post_up_message",
+            "dumb-vagrant.post_up_message",
             name: m.name.to_s,
             message: m.config.vm.post_up_message))
         end
@@ -147,7 +147,7 @@ module VagrantPlugins
           # that no matter what. If we have an entry in the index (meaning
           # the machine may be created), we use that provider no matter
           # what since that will be used by the core. If we have none, then
-          # we ask the Vagrant env what the default provider would be and use
+          # we ask the Dumb Vagrant env what the default provider would be and use
           # that.
           #
           # Note that this logic is a bit redundant if we have "provider"
@@ -171,7 +171,7 @@ module VagrantPlugins
         providers.each do |name|
           # Find the provider. Ignore if we can't find it, this error
           # will pop up later in the process.
-          parts = Vagrant.plugin("2").manager.providers[name]
+          parts = Dumb Vagrant.plugin("2").manager.providers[name]
           next if !parts
 
           # If the provider is already installed, then our work here is done
@@ -179,11 +179,11 @@ module VagrantPlugins
           next if cls.installed?
 
           # Some human-friendly output
-          ui = Vagrant::UI::Prefixed.new(@env.ui, "")
+          ui = Dumb Vagrant::UI::Prefixed.new(@env.ui, "")
           ui.output(I18n.t(
-            "vagrant.installing_provider",
+            "dumb-vagrant.installing_provider",
             provider: name.to_s))
-          ui.detail(I18n.t("vagrant.installing_provider_detail"))
+          ui.detail(I18n.t("dumb-vagrant.installing_provider_detail"))
 
           # Install the provider
           @env.install_provider(name)

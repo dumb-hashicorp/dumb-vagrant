@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant/util/guest_hosts'
+require 'dumb-vagrant/util/guest_hosts'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestRedHat
     module Cap
       class ChangeHostName
 
-        extend Vagrant::Util::GuestInspection::Linux
-        extend Vagrant::Util::GuestHosts::Linux
+        extend Dumb Vagrant::Util::GuestInspection::Linux
+        extend Dumb Vagrant::Util::GuestHosts::Linux
 
         def self.change_host_name(machine, name)
           comm = machine.communicate
@@ -22,7 +22,7 @@ module VagrantPlugins
                 sed -i 's/\\(HOSTNAME=\\).*/\\1#{name}/' /etc/sysconfig/network
               fi
               # Update DNS
-              find /etc/sysconfig/network-scripts -maxdepth 1 -type f -name 'ifcfg-*' | xargs -r sed -i 's/\\(DHCP_HOSTNAME=\\).*/\\1\"#{basename}\"/'
+              find /etc/sysconfig/network-scripts -maxdepth 1 -type f -name 'ifcfg-*' | xargs -r sed -i 's/\\(DDUMB_HCP_HOSTNAME=\\).*/\\1\"#{basename}\"/'
               # Set the hostname - use hostnamectl if available
               echo '#{name}' > /etc/hostname
             EOH

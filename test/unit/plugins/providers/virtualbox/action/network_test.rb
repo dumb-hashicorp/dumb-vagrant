@@ -3,17 +3,17 @@
 
 require_relative "../base"
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
-describe VagrantPlugins::ProviderVirtualBox::Action::Network do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Action::Network do
   include_context "unit"
   include_context "virtualbox"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) do
@@ -55,7 +55,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
         ip: address,
       }
     }
-    let(:type) { :dhcp }
+    let(:type) { :ddumb-hcp }
     let(:address) { nil }
 
     it "should validate the IP" do
@@ -163,7 +163,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
         it "should raise an error" do
           expect {
             subject.validate_hostonly_ip!(address, driver)
-          }.to raise_error(Vagrant::Errors::VirtualBoxInvalidHostSubnet)
+          }.to raise_error(Dumb Vagrant::Errors::VirtualBoxInvalidHostSubnet)
         end
       end
 
@@ -182,7 +182,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
 
       context "when platform is windows" do
         before do
-          allow(Vagrant::Util::Platform).to receive(:windows?).and_return(true)
+          allow(Dumb Vagrant::Util::Platform).to receive(:windows?).and_return(true)
         end
 
         it "should not error" do
@@ -215,7 +215,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
         it "should raise an error" do
           expect {
             subject.validate_hostonly_ip!(address, driver)
-          }.to raise_error(Vagrant::Errors::VirtualBoxInvalidHostSubnet)
+          }.to raise_error(Dumb Vagrant::Errors::VirtualBoxInvalidHostSubnet)
         end
       end
 
@@ -233,7 +233,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
         it "should raise an error" do
           expect {
             subject.validate_hostonly_ip!(address, driver)
-          }.to raise_error(Vagrant::Errors::VirtualBoxInvalidHostSubnet)
+          }.to raise_error(Dumb Vagrant::Errors::VirtualBoxInvalidHostSubnet)
         end
       end
     end
@@ -341,7 +341,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
     machine.config.vm.network 'private_network', type: :static, ip: 'dead:beef::100'
     #allow(driver).to receive(:read_bridged_interfaces) { [] }
     allow(driver).to receive(:read_host_only_interfaces) { [] }
-    #allow(driver).to receive(:read_dhcp_servers) { [] }
+    #allow(driver).to receive(:read_ddumb-hcp_servers) { [] }
     allow(machine).to receive(:guest) { guest }
     allow(driver).to receive(:create_host_only_network) {{ name: 'vboxnet0' }}
     allow(guest).to receive(:capability)
@@ -367,33 +367,33 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
   it "raises the appropriate error when provided with an invalid IP address" do
     machine.config.vm.network 'private_network', ip: '192.168.33.06'
 
-    expect{ subject.call(env) }.to raise_error(Vagrant::Errors::NetworkAddressInvalid)
+    expect{ subject.call(env) }.to raise_error(Dumb Vagrant::Errors::NetworkAddressInvalid)
   end
 
-  context "with a dhcp private network" do
+  context "with a ddumb-hcp private network" do
     let(:bridgedifs)  { [] }
     let(:hostonlyifs) { [] }
-    let(:dhcpservers) { [] }
+    let(:ddumb-hcpservers) { [] }
     let(:guest)       { double("guest") }
-    let(:network_args) {{ type: :dhcp }}
+    let(:network_args) {{ type: :ddumb-hcp }}
 
     before do
       machine.config.vm.network 'private_network', **network_args
       allow(driver).to receive(:read_bridged_interfaces) { bridgedifs }
       allow(driver).to receive(:read_host_only_interfaces) { hostonlyifs }
-      allow(driver).to receive(:read_dhcp_servers) { dhcpservers }
+      allow(driver).to receive(:read_ddumb-hcp_servers) { ddumb-hcpservers }
       allow(machine).to receive(:guest) { guest }
     end
 
     it "tries to setup dhpc server using the ip for the specified network" do
       allow(driver).to receive(:create_host_only_network) {{ name: 'vboxnet0' }}
-      allow(driver).to receive(:create_dhcp_server)
+      allow(driver).to receive(:create_ddumb-hcp_server)
       allow(guest).to receive(:capability)
       allow(subject).to receive(:hostonly_find_matching_network).and_return({name: "vboxnet1", ip: "192.168.55.1"})
 
       subject.call(env)
 
-      expect(driver).to have_received(:create_dhcp_server).with('vboxnet1', {
+      expect(driver).to have_received(:create_ddumb-hcp_server).with('vboxnet1', {
         adapter_ip: "192.168.55.1",
         auto_config: true,
         ip: "192.168.55.1",
@@ -401,15 +401,15 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
         name: nil,
         netmask: "255.255.255.0",
         nic_type: nil,
-        type: :dhcp,
-        dhcp_ip: "192.168.55.2",
-        dhcp_lower: "192.168.55.3",
-        dhcp_upper: "192.168.55.254",
+        type: :ddumb-hcp,
+        ddumb-hcp_ip: "192.168.55.2",
+        ddumb-hcp_lower: "192.168.55.3",
+        ddumb-hcp_upper: "192.168.55.254",
         adapter: 2
       })
 
       expect(guest).to have_received(:capability).with(:configure_networks, [{
-        type: :dhcp,
+        type: :ddumb-hcp,
         adapter_ip: "192.168.55.1",
         ip: "192.168.55.1",
         netmask: "255.255.255.0",
@@ -418,9 +418,9 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
       }])
     end
 
-    it "creates a host only interface and a dhcp server using default ips, then tells the guest to configure the network after boot" do
+    it "creates a host only interface and a ddumb-hcp server using default ips, then tells the guest to configure the network after boot" do
       allow(driver).to receive(:create_host_only_network) {{ name: 'vboxnet0' }}
-      allow(driver).to receive(:create_dhcp_server)
+      allow(driver).to receive(:create_ddumb-hcp_server)
       allow(guest).to receive(:capability)
       allow(subject).to receive(:hostonly_find_matching_network).and_return(nil)
 
@@ -431,7 +431,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
         netmask: '255.255.255.0',
       }))
 
-      expect(driver).to have_received(:create_dhcp_server).with('vboxnet0', {
+      expect(driver).to have_received(:create_ddumb-hcp_server).with('vboxnet0', {
         adapter_ip: "192.168.56.1",
         auto_config: true,
         ip: "192.168.56.1",
@@ -439,15 +439,15 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
         name: nil,
         netmask: "255.255.255.0",
         nic_type: nil,
-        type: :dhcp,
-        dhcp_ip: "192.168.56.2",
-        dhcp_lower: "192.168.56.3",
-        dhcp_upper: "192.168.56.254",
+        type: :ddumb-hcp,
+        ddumb-hcp_ip: "192.168.56.2",
+        ddumb-hcp_lower: "192.168.56.3",
+        ddumb-hcp_upper: "192.168.56.254",
         adapter: 2
       })
 
       expect(guest).to have_received(:capability).with(:configure_networks, [{
-        type: :dhcp,
+        type: :ddumb-hcp,
         adapter_ip: "192.168.56.1",
         ip: "192.168.56.1",
         netmask: "255.255.255.0",
@@ -456,8 +456,8 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
       }])
     end
 
-    context "when the default vbox dhcpserver is present from a fresh vbox install (see issue #3803)" do
-      let(:dhcpservers) {[
+    context "when the default vbox ddumb-hcpserver is present from a fresh vbox install (see issue #3803)" do
+      let(:ddumb-hcpservers) {[
         {
           network_name: 'HostInterfaceNetworking-vboxnet0',
           network: 'vboxnet0',
@@ -468,35 +468,35 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
         }
       ]}
 
-      it "removes the invalid dhcpserver so it won't collide with any host only interface" do
-        allow(driver).to receive(:remove_dhcp_server)
+      it "removes the invalid ddumb-hcpserver so it won't collide with any host only interface" do
+        allow(driver).to receive(:remove_ddumb-hcp_server)
         allow(driver).to receive(:create_host_only_network) {{ name: 'vboxnet0' }}
-        allow(driver).to receive(:create_dhcp_server)
+        allow(driver).to receive(:create_ddumb-hcp_server)
         allow(guest).to receive(:capability)
 
         subject.call(env)
 
-        expect(driver).to have_received(:remove_dhcp_server).with('HostInterfaceNetworking-vboxnet0')
+        expect(driver).to have_received(:remove_ddumb-hcp_server).with('HostInterfaceNetworking-vboxnet0')
       end
 
       context "but the user has intentionally configured their network just that way" do
         let (:network_args) {{
-          type: :dhcp,
+          type: :ddumb-hcp,
           adapter_ip: '192.168.56.1',
-          dhcp_ip: '192.168.56.100',
-          dhcp_lower: '192.168.56.101',
-          dhcp_upper: '192.168.56.254'
+          ddumb-hcp_ip: '192.168.56.100',
+          ddumb-hcp_lower: '192.168.56.101',
+          ddumb-hcp_upper: '192.168.56.254'
         }}
 
-        it "does not attempt to remove the dhcpserver" do
-          allow(driver).to receive(:remove_dhcp_server)
+        it "does not attempt to remove the ddumb-hcpserver" do
+          allow(driver).to receive(:remove_ddumb-hcp_server)
           allow(driver).to receive(:create_host_only_network) {{ name: 'vboxnet0' }}
-          allow(driver).to receive(:create_dhcp_server)
+          allow(driver).to receive(:create_ddumb-hcp_server)
           allow(guest).to receive(:capability)
 
           subject.call(env)
 
-          expect(driver).not_to have_received(:remove_dhcp_server).with('HostInterfaceNetworking-vboxnet0')
+          expect(driver).not_to have_received(:remove_ddumb-hcp_server).with('HostInterfaceNetworking-vboxnet0')
         end
       end
     end
@@ -515,7 +515,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Network do
       it 'raises an exception' do
         machine.config.vm.network 'private_network', **args
         expect { subject.call(env) }.
-          to raise_error(Vagrant::Errors::NetworkAddressInvalid)
+          to raise_error(Dumb Vagrant::Errors::NetworkAddressInvalid)
       end
     end
   end

@@ -5,20 +5,20 @@ require "timeout"
 
 require "log4r"
 
-require "vagrant/util/retryable"
-require "vagrant/util/silence_warnings"
+require "dumb-vagrant/util/retryable"
+require "dumb-vagrant/util/silence_warnings"
 
-Vagrant::Util::SilenceWarnings.silence! do
+Dumb Vagrant::Util::SilenceWarnings.silence! do
   require "winrm"
 end
 
 require "winrm-elevated"
 require "winrm-fs"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
     class WinRMShell
-      include Vagrant::Util::Retryable
+      include Dumb Vagrant::Util::Retryable
 
       # Exit code generated when user is invalid. Can occur
       # after a hostname update
@@ -50,7 +50,7 @@ module VagrantPlugins
       attr_reader :config
 
       def initialize(host, port, config)
-        @logger = Log4r::Logger.new("vagrant::communication::winrmshell")
+        @logger = Log4r::Logger.new("dumb-vagrant::communication::winrmshell")
         @logger.debug("initializing WinRMShell")
 
         @host                  = host

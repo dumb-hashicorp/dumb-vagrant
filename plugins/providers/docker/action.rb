@@ -1,17 +1,17 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       # Include the built-in modules so we can use them as top-level things.
-      include Vagrant::Action::Builtin
+      include Dumb Vagrant::Action::Builtin
 
       # This action starts another container just like the real one running
       # but only for the purpose of running a single command rather than
       # to exist long-running.
       def self.action_run_command
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           # We just call the "up" action. We create a separate action
           # to hold this though in case we modify it in the future, and
           # so that we can switch on the "machine_action" env var.
@@ -22,7 +22,7 @@ module VagrantPlugins
       # This action brings the "machine" up from nothing, including creating the
       # container, configuring metadata, and booting.
       def self.action_up
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
               b2.use HandleBox
@@ -55,7 +55,7 @@ module VagrantPlugins
 
       # This action just runs the provisioners on the machine.
       def self.action_provision
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
@@ -80,7 +80,7 @@ module VagrantPlugins
       # This is the action that is primarily responsible for halting
       # the virtual machine, gracefully or by force.
       def self.action_halt
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use Call, IsState, :host_state_unknown do |env, b2|
             if env[:result]
               b2.use HostMachine
@@ -102,7 +102,7 @@ module VagrantPlugins
       # brings it down, sucks in new configuration, and brings the
       # machine back up with the new configuration.
       def self.action_reload
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
@@ -130,7 +130,7 @@ module VagrantPlugins
       # This is the action that is primarily responsible for completely
       # freeing the resources of the underlying virtual machine.
       def self.action_destroy
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use Call, IsHostMachineCreated do |env, b2|
             if !env[:result]
               b2.use Message, I18n.t("docker_provider.messages.not_created")
@@ -172,7 +172,7 @@ module VagrantPlugins
 
       # This is the action that will exec into an SSH shell.
       def self.action_ssh
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
               raise Errors::ContainerNotCreatedError
@@ -192,7 +192,7 @@ module VagrantPlugins
 
       # This is the action that will run a single SSH command.
       def self.action_ssh_run
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
               raise Errors::ContainerNotCreatedError
@@ -210,7 +210,7 @@ module VagrantPlugins
       end
 
       def self.action_start
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use Call, IsState, :running do |env, b2|
             if env[:machine_action] != :run_command
               b2.use Call, HasProvisioner do |env2, b3|

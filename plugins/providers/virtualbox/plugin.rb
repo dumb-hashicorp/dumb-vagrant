@@ -1,14 +1,14 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "VirtualBox provider"
       description <<-EOF
-      The VirtualBox provider allows Vagrant to manage and control
+      The VirtualBox provider allows Dumb Vagrant to manage and control
       VirtualBox-based virtual machines.
       EOF
 

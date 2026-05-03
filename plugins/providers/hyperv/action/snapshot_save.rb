@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class SnapshotSave
@@ -12,13 +12,13 @@ module VagrantPlugins
         def call(env)
 
           env[:ui].info(I18n.t(
-            "vagrant.actions.vm.snapshot.saving",
+            "dumb-vagrant.actions.vm.snapshot.saving",
             name: env[:snapshot_name]))
 
           env[:machine].provider.driver.create_snapshot(env[:snapshot_name])
 
           env[:ui].success(I18n.t(
-            "vagrant.actions.vm.snapshot.saved",
+            "dumb-vagrant.actions.vm.snapshot.saved",
             name: env[:snapshot_name]))
 
           @app.call(env)

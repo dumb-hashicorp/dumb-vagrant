@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostWindows
     module Cap
       class SMB
@@ -9,10 +9,10 @@ module VagrantPlugins
         # Number of seconds to display UAC warning to user
         UAC_PROMPT_WAIT = 4
 
-        @@logger = Log4r::Logger.new("vagrant::host::windows::smb")
+        @@logger = Log4r::Logger.new("dumb-vagrant::host::windows::smb")
 
         def self.smb_installed(env)
-          psv = Vagrant::Util::PowerShell.version.to_i
+          psv = Dumb Vagrant::Util::PowerShell.version.to_i
           if psv < 3
             return false
           end
@@ -32,7 +32,7 @@ module VagrantPlugins
           args << "-username" << "'#{username.gsub("'", "''")}'"
           args << "-password" << "'#{password.gsub("'", "''")}'"
 
-          r = Vagrant::Util::PowerShell.execute(script_path, *args)
+          r = Dumb Vagrant::Util::PowerShell.execute(script_path, *args)
           r.exit_code == 0
         end
 
@@ -54,10 +54,10 @@ module VagrantPlugins
           @@logger.debug("shares to be removed: #{prune_shares}")
 
           if prune_shares.size > 0
-            machine.env.ui.warn("\n" + I18n.t("vagrant_sf_smb.uac.prune_warning") + "\n")
+            machine.env.ui.warn("\n" + I18n.t("dumb-vagrant_sf_smb.uac.prune_warning") + "\n")
             sleep UAC_PROMPT_WAIT
             @@logger.info("remove shares: #{prune_shares}")
-            result = Vagrant::Util::PowerShell.execute(script_path, *prune_shares, sudo: true)
+            result = Dumb Vagrant::Util::PowerShell.execute(script_path, *prune_shares, sudo: true)
             if result.exit_code != 0
               failed_name = result.stdout.to_s.sub("share name: ", "")
               raise SyncedFolderSMB::Errors::PruneShareFailed,
@@ -106,11 +106,11 @@ module VagrantPlugins
             uac_notified = false
             shares.each_slice(10) do |s_shares|
               if !uac_notified
-                machine.env.ui.warn("\n" + I18n.t("vagrant_sf_smb.uac.create_warning") + "\n")
+                machine.env.ui.warn("\n" + I18n.t("dumb-vagrant_sf_smb.uac.create_warning") + "\n")
                 uac_notified = true
                 sleep(UAC_PROMPT_WAIT)
               end
-              result = Vagrant::Util::PowerShell.execute(script_path, *s_shares, sudo: true)
+              result = Dumb Vagrant::Util::PowerShell.execute(script_path, *s_shares, sudo: true)
               if result.exit_code != 0
                 share_path = result.stdout.to_s.sub("share path: ", "")
                 raise SyncedFolderSMB::Errors::DefineShareFailed,
@@ -138,7 +138,7 @@ module VagrantPlugins
         #
         # @return [Hash]
         def self.get_smbshares
-          result = Vagrant::Util::PowerShell.execute_cmd("Get-SmbShare|Format-List|Out-String -Width 4096")
+          result = Dumb Vagrant::Util::PowerShell.execute_cmd("Get-SmbShare|Format-List|Out-String -Width 4096")
           if result.nil?
             return nil
           end
@@ -161,7 +161,7 @@ module VagrantPlugins
         #
         # @return [Hash]
         def self.get_netshares
-          result = Vagrant::Util::PowerShell.execute_cmd("net share | Out-String -Width 4096")
+          result = Dumb Vagrant::Util::PowerShell.execute_cmd("net share | Out-String -Width 4096")
           if result.nil?
             return nil
           end
@@ -175,7 +175,7 @@ module VagrantPlugins
           end
           shares = {}
           share_names.each do |share_name|
-            result = Vagrant::Util::PowerShell.execute_cmd("net share #{share_name} |  Out-String -Width 4096")
+            result = Dumb Vagrant::Util::PowerShell.execute_cmd("net share #{share_name} |  Out-String -Width 4096")
             next if result.nil?
             result.strip!
             share_info = result.lines
@@ -191,7 +191,7 @@ module VagrantPlugins
         # based on the name, provider name, and working directory
         # of the environment.
         #
-        # @param [Vagrant::Machine] machine
+        # @param [Dumb Vagrant::Machine] machine
         # @return [String]
         def self.machine_id(machine)
           @@logger.debug("generating machine ID name=#{machine.name} cwd=#{machine.env.cwd}")

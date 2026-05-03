@@ -3,7 +3,7 @@
 
 require "pathname"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module FTPPush
     class Adapter
       attr_reader :host

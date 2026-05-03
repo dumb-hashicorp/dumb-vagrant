@@ -4,10 +4,10 @@
 package command
 
 import (
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	plugincore "github.com/hashicorp/vagrant-plugin-sdk/core"
-	"github.com/hashicorp/vagrant-plugin-sdk/docs"
-	"github.com/hashicorp/vagrant-plugin-sdk/terminal"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	plugincore "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/core"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/docs"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/terminal"
 )
 
 type Subcommand interface {

@@ -3,7 +3,7 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       # This action is responsible for creating the host machine if
@@ -12,7 +12,7 @@ module VagrantPlugins
       class HostMachine
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant::docker::hostmachine")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::hostmachine")
         end
 
         def call(env)
@@ -30,7 +30,7 @@ module VagrantPlugins
             env[:machine].provider.host_vm_lock do
               setup_host_machine(host_machine, env)
             end
-          rescue Vagrant::Errors::EnvironmentLockedError
+          rescue Dumb Vagrant::Errors::EnvironmentLockedError
             sleep 1
             retry
           end

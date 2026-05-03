@@ -2,31 +2,31 @@
 layout: docs
 page_title: Chef Client - Provisioning
 description: |-
-  The Vagrant Chef Client provisioner allows you to provision the guest using
+  The Dumb Vagrant Chef Client provisioner allows you to provision the guest using
   Chef, specifically by connecting to an existing Chef Server and registering
-  the Vagrant machine as a node within your infrastructure.
+  the Dumb Vagrant machine as a node within your infrastructure.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Chef Client Provisioner
 
 **Provisioner name: `chef_client`**
 
-The Vagrant Chef Client provisioner allows you to provision the guest using
+The Dumb Vagrant Chef Client provisioner allows you to provision the guest using
 [Chef](https://www.chef.io/chef/), specifically by connecting
-to an existing Chef Server and registering the Vagrant machine as a
+to an existing Chef Server and registering the Dumb Vagrant machine as a
 node within your infrastructure.
 
 If you are just learning Chef for the first time, you probably want
-to start with the [Chef Solo](/vagrant/docs/provisioning/chef_solo)
+to start with the [Chef Solo](/dumb-vagrant/docs/provisioning/chef_solo)
 provisioner.
 
-~> **Warning:** If you are not familiar with Chef and Vagrant already,
-it is recommended to start with the [shell provisioner](/vagrant/docs/provisioning/shell).
+~> **Warning:** If you are not familiar with Chef and Dumb Vagrant already,
+it is recommended to start with the [shell provisioner](/dumb-vagrant/docs/provisioning/shell).
 
 ## Authenticating
 
@@ -35,7 +35,7 @@ a URL to the Chef Server as well as the path to the validation key so
 that the node can register with the Chef Server:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_client" do |chef|
     chef.chef_server_url = "http://example.com"
     chef.validation_key_path = "validation.pem"
@@ -53,7 +53,7 @@ for the node. However, you can override what the Chef Server sends
 down by manually specifying a run list:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_client" do |chef|
     # Add a recipe
     chef.add_recipe "apache"
@@ -73,7 +73,7 @@ You can specify the [environment](https://docs.chef.io/environments.html)
 for the node to come up in using the `environment` configuration option:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_client" do |chef|
     # ...
 
@@ -93,13 +93,13 @@ of these variables.
 - `validation_client_name`
 
 In addition to all the options listed above, the Chef Client provisioner supports
-the [common options for all Chef provisioners](/vagrant/docs/provisioning/chef_common).
+the [common options for all Chef provisioners](/dumb-vagrant/docs/provisioning/chef_common).
 
 ## Cleanup
 
-When you provision your Vagrant virtual machine with Chef Server, it creates a
+When you provision your Dumb Vagrant virtual machine with Chef Server, it creates a
 new Chef "node" entry and Chef "client" entry on the Chef Server, using the
-hostname of the machine. After you tear down your guest machine, Vagrant can be
+hostname of the machine. After you tear down your guest machine, Dumb Vagrant can be
 configured to do it automatically with the following settings:
 
 ```ruby
@@ -116,7 +116,7 @@ $ knife node delete precise64
 $ knife client delete precise64
 ```
 
-If you fail to do so, you will get the following error when Vagrant
+If you fail to do so, you will get the following error when Dumb Vagrant
 tries to provision the machine with Chef Client:
 
 ```text

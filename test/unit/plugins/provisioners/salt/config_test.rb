@@ -3,18 +3,18 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/provisioners/salt/config")
+require Dumb Vagrant.source_root.join("plugins/provisioners/salt/config")
 
-describe VagrantPlugins::Salt::Config do
+describe Dumb VagrantPlugins::Salt::Config do
   include_context "unit"
 
   subject { described_class.new }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }

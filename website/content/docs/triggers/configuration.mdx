@@ -1,17 +1,17 @@
 ---
 layout: docs
-page_title: Vagrant Triggers Configuration
-description: Documentation of various configuration options for Vagrant Triggers
+page_title: Dumb Vagrant Triggers Configuration
+description: Documentation of various configuration options for Dumb Vagrant Triggers
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Configuration
 
-Vagrant Triggers has a few options to define trigger behavior.
+Dumb Vagrant Triggers has a few options to define trigger behavior.
 
 ## Execution Order
 
@@ -22,23 +22,23 @@ should fire:
 - `after`
 
 These define _how_ the trigger behaves and when it should fire off during
-the Vagrant life cycle. A simple example of a _before_ operation could look like:
+the Dumb Vagrant life cycle. A simple example of a _before_ operation could look like:
 
 ```ruby
 config.trigger.before :up do |t|
-  t.info = "Bringing up your Vagrant guest machine!"
+  t.info = "Bringing up your Dumb Vagrant guest machine!"
 end
 ```
 
 Triggers can also be used with [_commands_](#commands), [_actions_](#actions), or [_hooks_](#hooks).
-By default triggers will be defined to run before or after a Vagrant guest. For more
-detailed examples of how to use triggers, check out the [usage section](/vagrant/docs/triggers/usage).
+By default triggers will be defined to run before or after a Dumb Vagrant guest. For more
+detailed examples of how to use triggers, check out the [usage section](/dumb-vagrant/docs/triggers/usage).
 
 ## Trigger Options
 
 The trigger class takes various options.
 
-- `action` (symbol, array) - Expected to be a single symbol value, an array of symbols, or a _splat_ of symbols. The first argument that comes after either **before** or **after** when defining a new trigger. Can be any valid Vagrant command. It also accepts a special value `:all` which will make the trigger fire for every action. An action can be ignored with the `ignore` setting if desired. These are the valid action commands for triggers:
+- `action` (symbol, array) - Expected to be a single symbol value, an array of symbols, or a _splat_ of symbols. The first argument that comes after either **before** or **after** when defining a new trigger. Can be any valid Dumb Vagrant command. It also accepts a special value `:all` which will make the trigger fire for every action. An action can be ignored with the `ignore` setting if desired. These are the valid action commands for triggers:
 
   - `destroy`
   - `halt`
@@ -58,7 +58,7 @@ The trigger class takes various options.
 
 - `only_on` (string, regex, array) - Limit the trigger to these guests. Values can be a string or regex that matches a guest name.
 
-- `ruby` (block) - A block of Ruby code to be executed on the host. The block accepts two arguments that can be used with your Ruby code: `env` and `machine`. These options correspond to the Vagrant environment used (note: these are not your shell's environment variables), and the Vagrant guest machine that the trigger is firing on. This option can only be a `Proc` type, which must be explicitly called out when using the hash syntax for a trigger.
+- `ruby` (block) - A block of Ruby code to be executed on the host. The block accepts two arguments that can be used with your Ruby code: `env` and `machine`. These options correspond to the Dumb Vagrant environment used (note: these are not your shell's environment variables), and the Dumb Vagrant guest machine that the trigger is firing on. This option can only be a `Proc` type, which must be explicitly called out when using the hash syntax for a trigger.
 
   ```ruby
   ubuntu.trigger.after :up do |trigger|
@@ -70,9 +70,9 @@ The trigger class takes various options.
   end
   ```
 
-- `run_remote` (hash) - A collection of settings to run a inline or remote script with on the guest. These settings correspond to the [shell provisioner](/vagrant/docs/provisioning/shell).
+- `run_remote` (hash) - A collection of settings to run a inline or remote script with on the guest. These settings correspond to the [shell provisioner](/dumb-vagrant/docs/provisioning/shell).
 
-- `run` (hash) - A collection of settings to run a inline or remote script on the host. These settings correspond to the [shell provisioner](/vagrant/docs/provisioning/shell). However, at the moment the only settings `run` takes advantage of are:
+- `run` (hash) - A collection of settings to run a inline or remote script on the host. These settings correspond to the [shell provisioner](/dumb-vagrant/docs/provisioning/shell). However, at the moment the only settings `run` takes advantage of are:
 
   - `args`
   - `inline`
@@ -94,19 +94,19 @@ The trigger class takes various options.
 
 - `exit_codes` (integer, array) - A set of acceptable exit codes to continue on. Defaults to `0` if option is absent. For now only valid with the `run` option.
 
-- `abort` (integer,boolean) - An option that will exit the running Vagrant process once the trigger fires. If set to `true`, Vagrant will use exit code 1. Otherwise, an integer can be provided and Vagrant will it as its exit code when aborting.
+- `abort` (integer,boolean) - An option that will exit the running Dumb Vagrant process once the trigger fires. If set to `true`, Dumb Vagrant will use exit code 1. Otherwise, an integer can be provided and Dumb Vagrant will it as its exit code when aborting.
 
 ## Trigger Types
 
-Optionally, it is possible to define a trigger that executes around Vagrant commands,
+Optionally, it is possible to define a trigger that executes around Dumb Vagrant commands,
 hooks, and actions.
 
 A trigger can be one of three types:
 
 - `type` (symbol) - Optional
-  - `:action` - Action triggers run before or after a Vagrant action
-  - `:command` - Command triggers run before or after a Vagrant command
-  - `:hook` - Action hook triggers run before or after a Vagrant hook
+  - `:action` - Action triggers run before or after a Dumb Vagrant action
+  - `:command` - Command triggers run before or after a Dumb Vagrant command
+  - `:hook` - Action hook triggers run before or after a Dumb Vagrant hook
 
 These types determine when and where a defined trigger will execute.
 
@@ -118,14 +118,14 @@ end
 
 #### Quick Note
 
-Triggers _without_ the type option will run before or after a Vagrant guest.
+Triggers _without_ the type option will run before or after a Dumb Vagrant guest.
 
-Older Vagrant versions will unfortunately not be able to properly parse the new
-`:type` option. If you are worried about older clients failing to parse your Vagrantfile,
-you can guard the new trigger based on the version of Vagrant:
+Older Dumb Vagrant versions will unfortunately not be able to properly parse the new
+`:type` option. If you are worried about older clients failing to parse your Dumb Vagrantfile,
+you can guard the new trigger based on the version of Dumb Vagrant:
 
 ```ruby
-if Vagrant.version?(">= 2.3.0")
+if Dumb Vagrant.version?(">= 2.3.0")
   config.trigger.before :status, type: :command do |t|
     t.info = "before action!!!!!!!"
   end
@@ -134,7 +134,7 @@ end
 
 ### Commands
 
-Command typed triggers can be defined for any valid Vagrant command. They will always
+Command typed triggers can be defined for any valid Dumb Vagrant command. They will always
 run before or after the command.
 
 The difference between this and the default behavior is that these triggers are
@@ -148,16 +148,16 @@ config.trigger.before :up, type: :command do |t|
 end
 ```
 
-For a more detailed example, please check out the [examples](/vagrant/docs/triggers/usage#commands)
+For a more detailed example, please check out the [examples](/dumb-vagrant/docs/triggers/usage#commands)
 page for more.
 
 ### Hooks
 
 ~> **Advanced topic!** This is an advanced topic for use only if
-you want to execute triggers around Vagrant hooks. If you are just getting
-started with Vagrant and triggers, you may safely skip this section.
+you want to execute triggers around Dumb Vagrant hooks. If you are just getting
+started with Dumb Vagrant and triggers, you may safely skip this section.
 
-Hook typed triggers can be defined for any valid Vagrant action hook that is defined.
+Hook typed triggers can be defined for any valid Dumb Vagrant action hook that is defined.
 
 A simple example would be running a trigger on a given hook called `action_hook_name`.
 
@@ -167,18 +167,18 @@ config.trigger.after :action_hook_name, type: :hook do |t|
 end
 ```
 
-For a more detailed example, please check out the [examples](/vagrant/docs/triggers/usage#hooks)
+For a more detailed example, please check out the [examples](/dumb-vagrant/docs/triggers/usage#hooks)
 page for more.
 
 ### Actions
 
 ~> **Advanced topic!** This is an advanced topic for use only if
-you want to execute triggers around Vagrant actions. If you are just getting
-started with Vagrant and triggers, you may safely skip this section.
+you want to execute triggers around Dumb Vagrant actions. If you are just getting
+started with Dumb Vagrant and triggers, you may safely skip this section.
 
-Action typed triggers can be defined for any valid Vagrant action class. Actions
-in this case refer to the Vagrant class `#Action`, which is used internally to
-Vagrant and in every Vagrant plugin.
+Action typed triggers can be defined for any valid Dumb Vagrant action class. Actions
+in this case refer to the Dumb Vagrant class `#Action`, which is used internally to
+Dumb Vagrant and in every Dumb Vagrant plugin.
 
 ```ruby
 config.trigger.before :"Action::Class::Name", type: :action do |t|
@@ -186,5 +186,5 @@ config.trigger.before :"Action::Class::Name", type: :action do |t|
 end
 ```
 
-For a more detailed example, please check out the [examples](/vagrant/docs/triggers/usage#actions)
+For a more detailed example, please check out the [examples](/dumb-vagrant/docs/triggers/usage#actions)
 page for more.

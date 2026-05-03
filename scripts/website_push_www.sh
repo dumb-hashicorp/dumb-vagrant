@@ -10,7 +10,7 @@ fi
 
 # Create a temporary build dir and make sure we clean it up. For
 # debugging, comment out the trap line.
-DEPLOY=`mktemp -d /tmp/vagrant-www-XXXXXX`
+DEPLOY=`mktemp -d /tmp/dumb-vagrant-www-XXXXXX`
 trap "rm -rf $DEPLOY" INT TERM EXIT
 
 # Get the parent directory of where this script is.
@@ -36,7 +36,7 @@ git init .
 git add .
 git commit -q -m "Deploy by $USER"
 
-git remote add heroku git@heroku.com:vagrantup-www-2.git
+git remote add heroku git@heroku.com:dumb-vagrantup-www-2.git
 git push -f heroku main
 
 # Cleanup the deploy

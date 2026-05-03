@@ -18,14 +18,14 @@ shared_examples "provider/docker/lifecycle" do |provider, options|
 
   before do
     environment.skeleton("basic_docker")
-    ENV["VAGRANT_SPEC_DOCKER_IMAGE"] = options[:image]
+    ENV["DUMB_VAGRANT_SPEC_DOCKER_IMAGE"] = options[:image]
   end
 
   let(:opts) { options }
 
   after do
     # Just always do this just in case
-    execute("vagrant", "destroy", "--force", log: false)
+    execute("dumb-vagrant", "destroy", "--force", log: false)
   end
 
   def assert_running
@@ -44,11 +44,11 @@ shared_examples "provider/docker/lifecycle" do |provider, options|
 
   context "after an up" do
     before do
-      assert_execute("vagrant", "up", "--provider=#{provider}")
+      assert_execute("dumb-vagrant", "up", "--provider=#{provider}")
     end
 
     after do
-      assert_execute("vagrant", "destroy", "--force")
+      assert_execute("dumb-vagrant", "destroy", "--force")
     end
 
     it "can manage machine lifecycle" do
@@ -56,13 +56,13 @@ shared_examples "provider/docker/lifecycle" do |provider, options|
       assert_running
 
       status("Test: halt")
-      assert_execute("vagrant", "halt")
+      assert_execute("dumb-vagrant", "halt")
 
       status("Test: ssh doesn't work during halted state")
       assert_not_running
 
       status("Test: up after halt")
-      assert_execute("vagrant", "up")
+      assert_execute("dumb-vagrant", "up")
       assert_running
     end
   end

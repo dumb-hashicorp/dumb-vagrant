@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
     # This is a helper module that provides some functions to the
     # communicator. This is extracted into a module so that we can
@@ -12,7 +12,7 @@ module VagrantPlugins
       # This asks the provider via the `winrm_info` capability if it
       # exists, otherwise defaulting to its own heuristics.
       #
-      # @param [Vagrant::Machine] machine
+      # @param [Dumb Vagrant::Machine] machine
       # @return [Hash]
       def self.winrm_info(machine)
         info = {}
@@ -29,7 +29,7 @@ module VagrantPlugins
       # Returns the address to access WinRM. This does not contain
       # the port.
       #
-      # @param [Vagrant::Machine] machine
+      # @param [Dumb Vagrant::Machine] machine
       # @return [String]
       def self.winrm_address(machine)
         addr = machine.config.winrm.host
@@ -47,7 +47,7 @@ module VagrantPlugins
 
       # Returns the port to access WinRM.
       #
-      # @param [Vagrant::Machine] machine
+      # @param [Dumb Vagrant::Machine] machine
       # @return [Integer]
       def self.winrm_port(machine, local=true)
         host_port = machine.config.winrm.port
@@ -57,7 +57,7 @@ module VagrantPlugins
           return machine.config.winrm.guest_port if !local
 
           # Search by guest port if we can. We use a provider capability
-          # if we have it. Otherwise, we just scan the Vagrantfile defined
+          # if we have it. Otherwise, we just scan the Dumb Vagrantfile defined
           # ports.
           port = nil
           if machine.provider.capability?(:forwarded_ports)

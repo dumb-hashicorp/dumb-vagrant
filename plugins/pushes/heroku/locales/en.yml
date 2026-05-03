@@ -17,9 +17,9 @@ en:
 
             https://git-scm.com/downloads
       missing_attribute: |-
-        Missing required attribute '%{attribute}'. The Vagrant Heroku Push
+        Missing required attribute '%{attribute}'. The Dumb Vagrant Heroku Push
         plugin requires you set this attribute. Please set this attribute in
-        your Vagrantfile, for example:
+        your Dumb Vagrantfile, for example:
 
             config.push.define "heroku" do |push|
               push.%{attribute} = "..."
@@ -30,4 +30,4 @@ en:
             %{path}
 
         Please ensure you are working in the correct directory. In order to use
-        the Vagrant Heroku Push plugin, you must have a git repository.
+        the Dumb Vagrant Heroku Push plugin, you must have a git repository.

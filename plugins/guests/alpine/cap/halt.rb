@@ -6,7 +6,7 @@
 #
 # FIXME: address disabled warnings
 #
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestAlpine
     module Cap
       class Halt

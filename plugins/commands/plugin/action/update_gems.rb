@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/plugin/manager"
+require "dumb-vagrant/plugin/manager"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Action
       class UpdateGems
@@ -15,13 +15,13 @@ module VagrantPlugins
           names = env[:plugin_name] || []
 
           if names.empty?
-            env[:ui].info(I18n.t("vagrant.commands.plugin.updating"))
+            env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.updating"))
           else
-            env[:ui].info(I18n.t("vagrant.commands.plugin.updating_specific",
+            env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.updating_specific",
                                  names: names.join(", ")))
           end
 
-          manager = Vagrant::Plugin::Manager.instance
+          manager = Dumb Vagrant::Plugin::Manager.instance
           installed_plugins = manager.installed_plugins
           new_specs       = manager.update_plugins(names)
           updated_plugins = manager.installed_plugins
@@ -35,11 +35,11 @@ module VagrantPlugins
           end
 
           if updated.empty?
-            env[:ui].success(I18n.t("vagrant.commands.plugin.up_to_date"))
+            env[:ui].success(I18n.t("dumb-vagrant.commands.plugin.up_to_date"))
           end
 
           updated.each do |name, version|
-            env[:ui].success(I18n.t("vagrant.commands.plugin.updated",
+            env[:ui].success(I18n.t("dumb-vagrant.commands.plugin.updated",
                                     name: name, version: version.to_s))
           end
 

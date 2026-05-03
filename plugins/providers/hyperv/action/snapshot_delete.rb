@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class SnapshotDelete
@@ -12,13 +12,13 @@ module VagrantPlugins
         def call(env)
 
           env[:ui].info(I18n.t(
-            "vagrant.actions.vm.snapshot.deleting",
+            "dumb-vagrant.actions.vm.snapshot.deleting",
             name: env[:snapshot_name]))
 
           env[:machine].provider.driver.delete_snapshot(env[:snapshot_name])
 
           env[:ui].success(I18n.t(
-            "vagrant.actions.vm.snapshot.deleted",
+            "dumb-vagrant.actions.vm.snapshot.deleted",
             name: env[:snapshot_name]))
 
           @app.call(env)

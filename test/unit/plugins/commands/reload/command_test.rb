@@ -2,18 +2,18 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/commands/reload/command")
+require Dumb Vagrant.source_root.join("plugins/commands/reload/command")
 
-describe VagrantPlugins::CommandReload::Command do
+describe Dumb VagrantPlugins::CommandReload::Command do
   include_context "unit"
 
-  let(:entry_klass) { Vagrant::MachineIndex::Entry }
+  let(:entry_klass) { Dumb Vagrant::MachineIndex::Entry }
   let(:argv)     { [] }
-  let(:vagrantfile_content){ "" }
+  let(:dumb-vagrantfile_content){ "" }
   let(:iso_env) do
     env = isolated_environment
-    env.vagrantfile(vagrantfile_content)
-    env.create_vagrant_env
+    env.dumb-vagrantfile(dumb-vagrantfile_content)
+    env.create_dumb-vagrant_env
   end
 
   subject { described_class.new(argv, iso_env) }
@@ -25,7 +25,7 @@ describe VagrantPlugins::CommandReload::Command do
   def new_entry(name)
     entry_klass.new.tap do |e|
       e.name = name
-      e.vagrantfile_path = "/bar"
+      e.dumb-vagrantfile_path = "/bar"
     end
   end
 
@@ -35,9 +35,9 @@ describe VagrantPlugins::CommandReload::Command do
   end
 
   context "with no argument" do
-    let(:vagrantfile_content) do
+    let(:dumb-vagrantfile_content) do
         <<-VF
-        Vagrant.configure("2") do |config|
+        Dumb Vagrant.configure("2") do |config|
           config.vm.define "app"
           config.vm.define "db"
         end
@@ -61,9 +61,9 @@ describe VagrantPlugins::CommandReload::Command do
   end
 
   context "with an argument" do
-    let(:vagrantfile_content) do
+    let(:dumb-vagrantfile_content) do
         <<-VF
-        Vagrant.configure("2") do |config|
+        Dumb Vagrant.configure("2") do |config|
           config.vm.define "app"
           config.vm.define "db"
         end
@@ -81,9 +81,9 @@ describe VagrantPlugins::CommandReload::Command do
   end
 
   context "with the force flag" do
-    let(:vagrantfile_content) do
+    let(:dumb-vagrantfile_content) do
         <<-VF
-        Vagrant.configure("2") do |config|
+        Dumb Vagrant.configure("2") do |config|
           config.vm.define "app"
           config.vm.define "db"
         end

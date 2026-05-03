@@ -6,7 +6,7 @@ require 'optparse'
 require_relative "base"
 require_relative "mixin_install_opts"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
       class Update < Base
@@ -15,7 +15,7 @@ module VagrantPlugins
         def execute
           options = {}
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant plugin update [names...] [-h]"
+            o.banner = "Usage: dumb-vagrant plugin update [names...] [-h]"
             o.separator ""
 
             o.on("--local", "Update plugin in local project") do |l|

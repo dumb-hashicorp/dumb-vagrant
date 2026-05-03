@@ -1,19 +1,19 @@
 ---
 layout: docs
-page_title: vagrant validate - Command-Line Interface
-description: The "vagrant validate" command is used to validate your Vagrantfile.
+page_title: dumb-vagrant validate - Command-Line Interface
+description: The "dumb-vagrant validate" command is used to validate your Dumb Vagrantfile.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Validate
 
-**Command: `vagrant validate`**
+**Command: `dumb-vagrant validate`**
 
-This command validates your [Vagrantfile](/vagrant/docs/vagrantfile/).
+This command validates your [Dumb Vagrantfile](/dumb-vagrant/docs/dumb-vagrantfile/).
 
 ## Options
 
@@ -21,17 +21,17 @@ This command validates your [Vagrantfile](/vagrant/docs/vagrantfile/).
 
 ## Examples
 
-Validate the syntax of the Vagrantfile to ensure it is correctly structured and free of errors
+Validate the syntax of the Dumb Vagrantfile to ensure it is correctly structured and free of errors
 
 ```shell-session
-$ vagrant validate
-Vagrantfile validated successfully.
+$ dumb-vagrant validate
+Dumb Vagrantfile validated successfully.
 ```
 
-Ensure that the Vagrantfile is correctly structured while ignoring provider-specific configuration options:
+Ensure that the Dumb Vagrantfile is correctly structured while ignoring provider-specific configuration options:
 
 ```shell-session
-$ vagrant validate --ignore-provider virtualbox
+$ dumb-vagrant validate --ignore-provider virtualbox
 ==> default: Ignoring provider config for validation...
-Vagrantfile validated successfully.
+Dumb Vagrantfile validated successfully.
 ```

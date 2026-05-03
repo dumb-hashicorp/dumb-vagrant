@@ -4,7 +4,7 @@
 require "log4r"
 require "timeout"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       # This action reads the SSH info for the machine and puts it into the
@@ -12,7 +12,7 @@ module VagrantPlugins
       class ReadGuestIP
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant::hyperv::connection")
+          @logger = Log4r::Logger.new("dumb-vagrant::hyperv::connection")
         end
 
         def call(env)

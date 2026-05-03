@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestAmazon::Cap::Flavor" do
+describe "Dumb VagrantPlugins::GuestAmazon::Cap::Flavor" do
   let(:caps) do
-    VagrantPlugins::GuestAmazon::Plugin
+    Dumb VagrantPlugins::GuestAmazon::Plugin
       .components
       .guest_capabilities[:amazon]
   end

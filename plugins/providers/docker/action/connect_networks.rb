@@ -4,18 +4,18 @@
 require 'ipaddr'
 require 'log4r'
 
-require 'vagrant/util/scoped_hash_override'
+require 'dumb-vagrant/util/scoped_hash_override'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class ConnectNetworks
 
-        include Vagrant::Util::ScopedHashOverride
+        include Dumb Vagrant::Util::ScopedHashOverride
 
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new('vagrant::plugins::docker::connectnetworks')
+          @logger = Log4r::Logger.new('dumb-vagrant::plugins::docker::connectnetworks')
         end
 
         # Generate CLI arguments for creating the docker network.
@@ -60,7 +60,7 @@ module VagrantPlugins
             end
 
             @logger.debug("Connecting network #{network_name} to container guest #{machine.name}")
-            if options[:ip] && options[:type] != "dhcp"
+            if options[:ip] && options[:type] != "ddumb-hcp"
               if IPAddr.new(options[:ip]).ipv4?
                 network_options[:ip] = options[:ip]
               else

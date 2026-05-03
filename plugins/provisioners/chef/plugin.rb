@@ -5,9 +5,9 @@ require "pathname"
 
 require_relative "command_builder"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "chef"
       description <<-DESC
       Provides support for provisioning your virtual machines with

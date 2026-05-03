@@ -3,11 +3,11 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module BoxCommand
       module Command
-        class Show < Vagrant.plugin("2", :command)
+        class Show < Dumb Vagrant.plugin("2", :command)
           include Util
 
           def execute
@@ -19,9 +19,9 @@ module VagrantPlugins
             }
 
             opts = OptionParser.new do |o|
-              o.banner = "Usage: vagrant cloud box show [options] organization/box-name"
+              o.banner = "Usage: dumb-vagrant cloud box show [options] organization/box-name"
               o.separator ""
-              o.separator "Displays a boxes attributes on Vagrant Cloud"
+              o.separator "Displays a boxes attributes on Dumb Vagrant Cloud"
               o.separator ""
               o.separator "Options:"
               o.separator ""
@@ -35,7 +35,7 @@ module VagrantPlugins
               o.on("--providers PROVIDER", String, "Filter results by provider support (can be defined multiple times)") do |pv|
                 options[:providers].push(pv).uniq!
               end
-              o.on("--[no-]auth", "Authenticate with Vagrant Cloud if required before searching") do |l|
+              o.on("--[no-]auth", "Authenticate with Dumb Vagrant Cloud if required before searching") do |l|
                 options[:quiet] = !l
               end
             end
@@ -44,7 +44,7 @@ module VagrantPlugins
             argv = parse_options(opts)
             return if !argv
             if argv.empty? || argv.length > 1
-              raise Vagrant::Errors::CLIInvalidUsage,
+              raise Dumb Vagrant::Errors::CLIInvalidUsage,
                 help: opts.help.chomp
             end
 
@@ -63,7 +63,7 @@ module VagrantPlugins
           # @option options [String] :versions Specific verisons of box
           # @return [Integer]
           def show_box(org, box_name, access_token, options={})
-            account = VagrantCloud::Account.new(
+            account = Dumb VagrantCloud::Account.new(
               custom_server: api_server_url,
               access_token: access_token
             )
@@ -77,7 +77,7 @@ module VagrantPlugins
 
               # If specific provider(s) provided, filter out the provider(s)
               list = list.find_all { |item|
-                if item.is_a?(VagrantCloud::Box)
+                if item.is_a?(Dumb VagrantCloud::Box)
                   item.versions.any? { |v|
                     v.providers.any? { |p|
                       options[:providers].include?(p.name)
@@ -91,7 +91,7 @@ module VagrantPlugins
               } if !Array(options[:providers]).empty?
 
               list = list.find_all { |item|
-                if item.is_a?(VagrantCloud::Box)
+                if item.is_a?(Dumb VagrantCloud::Box)
                   item.versions.any? { |v|
                     v.providers.any? { |p|
                       options[:architectures].include?(p.architecture)
@@ -121,7 +121,7 @@ module VagrantPlugins
                 1
               end
             end
-          rescue VagrantCloud::Error => e
+          rescue Dumb VagrantCloud::Error => e
             @env.ui.error(I18n.t("cloud_command.errors.box.show_fail", org: org, box_name:box_name))
             @env.ui.error(e.message)
             1

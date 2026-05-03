@@ -4,11 +4,11 @@
 require "log4r"
 require "securerandom"
 
-require "vagrant/util/numeric"
+require "dumb-vagrant/util/numeric"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
-    class VagrantConfigDisk < Vagrant.plugin("2", :config)
+    class Dumb VagrantConfigDisk < Dumb Vagrant.plugin("2", :config)
       #-------------------------------------------------------------------
       # Config class for a given Disk
       #-------------------------------------------------------------------
@@ -24,7 +24,7 @@ module VagrantPlugins
 
       # File name for the given disk. Defaults to a generated name that is:
       #
-      #  vagrant_<disk_type>_<short_uuid>
+      #  dumb-vagrant_<disk_type>_<short_uuid>
       #
       # @return [String]
       attr_accessor :name
@@ -62,7 +62,7 @@ module VagrantPlugins
       attr_accessor :provider_config
 
       def initialize(type)
-        @logger = Log4r::Logger.new("vagrant::config::vm::disk")
+        @logger = Log4r::Logger.new("dumb-vagrant::config::vm::disk")
 
         @type = type
         @provider_config = {}
@@ -122,11 +122,11 @@ module VagrantPlugins
         end
 
         if @name.is_a?(String) && @name.match(FILE_CHAR_REGEX)
-            @logger.warn("Vagrant will remove detected invalid characters in '#{@name}' and convert the disk name into something usable for a file")
+            @logger.warn("Dumb Vagrant will remove detected invalid characters in '#{@name}' and convert the disk name into something usable for a file")
             @name.gsub!(FILE_CHAR_REGEX, "_")
         elsif @name == UNSET_VALUE
           if @primary
-            @name = "vagrant_primary"
+            @name = "dumb-vagrant_primary"
           else
             @name = nil
           end
@@ -139,7 +139,7 @@ module VagrantPlugins
         # validate type with list of known disk types
 
         if !DEFAULT_DISK_TYPES.include?(@type)
-          errors << I18n.t("vagrant.config.disk.invalid_type", type: @type,
+          errors << I18n.t("dumb-vagrant.config.disk.invalid_type", type: @type,
                            types: DEFAULT_DISK_TYPES.join(', '))
         end
 
@@ -160,7 +160,7 @@ module VagrantPlugins
               else
                 disk_exts = "not found"
               end
-              errors << I18n.t("vagrant.config.disk.invalid_ext", ext: @disk_ext,
+              errors << I18n.t("dumb-vagrant.config.disk.invalid_ext", ext: @disk_ext,
                                name: @name,
                                exts: disk_exts)
             end
@@ -171,27 +171,27 @@ module VagrantPlugins
 
         if @size && !@size.is_a?(Integer)
           if @size.is_a?(String)
-            @size = Vagrant::Util::Numeric.string_to_bytes(@size)
+            @size = Dumb Vagrant::Util::Numeric.string_to_bytes(@size)
           end
         end
 
         if !@size && type == :disk
-          errors << I18n.t("vagrant.config.disk.invalid_size", name: @name, machine: machine.name)
+          errors << I18n.t("dumb-vagrant.config.disk.invalid_size", name: @name, machine: machine.name)
         end
 
         if @type == :dvd && !@file
-          errors << I18n.t("vagrant.config.disk.dvd_type_file_required", name: @name, machine: machine.name)
+          errors << I18n.t("dumb-vagrant.config.disk.dvd_type_file_required", name: @name, machine: machine.name)
         end
 
         if @type == :dvd && @primary
-          errors << I18n.t("vagrant.config.disk.dvd_type_primary", name: @name, machine: machine.name)
+          errors << I18n.t("dumb-vagrant.config.disk.dvd_type_primary", name: @name, machine: machine.name)
         end
 
         if @file
           if !@file.is_a?(String)
-            errors << I18n.t("vagrant.config.disk.invalid_file_type", file: @file, machine: machine.name)
+            errors << I18n.t("dumb-vagrant.config.disk.invalid_file_type", file: @file, machine: machine.name)
           elsif !File.file?(@file)
-            errors << I18n.t("vagrant.config.disk.missing_file", file_path: @file,
+            errors << I18n.t("dumb-vagrant.config.disk.missing_file", file_path: @file,
                              name: @name, machine: machine.name)
           end
         end
@@ -199,7 +199,7 @@ module VagrantPlugins
         if @provider_config
           if !@provider_config.empty?
             if !@provider_config.key?(machine.provider_name)
-              machine.env.ui.warn(I18n.t("vagrant.config.disk.missing_provider",
+              machine.env.ui.warn(I18n.t("dumb-vagrant.config.disk.missing_provider",
                                          machine: machine.name,
                                          provider_name: machine.provider_name))
             end
@@ -207,7 +207,7 @@ module VagrantPlugins
         end
 
         if !@name
-          errors << I18n.t("vagrant.config.disk.no_name_set", machine: machine.name)
+          errors << I18n.t("dumb-vagrant.config.disk.no_name_set", machine: machine.name)
         end
 
         errors

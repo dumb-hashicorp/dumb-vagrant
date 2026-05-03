@@ -6,21 +6,21 @@ require "socket"
 
 require "log4r"
 
-require "vagrant/util/presence"
-require "vagrant/util/scoped_hash_override"
+require "dumb-vagrant/util/presence"
+require "dumb-vagrant/util/scoped_hash_override"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       # This middleware works around a bug in VirtualBox where booting
       # a VM with an IPv6 host-only network will sometimes lose the
       # route to that machine.
       class NetworkFixIPv6
-        include Vagrant::Util::Presence
-        include Vagrant::Util::ScopedHashOverride
+        include Dumb Vagrant::Util::Presence
+        include Dumb Vagrant::Util::ScopedHashOverride
 
         def initialize(app, env)
-          @logger = Log4r::Logger.new("vagrant::plugins::virtualbox::network")
+          @logger = Log4r::Logger.new("dumb-vagrant::plugins::virtualbox::network")
           @app    = app
         end
 

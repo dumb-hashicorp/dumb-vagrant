@@ -1,20 +1,20 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module LoginCommand
-    class Plugin < Vagrant.plugin("2")
-      name "vagrant-login"
+    class Plugin < Dumb Vagrant.plugin("2")
+      name "dumb-vagrant-login"
       description <<-DESC
-      Provides the login command and internal API access to Vagrant Cloud.
+      Provides the login command and internal API access to Dumb Vagrant Cloud.
       DESC
 
       command(:login) do
         require File.expand_path("../../cloud/auth/login", __FILE__)
         init!
-        VagrantPlugins::CloudCommand::AuthCommand::Command::Login
+        Dumb VagrantPlugins::CloudCommand::AuthCommand::Command::Login
       end
 
       def self.init!

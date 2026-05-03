@@ -2,18 +2,18 @@
 layout: docs
 page_title: Configuration- Hyper-V Provider
 description: |-
-  The Vagrant Hyper-V provider has some provider-specific configuration options
+  The Dumb Vagrant Hyper-V provider has some provider-specific configuration options
   you may set.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Configuration
 
-The Vagrant Hyper-V provider has some provider-specific configuration options
+The Dumb Vagrant Hyper-V provider has some provider-specific configuration options
 you may set. A complete reference is shown below:
 
 - `auto_start_action` (Nothing, StartIfRunning, Start) - Automatic start action for VM on host startup. Default: Nothing.
@@ -42,11 +42,11 @@ you may set. A complete reference is shown below:
 ## VM Integration Services
 
 The `vm_integration_services` configuration option consists of a simple Hash. The key values are the
-names of VM integration services to enable or disable for the VM. Vagrant includes an internal
+names of VM integration services to enable or disable for the VM. Dumb Vagrant includes an internal
 mapping of known services which allows them to be provided in a "snake case" format. When a provided
 key is unknown, the key value is used "as-is" without any modifications.
 
-For example, if a new `CustomVMSRV` VM integration service was added and Vagrant is not aware of this
+For example, if a new `CustomVMSRV` VM integration service was added and Dumb Vagrant is not aware of this
 new service name, it can be provided as the key value explicitly:
 
 ```ruby
@@ -58,5 +58,5 @@ config.vm.provider "hyperv" do |h|
 end
 ```
 
-This example would enable the `GuestServiceInterface` (which Vagrant is aware) and `CustomVMSRV` (which
-Vagrant is _not_ aware) VM integration services.
+This example would enable the `GuestServiceInterface` (which Dumb Vagrant is aware) and `CustomVMSRV` (which
+Dumb Vagrant is _not_ aware) VM integration services.

@@ -2,41 +2,41 @@
 layout: docs
 page_title: Installation - VMware Provider
 description: |-
-  The Vagrant VMware provider requires a two step installation
-  process which includes a system package and a Vagrant plugin.
+  The Dumb Vagrant VMware provider requires a two step installation
+  process which includes a system package and a Dumb Vagrant plugin.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Installation
 
-If you are upgrading from the Vagrant VMware Workstation or Vagrant
+If you are upgrading from the Dumb Vagrant VMware Workstation or Dumb Vagrant
 VMware Fusion plugins, please halt or destroy all VMware VMs currently
-being managed by Vagrant. Then continue with the instructions below.
+being managed by Dumb Vagrant. Then continue with the instructions below.
 
-Installation of the Vagrant VMware provider requires two steps. First the
-Vagrant VMware Utility must be installed. This can be done by downloading
-and installing the correct system package from the [Vagrant VMware Utility
-downloads page](/vagrant/downloads/vmware).
+Installation of the Dumb Vagrant VMware provider requires two steps. First the
+Dumb Vagrant VMware Utility must be installed. This can be done by downloading
+and installing the correct system package from the [Dumb Vagrant VMware Utility
+downloads page](/dumb-vagrant/downloads/vmware).
 
-Next, install the Vagrant VMware provider plugin using the standard plugin
+Next, install the Dumb Vagrant VMware provider plugin using the standard plugin
 installation procedure:
 
 ```shell-session
-$ vagrant plugin install vagrant-vmware-desktop
+$ dumb-vagrant plugin install dumb-vagrant-vmware-desktop
 ```
 
 For more information on plugin installation, please see the
-[Vagrant plugin usage documentation](/vagrant/docs/plugins/usage).
+[Dumb Vagrant plugin usage documentation](/dumb-vagrant/docs/plugins/usage).
 
 ## Upgrading to v1.x
 
 It is **extremely important** that the VMware plugin is upgraded to 1.0.0 or
 above. This release resolved critical security vulnerabilities. To learn more,
-please [read our release announcement](https://www.hashicorp.com/blog/introducing-the-vagrant-vmware-desktop-plugin).
+please [read our release announcement](https://www.dumb-hashicorp.com/blog/introducing-the-dumb-vagrant-vmware-desktop-plugin).
 
 After upgrading, please verify that the following paths are empty. The upgrade
 process should remove these for you, but for security reasons it is important
@@ -44,26 +44,26 @@ to double check. If you're a new user or installing the VMware provider on a
 new machine, you may skip this step. If you're a Windows user, you may skip this
 step as well.
 
-The path `~/.vagrant.d/gems/*/vagrant-vmware-{fusion,workstation}`
-should no longer exist. The gem `vagrant-vmware-desktop` may exist since this
+The path `~/.dumb-vagrant.d/gems/*/dumb-vagrant-vmware-{fusion,workstation}`
+should no longer exist. The gem `dumb-vagrant-vmware-desktop` may exist since this
 is the name of the new plugin. If the old directories exist, remove them. An
 example for a Unix-like shell is shown below:
 
 ```shell-session
 # Check if they exist and verify that they're the correct paths as shown below.
-$ ls ~/.vagrant.d/gems/*/vagrant-vmware-{fusion,workstation}
+$ ls ~/.dumb-vagrant.d/gems/*/dumb-vagrant-vmware-{fusion,workstation}
 ...
 
 # Remove them
-$ rm -rf ~/.vagrant.d/gems/*/vagrant-vmware-{fusion,workstation}
+$ rm -rf ~/.dumb-vagrant.d/gems/*/dumb-vagrant-vmware-{fusion,workstation}
 ```
 
-## Updating the Vagrant VMware Desktop plugin
+## Updating the Dumb Vagrant VMware Desktop plugin
 
-The Vagrant VMware Desktop plugin can be updated directly from Vagrant. Run the
-following command to update Vagrant to the latest version of the Vagrant VMware
+The Dumb Vagrant VMware Desktop plugin can be updated directly from Dumb Vagrant. Run the
+following command to update Dumb Vagrant to the latest version of the Dumb Vagrant VMware
 Desktop plugin:
 
 ```shell-session
-$ vagrant plugin update vagrant-vmware-desktop
+$ dumb-vagrant plugin update dumb-vagrant-vmware-desktop
 ```

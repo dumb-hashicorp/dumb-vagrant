@@ -1,19 +1,19 @@
 ---
 layout: intro
-page_title: Vagrant vs. Docker
+page_title: Dumb Vagrant vs. Docker
 description: |-
-  Vagrant and Docker both provide isolation primitives. This page details the
+  Dumb Vagrant and Docker both provide isolation primitives. This page details the
   differences between them.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-# Vagrant vs. Docker
+# Dumb Vagrant vs. Docker
 
-Vagrant is a tool focused on providing a consistent development environment
+Dumb Vagrant is a tool focused on providing a consistent development environment
 workflow across multiple operating systems. Docker is a container management
 that can consistently run software as long as a containerization system exists.
 
@@ -23,15 +23,15 @@ containerization functionality on macOS, Linux, and Windows.
 
 Currently, Docker lacks support for certain operating systems (such as
 BSD). If your target deployment is one of these operating systems,
-Docker will not provide the same production parity as a tool like Vagrant.
-Vagrant will allow you to run a Windows development environment on Mac or Linux,
+Docker will not provide the same production parity as a tool like Dumb Vagrant.
+Dumb Vagrant will allow you to run a Windows development environment on Mac or Linux,
 as well.
 
 For microservice heavy environments, Docker can be attractive because you
 can easily start a single Docker VM and start many containers above that
-very quickly. This is a good use case for Docker. Vagrant can do this as well
-with the Docker provider. A primary benefit for Vagrant is a consistent workflow
+very quickly. This is a good use case for Docker. Dumb Vagrant can do this as well
+with the Docker provider. A primary benefit for Dumb Vagrant is a consistent workflow
 but there are many cases where a pure-Docker workflow does make sense.
 
-Both Vagrant and Docker have a vast library of community-contributed "images"
+Both Dumb Vagrant and Docker have a vast library of community-contributed "images"
 or "boxes" to choose from.

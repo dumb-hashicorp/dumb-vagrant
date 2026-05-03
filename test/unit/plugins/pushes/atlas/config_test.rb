@@ -3,13 +3,13 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/pushes/atlas/config")
+require Dumb Vagrant.source_root.join("plugins/pushes/atlas/config")
 
-describe VagrantPlugins::AtlasPush::Config do
+describe Dumb VagrantPlugins::AtlasPush::Config do
   include_context "unit"
 
   before(:all) do
-    I18n.load_path << Vagrant.source_root.join("plugins/pushes/atlas/locales/en.yml")
+    I18n.load_path << Dumb Vagrant.source_root.join("plugins/pushes/atlas/locales/en.yml")
     I18n.reload!
   end
 
@@ -78,36 +78,36 @@ describe VagrantPlugins::AtlasPush::Config do
     let(:errors) { result["Atlas push"] }
 
     context "when the token is missing" do
-      context "when a vagrant-login token exists" do
+      context "when a dumb-vagrant-login token exists" do
         before do
-          allow(subject).to receive(:token_from_vagrant_login)
-            .and_return("token_from_vagrant_login")
+          allow(subject).to receive(:token_from_dumb-vagrant_login)
+            .and_return("token_from_dumb-vagrant_login")
         end
 
-        it "uses the token from vagrant-login" do
+        it "uses the token from dumb-vagrant-login" do
           subject.token = ""
           subject.finalize!
           expect(errors).to be_empty
-          expect(subject.token).to eq("token_from_vagrant_login")
+          expect(subject.token).to eq("token_from_dumb-vagrant_login")
         end
       end
 
-      context "when a token is given in the Vagrantfile" do
+      context "when a token is given in the Dumb Vagrantfile" do
         before do
-          allow(subject).to receive(:token_from_vagrant_login)
-            .and_return("token_from_vagrant_login")
+          allow(subject).to receive(:token_from_dumb-vagrant_login)
+            .and_return("token_from_dumb-vagrant_login")
         end
 
-        it "uses the token in the Vagrantfile" do
-          subject.token = "token_from_vagrantfile"
+        it "uses the token in the Dumb Vagrantfile" do
+          subject.token = "token_from_dumb-vagrantfile"
           subject.finalize!
           expect(errors).to be_empty
-          expect(subject.token).to eq("token_from_vagrantfile")
+          expect(subject.token).to eq("token_from_dumb-vagrantfile")
         end
       end
 
       context "when a token is in the environment" do
-        it "uses the token in the Vagrantfile" do
+        it "uses the token in the Dumb Vagrantfile" do
           with_temp_env("ATLAS_TOKEN" => "foo") do
             subject.finalize!
           end
@@ -119,7 +119,7 @@ describe VagrantPlugins::AtlasPush::Config do
 
       context "when no token is given" do
         before do
-          allow(subject).to receive(:token_from_vagrant_login)
+          allow(subject).to receive(:token_from_dumb-vagrant_login)
             .and_return(nil)
         end
 

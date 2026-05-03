@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSolaris11::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestSolaris11::Cap::ChangeHostName" do
   let(:caps) do
-    VagrantPlugins::GuestSolaris11::Plugin
+    Dumb VagrantPlugins::GuestSolaris11::Plugin
       .components
       .guest_capabilities[:solaris11]
   end
 
   let(:machine) { double("machine", config: double("config", solaris11: double("solaris11", suexec_cmd: 'sudo'))) }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)

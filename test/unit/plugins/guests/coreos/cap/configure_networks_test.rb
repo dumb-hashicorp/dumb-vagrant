@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestCoreOS::Cap::ConfigureNetworks" do
+describe "Dumb VagrantPlugins::GuestCoreOS::Cap::ConfigureNetworks" do
   let(:described_class) do
-    VagrantPlugins::GuestCoreOS::Plugin
+    Dumb VagrantPlugins::GuestCoreOS::Plugin
       .components
       .guest_capabilities[:coreos]
       .get(:configure_networks)
@@ -97,9 +97,9 @@ describe "VagrantPlugins::GuestCoreOS::Cap::ConfigureNetworks" do
         described_class.configure_networks(machine, networks)
       end
 
-      it "should remove any previous vagrant configuration" do
+      it "should remove any previous dumb-vagrant configuration" do
         expect(comm).to receive(:sudo).
-          with(/rm .*vagrant-.*conf/, error_check: false)
+          with(/rm .*dumb-vagrant-.*conf/, error_check: false)
         described_class.configure_networks(machine, networks)
       end
 
@@ -186,7 +186,7 @@ describe "VagrantPlugins::GuestCoreOS::Cap::ConfigureNetworks" do
       let(:network_1) do
         {
           interface: 0,
-          type: "dhcp",
+          type: "ddumb-hcp",
         }
       end
       let(:netconfig_1) do
@@ -262,10 +262,10 @@ describe "VagrantPlugins::GuestCoreOS::Cap::ConfigureNetworks" do
         described_class.configure_networks(machine, networks)
       end
 
-      it "should configure DHCP interface" do
+      it "should configure DDUMB_HCP interface" do
         expect(comm).to receive(:upload) do |src, dst|
           content = File.read(src)
-          expect(content).to include("DHCP=yes")
+          expect(content).to include("DDUMB_HCP=yes")
         end
         described_class.configure_networks(machine, networks)
       end

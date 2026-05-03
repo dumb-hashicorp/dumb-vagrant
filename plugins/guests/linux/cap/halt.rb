@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant/util/guest_inspection'
+require 'dumb-vagrant/util/guest_inspection'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class Halt
-        extend Vagrant::Util::GuestInspection::Linux
+        extend Dumb Vagrant::Util::GuestInspection::Linux
 
         def self.halt(machine)
           begin
@@ -16,7 +16,7 @@ module VagrantPlugins
             else
               machine.communicate.sudo("shutdown -h now")
             end
-          rescue IOError, Vagrant::Errors::SSHDisconnected
+          rescue IOError, Dumb Vagrant::Errors::SSHDisconnected
             # Do nothing, because it probably means the machine shut down
             # and SSH connection was lost.
           end

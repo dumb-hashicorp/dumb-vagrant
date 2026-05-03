@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/guests/windows/config")
+require Dumb Vagrant.source_root.join("plugins/guests/windows/config")
 
-describe VagrantPlugins::GuestWindows::Config do
+describe Dumb VagrantPlugins::GuestWindows::Config do
   let(:machine) { double("machine") }
 
   subject { described_class.new }

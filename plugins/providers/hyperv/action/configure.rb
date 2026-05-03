@@ -4,13 +4,13 @@
 require "fileutils"
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class Configure
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::hyperv::configure")
+          @logger = Log4r::Logger.new("dumb-vagrant::hyperv::configure")
         end
 
         def call(env)
@@ -42,7 +42,7 @@ module VagrantPlugins
 
           if !switch && !sentinel.file?
             if switches.length > 1
-              env[:ui].detail(I18n.t("vagrant_hyperv.choose_switch") + "\n ")
+              env[:ui].detail(I18n.t("dumb-vagrant_hyperv.choose_switch") + "\n ")
               switches.each_index do |i|
                 switch = switches[i]
                 env[:ui].detail("#{i+1}) #{switch["Name"]}")
@@ -100,10 +100,10 @@ module VagrantPlugins
           end
 
           if env[:machine].provider_config.enable_enhanced_session_mode
-            env[:ui].detail(I18n.t("vagrant.hyperv_enable_enhanced_session"))
+            env[:ui].detail(I18n.t("dumb-vagrant.hyperv_enable_enhanced_session"))
             env[:machine].provider.driver.set_enhanced_session_transport_type("HvSocket")
           else
-            env[:ui].detail(I18n.t("vagrant.hyperv_disable_enhanced_session"))
+            env[:ui].detail(I18n.t("dumb-vagrant.hyperv_disable_enhanced_session"))
             env[:machine].provider.driver.set_enhanced_session_transport_type("VMBus")
           end
 

@@ -1,23 +1,23 @@
 ---
 layout: docs
-page_title: vagrant resume - Command-Line Interface
+page_title: dumb-vagrant resume - Command-Line Interface
 description: |-
-  The "vagrant resume" command is used to bring a machine back into the "up"
-  state, perhaps if it was previously suspended via "vagrant halt" or "vagrant
+  The "dumb-vagrant resume" command is used to bring a machine back into the "up"
+  state, perhaps if it was previously suspended via "dumb-vagrant halt" or "dumb-vagrant
   suspend".
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Resume
 
-**Command: `vagrant resume [name|id]`**
+**Command: `dumb-vagrant resume [name|id]`**
 
-This resumes a Vagrant managed machine that was previously suspended,
-perhaps with the [suspend command](/vagrant/docs/cli/suspend).
+This resumes a Dumb Vagrant managed machine that was previously suspended,
+perhaps with the [suspend command](/dumb-vagrant/docs/cli/suspend).
 
 The configured provisioners will not run again, by default. You can force
 the provisioners to re-run by specifying the `--provision` flag.
@@ -28,5 +28,5 @@ the provisioners to re-run by specifying the `--provision` flag.
 
 - `--provision-with x,y,z` - This will only run the given provisioners. For
   example, if you have a `:shell` and `:chef_solo` provisioner and run
-  `vagrant provision --provision-with shell`, only the shell provisioner will
+  `dumb-vagrant provision --provision-with shell`, only the shell provisioner will
   be run.

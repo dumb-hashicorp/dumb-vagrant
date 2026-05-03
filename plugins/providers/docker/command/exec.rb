@@ -1,12 +1,12 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant/util/safe_exec'
+require 'dumb-vagrant/util/safe_exec'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Command
-      class Exec < Vagrant.plugin("2", :command)
+      class Exec < Dumb Vagrant.plugin("2", :command)
         def self.synopsis
           "attach to an already-running docker container"
         end
@@ -19,7 +19,7 @@ module VagrantPlugins
           options[:prefix] = true
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant docker-exec [options] [name] -- <command> [args]"
+            o.banner = "Usage: dumb-vagrant docker-exec [options] [name] -- <command> [args]"
             o.separator ""
             o.separator "Options:"
             o.separator ""
@@ -91,7 +91,7 @@ module VagrantPlugins
           exec_options = options
 
           if options[:pty]
-            Vagrant::Util::SafeExec.exec(exec_cmd[0], *exec_cmd[1..-1])
+            Dumb Vagrant::Util::SafeExec.exec(exec_cmd[0], *exec_cmd[1..-1])
           else
             output = ""
             machine.provider.driver.execute(*exec_cmd, **exec_options) do |type, data|

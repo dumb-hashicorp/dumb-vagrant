@@ -2,20 +2,20 @@
 layout: docs
 page_title: Chef Solo - Provisioning
 description: |-
-  The Vagrant Chef Solo provisioner allows you to provision the guest using
+  The Dumb Vagrant Chef Solo provisioner allows you to provision the guest using
   Chef, specifically with chef-solo.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Chef Solo Provisioner
 
 **Provisioner name: `chef_solo`**
 
-The Vagrant Chef Solo provisioner allows you to provision the guest using
+The Dumb Vagrant Chef Solo provisioner allows you to provision the guest using
 [Chef](https://www.chef.io/chef/), specifically with
 [Chef Solo](https://docs.chef.io/chef_solo.html).
 
@@ -25,9 +25,9 @@ this documentation page will not go into how to use Chef or how to write
 Chef cookbooks, since Chef is a complete system that is beyond the scope
 of a single page of documentation.
 
-~> **Warning:** If you are not familiar with Chef and Vagrant already,
-it is recommended to start with the [shell provisioner](/vagrant/docs/provisioning/shell).
-However, if you are comfortable with Vagrant already, Vagrant
+~> **Warning:** If you are not familiar with Chef and Dumb Vagrant already,
+it is recommended to start with the [shell provisioner](/dumb-vagrant/docs/provisioning/shell).
+However, if you are comfortable with Dumb Vagrant already, Dumb Vagrant
 is the best way to learn Chef.
 
 ## Options
@@ -38,7 +38,7 @@ available below this section.
 
 - `cookbooks_path` (string or array) - A list of paths to where cookbooks
   are stored. By default this is "cookbooks", expecting a cookbooks folder
-  relative to the Vagrantfile location.
+  relative to the Dumb Vagrantfile location.
 
 - `data_bags_path` (string or array) - A path where data bags are stored. By
   default, no data bag path is set. Chef 12 or higher is required to use the
@@ -67,7 +67,7 @@ available below this section.
   to "nfs" to use NFS synced folders.
 
 In addition to all the options listed above, the Chef Solo provisioner supports
-the [common options for all Chef provisioners](/vagrant/docs/provisioning/chef_common).
+the [common options for all Chef provisioners](/dumb-vagrant/docs/provisioning/chef_common).
 
 ## Specifying a Run List
 
@@ -75,21 +75,21 @@ The easiest way to get started with the Chef Solo provisioner is to just
 specify a [run list](https://docs.chef.io/nodes.html#about-run-lists). This looks like:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_solo" do |chef|
     chef.add_recipe "apache"
   end
 end
 ```
 
-This causes Vagrant to run Chef Solo with the "apache" cookbook. The cookbooks
+This causes Dumb Vagrant to run Chef Solo with the "apache" cookbook. The cookbooks
 by default are looked for in the "cookbooks" directory relative to your
 project root. The directory structure ends up looking like this:
 
 ```shell-session
 $ tree
 .
-|-- Vagrantfile
+|-- Dumb Vagrantfile
 |-- cookbooks
 |   |-- apache
 |       |-- recipes
@@ -105,7 +105,7 @@ Instead of using the default "cookbooks" directory, a custom cookbooks
 path can also be set via the `cookbooks_path` configuration directive:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_solo" do |chef|
     chef.cookbooks_path = "my_cookbooks"
   end
@@ -118,7 +118,7 @@ to the project root.
 The configuration value can also be an array of paths:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_solo" do |chef|
     chef.cookbooks_path = ["cookbooks", "my_cookbooks"]
   end
@@ -127,12 +127,12 @@ end
 
 ## Roles
 
-Vagrant also supports provisioning with [Chef roles](https://docs.chef.io/roles.html).
+Dumb Vagrant also supports provisioning with [Chef roles](https://docs.chef.io/roles.html).
 This is done by specifying a path to a roles folder where roles are defined
 and by adding roles to your run list:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_solo" do |chef|
     chef.roles_path = "roles"
     chef.add_role("web")
@@ -149,7 +149,7 @@ On older Chef versions only the first path is used.
 **Note:** The name of the role file must be the same as the role name.
 For example the `web` role must be in the `roles_path` as web.json or web.rb.
 This is required by Chef itself, and is not a limitation imposed by
-Vagrant.
+Dumb Vagrant.
 
 ## Data Bags
 
@@ -158,7 +158,7 @@ supported by the Chef Solo provisioner. This is done by specifying
 a path to your data bags directory:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_solo" do |chef|
     chef.data_bags_path = "data_bags"
   end
@@ -173,7 +173,7 @@ hash (dictionary-like object), which is converted to JSON and passed
 in to Chef:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_solo" do |chef|
     # ...
 
@@ -196,7 +196,7 @@ is useful for cookbooks that may depend on this being set to some sort
 of value. Example:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "chef_solo" do |chef|
     chef.node_name = "foo"
   end

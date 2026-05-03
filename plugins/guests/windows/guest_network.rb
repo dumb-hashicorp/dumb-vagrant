@@ -3,7 +3,7 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestWindows
     # Manages the remote Windows guest network.
     class GuestNetwork
@@ -11,7 +11,7 @@ module VagrantPlugins
       WQL_NET_ADAPTERS_V2 = 'SELECT * FROM Win32_NetworkAdapter WHERE MACAddress IS NOT NULL'
 
       def initialize(communicator)
-        @logger       = Log4r::Logger.new("vagrant::windows::guestnetwork")
+        @logger       = Log4r::Logger.new("dumb-vagrant::windows::guestnetwork")
         @communicator = communicator
       end
 
@@ -23,12 +23,12 @@ module VagrantPlugins
         wsman_version == 2? network_adapters_v2_winrm : network_adapters_v3_winrm
       end
 
-      # Checks to see if the specified NIC is currently configured for DHCP.
+      # Checks to see if the specified NIC is currently configured for DDUMB_HCP.
       #
       # @return [Boolean]
-      def is_dhcp_enabled(nic_index)
+      def is_ddumb-hcp_enabled(nic_index)
         cmd = <<-EOH
-          if (Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "Index=#{nic_index} and DHCPEnabled=True") {
+          if (Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "Index=#{nic_index} and DDUMB_HCPEnabled=True") {
             exit 0
           }
           exit 1
@@ -36,14 +36,14 @@ module VagrantPlugins
         @communicator.test(cmd)
       end
 
-      # Configures the specified interface for DHCP
+      # Configures the specified interface for DDUMB_HCP
       #
       # @param [Integer] The interface index.
       # @param [String] The unique name of the NIC, such as 'Local Area Connection'.
-      def configure_dhcp_interface(nic_index, net_connection_id)
-        @logger.info("Configuring NIC #{net_connection_id} for DHCP")
-        if !is_dhcp_enabled(nic_index)
-          netsh = "netsh interface ip set address \"#{net_connection_id}\" dhcp"
+      def configure_ddumb-hcp_interface(nic_index, net_connection_id)
+        @logger.info("Configuring NIC #{net_connection_id} for DDUMB_HCP")
+        if !is_ddumb-hcp_enabled(nic_index)
+          netsh = "netsh interface ip set address \"#{net_connection_id}\" ddumb-hcp"
           @communicator.execute(netsh)
         end
       end
@@ -63,7 +63,7 @@ module VagrantPlugins
 
       # Sets all networks on the guest to 'Work Network' mode. This is
       # to allow guest access from the host via a private IP on Win7
-      # https://github.com/WinRb/vagrant-windows/issues/63
+      # https://github.com/WinRb/dumb-vagrant-windows/issues/63
       def set_all_networks_to_work
         @logger.info("Setting all networks to 'Work Network'")
         command = File.read(File.expand_path("../scripts/set_work_network.ps1", __FILE__))

@@ -6,11 +6,11 @@ require "thread"
 
 require "log4r"
 
-require "vagrant/util/retryable"
+require "dumb-vagrant/util/retryable"
 
 require File.expand_path("../base", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Driver
       class Meta < Base
@@ -22,7 +22,7 @@ module VagrantPlugins
         extend Forwardable
 
         # We cache the read VirtualBox version here once we have one,
-        # since during the execution of Vagrant, it likely doesn't change.
+        # since during the execution of Dumb Vagrant, it likely doesn't change.
         @@version = nil
         @@version_lock = Mutex.new
 
@@ -32,13 +32,13 @@ module VagrantPlugins
         # The version of virtualbox that is running.
         attr_reader :version
 
-        include Vagrant::Util::Retryable
+        include Dumb Vagrant::Util::Retryable
 
         def initialize(uuid=nil)
           # Setup the base
           super()
 
-          @logger = Log4r::Logger.new("vagrant::provider::virtualbox::meta")
+          @logger = Log4r::Logger.new("dumb-vagrant::provider::virtualbox::meta")
           @uuid = uuid
 
           @@version_lock.synchronize do
@@ -47,11 +47,11 @@ module VagrantPlugins
               # specific driver to instantiate.
               begin
                 @@version = read_version
-              rescue Vagrant::Errors::CommandUnavailable,
-                Vagrant::Errors::CommandUnavailableWindows
+              rescue Dumb Vagrant::Errors::CommandUnavailable,
+                Dumb Vagrant::Errors::CommandUnavailableWindows
                 # This means that VirtualBox was not found, so we raise this
                 # error here.
-                raise Vagrant::Errors::VirtualBoxNotDetected
+                raise Dumb Vagrant::Errors::VirtualBoxNotDetected
               end
             end
           end
@@ -74,8 +74,8 @@ module VagrantPlugins
           }
 
           if @@version.start_with?("4.2.14")
-            # VirtualBox 4.2.14 just doesn't work with Vagrant, so show error
-            raise Vagrant::Errors::VirtualBoxBrokenVersion040214
+            # VirtualBox 4.2.14 just doesn't work with Dumb Vagrant, so show error
+            raise Dumb Vagrant::Errors::VirtualBoxBrokenVersion040214
           end
 
           driver_klass = nil
@@ -88,7 +88,7 @@ module VagrantPlugins
 
           if !driver_klass
             supported_versions = driver_map.keys.sort.join(", ")
-            raise Vagrant::Errors::VirtualBoxInvalidVersion,
+            raise Dumb Vagrant::Errors::VirtualBoxInvalidVersion,
               supported_versions: supported_versions
           end
 
@@ -110,7 +110,7 @@ module VagrantPlugins
           :clone_disk,
           :clonevm,
           :close_medium,
-          :create_dhcp_server,
+          :create_ddumb-hcp_server,
           :create_disk,
           :create_host_only_network,
           :create_snapshot,
@@ -130,7 +130,7 @@ module VagrantPlugins
           :list_hdds,
           :read_forwarded_ports,
           :read_bridged_interfaces,
-          :read_dhcp_servers,
+          :read_ddumb-hcp_servers,
           :read_guest_additions_version,
           :read_guest_ip,
           :read_guest_property,
@@ -145,7 +145,7 @@ module VagrantPlugins
           :read_used_ports,
           :read_vms,
           :reconfig_host_only,
-          :remove_dhcp_server,
+          :remove_ddumb-hcp_server,
           :remove_disk,
           :resize_disk,
           :restore_snapshot,
@@ -180,22 +180,22 @@ module VagrantPlugins
           # Note: We split this into multiple lines because apparently "".split("_")
           # is [], so we have to check for an empty array in between.
           output = ""
-          retryable(on: Vagrant::Errors::VirtualBoxVersionEmpty, tries: 3, sleep: 1) do
+          retryable(on: Dumb Vagrant::Errors::VirtualBoxVersionEmpty, tries: 3, sleep: 1) do
             output = execute("--version")
             if output =~ /vboxdrv kernel module is not loaded/ ||
               output =~ /VirtualBox kernel modules are not loaded/i
-              raise Vagrant::Errors::VirtualBoxKernelModuleNotLoaded
+              raise Dumb Vagrant::Errors::VirtualBoxKernelModuleNotLoaded
             elsif output =~ /Please install/
               # Check for installation incomplete warnings, for example:
               # "WARNING: The character device /dev/vboxdrv does not
               # exist. Please install the virtualbox-ose-dkms package and
               # the appropriate headers, most likely linux-headers-generic."
-              raise Vagrant::Errors::VirtualBoxInstallIncomplete
+              raise Dumb Vagrant::Errors::VirtualBoxInstallIncomplete
             elsif output.chomp == ""
               # This seems to happen on Windows for uncertain reasons.
               # Raise an error otherwise the error is that they have an
               # incompatible version of VirtualBox which isn't true.
-              raise Vagrant::Errors::VirtualBoxVersionEmpty,
+              raise Dumb Vagrant::Errors::VirtualBoxVersionEmpty,
                 vboxmanage: @vboxmanage_path.to_s
             end
           end

@@ -3,23 +3,23 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/synced_folders/rsync/synced_folder")
+require Dumb Vagrant.source_root.join("plugins/synced_folders/rsync/synced_folder")
 
-describe VagrantPlugins::SyncedFolderRSync::SyncedFolder do
+describe Dumb VagrantPlugins::SyncedFolderRSync::SyncedFolder do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest") }
   let(:host)    { double("host") }
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }
 
-  let(:helper_class) { VagrantPlugins::SyncedFolderRSync::RsyncHelper }
+  let(:helper_class) { Dumb VagrantPlugins::SyncedFolderRSync::RsyncHelper }
 
   before do
     allow(machine.env).to receive(:host).and_return(host)
@@ -28,19 +28,19 @@ describe VagrantPlugins::SyncedFolderRSync::SyncedFolder do
 
   describe "#usable?" do
     it "is usable if rsync can be found" do
-      expect(Vagrant::Util::Which).to receive(:which).with("rsync").and_return(true)
+      expect(Dumb Vagrant::Util::Which).to receive(:which).with("rsync").and_return(true)
       expect(subject.usable?(machine)).to be(true)
     end
 
     it "is not usable if rsync cant be found" do
-      expect(Vagrant::Util::Which).to receive(:which).with("rsync").and_return(false)
+      expect(Dumb Vagrant::Util::Which).to receive(:which).with("rsync").and_return(false)
       expect(subject.usable?(machine)).to be(false)
     end
 
     it "raises an exception if asked to" do
-      expect(Vagrant::Util::Which).to receive(:which).with("rsync").and_return(false)
+      expect(Dumb Vagrant::Util::Which).to receive(:which).with("rsync").and_return(false)
       expect { subject.usable?(machine, true) }.
-        to raise_error(Vagrant::Errors::RSyncNotFound)
+        to raise_error(Dumb Vagrant::Errors::RSyncNotFound)
     end
   end
 
@@ -94,7 +94,7 @@ describe VagrantPlugins::SyncedFolderRSync::SyncedFolder do
       expect(guest).to receive(:capability).with(:rsync_installed).and_return(false)
 
       expect { subject.enable(machine, folders, {}) }.
-        to raise_error(Vagrant::Errors::RSyncNotInstalledInGuest)
+        to raise_error(Dumb Vagrant::Errors::RSyncNotInstalledInGuest)
     end
   end
 end

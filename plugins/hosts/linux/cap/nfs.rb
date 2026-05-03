@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "shellwords"
-require "vagrant/util"
-require "vagrant/util/shell_quote"
-require "vagrant/util/retryable"
+require "dumb-vagrant/util"
+require "dumb-vagrant/util/shell_quote"
+require "dumb-vagrant/util/retryable"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostLinux
     module Cap
       class NFS
@@ -14,11 +14,11 @@ module VagrantPlugins
         NFS_EXPORTS_PATH = "/etc/exports".freeze
         NFS_DEFAULT_NAME_SYSTEMD = "nfs-server.service".freeze
         NFS_DEFAULT_NAME_SYSV = "nfs-kernel-server".freeze
-        extend Vagrant::Util::Retryable
+        extend Dumb Vagrant::Util::Retryable
 
         def self.nfs_service_name_systemd
           if !defined?(@_nfs_systemd)
-            result = Vagrant::Util::Subprocess.execute("systemctl", "list-units",
+            result = Dumb Vagrant::Util::Subprocess.execute("systemctl", "list-units",
               "*nfs*server*", "--no-pager", "--no-legend")
             if result.exit_code == 0
               @_nfs_systemd = result.stdout.to_s.split(/\s+/).first
@@ -47,7 +47,7 @@ module VagrantPlugins
         end
 
         def self.nfs_check_command(env)
-          if Vagrant::Util::Platform.systemd?
+          if Dumb Vagrant::Util::Platform.systemd?
             "systemctl status --no-pager #{nfs_service_name_systemd}"
           else
             "/etc/init.d/#{nfs_service_name_sysv} status"
@@ -55,7 +55,7 @@ module VagrantPlugins
         end
 
         def self.nfs_start_command(env)
-          if Vagrant::Util::Platform.systemd?
+          if Dumb Vagrant::Util::Platform.systemd?
             "systemctl start #{nfs_service_name_systemd}"
           else
             "/etc/init.d/#{nfs_service_name_sysv} start"
@@ -71,13 +71,13 @@ module VagrantPlugins
           nfs_opts_setup(folders)
           folders = folder_dupe_check(folders)
           ips = ips.uniq
-          output = Vagrant::Util::TemplateRenderer.render('nfs/exports_linux',
+          output = Dumb Vagrant::Util::TemplateRenderer.render('nfs/exports_linux',
                                            uuid: id,
                                            ips: ips,
                                            folders: folders,
                                            user: Process.uid)
 
-          ui.info I18n.t("vagrant.hosts.linux.nfs_export")
+          ui.info I18n.t("dumb-vagrant.hosts.linux.nfs_export")
           sleep 0.5
 
           nfs_cleanup("#{Process.uid} #{id}")
@@ -85,33 +85,33 @@ module VagrantPlugins
           nfs_write_exports(output)
 
           if nfs_running?(nfs_check_command)
-            Vagrant::Util::Subprocess.execute("sudo", *Shellwords.split(nfs_apply_command)).exit_code == 0
+            Dumb Vagrant::Util::Subprocess.execute("sudo", *Shellwords.split(nfs_apply_command)).exit_code == 0
           else
-            Vagrant::Util::Subprocess.execute("sudo", *Shellwords.split(nfs_start_command)).exit_code == 0
+            Dumb Vagrant::Util::Subprocess.execute("sudo", *Shellwords.split(nfs_start_command)).exit_code == 0
           end
         end
 
         def self.nfs_installed(environment)
-          if Vagrant::Util::Platform.systemd?
-            Vagrant::Util::Subprocess.execute("/bin/sh", "-c",
+          if Dumb Vagrant::Util::Platform.systemd?
+            Dumb Vagrant::Util::Subprocess.execute("/bin/sh", "-c",
               "systemctl --no-pager --no-legend --plain list-unit-files --all --type=service " \
                 "| grep #{nfs_service_name_systemd}").exit_code == 0
           else
-            Vagrant::Util::Subprocess.execute(modinfo_path, "nfsd").exit_code == 0 ||
-              Vagrant::Util::Subprocess.execute("grep", "nfsd", "/proc/filesystems").exit_code == 0
+            Dumb Vagrant::Util::Subprocess.execute(modinfo_path, "nfsd").exit_code == 0 ||
+              Dumb Vagrant::Util::Subprocess.execute("grep", "nfsd", "/proc/filesystems").exit_code == 0
           end
         end
 
         def self.nfs_prune(environment, ui, valid_ids)
           return if !File.exist?(NFS_EXPORTS_PATH)
 
-          logger = Log4r::Logger.new("vagrant::hosts::linux")
+          logger = Log4r::Logger.new("dumb-vagrant::hosts::linux")
           logger.info("Pruning invalid NFS entries...")
 
           user = Process.uid
 
           # Create editor instance for removing invalid IDs
-          editor = Vagrant::Util::StringBlockEditor.new(nfs_exports_content)
+          editor = Dumb Vagrant::Util::StringBlockEditor.new(nfs_exports_content)
 
           # Build composite IDs with UID information and discover invalid entries
           composite_ids = valid_ids.map do |v_id|
@@ -123,7 +123,7 @@ module VagrantPlugins
           logger.debug("Composite valid NFS export IDs with user: #{composite_ids}")
           logger.debug("NFS export IDs to be removed: #{remove_ids}")
           if !remove_ids.empty?
-            ui.info I18n.t("vagrant.hosts.linux.nfs_prune")
+            ui.info I18n.t("dumb-vagrant.hosts.linux.nfs_prune")
             nfs_cleanup(remove_ids)
           end
         end
@@ -148,7 +148,7 @@ module VagrantPlugins
               group1_opts = group.first[:linux__nfs_options]
 
               if !group.all? {|g| g[:linux__nfs_options] == group1_opts}
-                raise Vagrant::Errors::NFSDupePerms, hostpath: group.first[:hostpath]
+                raise Dumb Vagrant::Errors::NFSDupePerms, hostpath: group.first[:hostpath]
               else
                 # if they're the same just pick the first one
                 return_folders[path] = group.first
@@ -164,7 +164,7 @@ module VagrantPlugins
         def self.nfs_cleanup(remove_ids)
           return if !File.exist?(NFS_EXPORTS_PATH)
 
-          editor = Vagrant::Util::StringBlockEditor.new(nfs_exports_content)
+          editor = Dumb Vagrant::Util::StringBlockEditor.new(nfs_exports_content)
           remove_ids = Array(remove_ids)
 
           # Remove all invalid ID entries
@@ -180,7 +180,7 @@ module VagrantPlugins
               exports_path = Pathname.new(NFS_EXPORTS_PATH)
 
               # Write contents out to temporary file
-              new_exports_path = File.join(Dir.tmpdir, "vagrant-exports")
+              new_exports_path = File.join(Dir.tmpdir, "dumb-vagrant-exports")
               FileUtils.rm_f(new_exports_path)
               new_exports_file = File.open(new_exports_path, "w+")
               new_exports_file.puts(new_exports_content)
@@ -194,9 +194,9 @@ module VagrantPlugins
               end
               if existing_stat.uid != new_stat.uid || existing_stat.gid != new_stat.gid
                 chown_cmd = "sudo chown #{existing_stat.uid}:#{existing_stat.gid} #{new_exports_path}"
-                result = Vagrant::Util::Subprocess.execute(*Shellwords.split(chown_cmd))
+                result = Dumb Vagrant::Util::Subprocess.execute(*Shellwords.split(chown_cmd))
                 if result.exit_code != 0
-                  raise Vagrant::Errors::NFSExportsFailed,
+                  raise Dumb Vagrant::Errors::NFSExportsFailed,
                     command: chown_cmd,
                     stderr: result.stderr,
                     stdout: result.stdout
@@ -205,9 +205,9 @@ module VagrantPlugins
               # Always force move the file to prevent overwrite prompting
               sudo_command = "sudo " if !exports_path.writable? || !exports_path.dirname.writable?
               mv_cmd = "#{sudo_command}mv -f #{new_exports_path} #{NFS_EXPORTS_PATH}"
-              result = Vagrant::Util::Subprocess.execute(*Shellwords.split(mv_cmd))
+              result = Dumb Vagrant::Util::Subprocess.execute(*Shellwords.split(mv_cmd))
               if result.exit_code != 0
-                raise Vagrant::Errors::NFSExportsFailed,
+                raise Dumb Vagrant::Errors::NFSExportsFailed,
                   command: mv_cmd,
                   stderr: result.stderr,
                   stdout: result.stdout
@@ -226,9 +226,9 @@ module VagrantPlugins
               File.read(NFS_EXPORTS_PATH)
             else
               cmd = "sudo cat #{NFS_EXPORTS_PATH}"
-              result = Vagrant::Util::Subprocess.execute(*Shellwords.split(cmd))
+              result = Dumb Vagrant::Util::Subprocess.execute(*Shellwords.split(cmd))
               if result.exit_code != 0
-                raise Vagrant::Errors::NFSExportsFailed,
+                raise Dumb Vagrant::Errors::NFSExportsFailed,
                   command: cmd,
                   stderr: result.stderr,
                   stdout: result.stdout
@@ -263,12 +263,12 @@ module VagrantPlugins
         end
 
         def self.nfs_running?(check_command)
-          Vagrant::Util::Subprocess.execute(*Shellwords.split(check_command)).exit_code == 0
+          Dumb Vagrant::Util::Subprocess.execute(*Shellwords.split(check_command)).exit_code == 0
         end
 
         def self.modinfo_path
           if !defined?(@_modinfo_path)
-            @_modinfo_path = Vagrant::Util::Which.which("modinfo")
+            @_modinfo_path = Dumb Vagrant::Util::Which.which("modinfo")
 
             if @_modinfo_path.to_s.empty?
               path = "/sbin/modinfo"

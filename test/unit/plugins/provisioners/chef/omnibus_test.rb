@@ -3,9 +3,9 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/chef/omnibus")
+require Dumb Vagrant.source_root.join("plugins/provisioners/chef/omnibus")
 
-describe VagrantPlugins::Chef::Omnibus do
+describe Dumb VagrantPlugins::Chef::Omnibus do
   describe "#sh_command" do
     it "includes the project name" do
       command = described_class.sh_command("chef", nil, "stable", "https://omnitruck.chef.io")

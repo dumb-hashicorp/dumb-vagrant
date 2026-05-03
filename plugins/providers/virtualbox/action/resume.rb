@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class Resume
@@ -13,10 +13,10 @@ module VagrantPlugins
           current_state = env[:machine].state.id
 
           if current_state == :paused
-            env[:ui].info I18n.t("vagrant.actions.vm.resume.unpausing")
+            env[:ui].info I18n.t("dumb-vagrant.actions.vm.resume.unpausing")
             env[:machine].provider.driver.resume
           elsif current_state == :saved
-            env[:ui].info I18n.t("vagrant.actions.vm.resume.resuming")
+            env[:ui].info I18n.t("dumb-vagrant.actions.vm.resume.resuming")
             env[:action_runner].run(Boot, env)
           end
 

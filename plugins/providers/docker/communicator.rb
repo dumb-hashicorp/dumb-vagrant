@@ -4,11 +4,11 @@
 require "digest/md5"
 require "tempfile"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     # This communicator uses the host VM as proxy to communicate to the
     # actual Docker container via SSH.
-    class Communicator < Vagrant.plugin("2", :communicator)
+    class Communicator < Dumb Vagrant.plugin("2", :communicator)
       def initialize(machine)
         @machine = machine
         @host_vm = machine.provider.host_vm
@@ -49,13 +49,13 @@ module VagrantPlugins
 
       def execute(command, **opts, &block)
         fence = {}
-        fence[:stderr] = "VAGRANT FENCE: #{Time.now.to_i} #{rand(100000)}"
-        fence[:stdout] = "VAGRANT FENCE: #{Time.now.to_i} #{rand(100000)}"
+        fence[:stderr] = "DUMB_VAGRANT FENCE: #{Time.now.to_i} #{rand(100000)}"
+        fence[:stdout] = "DUMB_VAGRANT FENCE: #{Time.now.to_i} #{rand(100000)}"
 
         # We want to emulate how the SSH communicator actually executes
         # things, so we build up the list of commands to execute in a
         # giant shell script.
-        tf = Tempfile.new("vagrant")
+        tf = Tempfile.new("dumb-vagrant")
         tf.binmode
         tf.write("export TERM=vt100\n")
         tf.write("echo #{fence[:stdout]}\n")

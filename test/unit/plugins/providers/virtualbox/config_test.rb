@@ -3,9 +3,9 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/providers/virtualbox/config")
+require Dumb Vagrant.source_root.join("plugins/providers/virtualbox/config")
 
-describe VagrantPlugins::ProviderVirtualBox::Config do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Config do
   let(:machine) { double("machine") }
 
   def assert_invalid

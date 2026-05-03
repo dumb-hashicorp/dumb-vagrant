@@ -5,15 +5,15 @@ require "ipaddr"
 require "socket"
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestArch
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
-        extend Vagrant::Util::GuestInspection::Linux
-        extend Vagrant::Util::GuestNetworks::Linux
+        include Dumb Vagrant::Util
+        extend Dumb Vagrant::Util::GuestInspection::Linux
+        extend Dumb Vagrant::Util::GuestNetworks::Linux
 
         def self.configure_networks(machine, networks)
           comm = machine.communicate
@@ -44,9 +44,9 @@ module VagrantPlugins
               )
             end
 
-            remote_path = "/tmp/vagrant-network-#{network[:device]}-#{Time.now.to_i}-#{i}"
+            remote_path = "/tmp/dumb-vagrant-network-#{network[:device]}-#{Time.now.to_i}-#{i}"
 
-            Tempfile.open("vagrant-arch-configure-networks") do |f|
+            Tempfile.open("dumb-vagrant-arch-configure-networks") do |f|
               f.binmode
               f.write(entry)
               f.fsync

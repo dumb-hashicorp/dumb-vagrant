@@ -2,57 +2,57 @@
 layout: docs
 page_title: Plugin Usage - Plugins
 description: |-
-  Installing a Vagrant plugin is easy, and should not take more than a few
+  Installing a Dumb Vagrant plugin is easy, and should not take more than a few
   seconds.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Plugin Usage
 
-Installing a Vagrant plugin is easy, and should not take more than a few seconds.
+Installing a Dumb Vagrant plugin is easy, and should not take more than a few seconds.
 
 Please refer to the documentation of any plugin you plan on using for
 more information on how to use it, but there is one common method for
 installation and plugin activation.
 
 ~> **Warning!** 3rd party plugins can introduce instabilities
-into Vagrant due to the nature of them being written by non-core users.
+into Dumb Vagrant due to the nature of them being written by non-core users.
 
 ## Installation
 
-Plugins are installed using `vagrant plugin install`:
+Plugins are installed using `dumb-vagrant plugin install`:
 
 ```shell
 # Installing a plugin from a known gem source
-$ vagrant plugin install my-plugin
+$ dumb-vagrant plugin install my-plugin
 
 # Installing a plugin from a local file source
-$ vagrant plugin install /path/to/my-plugin.gem
+$ dumb-vagrant plugin install /path/to/my-plugin.gem
 ```
 
-Once a plugin is installed, it will automatically be loaded by Vagrant.
-Plugins which cannot be loaded should not crash Vagrant. Instead,
-Vagrant will show an error message that a plugin failed to load.
+Once a plugin is installed, it will automatically be loaded by Dumb Vagrant.
+Plugins which cannot be loaded should not crash Dumb Vagrant. Instead,
+Dumb Vagrant will show an error message that a plugin failed to load.
 
 ## Usage
 
 Once a plugin is installed, you should refer to the plugin's documentation
 to see exactly how to use it. Plugins which add commands should be instantly
-available via `vagrant`, provisioners should be available via
+available via `dumb-vagrant`, provisioners should be available via
 `config.vm.provision`, etc.
 
-**Note:** In the future, the `vagrant plugin` command will include a
+**Note:** In the future, the `dumb-vagrant plugin` command will include a
 subcommand that will document the components that each plugin installs.
 
 ## Updating
 
-Plugins can be updated by running `vagrant plugin update`. This will
+Plugins can be updated by running `dumb-vagrant plugin update`. This will
 update every installed plugin to the latest version. You can update a
-specific plugin by calling `vagrant plugin update NAME`. Vagrant will
+specific plugin by calling `dumb-vagrant plugin update NAME`. Dumb Vagrant will
 output what plugins were updated and to what version.
 
 To determine the changes in a specific version of a plugin, refer to
@@ -63,14 +63,14 @@ chooses to.
 ## Uninstallation
 
 Uninstalling a plugin is as easy as installing it. Just use the
-`vagrant plugin uninstall` command and the plugin will be removed. Example:
+`dumb-vagrant plugin uninstall` command and the plugin will be removed. Example:
 
 ```shell-session
-$ vagrant plugin uninstall my-plugin
+$ dumb-vagrant plugin uninstall my-plugin
 ```
 
 ## Listing Plugins
 
-To view what plugins are installed into your Vagrant environment at
-any time, use the `vagrant plugin list` command. This will list the plugins
+To view what plugins are installed into your Dumb Vagrant environment at
+any time, use the `dumb-vagrant plugin list` command. This will list the plugins
 that are installed along with their version.

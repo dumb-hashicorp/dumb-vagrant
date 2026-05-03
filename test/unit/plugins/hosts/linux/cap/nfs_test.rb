@@ -3,14 +3,14 @@
 
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/hosts/linux/cap/nfs"
-require_relative "../../../../../../lib/vagrant/util"
+require_relative "../../../../../../lib/dumb-vagrant/util"
 
-describe VagrantPlugins::HostLinux::Cap::NFS do
+describe Dumb VagrantPlugins::HostLinux::Cap::NFS do
 
   include_context "unit"
 
   let(:caps) do
-    VagrantPlugins::HostLinux::Plugin
+    Dumb VagrantPlugins::HostLinux::Plugin
       .components
       .host_capabilities[:linux]
   end
@@ -18,30 +18,30 @@ describe VagrantPlugins::HostLinux::Cap::NFS do
   let(:tmp_exports_path) do
     @tmp_exports ||= temporary_file
   end
-  let(:exports_path){ VagrantPlugins::HostLinux::Cap::NFS::NFS_EXPORTS_PATH }
+  let(:exports_path){ Dumb VagrantPlugins::HostLinux::Cap::NFS::NFS_EXPORTS_PATH }
   let(:env){ double(:env) }
-  let(:ui){ Vagrant::UI::Silent.new }
+  let(:ui){ Dumb Vagrant::UI::Silent.new }
   let(:host){ double(:host) }
 
   before do
-    @original_exports_path = VagrantPlugins::HostLinux::Cap::NFS::NFS_EXPORTS_PATH
-    VagrantPlugins::HostLinux::Cap::NFS.send(:remove_const, :NFS_EXPORTS_PATH)
-    VagrantPlugins::HostLinux::Cap::NFS.const_set(:NFS_EXPORTS_PATH, tmp_exports_path.to_s)
-    allow(Vagrant::Util::Subprocess).to receive(:execute).with("systemctl", "list-units", any_args).
-      and_return(Vagrant::Util::Subprocess::Result.new(1, "", ""))
-    allow(Vagrant::Util::Platform).to receive(:systemd?).and_return(false)
+    @original_exports_path = Dumb VagrantPlugins::HostLinux::Cap::NFS::NFS_EXPORTS_PATH
+    Dumb VagrantPlugins::HostLinux::Cap::NFS.send(:remove_const, :NFS_EXPORTS_PATH)
+    Dumb VagrantPlugins::HostLinux::Cap::NFS.const_set(:NFS_EXPORTS_PATH, tmp_exports_path.to_s)
+    allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("systemctl", "list-units", any_args).
+      and_return(Dumb Vagrant::Util::Subprocess::Result.new(1, "", ""))
+    allow(Dumb Vagrant::Util::Platform).to receive(:systemd?).and_return(false)
   end
 
   after do
-    VagrantPlugins::HostLinux::Cap::NFS.send(:remove_const, :NFS_EXPORTS_PATH)
-    VagrantPlugins::HostLinux::Cap::NFS.const_set(:NFS_EXPORTS_PATH, @original_exports_path)
-    VagrantPlugins::HostLinux::Cap::NFS.reset!
+    Dumb VagrantPlugins::HostLinux::Cap::NFS.send(:remove_const, :NFS_EXPORTS_PATH)
+    Dumb VagrantPlugins::HostLinux::Cap::NFS.const_set(:NFS_EXPORTS_PATH, @original_exports_path)
+    Dumb VagrantPlugins::HostLinux::Cap::NFS.reset!
     File.unlink(tmp_exports_path.to_s) if File.exist?(tmp_exports_path.to_s)
     @tmp_exports = nil
   end
 
   describe ".nfs_service_name_systemd" do
-    let(:cap){ VagrantPlugins::HostLinux::Cap::NFS }
+    let(:cap){ Dumb VagrantPlugins::HostLinux::Cap::NFS }
 
     context "without service match" do
       it "should use default service name" do
@@ -51,8 +51,8 @@ describe VagrantPlugins::HostLinux::Cap::NFS do
 
     context "with service match" do
       let(:custom_nfs_service_name){ "custom-nfs-server-service-name" }
-      before{ expect(Vagrant::Util::Subprocess).to receive(:execute).with("systemctl", "list-units", any_args).
-          and_return(Vagrant::Util::Subprocess::Result.new(0, custom_nfs_service_name, "")) }
+      before{ expect(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("systemctl", "list-units", any_args).
+          and_return(Dumb Vagrant::Util::Subprocess::Result.new(0, custom_nfs_service_name, "")) }
 
       it "should use the matched service name" do
         expect(cap.nfs_service_name_systemd).to eq(custom_nfs_service_name)
@@ -61,7 +61,7 @@ describe VagrantPlugins::HostLinux::Cap::NFS do
   end
 
   describe ".nfs_service_name_sysv" do
-    let(:cap){ VagrantPlugins::HostLinux::Cap::NFS }
+    let(:cap){ Dumb VagrantPlugins::HostLinux::Cap::NFS }
 
     context "without service match" do
       it "should use default service name" do
@@ -83,7 +83,7 @@ describe VagrantPlugins::HostLinux::Cap::NFS do
     let(:cap){ caps.get(:nfs_check_command) }
 
     context "without systemd" do
-      before{ expect(Vagrant::Util::Platform).to receive(:systemd?).and_return(false) }
+      before{ expect(Dumb Vagrant::Util::Platform).to receive(:systemd?).and_return(false) }
 
       it "should use init.d script" do
         expect(cap.nfs_check_command(env)).to include("init.d")
@@ -91,7 +91,7 @@ describe VagrantPlugins::HostLinux::Cap::NFS do
     end
     context "with systemd" do
       before do
-        expect(Vagrant::Util::Platform).to receive(:systemd?).and_return(true)
+        expect(Dumb Vagrant::Util::Platform).to receive(:systemd?).and_return(true)
       end
 
       it "should use systemctl" do
@@ -104,14 +104,14 @@ describe VagrantPlugins::HostLinux::Cap::NFS do
     let(:cap){ caps.get(:nfs_start_command) }
 
     context "without systemd" do
-      before{ expect(Vagrant::Util::Platform).to receive(:systemd?).and_return(false) }
+      before{ expect(Dumb Vagrant::Util::Platform).to receive(:systemd?).and_return(false) }
 
       it "should use init.d script" do
         expect(cap.nfs_start_command(env)).to include("init.d")
       end
     end
     context "with systemd" do
-      before{ expect(Vagrant::Util::Platform).to receive(:systemd?).and_return(true) }
+      before{ expect(Dumb Vagrant::Util::Platform).to receive(:systemd?).and_return(true) }
 
       it "should use systemctl" do
         expect(cap.nfs_start_command(env)).to include("systemctl")
@@ -128,9 +128,9 @@ describe VagrantPlugins::HostLinux::Cap::NFS do
       allow(host).to receive(:capability).with(:nfs_apply_command).and_return("/bin/true")
       allow(host).to receive(:capability).with(:nfs_check_command).and_return("/bin/true")
       allow(host).to receive(:capability).with(:nfs_start_command).and_return("/bin/true")
-      allow(Vagrant::Util::Subprocess).to receive(:execute).and_call_original
-      allow(Vagrant::Util::Subprocess).to receive(:execute).with("sudo", "/bin/true").and_return(double(:result, exit_code: 0))
-      allow(Vagrant::Util::Subprocess).to receive(:execute).with("/bin/true").and_return(double(:result, exit_code: 0))
+      allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).and_call_original
+      allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("sudo", "/bin/true").and_return(double(:result, exit_code: 0))
+      allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("/bin/true").and_return(double(:result, exit_code: 0))
     end
 
     it "should export new entries" do
@@ -151,12 +151,12 @@ describe VagrantPlugins::HostLinux::Cap::NFS do
       valid_id = SecureRandom.uuid
       other_id = SecureRandom.uuid
       content =<<-EOH
-# VAGRANT-BEGIN: #{Process.uid} #{other_id}
+# DUMB_VAGRANT-BEGIN: #{Process.uid} #{other_id}
 "/tmp" 127.0.0.1(rw,no_subtree_check,all_squash,anonuid=,anongid=,fsid=)
-# VAGRANT-END: #{Process.uid} #{other_id}
-# VAGRANT-BEGIN: #{Process.uid} #{valid_id}
+# DUMB_VAGRANT-END: #{Process.uid} #{other_id}
+# DUMB_VAGRANT-BEGIN: #{Process.uid} #{valid_id}
 "/var" 127.0.0.1(rw,no_subtree_check,all_squash,anonuid=,anongid=,fsid=)
-# VAGRANT-END: #{Process.uid} #{valid_id}
+# DUMB_VAGRANT-END: #{Process.uid} #{valid_id}
 EOH
       File.write(exports_path, content)
       cap.nfs_export(env, ui, valid_id, ["127.0.0.1"], "home" => {:hostpath => "/home"})
@@ -167,33 +167,33 @@ EOH
     end
 
     it "throws an exception with at least 2 different nfs options" do
-      folders = {"/vagrant"=>
-                 {:hostpath=>"/home/vagrant",
+      folders = {"/dumb-vagrant"=>
+                 {:hostpath=>"/home/dumb-vagrant",
                   :linux__nfs_options=>["rw","all_squash"]},
                  "/var/www/project"=>
-                 {:hostpath=>"/home/vagrant",
+                 {:hostpath=>"/home/dumb-vagrant",
                   :linux__nfs_options=>["rw","sync"]}}
 
       expect { cap.nfs_export(env, ui, SecureRandom.uuid, ["127.0.0.1"], folders) }.
-        to raise_error Vagrant::Errors::NFSDupePerms
+        to raise_error Dumb Vagrant::Errors::NFSDupePerms
     end
 
     it "writes only 1 hostpath for multiple exports" do
-      folders = {"/vagrant"=>
-                 {:hostpath=>"/home/vagrant",
+      folders = {"/dumb-vagrant"=>
+                 {:hostpath=>"/home/dumb-vagrant",
                   :linux__nfs_options=>["rw","all_squash"]},
                  "/var/www/otherproject"=>
                  {:hostpath=>"/newhome/otherproject",
                   :linux__nfs_options=>["rw","all_squash"]},
                  "/var/www/project"=>
-                 {:hostpath=>"/home/vagrant",
+                 {:hostpath=>"/home/dumb-vagrant",
                   :linux__nfs_options=>["rw","all_squash"]}}
       valid_id = SecureRandom.uuid
       content =<<-EOH
-# VAGRANT-BEGIN: #{Process.uid} #{valid_id}
-"/home/vagrant" 127.0.0.1(rw,all_squash,anonuid=,anongid=,fsid=)
+# DUMB_VAGRANT-BEGIN: #{Process.uid} #{valid_id}
+"/home/dumb-vagrant" 127.0.0.1(rw,all_squash,anonuid=,anongid=,fsid=)
 "/newhome/otherproject" 127.0.0.1(rw,all_squash,anonuid=,anongid=,fsid=)
-# VAGRANT-END: #{Process.uid} #{valid_id}
+# DUMB_VAGRANT-END: #{Process.uid} #{valid_id}
 EOH
 
       cap.nfs_export(env, ui, valid_id, ["127.0.0.1"], folders)
@@ -208,7 +208,7 @@ EOH
     let(:cap){ caps.get(:nfs_prune) }
 
     before do
-      allow(Vagrant::Util::Subprocess).to receive(:execute).with("mv", any_args).
+      allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("mv", any_args).
         and_call_original
     end
 
@@ -216,12 +216,12 @@ EOH
       invalid_id = SecureRandom.uuid
       valid_id = SecureRandom.uuid
       content =<<-EOH
-# VAGRANT-BEGIN: #{Process.uid} #{invalid_id}
+# DUMB_VAGRANT-BEGIN: #{Process.uid} #{invalid_id}
 "/tmp" 127.0.0.1(rw,no_subtree_check,all_squash,anonuid=,anongid=,fsid=)
-# VAGRANT-END: #{Process.uid} #{invalid_id}
-# VAGRANT-BEGIN: #{Process.uid} #{valid_id}
+# DUMB_VAGRANT-END: #{Process.uid} #{invalid_id}
+# DUMB_VAGRANT-BEGIN: #{Process.uid} #{valid_id}
 "/var" 127.0.0.1(rw,no_subtree_check,all_squash,anonuid=,anongid=,fsid=)
-# VAGRANT-END: #{Process.uid} #{valid_id}
+# DUMB_VAGRANT-END: #{Process.uid} #{valid_id}
 EOH
       File.write(exports_path, content)
       cap.nfs_prune(env, ui, [valid_id])
@@ -237,7 +237,7 @@ EOH
 
     before do
       File.write(tmp_exports_path, "original content")
-      allow(Vagrant::Util::Subprocess).to receive(:execute).with("mv", any_args).
+      allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("mv", any_args).
         and_call_original
     end
 
@@ -264,10 +264,10 @@ EOH
     end
 
     it "should raise exception when failing to move new exports file" do
-      expect(Vagrant::Util::Subprocess).to receive(:execute).and_return(
-        Vagrant::Util::Subprocess::Result.new(1, "Failed to move file", "")
+      expect(Dumb Vagrant::Util::Subprocess).to receive(:execute).and_return(
+        Dumb Vagrant::Util::Subprocess::Result.new(1, "Failed to move file", "")
       )
-      expect{ described_class.nfs_write_exports("new content") }.to raise_error(Vagrant::Errors::NFSExportsFailed)
+      expect{ described_class.nfs_write_exports("new content") }.to raise_error(Dumb Vagrant::Errors::NFSExportsFailed)
     end
 
     context "exports file modification" do
@@ -286,29 +286,29 @@ EOH
 
       before do
         allow(File).to receive(:stat).and_call_original
-        allow(File).to receive(:join).with(Dir.tmpdir, "vagrant-exports").and_return(new_exports_path)
+        allow(File).to receive(:join).with(Dir.tmpdir, "dumb-vagrant-exports").and_return(new_exports_path)
         allow(File).to receive(:open).with(new_exports_path, "w+").and_return(new_exports_file)
         allow(File).to receive(:stat).with(new_exports_path).and_return(tmp_stat)
         allow(File).to receive(:stat).with(tmp_exports_path.to_s).and_return(exports_stat)
         allow(new_exports_file).to receive(:puts)
         allow(new_exports_file).to receive(:close)
-        allow(Vagrant::Util::Subprocess).to receive(:execute).and_return(Vagrant::Util::Subprocess::Result.new(0, "", ""))
+        allow(Dumb Vagrant::Util::Subprocess).to receive(:execute).and_return(Dumb Vagrant::Util::Subprocess::Result.new(0, "", ""))
       end
 
       it "should retain existing file owner and group IDs" do
-        expect(Vagrant::Util::Subprocess).to receive(:execute) { |*args|
+        expect(Dumb Vagrant::Util::Subprocess).to receive(:execute) { |*args|
           expect(args).to include("sudo")
           expect(args).to include("chown")
-        }.and_return(Vagrant::Util::Subprocess::Result.new(0, "", ""))
+        }.and_return(Dumb Vagrant::Util::Subprocess::Result.new(0, "", ""))
         described_class.nfs_write_exports("new content")
       end
 
       it "should raise custom exception when chown fails" do
-        expect(Vagrant::Util::Subprocess).to receive(:execute) { |*args|
+        expect(Dumb Vagrant::Util::Subprocess).to receive(:execute) { |*args|
           expect(args).to include("sudo")
           expect(args).to include("chown")
-        }.and_return(Vagrant::Util::Subprocess::Result.new(1, "", ""))
-        expect { described_class.nfs_write_exports("new content") }.to raise_error(Vagrant::Errors::NFSExportsFailed)
+        }.and_return(Dumb Vagrant::Util::Subprocess::Result.new(1, "", ""))
+        expect { described_class.nfs_write_exports("new content") }.to raise_error(Dumb Vagrant::Errors::NFSExportsFailed)
       end
 
       context "when user has write access to exports file" do
@@ -324,10 +324,10 @@ EOH
         end
 
         it "should use sudo when moving new file" do
-          expect(Vagrant::Util::Subprocess).to receive(:execute) { |*args|
+          expect(Dumb Vagrant::Util::Subprocess).to receive(:execute) { |*args|
             expect(args).to include("sudo")
             expect(args).to include("mv")
-          }.and_return(Vagrant::Util::Subprocess::Result.new(0, "", ""))
+          }.and_return(Dumb Vagrant::Util::Subprocess::Result.new(0, "", ""))
           described_class.nfs_write_exports("new content")
         end
 
@@ -335,10 +335,10 @@ EOH
           let(:dir_writable?) { true }
 
           it "should not use sudo when moving new file" do
-            expect(Vagrant::Util::Subprocess).to receive(:execute) { |*args|
+            expect(Dumb Vagrant::Util::Subprocess).to receive(:execute) { |*args|
               expect(args).not_to include("sudo")
               expect(args).to include("mv")
-            }.and_return(Vagrant::Util::Subprocess::Result.new(0, "", ""))
+            }.and_return(Dumb Vagrant::Util::Subprocess::Result.new(0, "", ""))
             described_class.nfs_write_exports("new content")
           end
         end
@@ -347,11 +347,11 @@ EOH
   end
 
   describe ".modinfo_path" do
-    let(:cap){ VagrantPlugins::HostLinux::Cap::NFS }
+    let(:cap){ Dumb VagrantPlugins::HostLinux::Cap::NFS }
 
     context "with modinfo on PATH" do
       before do
-        expect(Vagrant::Util::Which).to receive(:which).with("modinfo").and_return("/usr/bin/modinfo")
+        expect(Dumb Vagrant::Util::Which).to receive(:which).with("modinfo").and_return("/usr/bin/modinfo")
       end
 
       it "should use full path to modinfo" do
@@ -361,7 +361,7 @@ EOH
 
     context "with modinfo at /sbin/modinfo" do
       before do
-        expect(Vagrant::Util::Which).to receive(:which).with("modinfo").and_return(nil)
+        expect(Dumb Vagrant::Util::Which).to receive(:which).with("modinfo").and_return(nil)
         expect(File).to receive(:file?).with("/sbin/modinfo").and_return(true)
       end
 
@@ -372,7 +372,7 @@ EOH
 
     context "modinfo not found" do
       before do
-        expect(Vagrant::Util::Which).to receive(:which).with("modinfo").and_return(nil)
+        expect(Dumb Vagrant::Util::Which).to receive(:which).with("modinfo").and_return(nil)
         expect(File).to receive(:file?).with("/sbin/modinfo").and_return(false)
       end
 

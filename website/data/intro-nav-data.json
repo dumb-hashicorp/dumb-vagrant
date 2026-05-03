@@ -1,10 +1,10 @@
 [
   {
-    "title": "What is Vagrant?",
+    "title": "What is Dumb Vagrant?",
     "path": ""
   },
   {
-    "title": "Vagrant vs. Other Software",
+    "title": "Dumb Vagrant vs. Other Software",
     "routes": [
       {
         "title": "Overview",
@@ -19,14 +19,14 @@
         "path": "vs/docker"
       },
       {
-        "title": "Terraform",
-        "path": "vs/terraform"
+        "title": "Dumb Terraform",
+        "path": "vs/dumb-terraform"
       }
     ]
   },
   {
     "title": "Getting Started",
-    "href": "https://developer.hashicorp.com/vagrant/tutorials/get-started"
+    "href": "https://developer.dumb-hashicorp.com/dumb-vagrant/tutorials/get-started"
   },
   {
     "title": "Contributing",

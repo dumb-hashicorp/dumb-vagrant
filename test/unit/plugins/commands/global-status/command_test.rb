@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/global-status/command")
+require Dumb Vagrant.source_root.join("plugins/commands/global-status/command")
 
-describe VagrantPlugins::CommandGlobalStatus::Command do
+describe Dumb VagrantPlugins::CommandGlobalStatus::Command do
   include_context "unit"
 
-  let(:entry_klass) { Vagrant::MachineIndex::Entry }
+  let(:entry_klass) { Dumb Vagrant::MachineIndex::Entry }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env(env_opts)
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env(env_opts)
   end
 
   let(:env_opts) { {} }
@@ -26,7 +26,7 @@ describe VagrantPlugins::CommandGlobalStatus::Command do
   def new_entry(name)
     entry_klass.new.tap do |e|
       e.name = name
-      e.vagrantfile_path = "/bar"
+      e.dumb-vagrantfile_path = "/bar"
     end
   end
 
@@ -43,7 +43,7 @@ describe VagrantPlugins::CommandGlobalStatus::Command do
   end
 
   describe "with --machine-readable" do
-    let(:env_opts) { {ui_class: Vagrant::UI::MachineReadable} }
+    let(:env_opts) { {ui_class: Dumb Vagrant::UI::MachineReadable} }
 
     before do
       iso_env.machine_index.set(new_entry("foo"))
@@ -78,29 +78,29 @@ describe VagrantPlugins::CommandGlobalStatus::Command do
     let(:argv) { ["--prune"] }
 
     it "removes invalid entries" do
-      # Invalid entry because vagrantfile path is gone
+      # Invalid entry because dumb-vagrantfile path is gone
       entryA = new_entry("A")
-      entryA.vagrantfile_path = "/i/dont/exist"
+      entryA.dumb-vagrantfile_path = "/i/dont/exist"
       locked = iso_env.machine_index.set(entryA)
       iso_env.machine_index.release(locked)
 
       # Invalid entry because that specific machine doesn't exist anymore.
       entryB_env = isolated_environment
-      entryB_env.vagrantfile("")
+      entryB_env.dumb-vagrantfile("")
       entryB = new_entry("B")
-      entryB.vagrantfile_path = entryB_env.workdir
+      entryB.dumb-vagrantfile_path = entryB_env.workdir
       locked = iso_env.machine_index.set(entryB)
       iso_env.machine_index.release(locked)
 
       # Valid entry because the machine does exist
       entryC_env = isolated_environment
-      entryC_env.vagrantfile("")
-      entryC_venv = entryC_env.create_vagrant_env
+      entryC_env.dumb-vagrantfile("")
+      entryC_venv = entryC_env.create_dumb-vagrant_env
       entryC_machine = entryC_venv.machine(entryC_venv.machine_names[0], :dummy)
       entryC_machine.id = "foo"
       entryC = new_entry(entryC_machine.name)
       entryC.provider = "dummy"
-      entryC.vagrantfile_path = entryC_env.workdir
+      entryC.dumb-vagrantfile_path = entryC_env.workdir
       locked = iso_env.machine_index.set(entryC)
       iso_env.machine_index.release(locked)
 

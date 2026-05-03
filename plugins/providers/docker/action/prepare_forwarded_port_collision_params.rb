@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class PrepareForwardedPortCollisionParams
@@ -31,7 +31,7 @@ module VagrantPlugins
           docker_port_check = proc { |host_ip, host_port|
                                       result = port_check(env, host_port)
                                       if !result
-                                        result = Vagrant::Action::Builtin::HandleForwardedPortCollisions.port_check(machine, host_ip, host_port)
+                                        result = Dumb Vagrant::Action::Builtin::HandleForwardedPortCollisions.port_check(machine, host_ip, host_port)
                                       end
                                       result}
           env[:port_collision_port_check] = docker_port_check
@@ -46,7 +46,7 @@ module VagrantPlugins
         # grab these bound ports, so this check is here for that since
         # the checks above won't detect it
         #
-        # @param [Vagrant::Environment] env
+        # @param [Dumb Vagrant::Environment] env
         # @param [String] host_port
         # @returns [Bool]
         def port_check(env, host_port)

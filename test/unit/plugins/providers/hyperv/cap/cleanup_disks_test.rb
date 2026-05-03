@@ -2,16 +2,16 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require_relative "../../../../base"
-require Vagrant.source_root.join("plugins/providers/hyperv/cap/cleanup_disks")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/cap/cleanup_disks")
 
-describe VagrantPlugins::HyperV::Cap::CleanupDisks do
+describe Dumb VagrantPlugins::HyperV::Cap::CleanupDisks do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:driver) { double("driver") }
@@ -44,7 +44,7 @@ describe VagrantPlugins::HyperV::Cap::CleanupDisks do
           "disk" => [
             {
               "UUID" => "1234",
-              "Path" => "c:\\users\\vagrant\\storage.vhdx",
+              "Path" => "c:\\users\\dumb-vagrant\\storage.vhdx",
               "Name" => "storage"
             }
           ],
@@ -170,7 +170,7 @@ describe VagrantPlugins::HyperV::Cap::CleanupDisks do
         "disk" => [
           {
             "UUID" => "1234",
-            "Path" => "c:\\users\\vagrant\\storage.vhdx",
+            "Path" => "c:\\users\\dumb-vagrant\\storage.vhdx",
             "Name" => "storage"
           }
         ],
@@ -183,7 +183,7 @@ describe VagrantPlugins::HyperV::Cap::CleanupDisks do
       [
         {
           "UUID" => "1234",
-          "Path" => "c:\\users\\vagrant\\storage.vhdx",
+          "Path" => "c:\\users\\dumb-vagrant\\storage.vhdx",
           "Name"=>"storage",
           "ControllerType" => "IDE",
           "ControllerNumber" => 1,
@@ -191,11 +191,11 @@ describe VagrantPlugins::HyperV::Cap::CleanupDisks do
         }
       ]
     end
-    let(:path) { "C:\\Users\\vagrant\\storage.vhdx" }
+    let(:path) { "C:\\Users\\dumb-vagrant\\storage.vhdx" }
 
     it "removes and closes medium from guest" do
       expect(driver).to receive(:list_hdds).and_return(all_disks)
-      expect(driver).to receive(:remove_disk).with("IDE", 1, 0, "c:\\users\\vagrant\\storage.vhdx").and_return(true)
+      expect(driver).to receive(:remove_disk).with("IDE", 1, 0, "c:\\users\\dumb-vagrant\\storage.vhdx").and_return(true)
 
       subject.handle_cleanup_disk(machine, defined_disks, disk_meta_file["disk"])
     end
@@ -216,7 +216,7 @@ describe VagrantPlugins::HyperV::Cap::CleanupDisks do
           "disk" => [
             {
               "UUID" => "1234",
-              "Path" => "c:\\users\\vagrant\\storage.vhdx",
+              "Path" => "c:\\users\\dumb-vagrant\\storage.vhdx",
               "Name" => "storage"
             }
           ],
@@ -229,7 +229,7 @@ describe VagrantPlugins::HyperV::Cap::CleanupDisks do
         [
           {
             "UUID" => "1234",
-            "Path" => "C:\\Users\\vagrant\\storage.vhdx",
+            "Path" => "C:\\Users\\dumb-vagrant\\storage.vhdx",
             "Name" => "storage",
             "ControllerType" => "IDE",
             "ControllerNumber" => 1,
@@ -238,7 +238,7 @@ describe VagrantPlugins::HyperV::Cap::CleanupDisks do
         ]
       end
 
-      let(:path) { "C:\\Users\\vagrant\\storage.vhdx" }
+      let(:path) { "C:\\Users\\dumb-vagrant\\storage.vhdx" }
 
       it "still removes and closes the medium from the guest" do
         expect(driver).to receive(:list_hdds).and_return(all_disks)

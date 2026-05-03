@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class PrepareSSH
@@ -19,7 +19,7 @@ module VagrantPlugins
           # Modify the SSH info to be the host VM's info
           env[:ssh_info] = env[:machine].provider.host_vm.ssh_info
 
-          # Modify the SSH options for when we `vagrant ssh`...
+          # Modify the SSH options for when we `dumb-vagrant ssh`...
           ssh_opts = env[:ssh_opts] || {}
 
           # Build the command we'll execute within the Docker host machine:

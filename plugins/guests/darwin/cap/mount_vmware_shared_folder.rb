@@ -3,7 +3,7 @@
 
 require "securerandom"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestDarwin
     module Cap
       class MountVmwareSharedFolder

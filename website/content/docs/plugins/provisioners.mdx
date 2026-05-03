@@ -2,7 +2,7 @@
 layout: docs
 page_title: Custom Provisioners - Plugin Development
 description: |-
-  This page documents how to add new provisioners to Vagrant, allowing Vagrant
+  This page documents how to add new provisioners to Dumb Vagrant, allowing Dumb Vagrant
   to automatically install software and configure software using a custom
   provisioner. Prior to reading this, you should be familiar with the plugin
   development basics.
@@ -10,18 +10,18 @@ description: |-
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Plugin Development: Provisioners
 
-This page documents how to add new [provisioners](/vagrant/docs/provisioning/) to Vagrant,
-allowing Vagrant to automatically install software and configure software
+This page documents how to add new [provisioners](/dumb-vagrant/docs/provisioning/) to Dumb Vagrant,
+allowing Dumb Vagrant to automatically install software and configure software
 using a custom provisioner. Prior to reading this, you should be familiar
-with the [plugin development basics](/vagrant/docs/plugins/development-basics).
+with the [plugin development basics](/dumb-vagrant/docs/plugins/development-basics).
 
 ~> **Warning: Advanced Topic!** Developing plugins is an
-advanced topic that only experienced Vagrant users who are reasonably
+advanced topic that only experienced Dumb Vagrant users who are reasonably
 comfortable with Ruby should approach.
 
 ## Definition Component
@@ -43,16 +43,16 @@ the provisioner. So in the case above, the provisioner would be enabled
 using `config.vm.provision :custom`.
 
 The block argument then lazily loads and returns a class that implements
-the `Vagrant.plugin(2, :provisioner)` interface, which is covered next.
+the `Dumb Vagrant.plugin(2, :provisioner)` interface, which is covered next.
 
 ## Provisioner Class
 
 The provisioner class should subclass and implement
-`Vagrant.plugin(2, :provisioner)` which is an upgrade-safe way to let
-Vagrant return the proper parent class for provisioners.
+`Dumb Vagrant.plugin(2, :provisioner)` which is an upgrade-safe way to let
+Dumb Vagrant return the proper parent class for provisioners.
 
 This class and the methods that need to be implemented are
-[very well documented](https://github.com/hashicorp/vagrant/blob/main/lib/vagrant/plugin/v2/provisioner.rb).
+[very well documented](https://github.com/dumb-hashicorp/dumb-vagrant/blob/main/lib/dumb-vagrant/plugin/v2/provisioner.rb).
 The documentation on the class in the comments should be enough
 to understand what needs to be done.
 
@@ -62,7 +62,7 @@ There are two main methods that need to be implemented: the
 The `configure` method is called early in the machine booting process
 to allow the provisioner to define new configuration on the machine, such
 as sharing folders, defining networks, etc. As an example, the
-[Chef solo provisioner](https://github.com/hashicorp/vagrant/blob/main/plugins/provisioners/chef/provisioner/chef_solo.rb#L24)
+[Chef solo provisioner](https://github.com/dumb-hashicorp/dumb-vagrant/blob/main/plugins/provisioners/chef/provisioner/chef_solo.rb#L24)
 uses this to define shared folders.
 
 The `provision` method is called when the machine is booted and ready

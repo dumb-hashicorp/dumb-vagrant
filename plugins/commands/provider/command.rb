@@ -3,9 +3,9 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandProvider
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
         "show provider for this environment"
       end
@@ -16,7 +16,7 @@ module VagrantPlugins
         options[:usable] = false
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant provider [options] [args]"
+          o.banner = "Usage: dumb-vagrant provider [options] [args]"
           o.separator ""
           o.separator "This command interacts with the provider for this environment."
           o.separator "With no arguments, it'll output the default provider for this"
@@ -58,7 +58,7 @@ module VagrantPlugins
         if options[:install]
           key = "provider_install_#{machine.provider_name}".to_sym
           if !@env.host.capability?(key)
-            raise Vagrant::Errors::ProviderCantInstall,
+            raise Dumb Vagrant::Errors::ProviderCantInstall,
               provider: machine.provider_name.to_s
           end
 

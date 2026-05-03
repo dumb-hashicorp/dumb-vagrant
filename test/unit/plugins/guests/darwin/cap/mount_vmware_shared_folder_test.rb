@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestDarwin::Cap::MountVmwareSharedFolder" do
+describe "Dumb VagrantPlugins::GuestDarwin::Cap::MountVmwareSharedFolder" do
   let(:described_class) do
-    VagrantPlugins::GuestDarwin::Plugin
+    Dumb VagrantPlugins::GuestDarwin::Plugin
       .components
       .guest_capabilities[:darwin]
       .get(:mount_vmware_shared_folder)
@@ -18,12 +18,12 @@ describe "VagrantPlugins::GuestDarwin::Cap::MountVmwareSharedFolder" do
   before do
     allow(communicator).to receive(:test)
     allow(communicator).to receive(:sudo)
-    allow(VagrantPlugins::GuestDarwin::Plugin).to receive(:action_hook)
+    allow(Dumb VagrantPlugins::GuestDarwin::Plugin).to receive(:action_hook)
   end
 
   describe ".mount_vmware_shared_folder" do
-    let(:name) { "-vagrant" }
-    let(:guestpath) { "/vagrant" }
+    let(:name) { "-dumb-vagrant" }
+    let(:guestpath) { "/dumb-vagrant" }
     let(:options) { {} }
 
     before do
@@ -45,7 +45,7 @@ describe "VagrantPlugins::GuestDarwin::Cap::MountVmwareSharedFolder" do
       end
 
       context "with guest path within existing directory" do
-        let(:guestpath) { "/Users/vagrant/workspace" }
+        let(:guestpath) { "/Users/dumb-vagrant/workspace" }
 
         it "should test if guest path is a symlink" do
           expect(communicator).to receive(:test).with(/test -L/)
@@ -97,7 +97,7 @@ describe "VagrantPlugins::GuestDarwin::Cap::MountVmwareSharedFolder" do
           before { expect(described_class).to receive(:system_firmlink?).and_return(true) }
 
           it "should not register an action hook" do
-            expect(VagrantPlugins::GuestDarwin::Plugin).not_to receive(:action_hook).with(:apfs_firmlinks, :after_synced_folders)
+            expect(Dumb VagrantPlugins::GuestDarwin::Plugin).not_to receive(:action_hook).with(:apfs_firmlinks, :after_synced_folders)
           end
         end
       end
@@ -136,7 +136,7 @@ describe "VagrantPlugins::GuestDarwin::Cap::MountVmwareSharedFolder" do
       end
 
       it "should not register an action hook" do
-        expect(VagrantPlugins::GuestDarwin::Plugin).not_to receive(:action_hook).with(:apfs_firmlinks, :after_synced_folders)
+        expect(Dumb VagrantPlugins::GuestDarwin::Plugin).not_to receive(:action_hook).with(:apfs_firmlinks, :after_synced_folders)
       end
     end
   end

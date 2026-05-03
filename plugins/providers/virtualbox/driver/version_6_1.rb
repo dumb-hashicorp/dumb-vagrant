@@ -3,7 +3,7 @@
 
 require File.expand_path("../version_6_0", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Driver
       # Driver for VirtualBox 6.1.x
@@ -11,18 +11,18 @@ module VagrantPlugins
         def initialize(uuid)
           super
 
-          @logger = Log4r::Logger.new("vagrant::provider::virtualbox_6_1")
+          @logger = Log4r::Logger.new("dumb-vagrant::provider::virtualbox_6_1")
         end
 
-        def read_dhcp_servers
-          execute("list", "dhcpservers", retryable: true).split("\n\n").collect do |block|
+        def read_ddumb-hcp_servers
+          execute("list", "ddumb-hcpservers", retryable: true).split("\n\n").collect do |block|
             info = {}
 
             block.split("\n").each do |line|
               if network = line[/^NetworkName:\s+HostInterfaceNetworking-(.+?)$/, 1]
                 info[:network]      = network
                 info[:network_name] = "HostInterfaceNetworking-#{network}"
-              elsif ip = line[/^Dhcpd IP:\s+(.+?)$/, 1]
+              elsif ip = line[/^Ddumb-hcpd IP:\s+(.+?)$/, 1]
                 info[:ip] = ip
               elsif netmask = line[/^NetworkMask:\s+(.+?)$/, 1]
                 info[:netmask] = netmask

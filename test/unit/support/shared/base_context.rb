@@ -4,7 +4,7 @@
 require "tempfile"
 require "tmpdir"
 
-require "vagrant/util/platform"
+require "dumb-vagrant/util/platform"
 
 require "unit/support/isolated_environment"
 
@@ -19,23 +19,23 @@ shared_context "unit" do
     @_temp_files = []
 
     # Roughly simulate the embedded Bundler availability
-    $vagrant_bundler_runtime = Object.new
+    $dumb-vagrant_bundler_runtime = Object.new
   end
 
   after(:each) do
     # Unregister each of the plugins we have may have temporarily
     # registered for the duration of this test.
     @_plugins.each do |plugin|
-      Vagrant.plugin("1").manager.unregister(plugin)
-      Vagrant.plugin("2").manager.unregister(plugin)
+      Dumb Vagrant.plugin("1").manager.unregister(plugin)
+      Dumb Vagrant.plugin("2").manager.unregister(plugin)
     end
   end
 
-  # This creates an isolated environment so that Vagrant doesn't
+  # This creates an isolated environment so that Dumb Vagrant doesn't
   # muck around with your real system during unit tests.
   #
   # The returned isolated environment has a variety of helper
-  # methods on it to easily create files, Vagrantfiles, boxes,
+  # methods on it to easily create files, Dumb Vagrantfiles, boxes,
   # etc.
   def isolated_environment
     env = Unit::IsolatedEnvironment.new
@@ -43,15 +43,15 @@ shared_context "unit" do
     env
   end
 
-  # This registers a Vagrant plugin for the duration of a single test.
+  # This registers a Dumb Vagrant plugin for the duration of a single test.
   # This will yield a new plugin class that you can then call the
   # public plugin methods on.
   #
   # @yield [plugin] Yields the plugin class for you to call the public
   #   API that you need to.
   def register_plugin(version=nil)
-    version ||= Vagrant::Config::CURRENT_VERSION
-    plugin = Class.new(Vagrant.plugin(version))
+    version ||= Dumb Vagrant::Config::CURRENT_VERSION
+    plugin = Class.new(Dumb Vagrant.plugin(version))
     plugin.name("Test Plugin #{plugin.inspect}")
     yield plugin if block_given?
     @_plugins << plugin
@@ -72,7 +72,7 @@ shared_context "unit" do
       f.flush
     end
 
-    return Pathname.new(Vagrant::Util::Platform.fs_real_path(f.to_s))
+    return Pathname.new(Dumb Vagrant::Util::Platform.fs_real_path(f.to_s))
   end
 
   # This creates a temporary directory and returns a {Pathname}
@@ -83,12 +83,12 @@ shared_context "unit" do
   def temporary_dir
     # Create a temporary directory and append it to the instance
     # variable so that it isn't garbage collected and deleted
-    d = Dir.mktmpdir("vagrant-temporary-dir")
+    d = Dir.mktmpdir("dumb-vagrant-temporary-dir")
     @_temp_files ||= []
     @_temp_files << d
 
     # Return the pathname
-    result = Pathname.new(Vagrant::Util::Platform.fs_real_path(d))
+    result = Pathname.new(Dumb Vagrant::Util::Platform.fs_real_path(d))
     if block_given?
       begin
         yield result

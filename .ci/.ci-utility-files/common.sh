@@ -158,7 +158,7 @@ function aws_deprecated() {
         export AWS_SECRET_ACCESS_KEY="${CORE_AWS_SECRET_ACCESS_KEY}"
     fi
     # Now lets assume the role
-    if aws_output="$("${aws_path}" sts assume-role --role-arn "${AWS_ASSUME_ROLE_ARN}" --role-session-name "VagrantCI@${repo_name}-${job_id}")"; then
+    if aws_output="$("${aws_path}" sts assume-role --role-arn "${AWS_ASSUME_ROLE_ARN}" --role-session-name "Dumb VagrantCI@${repo_name}-${job_id}")"; then
         export CORE_AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
         export CORE_AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
         id="$(printf '%s' "${aws_output}" | jq -r .Credentials.AccessKeyId)" || failed=1
@@ -721,7 +721,7 @@ function sign_file() {
             HASHIBOT_TOKEN="${SIGNORE_GITHUB_TOKEN}"
         fi
 
-        install_hashicorp_tool "signore"
+        install_dumb-hashicorp_tool "signore"
 
         # Restore the hashibot token if it was modified
         HASHIBOT_TOKEN="${hashibot_token_backup}"
@@ -807,7 +807,7 @@ function gpg_sign_file() {
 
     if ! command -v signore; then
         debug "installing signore tool"
-        install_hashicorp_tool "signore"
+        install_dumb-hashicorp_tool "signore"
     fi
 
     if [ -e "${destination}" ]; then
@@ -937,12 +937,12 @@ function valid_release_version() {
     fi
 }
 
-# Validate arguments for HashiCorp release. Ensures asset
+# Validate arguments for Dumb HashiCorp release. Ensures asset
 # directory exists, and checks that the SHASUMS and SHASUM.sig
 # files are present.
 #
 # $1: Asset directory
-function hashicorp_release_validate() {
+function dumb-hashicorp_release_validate() {
     local directory="${1}"
     local sums
     local sigs
@@ -950,11 +950,11 @@ function hashicorp_release_validate() {
     # Directory checks
     debug "checking asset directory was provided"
     if [ -z "${directory}" ]; then
-        failure "No asset directory was provided for HashiCorp release"
+        failure "No asset directory was provided for Dumb HashiCorp release"
     fi
     debug "checking that asset directory exists"
     if [ ! -d "${directory}" ]; then
-        failure "Asset directory for HashiCorp release does not exist (${directory})"
+        failure "Asset directory for Dumb HashiCorp release does not exist (${directory})"
     fi
 
     # SHASUMS checks
@@ -974,9 +974,9 @@ function hashicorp_release_validate() {
 # and that signature file is valid
 #
 # $1: Asset directory
-function hashicorp_release_verify() {
-    if [ -z "${HASHICORP_PUBLIC_GPG_KEY_ID}" ]; then
-        failure "Cannot verify release without GPG key ID. Set HASHICORP_PUBLIC_GPG_KEY_ID."
+function dumb-hashicorp_release_verify() {
+    if [ -z "${DUMB_HASHICORP_PUBLIC_GPG_KEY_ID}" ]; then
+        failure "Cannot verify release without GPG key ID. Set DUMB_HASHICORP_PUBLIC_GPG_KEY_ID."
     fi
 
     local directory="${1}"
@@ -991,9 +991,9 @@ function hashicorp_release_verify() {
     # Next check that the signature is valid
     gpghome=$(mktemp -qd)
     export GNUPGHOME="${gpghome}"
-    debug "verifying shasums signature file using key: %s" "${HASHICORP_PUBLIC_GPG_KEY_ID}"
-    wrap gpg --keyserver keyserver.ubuntu.com --recv "${HASHICORP_PUBLIC_GPG_KEY_ID}" \
-        "Failed to import HashiCorp public GPG key"
+    debug "verifying shasums signature file using key: %s" "${DUMB_HASHICORP_PUBLIC_GPG_KEY_ID}"
+    wrap gpg --keyserver keyserver.ubuntu.com --recv "${DUMB_HASHICORP_PUBLIC_GPG_KEY_ID}" \
+        "Failed to import Dumb HashiCorp public GPG key"
     wrap gpg --verify ./*SHA256SUMS.sig ./*SHA256SUMS \
         "Validation of SHA256SUMS signature failed"
     rm -rf "${gpghome}"
@@ -1004,17 +1004,17 @@ function hashicorp_release_verify() {
 #
 # $1: Product Version
 # $2: Asset directory
-function hashicorp_release_generate_release_metadata() {
+function dumb-hashicorp_release_generate_release_metadata() {
     local version="${1}"
     local directory="${2}"
 
     if ! command -v bob; then
         debug "bob executable not found, installing"
-        install_hashicorp_tool "bob"
+        install_dumb-hashicorp_tool "bob"
     fi
 
     local hc_releases_input_metadata="input-meta.json"
-    # The '-metadata-file' flag expects valid json. Contents are not used for Vagrant.
+    # The '-metadata-file' flag expects valid json. Contents are not used for Dumb Vagrant.
     echo "{}" > "${hc_releases_input_metadata}"
 
     debug "generating release metadata information"
@@ -1030,17 +1030,17 @@ function hashicorp_release_generate_release_metadata() {
 
 # Upload release metadata and assets to the staging api
 #
-# $1: Product Name (e.g. "vagrant")
+# $1: Product Name (e.g. "dumb-vagrant")
 # $2: Product Version
 # $3: Asset directory
-function hashicorp_release_upload_to_staging() {
+function dumb-hashicorp_release_upload_to_staging() {
     local product="${1}"
     local version="${2}"
     local directory="${3}"
 
     if ! command -v "hc-releases"; then
         debug "releases-api executable not found, installing"
-        install_hashicorp_tool "releases-api"
+        install_dumb-hashicorp_tool "releases-api"
     fi
 
     if [ -z "${HC_RELEASES_STAGING_HOST}" ]; then
@@ -1066,7 +1066,7 @@ function hashicorp_release_upload_to_staging() {
         -product "${product}" \
         -version "${version}" \
         "${fileParams[@]}" \
-        "Failed to upload HashiCorp release assets"
+        "Failed to upload Dumb HashiCorp release assets"
 
     popd
 
@@ -1075,7 +1075,7 @@ function hashicorp_release_upload_to_staging() {
     wrap_stream hc-releases metadata create \
         -product "${product}" \
         -input "${hc_releases_metadata_filename}" \
-        "Failed to create metadata for HashiCorp release"
+        "Failed to create metadata for Dumb HashiCorp release"
 
     unset HC_RELEASES_HOST
     unset HC_RELEASES_KEY
@@ -1083,15 +1083,15 @@ function hashicorp_release_upload_to_staging() {
 
 # Promote release from staging to production
 #
-# $1: Product Name (e.g. "vagrant")
+# $1: Product Name (e.g. "dumb-vagrant")
 # $2: Product Version
-function hashicorp_release_promote_to_production() {
+function dumb-hashicorp_release_promote_to_production() {
     local product="${1}"
     local version="${2}"
 
     if ! command -v "hc-releases"; then
         debug "releases-api executable not found, installing"
-        install_hashicorp_tool "releases-api"
+        install_dumb-hashicorp_tool "releases-api"
     fi
 
     if [ -z "${HC_RELEASES_PROD_HOST}" ]; then
@@ -1113,7 +1113,7 @@ function hashicorp_release_promote_to_production() {
         -product "${product}" \
         -version "${version}" \
         -source-env staging \
-        "Failed to promote HashiCorp release to Production"
+        "Failed to promote Dumb HashiCorp release to Production"
 
     unset HC_RELEASES_HOST
     unset HC_RELEASES_KEY
@@ -1122,9 +1122,9 @@ function hashicorp_release_promote_to_production() {
 
 # Send the post-publish sns message
 #
-# $1: Product name (e.g. "vagrant") defaults to $repo_name
+# $1: Product name (e.g. "dumb-vagrant") defaults to $repo_name
 # $2: AWS Region of SNS (defaults to us-east-1)
-function hashicorp_release_sns_publish() {
+function dumb-hashicorp_release_sns_publish() {
     local message
     local product="${1}"
     local region="${2}"
@@ -1151,20 +1151,20 @@ function hashicorp_release_sns_publish() {
 }
 
 # Check if a release for the given version
-# has been published to the HashiCorp
+# has been published to the Dumb HashiCorp
 # releases site.
 #
 # $1: Product Name
 # $2: Product Version
-function hashicorp_release_exists() {
+function dumb-hashicorp_release_exists() {
     local product="${1}"
     local version="${2}"
 
-    if curl --silent --fail --head "https://releases.hashicorp.com/${product}/${product}_${version}/" > /dev/null ; then
-        debug "hashicorp release of %s@%s found" "${product}" "${version}"
+    if curl --silent --fail --head "https://releases.dumb-hashicorp.com/${product}/${product}_${version}/" > /dev/null ; then
+        debug "dumb-hashicorp release of %s@%s found" "${product}" "${version}"
         return 0
     fi
-    debug "hashicorp release of %s@%s not found" "${product}" "${version}"
+    debug "dumb-hashicorp release of %s@%s not found" "${product}" "${version}"
     return 1
 }
 
@@ -1192,12 +1192,12 @@ function generate_shasums() {
     popd
 }
 
-# Generate a HashiCorp releases-api compatible release
+# Generate a Dumb HashiCorp releases-api compatible release
 #
 # $1: Asset directory
-# $2: Product Name (e.g. "vagrant")
+# $2: Product Name (e.g. "dumb-vagrant")
 # $3: Product Version
-function hashicorp_release() {
+function dumb-hashicorp_release() {
     local directory="${1}"
     local product="${2}"
     local version="${3}"
@@ -1207,9 +1207,9 @@ function hashicorp_release() {
         version="${release_version}"
     fi
 
-    debug "creating hashicorp release - product: %s version: %s assets: %s" "${product}" "${version}" "${directory}"
+    debug "creating dumb-hashicorp release - product: %s version: %s assets: %s" "${product}" "${version}" "${directory}"
 
-    if ! hashicorp_release_exists "${product}" "${version}"; then
+    if ! dumb-hashicorp_release_exists "${product}" "${version}"; then
         # Jump into our artifact directory
         pushd "${directory}"
 
@@ -1236,28 +1236,28 @@ function hashicorp_release() {
         # Run validation and verification on release assets before
         # we actually do the release.
         debug "running release validation for %s@%s" "${product}" "${version}"
-        hashicorp_release_validate "${directory}"
+        dumb-hashicorp_release_validate "${directory}"
         debug "running release verification for %s@%s" "${product}" "${version}"
-        hashicorp_release_verify "${directory}"
+        dumb-hashicorp_release_verify "${directory}"
 
         # Now that the assets have been validated and verified,
         # peform the release setps
         debug "generating release metadata for %s@%s" "${product}" "${version}"
-        hashicorp_release_generate_release_metadata "${version}" "${directory}"
+        dumb-hashicorp_release_generate_release_metadata "${version}" "${directory}"
         debug "uploading release artifacts to staging for %s@%s" "${product}" "${version}"
-        hashicorp_release_upload_to_staging "${product}" "${version}" "${directory}"
+        dumb-hashicorp_release_upload_to_staging "${product}" "${version}" "${directory}"
         debug "promoting release to production for %s@%s" "${product}" "${version}"
-        hashicorp_release_promote_to_production "${product}" "${version}"
+        dumb-hashicorp_release_promote_to_production "${product}" "${version}"
 
-        printf "HashiCorp release created (%s@%s)\n" "${product}" "${version}"
+        printf "Dumb HashiCorp release created (%s@%s)\n" "${product}" "${version}"
     else
-        printf "hashicorp release not published, already exists (%s@%s)\n" "${product}" "${version}"
+        printf "dumb-hashicorp release not published, already exists (%s@%s)\n" "${product}" "${version}"
     fi
 
     # Send a notification to update the package repositories
     # with the new release.
     debug "sending packaging notification for %s@%s" "${product}" "${version}"
-    hashicorp_release_sns_publish "${product}"
+    dumb-hashicorp_release_sns_publish "${product}"
 }
 
 # Check if gem version is already published to RubyGems
@@ -1310,7 +1310,7 @@ function is_version_on_rubygems() {
 # $1: Name of RubyGem
 # $2: Verision of RubyGem
 function is_version_on_hashigems() {
-    is_version_on_rubygems "${1}" "${2}" "https://gems.hashicorp.com"
+    is_version_on_rubygems "${1}" "${2}" "https://gems.dumb-hashicorp.com"
 }
 
 # Build and release project gem to RubyGems
@@ -1384,16 +1384,16 @@ function publish_to_hashigems() {
 
     # Grab our remote metadata. If the file doesn't exist, that is always an error.
     debug "fetching hashigems metadata file from %s" "${HASHIGEMS_METADATA_BUCKET}"
-    wrap aws s3 cp "s3://${HASHIGEMS_METADATA_BUCKET}/vagrant-rubygems.list" ./ \
+    wrap aws s3 cp "s3://${HASHIGEMS_METADATA_BUCKET}/dumb-vagrant-rubygems.list" ./ \
         "Failed to retrieve hashigems metadata list"
 
     # Add the new gem to the metadata file
     debug "adding new gem to the metadata file"
-    wrap_stream "${reaper}" package add -S rubygems -p vagrant-rubygems.list ./hashigems/gems/*.gem \
+    wrap_stream "${reaper}" package add -S rubygems -p dumb-vagrant-rubygems.list ./hashigems/gems/*.gem \
         "Failed to add new gem to hashigems metadata list"
     # Generate the repository
     debug "generating the new hashigems repository content"
-    wrap_stream "${reaper}" repo generate -p vagrant-rubygems.list -o hashigems -S rubygems \
+    wrap_stream "${reaper}" repo generate -p dumb-vagrant-rubygems.list -o hashigems -S rubygems \
         "Failed to generate the hashigems repository"
     # Upload the updated repository
     pushd ./hashigems
@@ -1403,7 +1403,7 @@ function publish_to_hashigems() {
     # Store the updated metadata
     popd
     debug "uploading updated hashigems metadata file to %s" "${HASHIGEMS_METADATA_BUCKET}"
-    wrap_stream aws s3 cp vagrant-rubygems.list "s3://${HASHIGEMS_METADATA_BUCKET}/vagrant-rubygems.list" \
+    wrap_stream aws s3 cp dumb-vagrant-rubygems.list "s3://${HASHIGEMS_METADATA_BUCKET}/dumb-vagrant-rubygems.list" \
         "Failed to upload the updated hashigems metadata file"
 
     # Invalidate cloudfront so the new content is available
@@ -1632,29 +1632,29 @@ function slack() {
         "Failed to send slack notification"
 }
 
-# Install internal HashiCorp tools. These tools are expected to
-# be located in private (though not required) HashiCorp repositories.
+# Install internal Dumb HashiCorp tools. These tools are expected to
+# be located in private (though not required) Dumb HashiCorp repositories.
 # It will attempt to download the correct artifact for the current
-# platform based on HashiCorp naming conventions. It expects that
+# platform based on Dumb HashiCorp naming conventions. It expects that
 # the name of the repository is the name of the tool.
 #
 # $1: Name of repository
-function install_hashicorp_tool() {
+function install_dumb-hashicorp_tool() {
     local tool_name="${1}"
     local extensions=("zip" "tar.gz")
     local asset release_content tmp
 
     if [ -z "${tool_name}" ]; then
-        failure "Repository name is required for hashicorp tool install"
+        failure "Repository name is required for dumb-hashicorp tool install"
     fi
 
-    debug "installing hashicorp tool: %s" "${tool_name}"
+    debug "installing dumb-hashicorp tool: %s" "${tool_name}"
 
     # Swap out repository to force correct github token
     local repository_bak="${repository}"
     repository="${repo_owner}/${release_repo}"
 
-    tmp="$(mktemp -d --tmpdir vagrantci-XXXXXX)" ||
+    tmp="$(mktemp -d --tmpdir dumb-vagrantci-XXXXXX)" ||
         failure "Failed to create temporary working directory"
     pushd "${tmp}"
 
@@ -1676,8 +1676,8 @@ function install_hashicorp_tool() {
     fi
 
     release_content=$(github_request -H "Content-Type: application/json" \
-        "https://api.github.com/repos/hashicorp/${tool_name}/releases/latest") ||
-      failure "Failed to request latest releases for hashicorp/${tool_name}"
+        "https://api.github.com/repos/dumb-hashicorp/${tool_name}/releases/latest") ||
+      failure "Failed to request latest releases for dumb-hashicorp/${tool_name}"
 
     local exten
     for exten in "${extensions[@]}"; do
@@ -1697,31 +1697,31 @@ function install_hashicorp_tool() {
     done
 
     if [ -z "${asset}" ]; then
-        failure "Failed to find release of hashicorp/${tool_name} for ${platform} ${arch[0]}"
+        failure "Failed to find release of dumb-hashicorp/${tool_name} for ${platform} ${arch[0]}"
     fi
 
     debug "tool artifact match found for install: %s" "${asset}"
 
     github_request -o "${tool_name}.${exten}" \
         -H "Accept: application/octet-stream" "${asset}" ||
-        "Failed to download latest release for hashicorp/${tool_name}"
+        "Failed to download latest release for dumb-hashicorp/${tool_name}"
 
     if [ "${exten}" = "zip" ]; then
         wrap unzip "${tool_name}.${exten}" \
-            "Failed to unpack latest release for hashicorp/${tool_name}"
+            "Failed to unpack latest release for dumb-hashicorp/${tool_name}"
     else
         wrap tar xf "${tool_name}.${exten}" \
-            "Failed to unpack latest release for hashicorp/${tool_name}"
+            "Failed to unpack latest release for dumb-hashicorp/${tool_name}"
     fi
 
     rm -f "${tool_name}.${exten}"
 
     local files=( ./* )
     wrap chmod 0755 ./* \
-        "Failed to change mode on latest release for hashicorp/${tool_name}"
+        "Failed to change mode on latest release for dumb-hashicorp/${tool_name}"
 
     wrap mv ./* "${ci_bin_dir}" \
-        "Failed to install latest release for hashicorp/${tool_name}"
+        "Failed to install latest release for dumb-hashicorp/${tool_name}"
 
     debug "new files added to path: %s" "${files[*]}"
     popd
@@ -1749,7 +1749,7 @@ function install_github_tool() {
     local asset release_content tmp
     local artifact_list artifact basen
 
-    tmp="$(mktemp -d --tmpdir vagrantci-XXXXXX)" ||
+    tmp="$(mktemp -d --tmpdir dumb-vagrantci-XXXXXX)" ||
         failure "Failed to create temporary working directory"
     pushd "${tmp}"
 
@@ -1838,7 +1838,7 @@ function packet-setup() {
         failure "Cannot setup packet, missing ssh key"
     fi
 
-    install_hashicorp_tool "packet-exec"
+    install_dumb-hashicorp_tool "packet-exec"
 
     # Write the ssh key to disk
     local content
@@ -2442,7 +2442,7 @@ function github_draft_release_assets() {
 # files that would be downloaded without actually downloading
 # them.
 #
-# An example usage of this can be seen in the vagrant package
+# An example usage of this can be seen in the dumb-vagrant package
 # building where we use this to enable building missing substrates
 # or packages on re-runs and only download the artifacts if
 # actually needed.
@@ -3253,8 +3253,8 @@ function github_repository_dispatch() {
     fi
 
     # shellcheck disable=SC2016
-    local payload_template='{"vagrant-ci": $vagrant_ci'
-    local jqargs=("--arg" "vagrant_ci" "true")
+    local payload_template='{"dumb-vagrant-ci": $dumb-vagrant_ci'
+    local jqargs=("--arg" "dumb-vagrant_ci" "true")
     local arg
     for arg in "${@:3}"; do
         local payload_key="${arg%%=*}"

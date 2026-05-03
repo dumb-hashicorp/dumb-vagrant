@@ -1,14 +1,14 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestWindows
     module Cap
       class RSync
         def self.rsync_scrub_guestpath( machine, opts )
           # Windows guests most often use cygwin-dependent rsync utilities
           # that expect "/cygdrive/c" instead of "c:" as the path prefix
-          # some vagrant code may pass guest paths with drive-lettered paths here
+          # some dumb-vagrant code may pass guest paths with drive-lettered paths here
           opts[:guestpath].gsub( /^([a-zA-Z]):/, '/cygdrive/\1' )
         end
 

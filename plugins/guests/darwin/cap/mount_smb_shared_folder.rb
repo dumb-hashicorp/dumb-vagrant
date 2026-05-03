@@ -1,14 +1,14 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/retryable"
+require "dumb-vagrant/util/retryable"
 require "shellwords"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestDarwin
     module Cap
       class MountSMBSharedFolder
-        extend Vagrant::Util::Retryable
+        extend Dumb Vagrant::Util::Retryable
         def self.mount_smb_shared_folder(machine, name, guestpath, options)
           expanded_guest_path = machine.guest.capability(:shell_expand_guest_path, guestpath)
 
@@ -24,17 +24,17 @@ module VagrantPlugins
 
           smb_password = Shellwords.shellescape(options[:smb_password])
           # Ensure password is scrubbed
-          Vagrant::Util::CredentialScrubber.sensitive(smb_password)
+          Dumb Vagrant::Util::CredentialScrubber.sensitive(smb_password)
 
           mount_options = options[:mount_options];
           mount_command = "mount -t smbfs " +
             (mount_options ? "-o '#{mount_options.join(",")}' " : "") +
             "//#{options[:smb_username]}:#{smb_password}@#{options[:smb_host]}/#{name} " +
             "#{expanded_guest_path}"
-          retryable(on: Vagrant::Errors::DarwinMountFailed, tries: 10, sleep: 2) do
+          retryable(on: Dumb Vagrant::Errors::DarwinMountFailed, tries: 10, sleep: 2) do
             result = machine.communicate.execute(mount_command)
             if result.exit_code != 0
-              raise Vagrant::Errors::DarwinMountFailed,
+              raise Dumb Vagrant::Errors::DarwinMountFailed,
                 command: mount_command,
                 output: result.stderr
             end

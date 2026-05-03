@@ -3,17 +3,17 @@
 
 require_relative "../../../../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/ansible/cap/guest/redhat/ansible_install")
+require Dumb Vagrant.source_root.join("plugins/provisioners/ansible/cap/guest/redhat/ansible_install")
 
-describe VagrantPlugins::Ansible::Cap::Guest::RedHat::AnsibleInstall do
+describe Dumb VagrantPlugins::Ansible::Cap::Guest::RedHat::AnsibleInstall do
   include_context "unit"
 
-  subject { VagrantPlugins::Ansible::Cap::Guest::RedHat::AnsibleInstall }
+  subject { Dumb VagrantPlugins::Ansible::Cap::Guest::RedHat::AnsibleInstall }
 
   let(:iso_env) do
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }
   let(:communicator) { double("comm") }

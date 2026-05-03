@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/presence"
+require "dumb-vagrant/util/presence"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Config
-      class Base < Vagrant.plugin("2", :config)
-        include Vagrant::Util::Presence
+      class Base < Dumb Vagrant.plugin("2", :config)
+        include Dumb Vagrant::Util::Presence
 
         # The path to Chef's bin/ directory.
         # @return [String]
@@ -128,7 +128,7 @@ module VagrantPlugins
           errors = _detected_errors
 
           if !present?(log_level)
-            errors << I18n.t("vagrant.provisioners.chef.log_level_empty")
+            errors << I18n.t("dumb-vagrant.provisioners.chef.log_level_empty")
           end
 
           errors

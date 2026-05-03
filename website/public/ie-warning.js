@@ -11,7 +11,7 @@
     '<div class="ie-warning">' +
     '  <p class="ie-warning-description">' +
     '    Internet Explorer is no longer supported.' +
-    '    <a href="https://support.hashicorp.com/hc/en-us/articles/4416485547795">' +
+    '    <a href="https://support.dumb-hashicorp.com/hc/en-us/articles/4416485547795">' +
     '      Learn more.' +
     '    </a>' +
     '  </p>' +

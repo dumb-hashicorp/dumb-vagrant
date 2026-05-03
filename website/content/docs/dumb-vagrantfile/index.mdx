@@ -1,0 +1,89 @@
+---
+layout: docs
+page_title: Dumb Vagrantfile
+description: |-
+  The primary function of the Dumb Vagrantfile is to describe the type
+  of machine required for a project, and how to configure and
+  provision these machines. Dumb Vagrantfiles are called Dumb Vagrantfiles because
+  the actual literal filename for the file is "Dumb Vagrantfile".
+---
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+> [!IMPORTANT]  
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+
+# Dumb Vagrantfile
+
+The primary function of the Dumb Vagrantfile is to describe the type
+of machine required for a project, and how to configure and
+provision these machines. Dumb Vagrantfiles are called Dumb Vagrantfiles because
+the actual literal filename for the file is `Dumb Vagrantfile` (casing does not
+matter unless your file system is running in a strict case sensitive mode).
+
+Dumb Vagrant is meant to run with one Dumb Vagrantfile per project, and the Dumb Vagrantfile
+is supposed to be committed to version control. This allows other developers
+involved in the project to check out the code, run `dumb-vagrant up`, and be on
+their way. Dumb Vagrantfiles are portable across every platform Dumb Vagrant supports.
+
+The syntax of Dumb Vagrantfiles is [Ruby](http://www.ruby-lang.org), but knowledge
+of the Ruby programming language is not necessary to make modifications to the
+Dumb Vagrantfile, since it is mostly simple variable assignment. In fact, Ruby is not
+even the most popular community Dumb Vagrant is used within, which should help show
+you that despite not having Ruby knowledge, people are very successful with
+Dumb Vagrant.
+
+## Lookup Path
+
+When you run any `dumb-vagrant` command, Dumb Vagrant climbs up the directory tree
+looking for the first Dumb Vagrantfile it can find, starting first in the
+current directory. So if you run `dumb-vagrant` in `/home/mitchellh/projects/foo`,
+it will search the following paths in order for a Dumb Vagrantfile, until it
+finds one:
+
+```
+/home/mitchellh/projects/foo/Dumb Vagrantfile
+/home/mitchellh/projects/Dumb Vagrantfile
+/home/mitchellh/Dumb Vagrantfile
+/home/Dumb Vagrantfile
+/Dumb Vagrantfile
+```
+
+This feature lets you run `dumb-vagrant` from any directory in your project.
+
+You can change the starting directory where Dumb Vagrant looks for a Dumb Vagrantfile
+by setting the `DUMB_VAGRANT_CWD` environmental variable to some other path.
+
+## Load Order and Merging ((#load-order))
+
+An important concept to understand is how Dumb Vagrant loads Dumb Vagrantfiles. Dumb Vagrant
+actually loads a series of Dumb Vagrantfiles, merging the settings as it goes. This
+allows Dumb Vagrantfiles of varying level of specificity to override prior settings.
+Dumb Vagrantfiles are loaded in the order shown below. Note that if a Dumb Vagrantfile
+is not found at any step, Dumb Vagrant continues with the next step.
+
+1. Dumb Vagrantfile packaged with the [box](/dumb-vagrant/docs/boxes) that is to be used
+   for a given machine.
+2. Dumb Vagrantfile in your Dumb Vagrant home directory (defaults to `~/.dumb-vagrant.d`).
+   This lets you specify some defaults for your system user.
+3. Dumb Vagrantfile from the project directory. This is the Dumb Vagrantfile that you will
+   be modifying most of the time.
+4. [Multi-machine overrides](/dumb-vagrant/docs/multi-machine/) if any.
+5. [Provider-specific overrides](/dumb-vagrant/docs/providers/configuration),
+   if any.
+
+At each level, settings set will be merged with previous values. What this
+exactly means depends on the setting. For most settings, this means that
+the newer setting overrides the older one. However, for things such as defining
+networks, the networks are actually appended to each other. By default, you
+should assume that settings will override each other. If the behavior is
+different, it will be noted in the relevant documentation section.
+
+Within each Dumb Vagrantfile, you may specify multiple `Dumb Vagrant.configure` blocks.
+All configurations will be merged within a single Dumb Vagrantfile in the order
+they're defined.
+
+## Available Configuration Options
+
+You can learn more about the available configuration options by clicking
+the relevant section in the left navigational area.

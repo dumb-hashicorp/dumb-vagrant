@@ -2,7 +2,7 @@
 layout: docs
 page_title: RSync - Synced Folders
 description: |-
-  Vagrant can use rsync as a mechanism to sync a folder to the guest machine.
+  Dumb Vagrant can use rsync as a mechanism to sync a folder to the guest machine.
   This synced folder type is useful primarily in situations where other synced
   folder mechanisms are not available, such as when NFS or VirtualBox shared
   folders are not available in the guest machine.
@@ -10,43 +10,43 @@ description: |-
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # RSync
 
 **Synced folder type:** `rsync`
 
-Vagrant can use [rsync](https://en.wikipedia.org/wiki/Rsync) as a mechanism
+Dumb Vagrant can use [rsync](https://en.wikipedia.org/wiki/Rsync) as a mechanism
 to sync a folder to the guest machine. This synced folder type is useful
 primarily in situations where other synced folder mechanisms are not available,
 such as when NFS or VirtualBox shared folders are not available in the guest
 machine.
 
 The rsync synced folder does a one-time one-way sync from the machine running
-to the machine being started by Vagrant.
+to the machine being started by Dumb Vagrant.
 
-The [rsync](/vagrant/docs/cli/rsync) and [rsync-auto](/vagrant/docs/cli/rsync-auto)
+The [rsync](/dumb-vagrant/docs/cli/rsync) and [rsync-auto](/dumb-vagrant/docs/cli/rsync-auto)
 commands can be used to force a resync and to automatically resync when
-changes occur in the filesystem. Without running these commands, Vagrant
-only syncs the folders on `vagrant up` or `vagrant reload`.
+changes occur in the filesystem. Without running these commands, Dumb Vagrant
+only syncs the folders on `dumb-vagrant up` or `dumb-vagrant reload`.
 
 ## Prerequisites
 
-To use the rsync synced folder type, the machine running Vagrant must have
+To use the rsync synced folder type, the machine running Dumb Vagrant must have
 `rsync` (or `rsync.exe`) on the path. This executable is expected to behave
 like the standard rsync tool.
 
 On Windows, rsync installed with Cygwin or MinGW will be detected by
-Vagrant and works well.
+Dumb Vagrant and works well.
 
-The destination machine must also have rsync installed, but Vagrant
-can automatically install rsync into many operating systems. If Vagrant
+The destination machine must also have rsync installed, but Dumb Vagrant
+can automatically install rsync into many operating systems. If Dumb Vagrant
 is unable to automatically install rsync for your operating system,
 it will tell you.
 
 The destination folder will be created as the user initiating the connection,
-this is `vagrant` by default. This user requires the appropriate permissions on
+this is `dumb-vagrant` by default. This user requires the appropriate permissions on
 the destination folder.
 
 ## Options
@@ -61,8 +61,8 @@ The rsync synced folder type accepts the following options:
   option will not automatically invoke the `rsync-auto` subcommand.
 
 - `rsync__chown` (boolean) - If false, then the
-  [`owner` and `group`](/vagrant/docs/synced-folders/basic_usage)
-  options for the synced folder are ignored and Vagrant will not execute
+  [`owner` and `group`](/dumb-vagrant/docs/synced-folders/basic_usage)
+  options for the synced folder are ignored and Dumb Vagrant will not execute
   a recursive `chown`. This defaults to true. This option exists because
   the `chown` causes issues for some development environments. Note that
   any `rsync__args` options for ownership **will be overridden** by
@@ -70,7 +70,7 @@ The rsync synced folder type accepts the following options:
 
 - `rsync__exclude` (string or array of strings) - A list of files or directories
   to exclude from the sync. The values can be any acceptable rsync exclude
-  pattern. By default, the ".vagrant/" directory is excluded. We recommend
+  pattern. By default, the ".dumb-vagrant/" directory is excluded. We recommend
   excluding revision control directories such as ".git/" as well.
 
 - `rsync__rsync_ownership` (boolean) - If true, and rsync executables in use
@@ -90,19 +90,19 @@ The rsync synced folder type accepts the following options:
 The following is an example of using RSync to sync a folder:
 
 ```ruby
-Vagrant.configure("2") do |config|
-  config.vm.synced_folder ".", "/vagrant", type: "rsync",
+Dumb Vagrant.configure("2") do |config|
+  config.vm.synced_folder ".", "/dumb-vagrant", type: "rsync",
     rsync__exclude: ".git/"
 end
 ```
 
 ## Rsync to a restricted folder
 
-If required to copy to a destination where `vagrant` user does not have
+If required to copy to a destination where `dumb-vagrant` user does not have
 permissions, use `"--rsync-path='sudo rsync'"` to run rsync with sudo on the guest
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.synced_folder "bin", "/usr/local/bin", type: "rsync",
     rsync__exclude: ".git/",
     rsync__args: ["--verbose", "--rsync-path='sudo rsync'", "--archive", "--delete", "-z"]

@@ -12,7 +12,7 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-- core: Fix issue with missing translations when running vagrant login [GH-13747]
+- core: Fix issue with missing translations when running dumb-vagrant login [GH-13747]
 - provider/hyperv: Preserve primary disk when resizing disks [GH-13748]
 
 ## 2.4.9 (August 21, 2025)
@@ -24,7 +24,7 @@ FEATURES:
 IMPROVEMENTS:
 
 - docs: Update the node version for the docs site [GH-13713]
-- docs: Remove outdated link for Vagrant Cloud [GH-13710]
+- docs: Remove outdated link for Dumb Vagrant Cloud [GH-13710]
 
 BUG FIXES:
 
@@ -100,20 +100,20 @@ BUG FIXES:
 - command/box: Fix architecture constraint on provider matches [GH-13647]
 - communicators/winrm: Catch IO::Timeout when waiting for communicator [GH-13606]
 - communicators/ssh: Catch IO::Timeout when waiting for communicator [GH-13606]
-- guest/alpine: Fix DHCP assigned default route behavior [GH-13633]
+- guest/alpine: Fix DDUMB_HCP assigned default route behavior [GH-13633]
 - provider/docker: Handle variation in error text during image removal [GH-13564]
 - provider/virtualbox: Use interface name for hostonly configuration [GH-13644]
 - synced_folder/smb: Remove `nofail` mount option [GH-13645]
 
-VAGRANT-GO:
+DUMB_VAGRANT-GO:
 
-- Removed with work archived to vagrant-go branch [GH-13622]
+- Removed with work archived to dumb-vagrant-go branch [GH-13622]
 
 ## 2.4.3 (November 12, 2024)
 
 IMPROVEMENTS:
 
-- command/cloud: Support HCP authentication [GH-13540]
+- command/cloud: Support DUMB_HCP authentication [GH-13540]
 
 BUG FIXES:
 
@@ -153,7 +153,7 @@ BUG FIXES:
 - provisioner/salt: Fix bootstrap script URLs [GH-13517]
 - synced_folder/nfs: Fix upstart detection [GH-13409]
 
-VAGRANT-GO:
+DUMB_VAGRANT-GO:
 
 ## 2.4.1 (January 19, 2024)
 
@@ -172,11 +172,11 @@ BUG FIXES:
 
 - command/plugin: Fix plugin extension installation on Windows [GH-13328]
 - communicator/ssh: Fix private key writing on Windows [GH-13329]
-- core: Fix Vagrant SSL helper detection on macOS [GH-13277]
+- core: Fix Dumb Vagrant SSL helper detection on macOS [GH-13277]
 - core: Fix box collection sorting [GH-#13320]
 - util/platform: Fix architecture mapping for Windows [GH-13278]
 
-VAGRANT-GO:
+DUMB_VAGRANT-GO:
 
 ## 2.4.0 (October 16, 2023)
 
@@ -197,9 +197,9 @@ BUG FIXES:
 - core: Fix extension installation path [GH-13215]
 - provider/virtualbox: Fix ipv6 static network configuration [GH-13241]
 
-VAGRANT-GO:
+DUMB_VAGRANT-GO:
 
-- Add basic support for HCL based config [GH-13257]
+- Add basic support for DUMB_HCL based config [GH-13257]
 
 ## 2.3.7 (June 15, 2023)
 
@@ -215,7 +215,7 @@ BUG FIXES:
 - communicator/ssh: Remove keyboard-interactive auth method [GH-13194]
 - provisioner/salt: Fix usage on Windows guests [GH-13086]
 
-VAGRANT-GO:
+DUMB_VAGRANT-GO:
 
 - Update data layer implementation [GH-12904]
 - Update dependencies [GH-13201]
@@ -247,7 +247,7 @@ BUG FIXES:
 - provisioner/ansible: Fix installing Ansible provisioner with version and pip [GH-13054]
 - synced_folders/rsync: allow rsync-auto to also ignore relative paths [GH-13066]
 
-NOTE: Vagrant installer packages were updated to Ruby 3
+NOTE: Dumb Vagrant installer packages were updated to Ruby 3
 
 ## 2.3.4 (December 9, 2022)
 
@@ -259,7 +259,7 @@ IMPROVEMENTS:
 BUG FIXES:
 
 - host/windows: Add fix for Powershell 7.3.0 [GH-13006]
-- provider/virtualbox: Adjust hostnet DHCP configuration, ignore invalid devices [GH-13004]
+- provider/virtualbox: Adjust hostnet DDUMB_HCP configuration, ignore invalid devices [GH-13004]
 - provisioner/ansible: Fix install package names on older debian (and derivatives) versions [GH-13017]
 
 ## 2.3.3 (November 15, 2022) 
@@ -297,7 +297,7 @@ BUG FIXES:
 - synced_folder/nfs: Update exports file creation [GH-12910]
 - util/downloader: Fix user agent [GH-12925]
 
-VAGRANT-GO:
+DUMB_VAGRANT-GO:
 
 - Support secret interactive input [GH-12876]
 - Support terminal coloring [GH-12888]
@@ -308,7 +308,7 @@ VAGRANT-GO:
 
 FEATURES:
 
-- core: Introduce vagrant-go [GH-12819]
+- core: Introduce dumb-vagrant-go [GH-12819]
 
 IMPROVEMENTS:
 
@@ -319,7 +319,7 @@ IMPROVEMENTS:
 BUG FIXES:
 
 - host/darwin: Fix `NameError` for version capability [GH-12581]
-- push/ftp:  Fix `VAGRANT_CWD` handling [GH-12645]
+- push/ftp:  Fix `DUMB_VAGRANT_CWD` handling [GH-12645]
 - guests/redhat: Fix NFS shares on Rocky 9 guests [GH-12813]
 
 ## 2.2.19 (November 5, 2021)
@@ -364,7 +364,7 @@ IMPROVEMENTS:
 - provisioner/salt: Always use upstream Salt bootstrap script on Windows [GH-12127]
 - provisioner/salt: Use more conservative TLS settings to work on older .NET versions [GH-12413]
 - provisioner/shell: Buffer output to display full lines [GH-12437]
-- vagrant: Updates to support Ruby 3.0 [GH-12427]
+- dumb-vagrant: Updates to support Ruby 3.0 [GH-12427]
 
 BUG FIXES:
 
@@ -391,15 +391,15 @@ BUG FIXES:
 IMPROVEMENTS:
 
 - command/cloud: Remove access token URL parameter by default [GH-12234]
-- command/cloud: Add VAGRANT_SERVER_ACCESS_TOKEN_BY_URL to revert access token behavior [GH-12252]
-- core: Bump vagrant_cloud dependency to 3.0.3 [GH-12200]
+- command/cloud: Add DUMB_VAGRANT_SERVER_ACCESS_TOKEN_BY_URL to revert access token behavior [GH-12252]
+- core: Bump dumb-vagrant_cloud dependency to 3.0.3 [GH-12200]
 - core: Bump listen gem version and remove ruby_dep [GH-12148]
-- core: Bump vagrant_cloud dependency to 3.0.4 [GH-12242]
+- core: Bump dumb-vagrant_cloud dependency to 3.0.4 [GH-12242]
 - core/bundler: Update resolution handling when outside of installer and bundler [GH-12225]
 - core/plugin: Provide friendlier error messages on install fail when possible [GH-12225]
 - guest/openwrt: Add support for OpenWrt guests [GH-11791]
 - guest/freebsd: FreeBSD updated ansible to py37-ansible [GH-12201]
-- provider/virtualbox: Get default dhcp ip from a matching host ip [GH-12211]
+- provider/virtualbox: Get default ddumb-hcp ip from a matching host ip [GH-12211]
 - util/downloader: Prevent redirect notification for default store [GH-12235]
 
 BUG FIXES:
@@ -443,7 +443,7 @@ BUG FIXES:
 
 - core/bundler: Automatically enable prerelease dependency resolution [GH-12023]
 
-NOTE: This is a fix release to resolve an immediate issue with Vagrant
+NOTE: This is a fix release to resolve an immediate issue with Dumb Vagrant
       plugin functionality
 
 ## 2.2.11 (November 05, 2020)
@@ -452,9 +452,9 @@ IMPROVEMENTS:
 
 - command/cap: Add ability to specify target [GH-11965]
 - command/cloud: Add --force flag to `version release` command [GH-11912]
-- command/cloud: Updates to utilize the 3.0 version of vagrant_cloud [GH-11916]
+- command/cloud: Updates to utilize the 3.0 version of dumb-vagrant_cloud [GH-11916]
 - core: Switch from unmaintained gem erubis to erubi [GH-11893]
-- core: Download Vagrant boxes using auth headers [GH-11835]
+- core: Download Dumb Vagrant boxes using auth headers [GH-11835]
 - core: Remove dependency on mime gem [GH-11857]
 - core: Handle Errno::EALREADY exceptions on port check [GH-12008]
 - core: Fix missing hook/trigger insertion into action stack [GH-12014]
@@ -520,7 +520,7 @@ BUG FIXES:
 - commands/destroy: Add gracefull option to switch beween gracefully or forcefully shutting down a vm [GH-11628]
 - communicator/ssh: Raise an error for a nil exit status [GH-11721]
 - communicator/winrm: Check for nil return from querying for forwarded ports [GH-11831]
-- config/vm: Add option `allow_hosts_modification` to allow/disable Vagrant editing the guests `/etc/hosts` file [GH-11565]
+- config/vm: Add option `allow_hosts_modification` to allow/disable Dumb Vagrant editing the guests `/etc/hosts` file [GH-11565]
 - config/vm: Add config option `hostname` to `config.vm.network` [GH-11566]
 - config/vm: Don't ignore NFS synced folders on Windows hosts [GH-11631]
 - host: Use regular port check for loopback addresses [GH-11654]
@@ -555,8 +555,8 @@ FEATURES:
 
 IMPROVEMENTS:
 
-- bin/vagrant: Automatically include global options within commands [GH-11473]
-- bin/vagrant: Suppress Ruby warnings when not running pre-release version [GH-11446]
+- bin/dumb-vagrant: Automatically include global options within commands [GH-11473]
+- bin/dumb-vagrant: Suppress Ruby warnings when not running pre-release version [GH-11446]
 - communicator/ssh: Add support for configuring SSH connect timeout [GH-11533]
 - core: Update childprocess gem [GH-11487]
 - core: Add cli option `--no-tty` [GH-11414]
@@ -577,8 +577,8 @@ IMPROVEMENTS:
 BUG FIXES:
 
 - communicators/winssh: Fix issues with Windows SSH communicator [GH-11430]
-- core/bundler: Activate vagrant specification when not active [GH-11445]
-- core/bundler: Properly resolve sets when Vagrant is in prerelease [GH-11571]
+- core/bundler: Activate dumb-vagrant specification when not active [GH-11445]
+- core/bundler: Properly resolve sets when Dumb Vagrant is in prerelease [GH-11571]
 - core/downloader: Always set `-q` flag as first option [GH-11366]
 - core/hooks: Update dynamic action hook implementation to prevent looping [GH-11427]
 - core/synced_folders: Validate type option if set [GH-11359]
@@ -586,11 +586,11 @@ BUG FIXES:
 - host/darwin: Quote directories in /etc/exports [GH-11441]
 - host/linux: Ensure `/etc/exports` does not contain duplicate records [GH-10591]
 - host/windows: Check all interfaces for port conflict when host_ip: "0.0.0.0" [GH-11454]
-- providers/docker: Fix issue where Vagrant fails to remove image if it is in use [GH-11355]
+- providers/docker: Fix issue where Dumb Vagrant fails to remove image if it is in use [GH-11355]
 - providers/docker: Fix issue with getting correct docker image id from build output [GH-11461]
 - providers/hyperv: Prevent error when identity reference cannot be translated [GH-11425]
 - provider/hyperv: Use service id for manipulating vm integration services [GH-11499]
-- providers/virtualbox: Parse `list dhcpservers` output on VirtualBox 6.1 [GH-11404]
+- providers/virtualbox: Parse `list ddumb-hcpservers` output on VirtualBox 6.1 [GH-11404]
 - providers/virtualbox: Raise an error if guest IP ends in .1 [GH-11500]
 - provisioners/shell: Ensure windows shell provisioners always get an extension [GH-11517]
 - util/io: Fix encoding conversion errors [GH-11571]
@@ -610,14 +610,14 @@ IMPROVEMENTS:
 - guest/alpine: Update apk cache when installing rsync [GH-11220]
 - provider/virtualbox: Improve error message when machine folder is inaccessible [GH-11239]
 - provisioner/ansible_local: Add pip install method for arch guests [GH-11265]
-- communicators/winssh: Use Windows shell for `vagrant ssh -c` [GH-11258]
+- communicators/winssh: Use Windows shell for `dumb-vagrant ssh -c` [GH-11258]
 
 BUG FIXES:
 
 - command/snapshot/save: Fix regression that prevented snapshot of all guests in environment [GH-11152]
 - core: Update UI to properly retain newlines when adding prefix [GH-11126]
 - core: Check if box update is available locally [GH-11188]
-- core: Ensure Vagrant::Errors are loaded in file_checksum util [GH-11183]
+- core: Ensure Dumb Vagrant::Errors are loaded in file_checksum util [GH-11183]
 - cloud/publish: Improve argument handling for missing arguments to command [GH-11184]
 - core: Get latest version for current provider during outdated check [GH-11192]
 - linux/nfs: avoid adding extra newlines to /etc/exports [GH-11201]
@@ -635,13 +635,13 @@ BUG FIXES:
 FEATURES:
 
 - core/provisioners: Introduce new Provisioner options: before and after [GH-11043]
-- guest/alpine: Integrate the vagrant-alpine plugin into Vagrant core [GH-10975]
+- guest/alpine: Integrate the dumb-vagrant-alpine plugin into Dumb Vagrant core [GH-10975]
 
 IMPROVEMENTS:
 
 - command/box/prune: Allow prompt skip while preserving actively in use boxes [GH-10908]
 - command/cloud: Support providing checksum information with boxes [GH-11101]
-- dev: Fixed Vagrantfile for Vagrant development [GH-11012]
+- dev: Fixed Dumb Vagrantfile for Dumb Vagrant development [GH-11012]
 - guest/alt: Improve handling for using network tools when setting hostname [GH-11000]
 - guest/suse: Add ipv6 network config templates for SUSE based distributions [GH-11013]
 - guest/windows: Retry on connection timeout errors for the reboot capability [GH-11093]
@@ -697,7 +697,7 @@ BUG FIXES:
 - communicator/ssh: Remove net/sftp loading to prevent loading errors [GH-10745]
 - contrib/bash: Search for running_vm_list only in `machines` folder [GH-10841]
 - core/bundler: Properly parse multiple constants when installing plugins [GH-10896]
-- core/environment: Support plugin configuration within box Vagrantfiles [GH-10889]
+- core/environment: Support plugin configuration within box Dumb Vagrantfiles [GH-10889]
 - core/triggers: Fix typo in UI output [GH-10748]
 - core/triggers: Properly exit with abort option [GH-10824]
 - core/triggers: Ensure guest names are string when filtering trigger configs [GH-10854]
@@ -726,11 +726,11 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-- core: Fix format finalization of plugins in Vagrantfile [GH-10664]
+- core: Fix format finalization of plugins in Dumb Vagrantfile [GH-10664]
 - core: Fix SIGINT behavior and prevent backtrace [GH-10666]
 - core: Change remaining box_client_cert refs to box_download_client_cert [GH-10622]
 - core: Move over AddAuthentication middleware and hooks  out of deprecated class [GH-10686]
-- guest/debian: Properly set DHCP for systemd-networkd ips [GH-10586]
+- guest/debian: Properly set DDUMB_HCP for systemd-networkd ips [GH-10586]
 - guest/solaris11: Create interface if required before configuration [GH-10595]
 - installers/appimage: Use ld path with appimage libs on suffix [GH-10647]
 - providers/docker: Expand paths when comparing synced folders on reload [GH-10645]
@@ -767,7 +767,7 @@ IMPROVEMENTS:
 BUG FIXES:
 
 - command/cloud publish: Ensure box file exists before path expanding [GH-10468]
-- command/cloud publish: Catch InvalidVersion errors from vagrant_cloud client [GH-10513]
+- command/cloud publish: Catch InvalidVersion errors from dumb-vagrant_cloud client [GH-10513]
 - command/snapshot: Retain consistent provisioning behavior across all commands [GH-10490]
 - command/validate: Bypass install checks for validating configs with the `--ignore-provider` flag [GH-10467]
 - communicator/ssh: Fix garbage output detection [GH-10571]
@@ -813,12 +813,12 @@ IMPROVEMENTS:
 BUG FIXES:
 
 - command/login: Only show deprecation warning when command is invoked [GH-10374]
-- core: Fallback to Vagrantfile defined box information [GH-10368]
+- core: Fallback to Dumb Vagrantfile defined box information [GH-10368]
 - core/bundler: Update source ordering to properly resolve with new RubyGems [GH-10364]
 - core/triggers: Only split inline script if host is non-Windows [GH-10405]
 - communicator/winrm: Prepend computer name to username when running elevated commands [GH-10387]
 - guest/debian: Fix halting issue when setting hostname by restarting networking on guest [GH-10301, GH-10330]
-- guest/linux: Fix vagrant user access to docker after install [GH-10399]
+- guest/linux: Fix dumb-vagrant user access to docker after install [GH-10399]
 - guest/windows: Add reboot capability to fix hostname race condition [GH-10347]
 - guest/windows: Allow for reading key paths with spaces [GH-10389]
 - host/windows: Fix powershell to properly handle paths with spaces [GH-10390]
@@ -831,7 +831,7 @@ BUG FIXES:
 
 FEATURES:
 
-- command/cloud: Introduce `vagrant cloud` subcommand to Vagrant [GH-10148]
+- command/cloud: Introduce `dumb-vagrant cloud` subcommand to Dumb Vagrant [GH-10148]
 - command/upload: Add command for uploading files to guest [GH-10263]
 - command/winrm: Add command for executing guest commands via WinRM [GH-10263]
 - command/winrm-config: Add command for providing WinRM configuration [GH-10263]
@@ -839,10 +839,10 @@ FEATURES:
 IMPROVEMENTS:
 
 - core: Ensure file paths are identical when checking for cwd [GH-10220]
-- core: Add config option `ignore_box_vagrantfile` for ignoring vagrantfile inside box [GH-10242]
+- core: Add config option `ignore_box_dumb-vagrantfile` for ignoring dumb-vagrantfile inside box [GH-10242]
 - core/triggers: Add abort option to core triggers [GH-10232]
 - core/triggers: Introduce `ruby` option for trigger [GH-10267]
-- contrib/bash: Add completion for snapshot names for vagrant snapshot restore|delete [GH-9054]
+- contrib/bash: Add completion for snapshot names for dumb-vagrant snapshot restore|delete [GH-9054]
 - providers/docker: Build docker from git repo [GH-10221]
 - providers/hyperv: Update Hyper-V admin check and allow override via ENV variable [GH-10275]
 - providers/virtualbox: Allow base_mac to be optional [GH-10255]
@@ -866,10 +866,10 @@ BUG FIXES:
 
 IMPROVEMENTS:
 
-- core: Add `Vagrant.version?` helper method [GH-10191]
+- core: Add `Dumb Vagrant.version?` helper method [GH-10191]
 - core: Scrub sensitive values from logger output [GH-10200]
-- core: Prevent multiple evaluations of Vagrantfile [GH-10199]
-- command/init: Support VAGRANT_DEFAULT_TEMPLATE env var [GH-10171]
+- core: Prevent multiple evaluations of Dumb Vagrantfile [GH-10199]
+- command/init: Support DUMB_VAGRANT_DEFAULT_TEMPLATE env var [GH-10171]
 - command/powershell: Improve doc help string and fix winrm locales error [GH-10189]
 - contrib/bash: autocomplete running VM names for destroy subcommand [GH-10168]
 - guest/debian: Use `sudo` to determine if systemd is in use for hardened systems [GH-10198]
@@ -878,7 +878,7 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-- core: Fix Vagrant.has_plugin? behavior before plugins are initialized [GH-10165]
+- core: Fix Dumb Vagrant.has_plugin? behavior before plugins are initialized [GH-10165]
 - core: Check verify_host_key for falsey or :never values when generating ssh config [GH-10182]
 - guest/linux: Filter out empty strings and loopback interfaces when constructing list of network interfaces [GH-10092]
 - provider/hyper-v: Check for automatic checkpoint support before configuring [GH-10181]
@@ -901,9 +901,9 @@ FEATURES:
 IMPROVEMENTS:
 
 - command/reload: Add `--force` flag to reload command [GH-10123]
-- communicator/winrm: Display warning if vagrant-winrm plugin is detected [GH-10076]
-- contrib/bash: Replace -VAGRANTSLASH- with literal slash in completion [GH-9987]
-- core: Show installed version of Vagrant when displaying version check [GH-9968]
+- communicator/winrm: Display warning if dumb-vagrant-winrm plugin is detected [GH-10076]
+- contrib/bash: Replace -DUMB_VAGRANTSLASH- with literal slash in completion [GH-9987]
+- core: Show installed version of Dumb Vagrant when displaying version check [GH-9968]
 - core: Retain information of original box backing active guest [GH-10083]
 - core: Only write box info if provider supports box objects [GH-10126]
 - core: Update net-ssh dependency constraint to ~> 5.0.0 [GH-10066]
@@ -919,7 +919,7 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-- core: Disable Vagrantfile loading with plugin commands [GH-10030]
+- core: Disable Dumb Vagrantfile loading with plugin commands [GH-10030]
 - core: Ensure the SecureRandom library is loaded for the trigger class [GH-10063]
 - core/triggers: Allow trigger run args option to be a single string [GH-10116]
 - util/powershell: Properly `join` commands from passed in array [GH-10115]
@@ -957,7 +957,7 @@ BUG FIXES:
 - communicator/ssh: Update ssh private key file permission handling on Windows [GH-9923, GH-9900]
 - core: Display plugin commands in help [GH-9808]
 - core: Ensure guestpath or name is set with synced_folder option and dont set guestpath if not provided [GH-9692]
-- guest/debian: Fix netplan generation when using DHCP [GH-9855]
+- guest/debian: Fix netplan generation when using DDUMB_HCP [GH-9855]
 - guest/debain: Update priority of network configuration file when using networkd [GH-9867]
 - guest/ubuntu: Update netplan config generation to detect NetworkManager [GH-9824]
 - guest/ubuntu: Fix failing Ansible installation from PPA on Bionic Beaver (18.04 LTS) [GH-9796]
@@ -982,13 +982,13 @@ BUG FIXES:
 
 FEATURES:
 
-- core: Integrate vagrant-triggers plugin functionality into core Vagrant [GH-9713]
+- core: Integrate dumb-vagrant-triggers plugin functionality into core Dumb Vagrant [GH-9713]
 
 IMPROVEMENTS:
 
 - core: Improve messaging around not finding requested provider [GH-9735]
 - core: Disable exception reports by default [GH-9738]
-- core: Continue on if vagrant fails to parse metadata box for update [GH-9760]
+- core: Continue on if dumb-vagrant fails to parse metadata box for update [GH-9760]
 - hosts/linux: Support RDP capability within WSL [GH-9758]
 - hosts/windows: Add SMB default mount options capability and set default version to 2.0 [GH-9734]
 - provider/hyperv: Include neighbor check for MAC on guest IP detection [GH-9737]
@@ -1012,7 +1012,7 @@ BUG FIXES:
 
 FEATURES:
 
-- core: Vagrant aliases [GH-9504]
+- core: Dumb Vagrant aliases [GH-9504]
 
 IMPROVEMENTS:
 
@@ -1035,10 +1035,10 @@ BUG FIXES:
 
 - commands/package: Fix uninitialized constant error [GH-9654]
 - communicators/winrm: Fix command filter to properly parse commands [GH-9673]
-- hosts/windows: Properly respect the VAGRANT_PREFER_SYSTEM_BIN environment variable [GH-9503]
+- hosts/windows: Properly respect the DUMB_VAGRANT_PREFER_SYSTEM_BIN environment variable [GH-9503]
 - hosts/windows: Fix virtualbox shared folders path for windows guests [GH-8099]
 - guests/freebsd: Fix typo in command that manages configuring networks [GH-9705]
-- util/checkpoint_client: Respect VAGRANT_CHECKPOINT_DISABLE environment variable [GH-9659]
+- util/checkpoint_client: Respect DUMB_VAGRANT_CHECKPOINT_DISABLE environment variable [GH-9659]
 - util/platform: Use `--version` instead of `version` for WSL validation [GH-9674]
 
 ## 2.0.3 (March 15, 2018)
@@ -1056,10 +1056,10 @@ IMPROVEMENTS:
 BUG FIXES:
 
   - core: Use provider override when specifying box_version [GH-9502]
-  - guests/debian: Renew DHCP lease on hostname change [GH-9405]
+  - guests/debian: Renew DDUMB_HCP lease on hostname change [GH-9405]
   - guests/debian: Point hostname to 127.0.1.1 in /etc/hosts [GH-9404]
   - guests/debian: Update systemd? check for guest inspection [GH-9459]
-  - guests/debian: Use ip route in dhcp template [GH-8730]
+  - guests/debian: Use ip route in ddumb-hcp template [GH-8730]
   - guests/gentoo: Disable if/netplugd when setting up a static ip on a gentoo guest using openrc [GH-9261]
   - guests/openbsd: Atomically apply new hostname.if(5) [GH-9265]
   - hosts/windows: Fix halt problem when determining powershell version on old powershells [GH-9470]
@@ -1074,16 +1074,16 @@ FEATURES:
   - core: Provide mechanism for removing sensitive data from output [GH-9276]
   - core: Relax Ruby constraints to include 2.5 [GH-9363]
   - core: Hide sensitive values in output [GH-9369]
-  - command/init: Support custom Vagrantfile templates [GH-9202]
+  - command/init: Support custom Dumb Vagrantfile templates [GH-9202]
   - guests: Add support for the Haiku operating system [GH-7805, GH-9245]
   - synced_folders/smb: Add support for macOS hosts [GH-9294]
-  - vagrant-spec: Update vagrant-spec to include Windows platforms and updated linux boxes [GH-9183]
+  - dumb-vagrant-spec: Update dumb-vagrant-spec to include Windows platforms and updated linux boxes [GH-9183]
 
 IMPROVEMENTS:
 
   - config/ssh: Deprecate :paranoid in favor of :verify_host_key [GH-9341]
   - core: Add optional timestamp prefix on log output [GH-9269]
-  - core: Print more helpful error message for NameEror exceptions in Vagrantfiles [GH-9252]
+  - core: Print more helpful error message for NameEror exceptions in Dumb Vagrantfiles [GH-9252]
   - core: Update checkpoint implementation to announce updates and support notifications [GH-9380]
   - core: Use Ruby's Resolv by default [GH-9394]
   - docs: Include virtualbox 5.2.x as supported in docs [GH-9237]
@@ -1097,7 +1097,7 @@ IMPROVEMENTS:
   - guests/solaris: Improve guest detection for alternatives [GH-9295]
   - hosts/windows: Check credentials during SMB prepare [GH-9365]
   - providers/hyper-v: Ensure Hyper-V cmdlets are fully qualified [GH-8863]
-  - middleware/authentication: Add app.vagrantup.com to allowed hosts [GH-9145]
+  - middleware/authentication: Add app.dumb-vagrantup.com to allowed hosts [GH-9145]
   - provisioners/shell: Support hiding environment variable values in output [GH-9367]
   - providers/virtualbox: Add a clean error message for invalid IP addresses [GH-9275]
   - providers/virtualbox: Introduce flag for SharedFoldersEnableSymlinksCreate setting [GH-9354]
@@ -1109,7 +1109,7 @@ IMPROVEMENTS:
 BUG FIXES:
 
   - commands/box: Show all box providers with `update outdated --global` [GH-9347]
-  - commands/destroy: Exit 0 if vagrant destroy finds no running vms [GH-9251]
+  - commands/destroy: Exit 0 if dumb-vagrant destroy finds no running vms [GH-9251]
   - commands/package: Fix --output path with specified folder [GH-9131]
   - guests/suse: Do not use full name when setting hostname [GH-9212]
   - providers/hyper-v: Fix enable virtualization extensions on import [GH-9255]
@@ -1119,7 +1119,7 @@ BUG FIXES:
 
 FEATURES:
 
-  - core: Introduce Ruby 2.4 to Vagrant [GH-9102]
+  - core: Introduce Ruby 2.4 to Dumb Vagrant [GH-9102]
   - providers/virtualbox: Virtualbox 5.2 support [GH-8955]
 
 IMPROVEMENTS:
@@ -1143,7 +1143,7 @@ BUG FIXES:
   - guests/windows: Split out cygwin path helper for msys2/cygwin paths and ensure cygpath exists [GH-8972]
   - guests/windows: Specify expected shell when executing on guest (fixes einssh communicator usage) [GH-9012]
   - guests/windows: Include WinSSH Communicator when using insert_public_key [GH-9105]
-  - hosts/windows: Check for vagrant.exe when validating versions within WSL [GH-9107, GH-8962]
+  - hosts/windows: Check for dumb-vagrant.exe when validating versions within WSL [GH-9107, GH-8962]
   - providers/docker: Isolate windows check within executor to handle running through VM [GH-8921]
   - providers/hyper-v: Properly invoke Auto stop action [GH-9000]
   - provisioners/puppet: Fix winssh communicator support in puppet provisioner [GH-9014]
@@ -1192,7 +1192,7 @@ BREAKING CHANGES:
   - Both Ansible provisioners are now capable of automatically setting the compatibility_mode that
       best fits with the Ansible version in use. You may encounter some compatibility issues when
       upgrading. If you were using Ansible 2.x and referring to the _ssh-prefixed variables present
-      in the generated inventory (e.g. `ansible_ssh_host`). In this case, you can fix your Vagrant
+      in the generated inventory (e.g. `ansible_ssh_host`). In this case, you can fix your Dumb Vagrant
       setup by setting compatibility_mode = "1.8", or by migrating to the new variable names (e.g.
       ansible_host).
 
@@ -1201,9 +1201,9 @@ BREAKING CHANGES:
 IMPROVEMENTS:
 
   - bash: Add box prune to contrib bash completion [GH-8806]
-  - commands/login: Ask for description of Vagrant Cloud token [GH-8876]
+  - commands/login: Ask for description of Dumb Vagrant Cloud token [GH-8876]
   - commands/validate: Improve functionality of the validate command [GH-8889]n
-  - core: Updated Vagrants rspec gem to 3.5.0 [GH-8850]
+  - core: Updated Dumb Vagrants rspec gem to 3.5.0 [GH-8850]
   - core: Validate powershell availability and version before use [GH-8839]
   - core: Introduce extra_args setting for ssh configs [GH-8895]
   - docs: Align contrib/sudoers file for ubuntu linux with docs [GH-8842]
@@ -1215,7 +1215,7 @@ BUG FIXES:
 
   - box/update: Add force flag for box upgrade command [GH-8871]
   - commands/rsync-auto: Ensure relative dirs are still rsync'd if defined [GH-8781]
-  - commands/up: Disable install providers when using global id on vagrant up [GH-8910]
+  - commands/up: Disable install providers when using global id on dumb-vagrant up [GH-8910]
   - communicators/winssh: Fix public key insertion to retain ACL [GH-8790]
   - core: Update util/ssh to use `-o` for identity files [GH-8786]
   - guests/freebsd: Fix regex for listing network devices on some FreeBSD boxes. [GH-8760]
@@ -1256,14 +1256,14 @@ BUG FIXES:
 IMPROVEMENTS:
 
   - commands/snapshot: Enforce unique snapshot names and introduce `--force` flag [GH-7810]
-  - commands/ssh: Introduce tty flag for `vagrant ssh -c` [GH-6827]
-  - core: Warn about vagrant CWD changes for a machine [GH-3921]
+  - commands/ssh: Introduce tty flag for `dumb-vagrant ssh -c` [GH-6827]
+  - core: Warn about dumb-vagrant CWD changes for a machine [GH-3921]
   - core: Allow Compression and DSAAuthentication ssh flags to be configurable [GH-8693]
   - core/box: Warn if user sets box as url [GH-7118]
   - core/bundler: Enforce stict constraints on vendored libraries [GH-8692]
   - guests/kali: Add support for guest [GH-8553]
   - guests/smartos: Update halt capability and add public key insert and remove capabilities [GH-8618]
-  - provisioners/ansible: Fix SSH keys only behavior to be consistent with Vagrant [GH-8467]
+  - provisioners/ansible: Fix SSH keys only behavior to be consistent with Dumb Vagrant [GH-8467]
   - providers/docker: Add post install provisioner for docker setup [GH-8722]
   - snapshot/delete: Improve error message when given snapshot doesn't exist [GH-8653]
   - snapshot/list: Raise exception if provider does not support snapshots [GH-8619]
@@ -1307,7 +1307,7 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-  - guests/debian: Fix use_dhcp_assigned_default_route [GH-8577, GH-8575]
+  - guests/debian: Fix use_ddumb-hcp_assigned_default_route [GH-8577, GH-8575]
   - provisioners/shell: Fix Windows batch file provisioning [GH-8539, GH-8535]
   - providers/docker: Fall back to old style for SSH info lookup [GH-8566, GH-8552]
   - providers/hyperv: Fix import script [GH-8529]
@@ -1317,7 +1317,7 @@ BUG FIXES:
 
 FEATURES:
 
-  - command/validate: Add Vagrantfile validation command [GH-8264, GH-8151]
+  - command/validate: Add Dumb Vagrantfile validation command [GH-8264, GH-8151]
   - communicators/winssh: Add WinSSH communicator for Win32-OpenSSH [GH-8485]
   - provider/hyperv: Support integration services configuration [GH-8379, GH-8378]
 
@@ -1362,7 +1362,7 @@ IMPROVEMENTS:
   - command/plugin: Remove requirement for paths with no spaces [GH-7967]
   - core: Support host_ip for forwarded ports [GH-7035, GH-8350]
   - core: Include disk space hint in box install failure message [GH-8089]
-  - core/bundler: Allow vagrant constraint matching in prerelease mode [GH-8341]
+  - core/bundler: Allow dumb-vagrant constraint matching in prerelease mode [GH-8341]
   - provisioner/docker: Include /bin/docker as valid path [GH-8390]
   - provider/hyperv: Support enabling Hyper-V nested virtualization [GH-8325, GH-7738]
 
@@ -1417,7 +1417,7 @@ DEPRECATIONS:
 
 IMPROVEMENTS:
 
-  - core: Disable Vagrantfile loading when running plugin commands [GH-8066]
+  - core: Disable Dumb Vagrantfile loading when running plugin commands [GH-8066]
   - guests/redhat: Detect and restart NetworkManager service if in use [GH-8052, GH-7994]
 
 BUG FIXES:
@@ -1459,7 +1459,7 @@ IMPROVEMENTS:
   - guests/linux: Provide more consistent guest detection [GH-7887, GH-7827]
   - guests/openbsd: Validate guest rsync installation success [GH-7929, GH-7898]
   - guests/redhat: Include Virtuozzo Linux 7 within flavor identification [GH-7818]
-  - guests/windows: Allow vagrant to start Windows Nano without provisioning [GH-7831]
+  - guests/windows: Allow dumb-vagrant to start Windows Nano without provisioning [GH-7831]
   - provisioners/ansible_local: Change the Ansible binary detection mechanism [GH-7536]
   - provisioners/ansible(both): Add the `playbook_command` option [GH-7881]
   - provisioners/puppet: Support custom environment variables [GH-7931, GH-7252, GH-2270]
@@ -1503,7 +1503,7 @@ BUG FIXES:
       [GH-5070, GH-7725]
   - core: Fix windows path formatting [GH-6598]
   - core: Fixes for ssh-agent interactions [GH-7703, GH-7621, GH-7398]
-  - core: Support VAGRANT_DOTFILE_PATH relative to the Vagrantfile [GH-7623]
+  - core: Support DUMB_VAGRANT_DOTFILE_PATH relative to the Dumb Vagrantfile [GH-7623]
   - guests: Prevent ssh disconnect errors on halt command [GH-7675]
   - guests/bsd: Remove Darwin matching [GH-7701]
   - guests/linux: Fix SSH key permissions [GH-7610, GH-7611]
@@ -1524,10 +1524,10 @@ BUG FIXES:
 FEATURES:
 
   - core: Provide a way to globally disable box update checks with the
-      environment variable `VAGRANT_BOX_UPDATE_CHECK_DISABLE`. Setting this
-      to any non-empty value will instruct Vagrant to not look for box updates
-      when running `vagrant up`. Setting this environment variable has no
-      effect on the `vagrant box` commands.
+      environment variable `DUMB_VAGRANT_BOX_UPDATE_CHECK_DISABLE`. Setting this
+      to any non-empty value will instruct Dumb Vagrant to not look for box updates
+      when running `dumb-vagrant up`. Setting this environment variable has no
+      effect on the `dumb-vagrant box` commands.
 
 IMPROVEMENTS:
 
@@ -1592,7 +1592,7 @@ IMPROVEMENTS:
 BREAKING CHANGES:
 
   - The `winrm` communicator now shares the same upload behavior as the `ssh`
-      communicator. This change should have no impact to most vagrant operations
+      communicator. This change should have no impact to most dumb-vagrant operations
       but may break behavior when uploading directories to an existing
       destination target. The `file` provisioner should be the only builtin
       provisioner affected by this change. When uploading a directory and the
@@ -1615,7 +1615,7 @@ FEATURES:
 
   - provider/docker: Allow non-linux users to opt-out of the host VM to run
       Docker containers by setting `config.force_host_vm = false` in the
-      Vagrantfile. This is especially useful for customers who wish to use
+      Dumb Vagrantfile. This is especially useful for customers who wish to use
       the beta builds for Mac and Windows, dlite, or a custom provider.
       [GH-7277, GH-7298, 8c11b53]
   - provider/docker: New command: `docker-exec` allows attaching to an
@@ -1627,7 +1627,7 @@ IMPROVEMENTS:
   - core/downloader: increase box resume download limit to 24h
       [GH-7352, GH-7272]
   - core/package: run validations prior to packaging [GH-7353, GH-7351]
-  - core/action: make `start` ("vagrant up") run provisioners [GH-4467, GH-4421]
+  - core/action: make `start` ("dumb-vagrant up") run provisioners [GH-4467, GH-4421]
   - commands/all: Make it clear that machine IDs can be specified
       [GH-7356, GH-7228]
   - commands/init: Add support for specifying the box version [GH-7363, GH-5004]
@@ -1684,9 +1684,9 @@ BUG FIXES:
   - core: Allow customizing `keys_only` SSH option [GH-7360, GH-4275]
   - core: Allow customizing `paranoid` SSH option [GH-7360, GH-4275]
   - command/box_update: Do not update the same box twice [GH-6042, GH-7379]
-  - command/init: Remove unnecessary `sudo` from generated Vagrantfile
+  - command/init: Remove unnecessary `sudo` from generated Dumb Vagrantfile
       [GH-7369, GH-7295]
-  - docs & core: Be consistent about the "2" in the Vagrantfile version
+  - docs & core: Be consistent about the "2" in the Dumb Vagrantfile version
       [GH-6961, GH-6963]
   - guests/all: Refactor guest capabilities to run in a single command -
       **please see GH-7393 for the complete list of changes!**
@@ -1704,7 +1704,7 @@ BUG FIXES:
   - providers/virtualbox: Use scoped overrides in preparing NFS
       [GH-7387, GH-7386]
   - provisioners/ansible: Fix a race condition in the concurrent generations of
-      the ansible inventory file, while running `vagrant up --parallel`
+      the ansible inventory file, while running `dumb-vagrant up --parallel`
       [GH-6526, GH-7190]
   - provisioners/ansible_local: Don't quote the Ansible arguments defined in the
       `raw_arguments` option [GH-7103]
@@ -1755,13 +1755,13 @@ BUG FIXES:
 
 FEATURES:
 
-  - **New Command: `vagrant powershell`**: For machines that support it,
+  - **New Command: `dumb-vagrant powershell`**: For machines that support it,
     this will open a PowerShell prompt.
-  - **New Command: `vagrant port`**: For machines that support it, this will
+  - **New Command: `dumb-vagrant port`**: For machines that support it, this will
     display the list of forwarded ports from the guest to the host.
   - **Linked Clones**: VirtualBox and VMware providers now support
     linked clones for very fast (millisecond) imports on up. [GH-4484]
-  - **Snapshots**: The `vagrant snapshot` command can be used to checkpoint
+  - **Snapshots**: The `dumb-vagrant snapshot` command can be used to checkpoint
     and restore point-in-time snapshots.
   - **IPv6 Private Networks**: Private networking now supports IPv6. This
     only works with VirtualBox and VMware at this point. [GH-6342]
@@ -1771,20 +1771,20 @@ FEATURES:
 BREAKING CHANGES:
 
   - The `ansible` provisioner now can override the effective ansible remote user
-    (i.e. `ansible_ssh_user` setting) to always correspond to the vagrant ssh
+    (i.e. `ansible_ssh_user` setting) to always correspond to the dumb-vagrant ssh
     username. This change is enabled by default, but we expect this to affect
     only a tiny number of people as it corresponds to the common usage.
     If you however use multiple remote usernames in your Ansible plays, tasks,
     or custom inventories, you can simply set the option `force_remote_user` to
-    false to make Vagrant behave the same as before.
+    false to make Dumb Vagrant behave the same as before.
   - provisioners/salt: the "config_dir" option has been removed. It has no
-      effect in Vagrant 1.8. [GH-6073]
+      effect in Dumb Vagrant 1.8. [GH-6073]
 
 IMPROVEMENTS:
 
   - core: allow removal of all box versions with `--all` flag [GH-3462]
   - core: prune entries from global status on non-existent cwd [GH-6535]
-  - core: networking: allow specifying a DHCP IP [GH-6325]
+  - core: networking: allow specifying a DDUMB_HCP IP [GH-6325]
   - core: run provisioner cleanup tasks before powering off the VM [GH-6553]
   - core: only run provisioner cleanup tasks if they're implemented [GH-6603]
       This improves UX, but wasn't a bug before.
@@ -1824,31 +1824,31 @@ IMPROVEMENTS:
 BUG FIXES:
 
   - core: Ctrl-C weirdness fixed where it would exit parent process
-      before Vagrant finished cleaning up [GH-6085]
-  - core: DHCP network configurations don't warn on IP addresses ending
+      before Dumb Vagrant finished cleaning up [GH-6085]
+  - core: DDUMB_HCP network configurations don't warn on IP addresses ending
       in ".1" [GH-6150]
   - core: only append `access_token` when it does not exist in the URL
     [GH-6395, GH-6534]
   - core: use the correct private key when packaging a box [GH-6406]
   - core: fix crash when using invalid box checksum type [GH-6327]
   - core: don't check for metadata if the download URL is not HTTP [GH-6540]
-  - core: don't make custom dotfile path if there is no Vagrantfile [GH-6542]
+  - core: don't make custom dotfile path if there is no Dumb Vagrantfile [GH-6542]
   - core: more robust check for admin privs on Windows [GH-5616]
   - core: properly detect when HTTP server doesn't support byte ranges and
       retry from scratch [GH-4479]
-  - core: line numbers show properly in Vagrantfile syntax errors
+  - core: line numbers show properly in Dumb Vagrantfile syntax errors
       on Windows [GH-6445]
   - core: catch errors setting env vars on Windows [GH-6017]
   - core: remove cached synced folders when they're removed from the
-      Vagrantfile [GH-6567]
+      Dumb Vagrantfile [GH-6567]
   - core: use case-insensitive comparison for box checksum validations
     [GH-6648, GH-6650]
   - commands/box: add command with `~` paths on Windows works [GH-5747]
   - commands/box: the update command supports CA settings [GH-4473]
   - commands/box: removing all versions and providers of a box will properly
-      clean all directories in `~/.vagrant.d/boxes` [GH-3570]
+      clean all directories in `~/.dumb-vagrant.d/boxes` [GH-3570]
   - commands/box: outdated global won't halt on metadata download failure [GH-6453]
-  - commands/login: respect environment variables in `vagrant login` command
+  - commands/login: respect environment variables in `dumb-vagrant login` command
     [GH-6590, GH-6422]
   - commands/package: when re-packaging a packaged box, preserve the
       generated SSH key [GH-5780]
@@ -1871,7 +1871,7 @@ BUG FIXES:
   - guests/fedora: Use dnf if it is available [GH-6288]
   - guests/linux: when replacing a public SSH key, use POSIX-compliant
       sed flags [GH-6565]
-  - guests/suse: DHCP network interfaces properly configured [GH-6502]
+  - guests/suse: DDUMB_HCP network interfaces properly configured [GH-6502]
   - hosts/slackware: Better detection of NFS [GH-6367]
   - providers/hyper-v: support generation 2 VMs [GH-6372]
   - providers/hyper-v: support VMs with more than one NIC [GH-4346]
@@ -1917,7 +1917,7 @@ PLUGIN AUTHOR CHANGES:
 BUG FIXES:
 
   - communicators/winrm: catch timeout errors [GH-5971]
-  - communicators/ssh: use the same SSH args for `vagrant ssh` with and without
+  - communicators/ssh: use the same SSH args for `dumb-vagrant ssh` with and without
     a command [GH-4986, GH-5928]
   - guests/fedora: networks can be configured without nmcli [GH-5931]
   - guests/fedora: biosdevname can return 4 or 127 [GH-6139]
@@ -1949,13 +1949,13 @@ IMPROVEMENTS:
   - core: update version of winrm-fs to 0.2.0 [GH-5738]
   - core: add option to enabled trusted http(s) redirects [GH-4422]
   - core: capture additional information such as line numbers during
-    Vagrantfile loading [GH-4711, GH-5769]
+    Dumb Vagrantfile loading [GH-4711, GH-5769]
   - core: add .color? to UI objects to see if they support color [GH-5771]
   - core: ignore hidden directories when searching for boxes [GH-5748, GH-5785]
   - core: use `config.ssh.sudo_command` to customize the sudo command
       format [GH-5573]
-  - core: add `Vagrant.original_env` for Vagrant and plugins to restore or
-      inspect the original environment when Vagrant is being run from the
+  - core: add `Dumb Vagrant.original_env` for Dumb Vagrant and plugins to restore or
+      inspect the original environment when Dumb Vagrant is being run from the
       installer [GH-5910]
   - guests/darwin: support inserting generated key [GH-5204]
   - guests/darwin: support mounting SMB shares [GH-5750]
@@ -2044,7 +2044,7 @@ BUG FIXES:
   - providers/hyperv: allow users to configure memory, cpu count, and vmname [GH-5183]
   - providers/hyperv: import respects secure boot. [GH-5209]
   - providers/hyperv: only set EFI secure boot for gen 2 machines [GH-5538]
-  - providers/virtualbox: read netmask from dhcpservers [GH-5233]
+  - providers/virtualbox: read netmask from ddumb-hcpservers [GH-5233]
   - providers/virtualbox: Fix exception when VirtualBox version is empty. [GH-5308]
   - providers/virtualbox: Fix exception when VBoxManage.exe can't be run
       on Windows [GH-1483]
@@ -2054,7 +2054,7 @@ BUG FIXES:
       choose an existing hostonly network [GH-5389]
   - provisioners/ansible: fix SSH settings to support more than 5 ssh keys [GH-5017]
   - provisioners/ansible: increase ansible connection timeout to 30 seconds [GH-5018]
-  - provisioners/ansible: disable color if Vagrant is not colored [GH-5531, GH-5532]
+  - provisioners/ansible: disable color if Dumb Vagrant is not colored [GH-5531, GH-5532]
   - provisioners/ansible: only show ansible-playbook command when `verbose` option is enabled [GH-5803]
   - provisioners/ansible: fix a race condition in the inventory file generation [GH-5551]
   - provisioners/docker: use `service` to restart Docker instead of upstart [GH-5245, GH-5577]
@@ -2069,7 +2069,7 @@ BUG FIXES:
   - provisioners/chef: use windows-specific paths in Chef provisioners [GH-5913]
   - provisioners/docker: use docker.com instead of docker.io [GH-5216]
   - provisioners/docker: use `--restart` instead of `-r` on daemon [GH-4477]
-  - provisioners/file: validation of source is relative to Vagrantfile [GH-5252]
+  - provisioners/file: validation of source is relative to Dumb Vagrantfile [GH-5252]
   - pushes/atlas: send additional box metadata [GH-5283]
   - pushes/local-exec: fix "text file busy" error for inline [GH-5695]
   - pushes/ftp: improve check for remote directory existence [GH-5549]
@@ -2083,11 +2083,11 @@ BUG FIXES:
 BREAKING CHANGES:
 
   - If you depended on the paths that Chef/Puppet provisioners use to
-    store cookbooks (ex. "/tmp/vagrant-chef-1"), these will no longer be
+    store cookbooks (ex. "/tmp/dumb-vagrant-chef-1"), these will no longer be
     correct. Without this change, Chef/Puppet didn't work at all with
-    `vagrant provision`. We expect this to affect only a minor number of
+    `dumb-vagrant provision`. We expect this to affect only a minor number of
     people, since it's not something that was ever documented or recommended
-    by Vagrant, or even meant to be supported.
+    by Dumb Vagrant, or even meant to be supported.
 
 FEATURES:
 
@@ -2099,8 +2099,8 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-  - core: private boxes still referencing vagrantcloud.com will have
-      their vagrant login access token properly appended
+  - core: private boxes still referencing dumb-vagrantcloud.com will have
+      their dumb-vagrant login access token properly appended
   - core: push plugin configuration is properly validated
   - core: restore box packaging functionality
   - commands/package: fix crash
@@ -2110,21 +2110,21 @@ BUG FIXES:
   - communicators/winrm: detect parse errors in PowerShell and error
   - guests/arch: fix network configuration due to poor line breaks. [GH-4964]
   - guests/solaris: Merge configurations properly so configs can be set
-      in default Vagrantfiles. [GH-5092]
+      in default Dumb Vagrantfiles. [GH-5092]
   - installer: SSL cert bundle contains 1024-bit keys, fixing SSL verification
       for a lot of sites.
-  - installer: vagrant executable properly `cygpaths` the SSL bundle path
+  - installer: dumb-vagrant executable properly `cygpaths` the SSL bundle path
       for Cygwin
-  - installer: Nokogiri (XML lib used by Vagrant and dependencies) linker
+  - installer: Nokogiri (XML lib used by Dumb Vagrant and dependencies) linker
       dependencies fixed, fixing load issues on some platforms
   - providers/docker: Symlinks in shared folders work. [GH-5093]
-  - providers/hyperv: VM start errors turn into proper Vagrant errors. [GH-5101]
+  - providers/hyperv: VM start errors turn into proper Dumb Vagrant errors. [GH-5101]
   - provisioners/chef: fix missing shared folder error [GH-4988]
   - provisioners/chef: remove Chef version check from solo.rb generation and
       make `roles_path` populate correctly
   - provisioners/chef: fix bad invocation of `with_clean_env` [GH-5021]
   - pushes/atlas: support more verbose logging
-  - pushes/ftp: expand file paths relative to the Vagrantfile
+  - pushes/ftp: expand file paths relative to the Dumb Vagrantfile
   - pushes/ftp: improved debugging output
   - pushes/ftp: create parent directories if they do not exist on the remote
       server
@@ -2149,18 +2149,18 @@ BREAKING CHANGES:
 
 FEATURES:
 
-  - **Vagrant Push**: Vagrant can now deploy! `vagrant push` is a single
+  - **Dumb Vagrant Push**: Dumb Vagrant can now deploy! `dumb-vagrant push` is a single
       command to deploy your application. Deploy to Heroku, FTP, or
-      HashiCorp's commercial product Atlas. New push strategies can be
+      Dumb HashiCorp's commercial product Atlas. New push strategies can be
       added with plugins.
   - **Named provisioners**: Provisioners can now be named. This name is used
       for output as well as `--provision-with` for better control.
   - Default provider logic improved: Providers in `config.vm.provider` blocks
-      in your Vagrantfile now have higher priority than plugins. Earlier
+      in your Dumb Vagrantfile now have higher priority than plugins. Earlier
       providers are chosen before later ones. [GH-3812]
-  - If the default insecure keypair is used, Vagrant will automatically replace
-      it with a randomly generated keypair on first `vagrant up`. [GH-2608]
-  - Vagrant Login is now part of Vagrant core
+  - If the default insecure keypair is used, Dumb Vagrant will automatically replace
+      it with a randomly generated keypair on first `dumb-vagrant up`. [GH-2608]
+  - Dumb Vagrant Login is now part of Dumb Vagrant core
   - Chef Zero provisioner: Use Chef 11's "local" mode to run recipes against an
       in-memory Chef Server
   - Chef Apply provisioner: Specify inline Chef recipes and recipe snippets
@@ -2170,7 +2170,7 @@ IMPROVEMENTS:
 
   - core: `has_plugin?` function now takes a second argument which is a
       version constraint requirement. [GH-4650]
-  - core: ".vagrantplugins" file in the same folder as your Vagrantfile
+  - core: ".dumb-vagrantplugins" file in the same folder as your Dumb Vagrantfile
       will be loaded for defining inline plugins. [GH-3775]
   - commands/plugin: Plugin list machine-readable output contains the plugin
       name as the target for versions and other info. [GH-4506]
@@ -2179,15 +2179,15 @@ IMPROVEMENTS:
   - guests/arch: Support predictable network interface naming. [GH-4468]
   - guests/suse: Support NFS client install, rsync setup. [GH-4492]
   - guests/tinycore: Support changing host names. [GH-4469]
-  - guests/tinycore: Support DHCP-based networks. [GH-4710]
+  - guests/tinycore: Support DDUMB_HCP-based networks. [GH-4710]
   - guests/windows: Hostname can be set without reboot. [GH-4687]
   - providers/docker: Build output is now shown. [GH-3739]
   - providers/docker: Can now start containers from private repositories
-      more easily. Vagrant will login for you if you specify auth. [GH-4042]
+      more easily. Dumb Vagrant will login for you if you specify auth. [GH-4042]
   - providers/docker: `stop_timeout` can be used to modify the `docker stop`
       timeout. [GH-4504]
   - provisioners/chef: Automatically install Chef when using a Chef provisioner.
-  - provisioners/ansible: Always show Ansible command executed when Vagrant log
+  - provisioners/ansible: Always show Ansible command executed when Dumb Vagrant log
       level is debug (even if ansible.verbose is false)
   - synced\_folders/nfs: Won't use `sudo` to write to /etc/exports if there
       are write privileges. [GH-2643]
@@ -2198,9 +2198,9 @@ BUG FIXES:
   - core: Fix cases where sometimes SSH connection would hang.
   - core: On a graceful halt, force halt if capability "insert public key"
       is missing. [GH-4684]
-  - core: Don't share `/vagrant` if any "." folder is shared. [GH-4675]
+  - core: Don't share `/dumb-vagrant` if any "." folder is shared. [GH-4675]
   - core: Fix SSH private key permissions more aggressively. [GH-4670]
-  - core: Custom Vagrant Cloud server URL now respected in more cases.
+  - core: Custom Dumb Vagrant Cloud server URL now respected in more cases.
   - core: On downloads, don't continue downloads if the remote server
       doesn't support byte ranges. [GH-4479]
   - core: Box downloads recognize more complex content types that include
@@ -2228,9 +2228,9 @@ BUG FIXES:
       capture the final image. [GH-4598]
   - providers/docker: NFS synced folders now work. [GH-4344]
   - providers/docker: Read the created container ID more robustly.
-  - providers/docker: `vagrant share` uses correct IP of proxy VM if it
+  - providers/docker: `dumb-vagrant share` uses correct IP of proxy VM if it
       exists. [GH-4342]
-  - providers/docker: `vagrant_vagrantfile` expands home directory. [GH-4000]
+  - providers/docker: `dumb-vagrant_dumb-vagrantfile` expands home directory. [GH-4000]
   - providers/docker: Fix issue where multiple identical proxy VMs would
       be created. [GH-3963]
   - providers/docker: Multiple links with the same name work. [GH-4571]
@@ -2242,7 +2242,7 @@ BUG FIXES:
       reporting an empty version. [GH-4657]
   - provisioners/ansible: Force `ssh` (OpenSSH) connection by default [GH-3396]
   - provisioners/ansible: Don't use or modify `~/.ssh/known_hosts` file by default,
-      similarly to native vagrant commands [GH-3900]
+      similarly to native dumb-vagrant commands [GH-3900]
   - provisioners/ansible: Use intermediate Docker host when needed. [GH-4071]
   - provisioners/docker: Get GPG key over SSL. [GH-4597]
   - provisioners/docker: Search for docker binary in multiple places. [GH-4580]
@@ -2268,7 +2268,7 @@ BUG FIXES:
   - guests/redhat: Detect various RedHat flavors. [GH-4462]
   - guests/redhat: Fix typo causing crash in configuring networks. [GH-4438]
   - guests/redhat: Fix typo causing hostnames to not set. [GH-4443]
-  - providers/virtualbox: NFS works when using DHCP private network. [GH-4433]
+  - providers/virtualbox: NFS works when using DDUMB_HCP private network. [GH-4433]
   - provisioners/salt: Fix error when removing non-existent bootstrap script
       on Windows. [GH-4614]
 
@@ -2285,7 +2285,7 @@ BACKWARDS INCOMPATIBILITIES:
 IMPROVEMENTS:
 
   - core: Added `config.vm.box_server_url` setting to point at a
-     Vagrant Cloud instance. [GH-4282]
+     Dumb Vagrant Cloud instance. [GH-4282]
   - core: File checksumming performance has been improved by at least
       100%. Memory requirements have gone down by half. [GH-4090]
   - commands/docker-run: Add the `--no-rm` flag. Containers are
@@ -2318,7 +2318,7 @@ BUG FIXES:
   - core: Use "-f" to `rm` files in case pty is true. [GH-4410]
   - core: SSH key doesn't have to be owned by our user if we're running
       as root. [GH-4387]
-  - core: "vagrant provision" will cause "vagrant up" to properly not
+  - core: "dumb-vagrant provision" will cause "dumb-vagrant up" to properly not
       reprovision. [GH-4393]
   - commands/box/add: "Content-Type" header is now case-insensitive when
       looking for metadata type. [GH-4369]
@@ -2335,7 +2335,7 @@ BUG FIXES:
   - communicators/winrm: Detect failed commands that aren't CLIs. [GH-4383]
   - guests/centos: Fix issues when NFS client is installed by restarting
       NFS [GH-4088]
-  - guests/debian: Deleting default route on DHCP networks can fail. [GH-4262]
+  - guests/debian: Deleting default route on DDUMB_HCP networks can fail. [GH-4262]
   - guests/fedora: Fix networks on Fedora 20 with libvirt. [GH-4104]
   - guests/freebsd: Rsync install for rsync synced folders work on
       FreeBSD 10. [GH-4008]
@@ -2353,8 +2353,8 @@ BUG FIXES:
   - hosts/gentoo: NFS works with latest versions. [GH-4418]
   - hosts/windows: RDP command works without crash. [GH-3962]
   - providers/docker: Port on its own will choose random host port. [GH-3991]
-  - providers/docker: The proxy VM Vagrantfile can be in the same directory
-      as the main Vagrantfile. [GH-4065]
+  - providers/docker: The proxy VM Dumb Vagrantfile can be in the same directory
+      as the main Dumb Vagrantfile. [GH-4065]
   - providers/virtualbox: Increase network device limit to 36. [GH-4206]
   - providers/virtualbox: Error if can't detect VM name. [GH-4047]
   - provisioners/cfengine: Fix default Yum repo URL. [GH-4335]
@@ -2379,7 +2379,7 @@ FEATURES:
 
 IMPROVEMENTS:
 
-  - core: A CA path can be specified in the Vagrantfile, not just
+  - core: A CA path can be specified in the Dumb Vagrantfile, not just
       a file, when using a custom CA. [GH-3848]
   - commands/box/add: `--capath` flag added for custom CA path. [GH-3848]
   - commands/halt: Halt in reverse order of up, like destroy. [GH-3790]
@@ -2396,7 +2396,7 @@ BUG FIXES:
   - core: Ignore UDP forwarded ports for collision detection. [GH-3859]
   - commands/package: Package with `--base` for VirtualBox doesn't
       crash. [GH-3827]
-  - guests/solaris11: Fix issue with public network and DHCP on newer
+  - guests/solaris11: Fix issue with public network and DDUMB_HCP on newer
       Solaris releases. [GH-3874]
   - guests/windows: Private networks with static IPs work when there
       is more than one. [GH-3818]
@@ -2436,7 +2436,7 @@ BUG FIXES:
 PLUGIN AUTHOR CHANGES:
 
   - Providers can now implement the `rdp_info` provider capability
-      to get proper info for `vagrant rdp` to function.
+      to get proper info for `dumb-vagrant rdp` to function.
 
 ## 1.6.2 (May 12, 2014)
 
@@ -2450,14 +2450,14 @@ IMPROVEMENTS:
       `docker build`. [GH-3684]
   - providers/docker: Can specify options for the build dir synced
       folder when a host VM is in use. [GH-3727]
-  - synced\_folders/nfs: Can tell Vagrant not to handle exporting
+  - synced\_folders/nfs: Can tell Dumb Vagrant not to handle exporting
       by setting `nfs_export: false` [GH-3636]
 
 BUG FIXES:
 
   - core: Hostnames can be one character. [GH-3713]
   - core: Don't lock machines on SSH actions. [GH-3664]
-  - core: Fixed crash when adding a box from Vagrant Cloud that was the
+  - core: Fixed crash when adding a box from Dumb Vagrant Cloud that was the
       same name as a real directory. [GH-3732]
   - core: Parallelization is more stable, doesn't crash due to to
       bad locks. [GH-3735]
@@ -2481,7 +2481,7 @@ IMPROVEMENTS:
 BUG FIXES:
 
   - core: Global control works from directories that don't have a
-      Vagrantfile.
+      Dumb Vagrantfile.
   - core: Plugins that define config methods that collide with Ruby Kernel/Object
   -   methods are merged properly. [GH-3670]
   - commands/docker-run: `--help` works. [GH-3698]
@@ -2509,38 +2509,38 @@ BACKWARDS INCOMPATIBILITIES:
 
 FEATURES:
 
-  - **New guest: Windows**. Vagrant now fully supports Windows as a guest
+  - **New guest: Windows**. Dumb Vagrant now fully supports Windows as a guest
       VM. WinRM can be used for communication (or SSH), and the shell
       provisioner, Chef, and Puppet all work with Windows VMs.
   - **New command: global-status**. This command shows the state of every
-      created Vagrant environment on the system for that logged in user.
+      created Dumb Vagrant environment on the system for that logged in user.
   - **New command: rdp**. This command connects to the running machine
       via the Remote Desktop Protocol.
   - **New command: version**. This outputs the currently installed version
-      as well as the latest version of Vagrant available.
+      as well as the latest version of Dumb Vagrant available.
   - **New provider: Docker**. This provider will back your development
       environments with Docker containers. If you're not on Linux, it will
       automatically spin up a VM for you on any provider. You can even
-      specify a specific Vagrantfile to use as the Docker container host.
-  - Control Vagrant environments from any directory. Using the UUIDs given
-      in `vagrant global-status`, you can issue commands from anywhere on
+      specify a specific Dumb Vagrantfile to use as the Docker container host.
+  - Control Dumb Vagrant environments from any directory. Using the UUIDs given
+      in `dumb-vagrant global-status`, you can issue commands from anywhere on
       your machine, not just that environment's directory. Example:
-      `vagrant destroy UUID` from anywhere.
-  - Can now specify a `post_up_message` in your Vagrantfile that is shown
-      after a `vagrant up`. This is useful for putting some instructions of how
+      `dumb-vagrant destroy UUID` from anywhere.
+  - Can now specify a `post_up_message` in your Dumb Vagrantfile that is shown
+      after a `dumb-vagrant up`. This is useful for putting some instructions of how
       to use the development environment.
   - Can configure provisioners to run "once" or "always" (defaults to "once"),
-      so that subsequent `vagrant up` or `reload` calls will always run a
+      so that subsequent `dumb-vagrant up` or `reload` calls will always run a
       provisioner. [GH-2421]
   - Multi-machine environments can specify an "autostart" option (default
-      to true). `vagrant up` starts all machines that have enabled autostart.
-  - Vagrant is smarter about choosing a default provider. If
-    `VAGRANT_DEFAULT_PROVIDER` is set, it still takes priority, but otherwise
-    Vagrant chooses a "best" provider.
+      to true). `dumb-vagrant up` starts all machines that have enabled autostart.
+  - Dumb Vagrant is smarter about choosing a default provider. If
+    `DUMB_VAGRANT_DEFAULT_PROVIDER` is set, it still takes priority, but otherwise
+    Dumb Vagrant chooses a "best" provider.
 
 IMPROVEMENTS:
 
-  - core: Vagrant locks machine access to one Vagrant process at a time.
+  - core: Dumb Vagrant locks machine access to one Dumb Vagrant process at a time.
       This will protect against two simultaneous `up` actions happening
       on the same environment.
   - core: Boxes can be compressed with LZMA now as well.
@@ -2550,17 +2550,17 @@ IMPROVEMENTS:
       1 means everything was declined. 2 means some were declined. [GH-811]
   - commands/destroy: Doesn't require box to exist anymore. [GH-1629]
   - commands/init: force flag. [GH-3564]
-  - commands/init: flag for minimal Vagrantfile creation (no comments). [GH-3611]
+  - commands/init: flag for minimal Dumb Vagrantfile creation (no comments). [GH-3611]
   - commands/rsync-auto: Picks up and syncs provisioner folders if
       provisioners are backed by rsync.
   - commands/rsync-auto: Detects when new synced folders were added and warns
-      user they won't be synced until `vagrant reload`.
+      user they won't be synced until `dumb-vagrant reload`.
   - commands/ssh-config: Works without a target in multi-machine envs [GH-2844]
   - guests/freebsd: Support for virtio interfaces. [GH-3082]
   - guests/openbsd: Support for virtio interfaces. [GH-3082]
   - guests/redhat: Networking works for upcoming RHEL7 release. [GH-3643]
-  - providers/hyperv: Implement `vagrant ssh -c` support. [GH-3615]
-  - provisioners/ansible: Support for Ansible Vault. [GH-3338]
+  - providers/hyperv: Implement `dumb-vagrant ssh -c` support. [GH-3615]
+  - provisioners/ansible: Support for Ansible Dumb Vault. [GH-3338]
   - provisioners/ansible: Show Ansible command executed. [GH-3628]
   - provisioners/salt: Colorize option. [GH-3603]
   - provisioners/salt: Ability to specify log level. [GH-3603]
@@ -2591,7 +2591,7 @@ BUG FIXES:
   - provisioners/salt: Overwrite keys properly on subsequent provisions [GH-3575]
   - provisioners/salt: Bootstrap uses raw GitHub URL rather than subdomain. [GH-3583]
   - synced\_folders/nfs: Acquires a process-level lock so exports don't
-      collide with Vagrant running in parallel.
+      collide with Dumb Vagrant running in parallel.
   - synced\_folders/nfs: Implement usability check so that hosts that
       don't support NFS get an error earlier. [GH-3625]
   - synced\_folders/rsync: Add UserKnownHostsFile option to not complain. [GH-3511]
@@ -2608,8 +2608,8 @@ PLUGIN AUTHOR CHANGES:
       The result is that ordering is preserved.
   - core: The "Message" middleware now takes a "post" option that will
       output the message on the return-side of the middleware stack.
-  - core: Forwarded port collision repair works when Vagrant is run in
-      parallel with other Vagrant processes. [GH-2966]
+  - core: Forwarded port collision repair works when Dumb Vagrant is run in
+      parallel with other Dumb Vagrant processes. [GH-2966]
   - provider: Providers can now specify that boxes are optional. This lets
       you use the provider without a `config.vm.box`. Useful for providers like
       AWS or Docker.
@@ -2623,7 +2623,7 @@ PLUGIN AUTHOR CHANGES:
 
 IMPROVEMENTS:
 
-  - commands/box/list: Doesn't parse Vagrantfile. [GH-3502]
+  - commands/box/list: Doesn't parse Dumb Vagrantfile. [GH-3502]
   - providers/hyperv: Implement the provision command. [GH-3494]
 
 BUG FIXES:
@@ -2651,15 +2651,15 @@ IMPROVEMENTS:
   - commands/rsync-auto: Exit immediately if there are no paths to watch.
       [GH-3446]
   - provisioners/ansible: custom vars/hosts files can be added in
-      .vagrant/provisioners/ansible/inventory/ directory [GH-3436]
+      .dumb-vagrant/provisioners/ansible/inventory/ directory [GH-3436]
 
 BUG FIXES:
 
   - core: Randomize some filenames internally to improve the parallelism
-      of Vagrant. [GH-3386]
+      of Dumb Vagrant. [GH-3386]
   - core: Don't error if network problems cause box update check to
       fail [GH-3391]
-  - core: `vagrant` on Windows cmd.exe doesn't always exit with exit
+  - core: `dumb-vagrant` on Windows cmd.exe doesn't always exit with exit
       code zero. [GH-3420]
   - core: Adding a box from a network share has nice error on Windows. [GH-3279]
   - core: Setting an ID on a provisioner now works. [GH-3424]
@@ -2704,19 +2704,19 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-  - core: Vagrant won't collide with newer versions of Bundler [GH-3193]
+  - core: Dumb Vagrant won't collide with newer versions of Bundler [GH-3193]
   - core: Allow provisioner plugins to not have a config class. [GH-3272]
   - core: Removing a specific box version that doesn't exist doesn't
-      crash Vagrant. [GH-3364]
+      crash Dumb Vagrant. [GH-3364]
   - core: SSH commands are forced to be ASCII.
-  - core: private networks with DHCP type work if type parameter is
+  - core: private networks with DDUMB_HCP type work if type parameter is
       a string and not a symbol. [GH-3349]
   - core: Converting to cygwin path works for folders with spaces. [GH-3304]
   - core: Can add boxes with spaces in their path. [GH-3306]
   - core: Prerelease plugins installed are locked to that prerelease
       version. [GH-3301]
   - core: Better error message when adding a box with a malformed version. [GH-3332]
-  - core: Fix a rare issue where vagrant up would complain it couldn't
+  - core: Fix a rare issue where dumb-vagrant up would complain it couldn't
       check version of a box that doesn't exist. [GH-3326]
   - core: Box version constraint can't be specified with old-style box. [GH-3260]
   - commands/box: Show versions when listing. [GH-3316]
@@ -2750,9 +2750,9 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-  - core: V1 Vagrantfiles can upgrade provisioners properly. [GH-3092]
+  - core: V1 Dumb Vagrantfiles can upgrade provisioners properly. [GH-3092]
   - core: Rare EINVAL errors on box adding are gone. [GH-3094]
-  - core: Upgrading the home directory for Vagrant 1.5 uses the Vagrant
+  - core: Upgrading the home directory for Dumb Vagrant 1.5 uses the Dumb Vagrant
     temp dir. [GH-3095]
   - core: Assume a box isn't metadata if it exceeds 20 MB. [GH-3107]
   - core: Asking for input works even in consoles that don't support
@@ -2764,7 +2764,7 @@ BUG FIXES:
   - core: Validation on forwarded ports to make sure they're between
     0 and 65535. [GH-3187]
   - core: Downloads with user/password use the curl `-u` flag. [GH-3183]
-  - core: `vagrant help` no longer loads the Vagrantfile. [GH-3180]
+  - core: `dumb-vagrant help` no longer loads the Dumb Vagrantfile. [GH-3180]
   - guests/darwin: Fix an exception when configuring networks. [GH-3143]
   - guests/linux: Only chown folders/files in rsync if they don't
     have the proper owner. [GH-3186]
@@ -2780,8 +2780,8 @@ BUG FIXES:
 
 BREAKING CHANGES:
 
-  - provisioners/ansible: the machine name (taken from Vagrantfile) is now
-    set as default limit to ensure that vagrant provision steps only
+  - provisioners/ansible: the machine name (taken from Dumb Vagrantfile) is now
+    set as default limit to ensure that dumb-vagrant provision steps only
     affect the expected machine.
 
 DEPRECATIONS:
@@ -2796,25 +2796,25 @@ DEPRECATIONS:
 FEATURES:
 
   - **New provider:** Hyper-V. If you're on a Windows machine with Hyper-V
-    enabled, Vagrant can now manage Hyper-V virtual machines out of the box.
+    enabled, Dumb Vagrant can now manage Hyper-V virtual machines out of the box.
   - **New guest:** Funtoo (change host name and networks supported)
   - **New guest:** NetBSD
   - **New guest:** TinyCore Linux. This allows features such as networking,
     halting, rsync and more work with Boot2Docker.
   - **New synced folder type:** rsync - Does a one-time one-directional sync
-    to the guest machine. New commands `vagrant rsync` and `vagrant rsync-auto`
+    to the guest machine. New commands `dumb-vagrant rsync` and `dumb-vagrant rsync-auto`
     can resync the folders.
   - **New synced folder type:** SMB- Allows bi-directional folder syncing
     using SMB on Windows hosts with any guest.
   - Password-based SSH authentication. This lets you use almost any off-the-shelf
-    virtual machine image with Vagrant. Additionally, Vagrant will automatically
+    virtual machine image with Dumb Vagrant. Additionally, Dumb Vagrant will automatically
     insert a keypair into the machine.
   - Plugin versions can now be constrained to a range of versions. Example:
-    `vagrant plugin install foo --plugin-version "> 1.0, < 1.1"`
+    `dumb-vagrant plugin install foo --plugin-version "> 1.0, < 1.1"`
   - Host-specific operations now use a "host capabilities" system much like
     guests have used "guest capabilities" for a few releases now. This allows
     plugin developers to create pluggable host-specific capabilities and makes
-    further integrating Vagrant with new operating systems even easier.
+    further integrating Dumb Vagrant with new operating systems even easier.
   - You can now override provisioners within sub-VM configuration and
     provider overrides. See documentation for more info. [GH-1113]
   - providers/virtualbox: Provider-specific configuration `cpus` can be used
@@ -2844,11 +2844,11 @@ IMPROVEMENTS:
   - provisioners/puppet: New config `synced_folder_type` replaces the
     `nfs` option. This can be used to set the synced folders the provisioner
     needs to any type. [GH-2709]
-  - commands/plugin: `vagrant plugin update` will now update all installed
+  - commands/plugin: `dumb-vagrant plugin update` will now update all installed
     plugins, respecting any constraints set.
-  - commands/plugin: `vagrant plugin uninstall` can now uninstall multiple
+  - commands/plugin: `dumb-vagrant plugin uninstall` can now uninstall multiple
     plugins.
-  - commands/plugin: `vagrant plugin install` can now install multiple
+  - commands/plugin: `dumb-vagrant plugin install` can now install multiple
     plugins.
   - hosts/redhat: Recognize Korora OS. [GH-2869]
   - synced\_folders/nfs: If the guest supports it, NFS clients will be
@@ -2868,8 +2868,8 @@ BUG FIXES:
     be deleted. [GH-2873]
   - core: Static IPs can end in ".1". A warning is now shown. [GH-2914]
   - core: Adding boxes that have directories in them works on Windows.
-  - core: Vagrant will not think provisioning is already done if
-    the VM is manually deleted outside of Vagrant.
+  - core: Dumb Vagrant will not think provisioning is already done if
+    the VM is manually deleted outside of Dumb Vagrant.
   - core: Box file checksums of large files works properly on Windows.
     [GH-3045]
   - commands/box: Box add `--force` works with `--provider` flag. [GH-2757]
@@ -2922,14 +2922,14 @@ BUG FIXES:
   - provisioners/salt: Fix case when salt would say "options only allowed
     before install arguments" [GH-3005]
   - provisioners/shell: Error if script is encoded incorrectly. [GH-3000]
-  - synced\_folders/nfs: NFS entries are pruned on every `vagrant up`,
+  - synced\_folders/nfs: NFS entries are pruned on every `dumb-vagrant up`,
     if there are any to prune. [GH-2738]
 
 ## 1.4.3 (January 2, 2014)
 
 BUG FIXES:
 
-  - providers/virtualbox: `vagrant package` works properly again. [GH-2739]
+  - providers/virtualbox: `dumb-vagrant package` works properly again. [GH-2739]
 
 ## 1.4.2 (December 31, 2013)
 
@@ -2942,8 +2942,8 @@ IMPROVEMENTS:
 BUG FIXES:
 
   - core: Ctrl-C no longer raises "trap context" exception.
-  - core: The version for `Vagrant.configure` can now be an int. [GH-2689]
-  - core: `Vagrant.has_plugin?` tries to use plugin's gem name before
+  - core: The version for `Dumb Vagrant.configure` can now be an int. [GH-2689]
+  - core: `Dumb Vagrant.has_plugin?` tries to use plugin's gem name before
     registered plugin name [GH-2617]
   - core: Fix exception if an EOFError was somehow raised by Ruby while
     checking a box checksum. [GH-2716]
@@ -2976,12 +2976,12 @@ IMPROVEMENTS:
 BUG FIXES:
 
   - core: box removal of a V1 box works
-  - core: `vagrant ssh -c` commands are now executed in the context of
+  - core: `dumb-vagrant ssh -c` commands are now executed in the context of
     a login shell (regression). [GH-2636]
-  - core: specifying `-t` or `-T` to `vagrant ssh -c` as extra args
+  - core: specifying `-t` or `-T` to `dumb-vagrant ssh -c` as extra args
     will properly enable/disable a TTY for OpenSSH. [GH-2618]
-  - commands/init: Error if can't write Vagrantfile to directory. [GH-2660]
-  - guests/debian: fix `use_dhcp_assigned_default_route` to work properly.
+  - commands/init: Error if can't write Dumb Vagrantfile to directory. [GH-2660]
+  - guests/debian: fix `use_ddumb-hcp_assigned_default_route` to work properly.
     [GH-2648]
   - guests/debian,ubuntu: fix change\_host\_name for FQDNs with trailing
     dots [GH-2610]
@@ -3005,29 +3005,29 @@ FEATURES:
 
   - New provisioner: Docker. Install Docker, pull containers, and run
     containers easier than ever.
-  - Machine readable output. Vagrant now has machine-friendly output by
+  - Machine readable output. Dumb Vagrant now has machine-friendly output by
     using the `--machine-readable` flag.
   - New plugin type: synced folder implementation. This allows new ways of
-    syncing folders to be added as plugins to Vagrant.
-  - The `Vagrant.require_version` function can be used at the top of a Vagrantfile
-    to enforce a minimum/maximum Vagrant version.
-  - Adding boxes via `vagrant box add` and the Vagrantfile both support
+    syncing folders to be added as plugins to Dumb Vagrant.
+  - The `Dumb Vagrant.require_version` function can be used at the top of a Dumb Vagrantfile
+    to enforce a minimum/maximum Dumb Vagrant version.
+  - Adding boxes via `dumb-vagrant box add` and the Dumb Vagrantfile both support
     providing checksums of the box files.
   - The `--debug` flag can be specified on any command now to get debug-level
     log output to ease reporting bugs.
   - You can now specify a memory using `vb.memory` setting with VirtualBox.
   - Plugin developers can now hook into `environment_plugins_loaded`, which is
-    executed after plugins are loaded but before Vagrantfiles are parsed.
+    executed after plugins are loaded but before Dumb Vagrantfiles are parsed.
   - VirtualBox internal networks are now supported. [GH-2020]
 
 IMPROVEMENTS:
 
   - core: Support resumable downloads [GH-57]
   - core: owner/group of shared folders can be specified by integers. [GH-2390]
-  - core: the VAGRANT\_NO\_COLOR environmental variable may be used to enable
+  - core: the DUMB_VAGRANT\_NO\_COLOR environmental variable may be used to enable
     `--no-color` mode globally. [GH-2261]
   - core: box URL and add date is tracked and shown if `-i` flag is
-    specified for `vagrant box list` [GH-2327]
+    specified for `dumb-vagrant box list` [GH-2327]
   - core: Multiple SSH keys can be specified with `config.ssh.private_key_path`
     [GH-907]
   - core: `config.vm.box_url` can be an array of URLs. [GH-1958]
@@ -3045,7 +3045,7 @@ IMPROVEMENTS:
     stdin works!
   - communicators/ssh: new configuration `config.ssh.pty` is a boolean for
     whether you want ot use a PTY for provisioning.
-  - guests/linux: emit upstart event `vagrant-mounted` if upstart is
+  - guests/linux: emit upstart event `dumb-vagrant-mounted` if upstart is
     available. [GH-2502]
   - guests/pld: support changing hostname [GH-2543]
   - providers/virtualbox: Enable symlinks for VirtualBox 4.1. [GH-2414]
@@ -3053,7 +3053,7 @@ IMPROVEMENTS:
     a random number to try to avoid conflicts in CI environments. [GH-2482]
   - providers/virtualbox: customizations via VBoxManage are retried, avoiding
     VirtualBox flakiness [GH-2483]
-  - providers/virtualbox: NFS works with DHCP host-only networks now. [GH-2560]
+  - providers/virtualbox: NFS works with DDUMB_HCP host-only networks now. [GH-2560]
   - provisioners/ansible: allow files for extra vars [GH-2366]
   - provisioners/puppet: client cert and private key can now be specified
     for the puppet server provisioner. [GH-902]
@@ -3070,16 +3070,16 @@ BUG FIXES:
   - core: 100% CPU spike when waiting for SSH is fixed. [GH-2401]
   - core: Command lookup works on systems where PATH is not valid UTF-8 [GH-2514]
   - core: Human-friendly error if box metadata.json becomes corrupted. [GH-2305]
-  - core: Don't load Vagrantfile on `vagrant plugin` commands, allowing
-    Vagrantfiles that use plugins to work. [GH-2388]
+  - core: Don't load Dumb Vagrantfile on `dumb-vagrant plugin` commands, allowing
+    Dumb Vagrantfiles that use plugins to work. [GH-2388]
   - core: global flags are ignored past the "--" on the CLI. [GH-2491]
   - core: provisioning will properly happen if `up` failed. [GH-2488]
   - guests/freebsd: Mounting NFS folders works. [GH-2400]
   - guests/freebsd: Uses `sh` by default for shell. [GH-2485]
-  - guests/linux: upstart events listening for `vagrant-mounted` won't
+  - guests/linux: upstart events listening for `dumb-vagrant-mounted` won't
     wait for jobs to complete, fixing issues with blocking during
-    vagrant up [GH-2564]
-  - guests/redhat: `DHCP_HOSTNAME` is set to the hostname, not the FQDN. [GH-2441]
+    dumb-vagrant up [GH-2564]
+  - guests/redhat: `DDUMB_HCP_HOSTNAME` is set to the hostname, not the FQDN. [GH-2441]
   - guests/redhat: Down interface before messing up configuration file
     for networking. [GH-1577]
   - guests/ubuntu: "localhost" is preserved when changing hostnames.
@@ -3093,7 +3093,7 @@ BUG FIXES:
   - provisioners/chef: Create/chown the cache and backup folders. [GH-2281]
   - provisioners/chef: Verify environment paths exist in config
     validation step. [GH-2381]
-  - provisioners/puppet: Multiple puppet definitions in a Vagrantfile
+  - provisioners/puppet: Multiple puppet definitions in a Dumb Vagrantfile
     work correctly.
   - provisioners/salt: Bootstrap on FreeBSD systems work. [GH-2525]
   - provisioners/salt: Extra args for bootstrap are put in the proper
@@ -3128,7 +3128,7 @@ BUG FIXES:
 
 FEATURES:
 
-  - provisioners/shell: Specify the `binary` option as true and Vagrant won't
+  - provisioners/shell: Specify the `binary` option as true and Dumb Vagrant won't
     automatically replace Windows line endings with Unix ones.  [GH-2235]
 
 IMPROVEMENTS:
@@ -3148,11 +3148,11 @@ BUG FIXES:
   - guests/linux: Fix poor chown command for mounting VirtualBox folders.
   - guests/linux: Don't raise exception right away if mounting fails, allow
     retries. [GH-2234]
-  - guests/redhat: Changing hostname changes DHCP_HOSTNAME. [GH-2267]
-  - hosts/arch: Vagrant won't crash on Arch anymore. [GH-2233]
+  - guests/redhat: Changing hostname changes DDUMB_HCP_HOSTNAME. [GH-2267]
+  - hosts/arch: Dumb Vagrant won't crash on Arch anymore. [GH-2233]
   - provisioners/ansible: Extra vars are converted to strings. [GH-2244]
   - provisioners/ansible: Output will show up on a task-by-task basis. [GH-2194]
-  - provisioners/chef: Propagate disabling color if Vagrant has no color
+  - provisioners/chef: Propagate disabling color if Dumb Vagrant has no color
     enabled. [GH-2246]
   - provisioners/chef: Delete from chef server exception fixed. [GH-2300]
   - provisioners/puppet: Work with restrictive umask. [GH-2241]
@@ -3181,7 +3181,7 @@ BUG FIXES:
   - core: Report the proper invalid state when waiting for the guest machine
     to be ready
   - core: `Guest#capability?` now works with strings as well
-  - core: Fix NoMethodError in the new `Vagrant.has_plugin?` method [GH-2189]
+  - core: Fix NoMethodError in the new `Dumb Vagrant.has_plugin?` method [GH-2189]
   - core: Convert forwarded port parameters to integers. [GH-2173]
   - core: Don't spike CPU to 100% while waiting for machine to boot. [GH-2163]
   - core: Increase timeout for individual SSH connection to 60 seconds. [GH-2163]
@@ -3189,7 +3189,7 @@ BUG FIXES:
     works. [GH-2196]
   - core: Don't try to be clever about deleting the machine state
     directory anymore. Manually done in destroy actions. [GH-2201]
-  - core: Find the root Vagrantfile only if Vagrantfile is a file, not
+  - core: Find the root Dumb Vagrantfile only if Dumb Vagrantfile is a file, not
     a directory. [GH-2216]
   - guests/linux: Try `id -g` in addition to `getent` for mounting
     VirtualBox shared folders [GH-2197]
@@ -3198,7 +3198,7 @@ BUG FIXES:
     exports work if you have sudo privs but not `su`. [GH-2191]
   - hosts/fedora: Fix host detection encoding issues. [GH-1977]
   - hosts/linux: Fix NFS export problems with `no_subtree_check`. [GH-2156]
-  - installer/mac: Vagrant works properly when a library conflicts from
+  - installer/mac: Dumb Vagrant works properly when a library conflicts from
     homebrew. [GH-2188]
   - installer/mac: deb/rpm packages now have an epoch of 1 so that new
     installers don't appear older. [GH-2179]
@@ -3211,12 +3211,12 @@ BUG FIXES:
 BUG FIXES:
 
   - core: Fix various issues where using the same options hash in a
-    Vagrantfile can cause errors.
-  - core: `VAGRANT_VAGRANTFILE` env var only applies to the project
-    Vagrantfile name. [GH-2130]
+    Dumb Vagrantfile can cause errors.
+  - core: `DUMB_VAGRANT_DUMB_VAGRANTFILE` env var only applies to the project
+    Dumb Vagrantfile name. [GH-2130]
   - core: Fix an issue where the data directory would be deleted too
     quickly in a multi-VM environment.
-  - core: Handle the case where we get an EACCES cleaning up the .vagrant
+  - core: Handle the case where we get an EACCES cleaning up the .dumb-vagrant
     directory.
   - core: Fix exception on upgrade warnings from V1 to V2. [GH-2142]
   - guests/coreos: Proper IP detection. [GH-2146]
@@ -3232,7 +3232,7 @@ BUG FIXES:
 
 BACKWARDS INCOMPATIBILITY:
 
-  - `config.ssh.max_tries` is gone. Instead of maximum tries, Vagrant now
+  - `config.ssh.max_tries` is gone. Instead of maximum tries, Dumb Vagrant now
     uses a simple overall timeout value `config.vm.boot_timeout` to wait for
     the machine to boot up.
   - `config.vm.graceful_halt_retry_*` settings are gone. Instead, a single
@@ -3241,13 +3241,13 @@ BACKWARDS INCOMPATIBILITY:
   - The ':extra' flag to shared folders for specifying arbitrary mount
     options has been replaced with the `:mount_options` flag, which is now
     an array of mount options.
-  - `vagrant up` will now only run provisioning by default the first time
+  - `dumb-vagrant up` will now only run provisioning by default the first time
    it is run. Subsequent `reload` or `up` will need to explicitly specify
    the `--provision` flag to provision. [GH-1776]
 
 FEATURES:
 
-  - New command: `vagrant plugin update` to update specific installed plugins.
+  - New command: `dumb-vagrant plugin update` to update specific installed plugins.
   - New provisioner: File provisioner. [GH-2112]
   - New provisioner: Salt provisioner. [GH-1626]
   - New guest: Mac OS X guest support. [GH-1914]
@@ -3256,29 +3256,29 @@ FEATURES:
   - New guest: Solaris 11 guest support. [GH-2052]
   - Support for environments in the Chef-solo provisioner. [GH-1915]
   - Provisioners can now define "cleanup" tasks that are executed on
-    `vagrant destroy`. [GH-1302]
+    `dumb-vagrant destroy`. [GH-1302]
   - Chef Client provisioner will now clean up the node/client using
     `knife` if configured to do so.
-  - `vagrant up` has a `--no-destroy-on-error` flag that will not destroy
+  - `dumb-vagrant up` has a `--no-destroy-on-error` flag that will not destroy
     the VM if a fatal error occurs. [GH-2011]
   - NFS: Arbitrary mount options can be specified using the
    `mount_options` option on synced folders. [GH-1029]
   - NFS: Arbitrary export options can be specified using
    `bsd__nfs_options` and `linux__nfs_options`. [GH-1029]
   - Static IP can now be set on public networks. [GH-1745]
-  - Add `Vagrant.has_plugin?` method for use in Vagrantfile to check
+  - Add `Dumb Vagrant.has_plugin?` method for use in Dumb Vagrantfile to check
     if a plugin is installed. [GH-1736]
   - Support for remote shell provisioning scripts [GH-1787]
 
 IMPROVEMENTS:
 
-  - core: add `--color` to any Vagrant command to FORCE color output. [GH-2027]
+  - core: add `--color` to any Dumb Vagrant command to FORCE color output. [GH-2027]
   - core: "config.vm.host_name" works again, just an alias to hostname.
   - core: Reboots via SSH are now handled gracefully (without exception).
   - core: Mark `disabled` as true on forwarded port to disable. [GH-1922]
   - core: NFS exports are now namespaced by user ID, so pruning NFS won't
     remove exports from other users. [GH-1511]
-  - core: "vagrant -v" no longer loads the Vagrantfile
+  - core: "dumb-vagrant -v" no longer loads the Dumb Vagrantfile
   - commands/box/remove: Fix stack trace that happens if no provider
     is specified. [GH-2100]
   - commands/plugin/install: Post install message of a plugin will be
@@ -3304,7 +3304,7 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-  - core: Clean up ".vagrant" folder more effectively.
+  - core: Clean up ".dumb-vagrant" folder more effectively.
   - core: strip newlines off of ID file values [GH-2024]
   - core: Multiple forwarded ports with different protocols but the same
     host port can be specified. [GH-2059]
@@ -3319,7 +3319,7 @@ BUG FIXES:
   - providers/virtualbox: VirtualBox 4.2 now supports up to 36
     network adapters. [GH-1886]
   - provisioners/ansible: Execute ansible with a cwd equal to the
-    path where the Vagrantfile is. [GH-2051]
+    path where the Dumb Vagrantfile is. [GH-2051]
   - provisioners/all: invalid config keys will be properly reported. [GH-2117]
   - provisioners/ansible: No longer report failure on every run. [GH-2007]
   - provisioners/ansible: Properly handle extra vars with spaces. [GH-1984]
@@ -3344,8 +3344,8 @@ BUG FIXES:
     versions properly. [GH-2000]
   - Make sure the hostname configuration is a string. [GH-1999]
   - cURL downloads now contain a user agent which fixes some
-    issues with downloading Vagrant through proxies. [GH-2003]
-  - `vagrant plugin install` will now always properly show the actual
+    issues with downloading Dumb Vagrant through proxies. [GH-2003]
+  - `dumb-vagrant plugin install` will now always properly show the actual
     installed gem name. [GH-1834]
 
 ## 1.2.6 (July 26, 2013)
@@ -3359,7 +3359,7 @@ BUG FIXES:
 
 FEATURES:
 
-  - `vagrant help <command>` now works. [GH-1578]
+  - `dumb-vagrant help <command>` now works. [GH-1578]
   - Added `config.vm.box_download_insecure` to allow the box_url setting
     to point to an https site that won't be validated. [GH-1712]
   - VirtualBox VBoxManage customizations can now be specified to run
@@ -3378,9 +3378,9 @@ IMPROVEMENTS:
   - Puppet will run without color if the UI is not colored. [GH-1344]
   - Chef supports the "formatter" configuration for setting the
     formatter. [GH-1250]
-  - VAGRANT_DOTFILE_PATH environmental variable reintroduces the
+  - DUMB_VAGRANT_DOTFILE_PATH environmental variable reintroduces the
     functionality removed in 1.1 from "config.dotfile_name" [GH-1524]
-  - Vagrant will show an error if VirtualBox 4.2.14 is running.
+  - Dumb Vagrant will show an error if VirtualBox 4.2.14 is running.
   - Added provider to BoxNotFound error message. [GH-1692]
   - If Ansible fails to run properly, show an error message. [GH-1699]
   - Adding a box with the `--provider` flag will now allow a box for
@@ -3397,19 +3397,19 @@ BUG FIXES:
   - Debian/Ubuntu change hostname works properly if eth0 is configured
     with hot-plugging. [GH-1929]
   - NFS exports with improper casing on Mac OS X work properly. [GH-1202]
-  - Shared folders overriding '/vagrant' in multi-VM environments no
+  - Shared folders overriding '/dumb-vagrant' in multi-VM environments no
     longer all just use the last value. [GH-1935]
   - NFS export fsid's are now 32-bit integers, rather than UUIDs. This
     lets NFS exports work with Linux kernels older than 2.6.20. [GH-1127]
   - NFS export allows access from all private networks on the VM. [GH-1204]
   - Default VirtualBox VM name now contains the machine name as defined
-    in the Vagrantfile, helping differentiate multi-VM. [GH-1281]
+    in the Dumb Vagrantfile, helping differentiate multi-VM. [GH-1281]
   - NFS works properly on CentOS hosts. [GH-1394]
   - Solaris guests actually shut down properly. [GH-1506]
   - All provisioners only output newlines when the provisioner sends a
     newline. This results in the output looking a lot nicer.
   - Sharing folders works properly if ".profile" contains an echo. [GH-1677]
-  - `vagrant ssh-config` IdentityFile is only wrapped in quotes if it
+  - `dumb-vagrant ssh-config` IdentityFile is only wrapped in quotes if it
     contains a space. [GH-1682]
   - Shared folder target path can be a Windows path. [GH-1688]
   - Forwarded ports don't auto-correct by default, and will raise an
@@ -3417,14 +3417,14 @@ BUG FIXES:
   - Retry SSH on ENETUNREACH error. [GH-1732]
   - NFS is silently ignored on Windows. [GH-1748]
   - Validation so that private network static IP does not end in ".1" [GH-1750]
-  - With forward agent enabled and sudo being used, Vagrant will automatically
+  - With forward agent enabled and sudo being used, Dumb Vagrant will automatically
     discover and set `SSH_AUTH_SOCK` remotely so that forward agent
     works properly despite misconfigured sudoers. [GH-1307]
   - Synced folder paths on Windows containing '\' are replaced with
     '/' internally so that they work properly.
   - Unused config objects are finalized properly. [GH-1877]
   - Private networks work with Fedora guests once again. [GH-1738]
-  - Default internal encoding of strings in Vagrant is now UTF-8, allowing
+  - Default internal encoding of strings in Dumb Vagrant is now UTF-8, allowing
     detection of Fedora to work again (which contained a UTF-8 string). [GH-1977]
 
 ## 1.2.4 (July 16, 2013)
@@ -3439,21 +3439,21 @@ FEATURES:
 
 IMPROVEMENTS:
 
-  - `vagrant box remove` works with only the name of the box if that
+  - `dumb-vagrant box remove` works with only the name of the box if that
     box exists only backed by one provider. [GH-1032]
-  - `vagrant destroy` returns exit status 1 if any of the confirmations
+  - `dumb-vagrant destroy` returns exit status 1 if any of the confirmations
     are declined. [GH-923]
   - Forwarded ports can specify a host IP and guest IP to bind to. [GH-1121]
-  - You can now set the "ip" of a private network that uses DHCP. This will
-    change the subnet and such that the DHCP server uses.
+  - You can now set the "ip" of a private network that uses DDUMB_HCP. This will
+    change the subnet and such that the DDUMB_HCP server uses.
   - Add `file_cache_path` support for chef_solo. [GH-1897]
 
 BUG FIXES:
 
   - VBoxManage or any other executable missing from PATH properly
     reported. Regression from 1.2.2. [GH-1928]
-  - Boxes downloaded as part of `vagrant up` are now done so _prior_ to
-    config validation. This allows Vagrantfiles to references files that
+  - Boxes downloaded as part of `dumb-vagrant up` are now done so _prior_ to
+    config validation. This allows Dumb Vagrantfiles to references files that
     may be in the box itself. [GH-1061]
   - Chef removes dna.json and encrypted data bag secret file prior to
     uploading. [GH-1111]
@@ -3465,7 +3465,7 @@ BUG FIXES:
     eliminating any SSH hangs. [GH-603]
   - Fix regression where VirtualBox detection wasn't working anymore. [GH-1918]
   - NFS shared folders with single quotes in their name now work properly. [GH-1166]
-  - Debian/Ubuntu request DHCP renewal when hostname changes, which will
+  - Debian/Ubuntu request DDUMB_HCP renewal when hostname changes, which will
     fix issues with FQDN detecting. [GH-1929]
   - SSH adds the "DSAAuthentication=yes" option in case that is disabled
     on the user's system. [GH-1900]
@@ -3484,18 +3484,18 @@ IMPROVEMENTS:
 
   - Setting hostnames works properly on OmniOS. [GH-1672]
   - Better VBoxManage error detection on Windows systems. This avoids
-    some major issues where Vagrant would sometimes "lose" your VM. [GH-1669]
+    some major issues where Dumb Vagrant would sometimes "lose" your VM. [GH-1669]
   - Better detection of missing VirtualBox kernel drivers on Linux
     systems. [GH-1671]
-  - More precise detection of Ubuntu/Debian guests so that running Vagrant
+  - More precise detection of Ubuntu/Debian guests so that running Dumb Vagrant
     within an LXC container works properly now.
   - Allow strings in addition to symbols to more places in V1 configuration
     as well as V2 configuration.
   - Add `ARPCHECK=0` to RedHat OS family network configuration. [GH-1815]
-  - Add SSH agent forwarding sample to initial Vagrantfile. [GH-1808]
+  - Add SSH agent forwarding sample to initial Dumb Vagrantfile. [GH-1808]
   - VirtualBox: Only configure networks if there are any to configure.
     This allows linux's that don't implement this capability to work with
-    Vagrant. [GH-1796]
+    Dumb Vagrant. [GH-1796]
   - Default SSH forwarded port now binds to 127.0.0.1 so only local
     connections are allowed. [GH-1785]
   - Use `netctl` for Arch Linux network configuration. [GH-1760]
@@ -3536,12 +3536,12 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-  - `vagrant package --base` works again. [GH-1615]
+  - `dumb-vagrant package --base` works again. [GH-1615]
   - Box overrides specified in provider config overrides no longer
     fail to detect the box. [GH-1617]
   - In a multi-machine environment, a box not found won't be downloaded
     multiple times. [GH-1467]
-  - `vagrant box add` with a file path now works correctly on Windows
+  - `dumb-vagrant box add` with a file path now works correctly on Windows
     when a drive letter is specified.
   - DOS line endings are converted to Unix line endings for the
     shell provisioner automatically. [GH-1495]
@@ -3550,8 +3550,8 @@ BUG FIXES:
 
 FEATURES:
 
-  - Add a `--[no-]parallel` flag to `vagrant up` to enable/disable
-    parallelism. Vagrant will parallelize by default.
+  - Add a `--[no-]parallel` flag to `dumb-vagrant up` to enable/disable
+    parallelism. Dumb Vagrant will parallelize by default.
 
 IMPROVEMENTS:
 
@@ -3571,19 +3571,19 @@ BUG FIXES:
 
 BACKWARDS INCOMPATIBILITIES:
 
-  - WINDOWS USERS: Vagrant now defaults to using the 'USERPROFILE' environmental
+  - WINDOWS USERS: Dumb Vagrant now defaults to using the 'USERPROFILE' environmental
     variable for the home directory if it is set. This means that the default
-    location for the Vagrant home directory is now `%USERPROFILE%/.vagrant.d`.
+    location for the Dumb Vagrant home directory is now `%USERPROFILE%/.dumb-vagrant.d`.
     On Cygwin, this will cause existing Cygwin users to "lose" their boxes.
-    To work around this, either set `VAGRANT_HOME` to your Cygwin ".vagrant.d"
-    folder or move your ".vagrant.d" folder to `USERPROFILE`. The latter is
+    To work around this, either set `DUMB_VAGRANT_HOME` to your Cygwin ".dumb-vagrant.d"
+    folder or move your ".dumb-vagrant.d" folder to `USERPROFILE`. The latter is
     recommended for long-term support.
-  - The constant `Vagrant::Environment::VAGRANT_HOME` was removed in favor of
-    `Vagrant::Environment#default_vagrant_home`.
+  - The constant `Dumb Vagrant::Environment::DUMB_VAGRANT_HOME` was removed in favor of
+    `Dumb Vagrant::Environment#default_dumb-vagrant_home`.
 
 FEATURES:
 
-  - Providers can now parallelize! If they explicitly support it, Vagrant
+  - Providers can now parallelize! If they explicitly support it, Dumb Vagrant
     will run "up" and other commands in parallel. For providers such AWS,
     this means that your instances will come up in parallel. VirtualBox
     does not support this mode.
@@ -3593,7 +3593,7 @@ FEATURES:
   - `config.vm.provider` now takes an optional second parameter to the block,
     allowing you to override any configuration value. These overrides are
     applied last, and therefore override any other configuration value.
-    Note that while this feature is available, the "Vagrant way" is instead
+    Note that while this feature is available, the "Dumb Vagrant way" is instead
     to use box manifests to ensure that the "box" for every provider matches,
     so these sorts of overrides are unnecessary.
   - A new "guest capabilities" system to replace the old "guest" system.
@@ -3613,15 +3613,15 @@ IMPROVEMENTS:
     environments.
   - By adding the "disabled" boolean flag to synced folders you can disable
     them altogether. [GH-1004]
-  - Specify the default provider with the `VAGRANT_DEFAULT_PROVIDER`
+  - Specify the default provider with the `DUMB_VAGRANT_DEFAULT_PROVIDER`
     environmental variable. [GH-1478]
   - Invalid settings are now caught and shown in a user-friendly way. [GH-1484]
   - Detect PuTTY Link SSH client on Windows and show an error. [GH-1518]
-  - `vagrant ssh` in Cygwin won't output DOS path file warnings.
+  - `dumb-vagrant ssh` in Cygwin won't output DOS path file warnings.
   - Add `--rtcuseutc on` as a sane default for VirtualBox. [GH-912]
   - SSH will send keep-alive packets every 5 seconds by default to
     keep connections alive. Can be disabled with `config.ssh.keep_alive`. [GH-516]
-  - Show a message on `vagrant up` if the machine is already running. [GH-1558]
+  - Show a message on `dumb-vagrant up` if the machine is already running. [GH-1558]
   - "Running provisioner" output now shoes the provisioner shortcut name,
     rather than the less-than-helpful class name.
   - Shared folders with the same guest path will overwrite each other. No
@@ -3645,15 +3645,15 @@ BUG FIXES:
     reporting dynamic progress.
   - When using `Builder` instances for hooks, the builders will be
     merged for the proper before/after chain. [GH-1555]
-  - Use the Vagrant temporary directory again for temporary files
+  - Use the Dumb Vagrant temporary directory again for temporary files
     since they can be quite large and were messing with tmpfs. [GH-1442]
-  - Fix issue parsing extra SSH args in `vagrant ssh` in multi-machine
+  - Fix issue parsing extra SSH args in `dumb-vagrant ssh` in multi-machine
     environments. [GH-1545]
   - Networks come back up properly on RedHat systems after reboot. [GH-921]
   - `config.ssh` settings override all detected SSH settings (regression). [GH-1479]
   - `ssh-config` won't raise an exception if the VirtualBox machine
     is not created. [GH-1562]
-  - Multiple machines defined in the same Vagrantfile with the same
+  - Multiple machines defined in the same Dumb Vagrantfile with the same
     name will properly merge.
   - More robust hostname checking for RedHat. [GH-1566]
   - Cookbook path existence for Chef is no longer an error, so that
@@ -3675,10 +3675,10 @@ BUG FIXES:
 IMPROVEMENTS:
 
   - More robust SSH connection close detection.
-  - Don't load `vagrant plugin` installed plugins when in a Bundler
+  - Don't load `dumb-vagrant plugin` installed plugins when in a Bundler
     environment. This happens during plugin development. This will make
-    Vagrant errors much quieter when developing plugins.
-  - Vagrant will detect Bundler environments, make assumptions that you're
+    Dumb Vagrant errors much quieter when developing plugins.
+  - Dumb Vagrant will detect Bundler environments, make assumptions that you're
     developing plugins, and will quiet its error output a bit.
   - More comprehensive synced folder configuration validation.
   - VBoxManage errors now show the output from the command so that
@@ -3711,19 +3711,19 @@ IMPROVEMENTS:
 
   - Puppet apply provisioner now retains the default module path
     even while specifying custom module paths. [GH-1207]
-  - Re-added DHCP support for host-only networks. [GH-1466]
+  - Re-added DDUMB_HCP support for host-only networks. [GH-1466]
   - Ability to specify a plugin version, plugin sources, and
     pre-release versions using `--plugin-version`, `--plugin-source`,
     and `--plugin-prerelease`. [GH-1461]
   - Move VirtualBox guest addition checks to after the machine
     boots. [GH-1179]
-  - Removed `Vagrant::TestHelpers` because it doesn't really work anymore.
+  - Removed `Dumb Vagrant::TestHelpers` because it doesn't really work anymore.
   - Add PLX linux guest support. [GH-1490]
 
 BUG FIXES:
 
   - Attempt to re-establish SSH connection on `Net::SSH::Disconnect`
-  - Allow any value that can convert to a string for `Vagrant.plugin`
+  - Allow any value that can convert to a string for `Dumb Vagrant.plugin`
   - Chef solo `recipe_url` works properly again. [GH-1467]
   - Port collision detection works properly in VirtualBox with
     auto-corrected ports. [GH-1472]
@@ -3746,7 +3746,7 @@ BUG FIXES:
 
 IMPROVEMENTS:
 
-  - Don't load plugins on any `vagrant plugin` command, so that errors
+  - Don't load plugins on any `dumb-vagrant plugin` command, so that errors
     are avoided. [GH-1418]
   - An error will be shown if you forward a port to the same host port
     multiple times.
@@ -3759,7 +3759,7 @@ BUG FIXES:
   - Quote keys to StringBlockEditor so keys with spaces, parens, and
     so on work properly.
   - When there is no route to host for SSH, re-establish a new connection.
-  - `vagrant package` once again works, no more nil error. [GH-1423]
+  - `dumb-vagrant package` once again works, no more nil error. [GH-1423]
   - Human friendly error when "metadata.json" is missing in a box.
   - Don't use the full path to the manifest file with the Puppet provisioner
     because it exposes a bug with Puppet path lookup on VMware.
@@ -3776,56 +3776,56 @@ BUG FIXES:
 
 BACKWARDS INCOMPATIBILITIES:
 
-  - Vagrantfiles from 1.0.x that _do not use_ any plugins are fully
+  - Dumb Vagrantfiles from 1.0.x that _do not use_ any plugins are fully
     backwards compatible. If plugins are used, they must be removed prior
     to upgrading. The new plugin system in place will avoid this issue in
     the future.
   - Lots of changes introduced in the form of a new configuration version and
-    format, but this is _opt-in_. Old Vagrantfile format continues to be supported,
+    format, but this is _opt-in_. Old Dumb Vagrantfile format continues to be supported,
     as promised. To use the new features that will be introduced throughout
     the 1.x series, you'll have to upgrade at some point.
-  - The .vagrant file is no longer supported and has been replaced by
-    a .vagrant directory. Running vagrant will automatically upgrade
+  - The .dumb-vagrant file is no longer supported and has been replaced by
+    a .dumb-vagrant directory. Running dumb-vagrant will automatically upgrade
     to the new style directory format, after which old versions of
-    Vagrant will not be able to see or control your VM.
+    Dumb Vagrant will not be able to see or control your VM.
 
 FEATURES:
 
-  - Groundwork for **providers**, alternate backends for Vagrant that
-    allow Vagrant to power systems other than VirtualBox. Much improvement
+  - Groundwork for **providers**, alternate backends for Dumb Vagrant that
+    allow Dumb Vagrant to power systems other than VirtualBox. Much improvement
     and change will come to this throughout the 1.x lifecycle. The API
     will continue to change, features will be added, and more. Specifically,
     a revamped system for handling shared folders gracefully across providers
     will be introduced in a future release.
   - New plugin system which adds much more structure and stability to
     the overall API. The goal of this system is to make it easier to write
-    powerful plugins for Vagrant while providing a backwards-compatible API
+    powerful plugins for Dumb Vagrant while providing a backwards-compatible API
     so that plugins will always _load_ (though they will almost certainly
-    not be _functional_ in future versions of Vagrant).
-  - Plugins are now installed and managed using the `vagrant plugin` interface.
+    not be _functional_ in future versions of Dumb Vagrant).
+  - Plugins are now installed and managed using the `dumb-vagrant plugin` interface.
   - Allow "file://" URLs for box URLs. [GH-1087]
-  - Emit "vagrant-mount" upstart event when NFS shares are mounted. [GH-1118]
+  - Emit "dumb-vagrant-mount" upstart event when NFS shares are mounted. [GH-1118]
   - Add a VirtualBox provider config `auto_nat_dns_proxy` which when set to
     false will not attempt to automatically manage NAT DNS proxy settings
     with VirtualBox. [GH-1313]
-  - `vagrant provision` accepts the `--provision-with` flag [GH-1167]
+  - `dumb-vagrant provision` accepts the `--provision-with` flag [GH-1167]
   - Set the name of VirtualBox machines with `virtualbox.name` in the
     VirtualBox provider config. [GH-1126]
-  - `vagrant ssh` will execute an `ssh` binary on Windows if it is on
+  - `dumb-vagrant ssh` will execute an `ssh` binary on Windows if it is on
     your PATH. [GH-933]
-  - The environmental variable `VAGRANT_VAGRANTFILE` can be used to
-    specify an alternate Vagrantfile filename.
+  - The environmental variable `DUMB_VAGRANT_DUMB_VAGRANTFILE` can be used to
+    specify an alternate Dumb Vagrantfile filename.
 
 IMPROVEMENTS / BUG FIXES:
 
-  - Vagrant works much better in Cygwin environments on Windows by
+  - Dumb Vagrant works much better in Cygwin environments on Windows by
     properly resolving Cygwin paths. [GH-1366]
   - Improve the SSH "ready?" check by more gracefully handling timeouts. [GH-841]
   - Human friendly error if connection times out for HTTP downloads. [GH-849]
   - Detect when the VirtualBox installation is incomplete and error. [GH-846]
   - Detect when kernel modules for VirtualBox need to be installed on Gentoo
     systems and report a user-friendly error. [GH-710]
-  - All `vagrant` commands that can take a target VM name can take one even
+  - All `dumb-vagrant` commands that can take a target VM name can take one even
     if you're not in a multi-VM environment. [GH-894]
   - Hostname is set before networks are setup to avoid very slow `sudo`
     speeds on CentOS. [GH-922]
@@ -3833,18 +3833,18 @@ IMPROVEMENTS / BUG FIXES:
   - The check for whether a port is open or not is more complete by
     catching ENETUNREACH errors. [GH-948]
   - SSH uses LogLevel FATAL so that errors are still shown.
-  - Sending a SIGINT (Ctrl-C) very early on when executing `vagrant` no
+  - Sending a SIGINT (Ctrl-C) very early on when executing `dumb-vagrant` no
     longer results in an ugly stack trace.
   - Chef JSON configuration output is now pretty-printed to be
     human readable. [GH-1146]
     that SSHing succeeds when booting a machine.
   - VMs in the "guru meditation" state can be destroyed now using
-    `vagrant destroy`.
+    `dumb-vagrant destroy`.
   - Fix issue where changing SSH key permissions didn't properly work. [GH-911]
-  - Fix issue where Vagrant didn't properly detect VBoxManage on Windows
+  - Fix issue where Dumb Vagrant didn't properly detect VBoxManage on Windows
     if VBOX_INSTALL_PATH contained multiple paths. [GH-885]
   - Fix typo in setting host name for Gentoo guests. [GH-931]
-  - Files that are included with `vagrant package --include` now properly
+  - Files that are included with `dumb-vagrant package --include` now properly
     preserve file attributes on earlier versions of Ruby. [GH-951]
   - Multiple interfaces now work with Arch linux guests. [GH-957]
   - Fix issue where subprocess execution would always spin CPU of Ruby
@@ -3862,14 +3862,14 @@ IMPROVEMENTS / BUG FIXES:
     using SCP to upload files. [GH-924]
   - Box adding doesn't use `/tmp` anymore which can avoid some cross-device
     copy issues. [GH-1199]
-  - Vagrant works properly in folders with strange characters. [GH-1223]
-  - Vagrant properly handles "paused" VirtualBox machines. [GH-1184]
+  - Dumb Vagrant works properly in folders with strange characters. [GH-1223]
+  - Dumb Vagrant properly handles "paused" VirtualBox machines. [GH-1184]
   - Better behavior around permissions issues when copying insecure
     private key. [GH-580]
 
 ## 1.0.7 (March 13, 2013)
 
-  - Detect if a newer version of Vagrant ran and error if it did,
+  - Detect if a newer version of Dumb Vagrant ran and error if it did,
     because we're not forward-compatible.
   - Check for guest additions version AFTER booting. [GH-1179]
   - Quote IdentityFile in `ssh-config` so private keys with spaces in
@@ -3897,7 +3897,7 @@ IMPROVEMENTS / BUG FIXES:
 ## 1.0.5 (September 18, 2012)
 
   - Work around a critical bug in VirtualBox 4.2.0 on Windows that
-    causes Vagrant to not work. [GH-1130]
+    causes Dumb Vagrant to not work. [GH-1130]
   - Plugin loading works better on Windows by using the proper
     file path separator.
   - NFS works on Fedora 16+. [GH-1140]
@@ -3916,18 +3916,18 @@ IMPROVEMENTS / BUG FIXES:
 ## 1.0.3 (May 1, 2012)
 
   - Don't enable NAT DNS proxy on machines where resolv.conf already points
-    to localhost. This allows Vagrant to work once again with Ubuntu
+    to localhost. This allows Dumb Vagrant to work once again with Ubuntu
     12.04. [GH-909]
 
 ## 1.0.2 (March 25, 2012)
 
   - Provisioners will still mount folders and such if `--no-provision` is
-    used, so that `vagrant provision` works. [GH-803]
+    used, so that `dumb-vagrant provision` works. [GH-803]
   - Nicer error message if an unsupported SSH key type is used. [GH-805]
   - Gentoo guests can now have their host names changed. [GH-796]
   - Relative paths can be used for the `config.ssh.private_key_path`
     setting. [GH-808]
-  - `vagrant ssh` now works on Solaris, where `IdentitiesOnly` was not
+  - `dumb-vagrant ssh` now works on Solaris, where `IdentitiesOnly` was not
     an available option. [GH-820]
   - Output works properly in the face of broken pipes. [GH-819]
   - Enable Host IO Cache on the SATA controller by default.
@@ -3937,7 +3937,7 @@ IMPROVEMENTS / BUG FIXES:
   - Checking for port forwarding collisions also checks for other applications
     that are potentially listening on that port as well. [GH-821]
   - Multiple VM names can be specified for the various commands now. For
-    example: `vagrant up web db service`. [GH-795]
+    example: `dumb-vagrant up web db service`. [GH-795]
   - More robust error handling if a VM fails to boot. The error message
     is much clearer now. [GH-825]
 
@@ -3945,37 +3945,37 @@ IMPROVEMENTS / BUG FIXES:
 
   - Installers are now bundled with Ruby 1.9.3p125. Previously they were
     bundled with 1.9.3p0. This actually fixes some IO issues with Windows.
-  - Windows installer now outputs a `vagrant` binary that will work in msys
+  - Windows installer now outputs a `dumb-vagrant` binary that will work in msys
     or Cygwin environments.
   - Fix crashing issue which manifested itself in multi-VM environments.
   - Add missing `rubygems` require in `environment.rb` to avoid
     possible load errors. [GH-781]
-  - `vagrant destroy` shows a nice error when called without a
+  - `dumb-vagrant destroy` shows a nice error when called without a
     TTY (and hence can't confirm). [GH-779]
-  - Fix an issue with the `:vagrantfile_name` option to `Vagrant::Environment`
+  - Fix an issue with the `:dumb-vagrantfile_name` option to `Dumb Vagrant::Environment`
     not working properly. [GH-778]
-  - `VAGRANT_CWD` environmental variable can be used to set the CWD to
+  - `DUMB_VAGRANT_CWD` environmental variable can be used to set the CWD to
     something other than the current directory.
   - Downloading boxes from servers that don't send a content-length
     now works properly. [GH-788]
   - The `:facter` option now works for puppet server. [GH-790]
   - The `--no-provision` and `--provision-with` flags are available to
-    `vagrant reload` now.
+    `dumb-vagrant reload` now.
   - `:openbsd` guest which supports only halting at the moment. [GH-773]
   - `ssh-config -h` now shows help, instead of assuming a host is being
     specified. For host, you can still use `--host`. [GH-793]
 
 ## 1.0.0 (March 6, 2012)
 
-  - `vagrant gem` should now be used to install Vagrant plugins that are
-    gems. This installs the gems to a private gem folder that Vagrant adds
-    to its own load path. This isolates Vagrant-related gems from system
+  - `dumb-vagrant gem` should now be used to install Dumb Vagrant plugins that are
+    gems. This installs the gems to a private gem folder that Dumb Vagrant adds
+    to its own load path. This isolates Dumb Vagrant-related gems from system
     gems.
-  - Plugin loading no longer happens right when Vagrant is loaded, but when
-    a Vagrant environment is loaded. I don't anticipate this causing any
+  - Plugin loading no longer happens right when Dumb Vagrant is loaded, but when
+    a Dumb Vagrant environment is loaded. I don't anticipate this causing any
     problems but it is a backwards incompatible change should a plugin
     depend on this (but I don't see any reason why they would).
-  - `vagrant destroy` now asks for confirmation by default. This can be
+  - `dumb-vagrant destroy` now asks for confirmation by default. This can be
     overridden with the `--force` flag. [GH-699]
   - Fix issue with Puppet config inheritance. [GH-722]
   - Fix issue where starting a VM on some systems was incorrectly treated
@@ -3984,9 +3984,9 @@ IMPROVEMENTS / BUG FIXES:
   - Unix-style line endings are used properly for guest OS. [GH-727]
   - Retry certain VirtualBox operations, since they intermittently fail.
     [GH-726]
-  - Fix issue where Vagrant would sometimes "lose" a VM if an exception
+  - Fix issue where Dumb Vagrant would sometimes "lose" a VM if an exception
     occurred. [GH-725]
-  - `vagrant destroy` destroys virtual machines in reverse order. [GH-739]
+  - `dumb-vagrant destroy` destroys virtual machines in reverse order. [GH-739]
   - Add an `fsid` option to Linux NFS exports. [GH-736]
   - Fix edge case where an exception could be raised in networking code. [GH-742]
   - Add missing translation for the "guru meditation" state. [GH-745]
@@ -4014,7 +4014,7 @@ IMPROVEMENTS / BUG FIXES:
 ## 0.9.6 (February 7, 2012)
 
   - Fix strange issue with inconsistent childprocess reads on JRuby. [GH-711]
-  - `vagrant ssh` does a direct `exec()` syscall now instead of going through
+  - `dumb-vagrant ssh` does a direct `exec()` syscall now instead of going through
     the shell. This makes it so things like shell expansion oddities no longer
     cause problems. [GH-715]
   - Fix crashing case if there are no ports to forward.
@@ -4036,7 +4036,7 @@ IMPROVEMENTS / BUG FIXES:
     that are up as choices. [GH-701]
   - More intelligent handling of the `certname` option for puppet
     server. [GH-702]
-  - You may now explicitly set the network to bridge to in the Vagrantfile
+  - You may now explicitly set the network to bridge to in the Dumb Vagrantfile
     using the `:bridge` parameter. [GH-655]
 
 ## 0.9.4 (January 28, 2012)
@@ -4081,7 +4081,7 @@ IMPROVEMENTS / BUG FIXES:
     determining VirtualBox version. [GH-658]
   - Debian/Ubuntu uses `ifdown` again, instead of `ifconfig xxx down`, since
     the behavior seems different/wrong.
-  - Give a nice error if `:vagrant` is used as a JSON key, since Vagrant
+  - Give a nice error if `:dumb-vagrant` is used as a JSON key, since Dumb Vagrant
     uses this. [GH-661]
   - If there is only one bridgeable interface, use that without asking
     the user. [GH-655]
@@ -4093,7 +4093,7 @@ IMPROVEMENTS / BUG FIXES:
   - Clearer invalid log level error. [GH-645]
   - Fix exception raised with NFS `recover` method.
   - Fix `ui` `NoMethodError` exception in puppet server.
-  - Fix `vagrant box help` on Ruby 1.8.7. [GH-647]
+  - Fix `dumb-vagrant box help` on Ruby 1.8.7. [GH-647]
 
 ## 0.9.0 (January 17, 2012)
 
@@ -4105,31 +4105,31 @@ IMPROVEMENTS / BUG FIXES:
   - `config.vm.forward_port` no longer requires a name parameter.
   - Bridged networking. `config.vm.network` with `:bridged` as the option will
     setup a bridged network.
-  - Host only networks can be configured with DHCP now. Specify `:dhcp` as
+  - Host only networks can be configured with DDUMB_HCP now. Specify `:ddumb-hcp` as
     the IP and it will be done.
   - `config.vm.customize` now takes a command to send to `VBoxManage`, so any
     arbitrary command can be sent. The older style of passing a block no longer
-    works and Vagrant will give a proper error message if it notices this old-style
+    works and Dumb Vagrant will give a proper error message if it notices this old-style
     being used.
-  - `config.ssh.forwarded_port_key` is gone. Vagrant no longer cares about
+  - `config.ssh.forwarded_port_key` is gone. Dumb Vagrant no longer cares about
     forwarded port names for any reason. Please use `config.ssh.guest_port`
     (more below).
   - `config.ssh.forwarded_port_destination` has been replaced by
     `config.ssh.guest_port` which more accurately reflects what it is
-    used for. Vagrant will automatically scan forwarded ports that match the
+    used for. Dumb Vagrant will automatically scan forwarded ports that match the
     guest port to find the SSH port.
-  - Logging. The entire Vagrant source has had logging sprinkled throughout
-    to make debugging issues easier. To enable logging, set the VAGRANT_LOG
+  - Logging. The entire Dumb Vagrant source has had logging sprinkled throughout
+    to make debugging issues easier. To enable logging, set the DUMB_VAGRANT_LOG
     environmental variable to the log level you wish to see. By default,
     logging is silent.
   - `system` renamed to `guest` throughout the source. Any `config.vm.system`
     configurations must be changed to `config.vm.guest`
   - Puppet provisioner no longer defaults manifest to "box.pp." Instead, it
     is now "default.pp"
-  - All Vagrant commands that take a VM name in a Multi-VM environment
+  - All Dumb Vagrant commands that take a VM name in a Multi-VM environment
     can now be given a regular expression. If the name starts and ends with a "/"
     then it is assumed to be a regular expression. [GH-573]
-  - Added a "--plain" flag to `vagrant ssh` which will cause Vagrant to not
+  - Added a "--plain" flag to `dumb-vagrant ssh` which will cause Dumb Vagrant to not
     perform any authentication. It will simply `ssh` into the proper IP and
     port of the virtual machine.
   - If a shared folder now has a `:create` flag set to `true`, the path on the
@@ -4140,9 +4140,9 @@ IMPROVEMENTS / BUG FIXES:
     by shortcut. [GH-367]
   - Arbitrary mount options can be passed with `:extra` to any shared
     folders. [GH-551]
-  - Options passed after a `--` to `vagrant ssh` are now passed directly to
+  - Options passed after a `--` to `dumb-vagrant ssh` are now passed directly to
     `ssh`. [GH-554]
-  - Ubuntu guests will now emit a `vagrant-mounted` upstart event after shared
+  - Ubuntu guests will now emit a `dumb-vagrant-mounted` upstart event after shared
     folders are mounted.
   - `attempts` is a new option on chef client and chef solo provisioners. This
     will run the provisioner multiple times until erroring about failing
@@ -4155,7 +4155,7 @@ IMPROVEMENTS / BUG FIXES:
   - Helpful error message when SCP is unavailable in the guest. [GH-568]
   - Error message for improperly packaged box files. [GH-198]
   - Copy insecure private key to user-owned directory so even
-    `sudo` installed Vagrant installations work. [GH-580]
+    `sudo` installed Dumb Vagrant installations work. [GH-580]
   - Provisioner stdout/stderr is now color coded based on stdout/stderr.
     stdout is green, stderr is red. [GH-595]
   - Chef solo now prompts users to run a `reload` if shared folders
@@ -4163,13 +4163,13 @@ IMPROVEMENTS / BUG FIXES:
   - "--no-provision" once again works for certain commands. [GH-591]
   - Resuming a VM from a saved state will show an error message if there
     would be port collisions. [GH-602]
-  - `vagrant ssh -c` will now exit with the same exit code as the command
+  - `dumb-vagrant ssh -c` will now exit with the same exit code as the command
     run. [GH-598]
-  - `vagrant ssh -c` will now send stderr to stderr and stdout to stdout
+  - `dumb-vagrant ssh -c` will now send stderr to stderr and stdout to stdout
     on the host machine, instead of all output to stdout.
-  - `vagrant box add` path now accepts unexpanded shell paths such as
+  - `dumb-vagrant box add` path now accepts unexpanded shell paths such as
     `~/foo` and will properly expand them. [GH-633]
-  - Vagrant can now be interrupted during the "importing" step.
+  - Dumb Vagrant can now be interrupted during the "importing" step.
   - NFS exports will no longer be cleared when an expected error occurs. [GH-577]
 
 ## 0.8.10 (December 10, 2011)
@@ -4182,19 +4182,19 @@ IMPROVEMENTS / BUG FIXES:
     subfolders first. [GH-525]
   - Support for basic HTTP auth in the URL for boxes.
   - Solaris support for host only networks. [GH-533]
-  - `vagrant init` respects `Vagrant::Environment` cwd. [GH-528]
-  - `vagrant` commands will not output color when stdout is
+  - `dumb-vagrant init` respects `Dumb Vagrant::Environment` cwd. [GH-528]
+  - `dumb-vagrant` commands will not output color when stdout is
     not a TTY.
   - Fix issue where `box_url` set with multiple VMs could cause issues. [GH-564]
   - Chef provisioners no longer depend on a "v-root" share being
     available. [GH-556]
   - NFS should work for FreeBSD hosts now. [GH-510]
   - SSH executed methods respect `config.ssh.max_tries`. [GH-508]
-  - `vagrant box add` now respects the "no_proxy" environmental variable.
+  - `dumb-vagrant box add` now respects the "no_proxy" environmental variable.
     [GH-502]
   - Tweaks that should make "Waiting for VM to boot" slightly more
     reliable.
-  - Add comments to Vagrantfile to make it detected as Ruby file for
+  - Add comments to Dumb Vagrantfile to make it detected as Ruby file for
     `vi` and `emacs`. [GH-515]
   - More correct guest addition version checking. [GH-514]
   - Chef solo support on Windows is improved. [GH-542]
@@ -4204,7 +4204,7 @@ IMPROVEMENTS / BUG FIXES:
 ## 0.8.7 (September 13, 2011)
 
   - Fix regression with remote paths from chef-solo. [GH-431]
-  - Fix issue where Vagrant crashes if `.vagrant` file becomes invalid. [GH-496]
+  - Fix issue where Dumb Vagrant crashes if `.dumb-vagrant` file becomes invalid. [GH-496]
   - Issue a warning instead of an error for attempting to forward a port
     <= 1024. [GH-487]
 
@@ -4213,7 +4213,7 @@ IMPROVEMENTS / BUG FIXES:
   - Fix issue with download progress not properly clearing the line. [GH-476]
   - NFS should work properly on Fedora. [GH-450]
   - Arguments can be specified to the `shell` provisioner via the `args` option. [GH-475]
-  - Vagrant behaves much better when there are "inaccessible" VMs. [GH-453]
+  - Dumb Vagrant behaves much better when there are "inaccessible" VMs. [GH-453]
 
 ## 0.8.5 (August 15, 2011)
 
@@ -4228,7 +4228,7 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
  - Chef solo `roles_path` and `data_bags_path` can only be single paths. [GH-446]
  - Fix `virtualbox_not_detected` error message to require 4.1.x. [GH-458]
  - Add shortname (`hostname -s`) for hostname setting on RHEL systems. [GH-456]
- - `vagrant ssh -c` output no longer has a prefix and respects newlines
+ - `dumb-vagrant ssh -c` output no longer has a prefix and respects newlines
    from the output. [GH-462]
 
 ## 0.8.2 (July 22, 2011)
@@ -4248,13 +4248,13 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
 ## 0.8.0 (July 20, 2011)
 
   - VirtualBox 4.1 support _only_. Previous versions of VirtualBox
-    are supported by earlier versions of Vagrant.
+    are supported by earlier versions of Dumb Vagrant.
   - Performance optimizations in `virtualbox` gem. Huge speed gains.
   - `:chef_server` provisioner is now `:chef_client`. [GH-359]
   - SSH connection is now cached after first access internally,
-    speeding up `vagrant up`, `reload`, etc. quite a bit.
+    speeding up `dumb-vagrant up`, `reload`, etc. quite a bit.
   - Actions which modify the VM now occur much more quickly,
-    greatly speeding up `vagrant up`, `reload`, etc.
+    greatly speeding up `dumb-vagrant up`, `reload`, etc.
   - SUSE host only networking support. [GH-369]
   - Show nice error message for invalid HTTP responses for HTTP
     downloader. [GH-403]
@@ -4273,9 +4273,9 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
     needs to be downloaded during an `up`. [GH-308]
   - Multiple Chef provisioners no longer overwrite cookbook folders. [GH-407]
   - `package` won't delete previously existing file. [GH-408]
-  - Vagrantfile can be lowercase now. [GH-399]
-  - Only one copy of Vagrant may be running at any given time. [GH-364]
-  - Default home directory for Vagrant moved to `~/.vagrant.d` [GH-333]
+  - Dumb Vagrantfile can be lowercase now. [GH-399]
+  - Only one copy of Dumb Vagrant may be running at any given time. [GH-364]
+  - Default home directory for Dumb Vagrant moved to `~/.dumb-vagrant.d` [GH-333]
   - Specify a `forwarded_port_destination` for SSH configuration and
     SSH port searching will fall back to that if it can't find any
     other port. [GH-375]
@@ -4301,14 +4301,14 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
   - Touch the network configuration file for RedHat so that the `sed` works
     with host only networking. [GH-381]
   - Load prerelease versions of plugins if available.
-  - Do not load a plugin if it depends on an invalid version of Vagrant.
+  - Do not load a plugin if it depends on an invalid version of Dumb Vagrant.
   - Encrypted data bag support in Chef server provisioner. [GH-398]
   - Use the `-H` flag to set the proper home directory for `sudo`. [GH-370]
 
 ## 0.7.5 (May 16, 2011)
 
   - `config.ssh.port` can be specified and takes highest precedence if specified.
-    Otherwise, Vagrant will still attempt to auto-detect the port. [GH-363]
+    Otherwise, Dumb Vagrant will still attempt to auto-detect the port. [GH-363]
   - Get rid of RubyGems deprecations introduced with RubyGems 1.8.x
   - Search in pre-release gems for plugins as well as release gems.
   - Support for Chef-solo `data_bags_path` [GH-362]
@@ -4359,7 +4359,7 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
     root on the VM.
   - Gentoo host only networking no longer fails if already setup. [GH-286]
   - Set the host name of your guest OS with `config.vm.host_name` [GH-273]
-  - `vagrant ssh-config` now outputs the configured `config.ssh.host`
+  - `dumb-vagrant ssh-config` now outputs the configured `config.ssh.host`
 
 ## 0.7.0 (January 19, 2011)
 
@@ -4371,13 +4371,13 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
   - HTTP downloading follows redirects. [GH-163]
   - Downloaders have clearer output to note what they're doing.
   - Shared folders with no guest path are not automounted. [GH-184]
-  - Boxes downloaded during `vagrant up` reload the Vagrantfile config, which
+  - Boxes downloaded during `dumb-vagrant up` reload the Dumb Vagrantfile config, which
     fixes a problem with box settings not being properly loaded. [GH-231]
   - `config.ssh.forward_x11` to enable the ForwardX11 SSH option. [GH-255]
-  - Vagrant source now has a `contrib` directory where contributions of miscellaneous
-    addons for Vagrant will be added.
-  - Vagrantfiles are now loaded only once (instead of 4+ times) [GH-238]
-  - Ability to move home vagrant dir (~/.vagrant) by setting VAGRANT_HOME
+  - Dumb Vagrant source now has a `contrib` directory where contributions of miscellaneous
+    addons for Dumb Vagrant will be added.
+  - Dumb Vagrantfiles are now loaded only once (instead of 4+ times) [GH-238]
+  - Ability to move home dumb-vagrant dir (~/.dumb-vagrant) by setting DUMB_VAGRANT_HOME
     environmental variable.
   - Removed check and error for the "OSE" version of VirtualBox, since with
     VirtualBox 4 this distinction no longer exists.
@@ -4385,10 +4385,10 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
   - Helpful error message shown if NFS mounting fails. [GH-135]
   - Gentoo guests now support host only networks. [GH-240]
   - RedHat (CentOS included) guests now support host only networks. [GH-260]
-  - New Vagrantfile syntax for enabling and configuring provisioners. This
+  - New Dumb Vagrantfile syntax for enabling and configuring provisioners. This
     change is not backwards compatible. [GH-265]
   - Provisioners are now RVM-friendly, meaning if you installed chef or puppet
-    with an RVM managed Ruby, Vagrant now finds then. [GH-254]
+    with an RVM managed Ruby, Dumb Vagrant now finds then. [GH-254]
   - Changed the unused host only network destroy mechanism to check for
     uselessness after the VM is destroyed. This should result in more accurate
     checks.
@@ -4403,7 +4403,7 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
   - Puppet provisioner. [GH-223]
   - Solaris system configurable to use `sudo`.
   - Solaris system registered, so it can be set with `:solaris`.
-  - `vagrant package` include can be a directory name, which will cause the
+  - `dumb-vagrant package` include can be a directory name, which will cause the
     contents to be recursively copied into the package. [GH-241]
   - Arbitrary options to puppet binary can be set with `config.puppet.options`. [GH-242]
   - BSD hosts use proper GNU sed syntax for clearing NFS shares. [GH-243]
@@ -4425,18 +4425,18 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
   - Multiple NFS folders now work on linux. [GH-215]
   - Add translation for state "stuck" which is very rare. [GH-218]
   - virtualbox gem dependency minimum raised to 0.7.6 to verify FFI < 1.0.0 is used.
-  - Fix issue where box downloading from `vagrant up` didn't reload the box collection. [GH-229]
+  - Fix issue where box downloading from `dumb-vagrant up` didn't reload the box collection. [GH-229]
 
 ## 0.6.7 (November 3, 2010)
 
   - Added validation to verify that a box is specified.
   - Proper error message when box is not found for `config.vm.box`. [GH-195]
-  - Fix output of `vagrant status` with multi-vm to be correct. [GH-196]
+  - Fix output of `dumb-vagrant status` with multi-vm to be correct. [GH-196]
 
 ## 0.6.6 (October 14, 2010)
 
-  - `vagrant status NAME` works once again. [GH-191]
-  - Conditional validation of Vagrantfile so that some commands don't validate. [GH-188]
+  - `dumb-vagrant status NAME` works once again. [GH-191]
+  - Conditional validation of Dumb Vagrantfile so that some commands don't validate. [GH-188]
   - Fix "junk" output for ssh-config. [GH-189]
   - Fix port collision handling with greater than two VMs. [GH-185]
   - Fix potential infinite loop with root path if bad CWD is given to environment.
@@ -4447,9 +4447,9 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
     from ever happening again.
   - Properly load sub-VM configuration on first-pass of config loading. Solves
     a LOT of problems with multi-VM. [GH-166] [GH-181]
-  - Configuration now only validates on final Vagrantfile proc, so multi-VM
+  - Configuration now only validates on final Dumb Vagrantfile proc, so multi-VM
     validates correctly.
-  - A nice error message is given if ".vagrant" is a directory and therefore
+  - A nice error message is given if ".dumb-vagrant" is a directory and therefore
     can't be accessed. [GH-172]
   - Fix plugin loading in a Rails 2.3.x project. [GH-176]
 
@@ -4462,13 +4462,13 @@ Note: 0.8.3 and 0.8.4 was yanked due to RubyGems encoding issue.
     boot process.
   - Action warden doesn't do recovery process on `SystemExit` exceptions,
     allowing the double ctrl-C to work properly again. [related to GH-166]
-  - Initial Vagrantfile is now heavily commented with various available
+  - Initial Dumb Vagrantfile is now heavily commented with various available
     options. [GH-171]
   - Box add checks if a box already exists before the download. [GH-170]
   - NFS no longer attempts to clean exports file if VM is not created,
     which was causing a stack trace during recovery. [related to GH-166]
   - Basic validation added for Chef configuration (both solo and server).
-  - Top config class is now available in all `Vagrant::Config::Base`
+  - Top config class is now available in all `Dumb Vagrant::Config::Base`
     subclasses, which is useful for config validation.
   - Subcommand help shows proper full command in task listing. [GH-168]
   - SSH gives error message if `ssh` binary is not found. [GH-161]
@@ -4484,25 +4484,25 @@ compatibility.
 
   - VM name now defaults to the name of the containing folder, plus a timestamp.
     This should make it easier to identify VMs in the VirtualBox GUI.
-  - Exposed Vagrant test helpers in `Vagrant::TestHelpers` for plugins to easily
-    test themselves against Vagrant environments.
-  - **Plugins** have landed. Plugins are simply gems which have a `vagrant_init.rb`
+  - Exposed Dumb Vagrant test helpers in `Dumb Vagrant::TestHelpers` for plugins to easily
+    test themselves against Dumb Vagrant environments.
+  - **Plugins** have landed. Plugins are simply gems which have a `dumb-vagrant_init.rb`
     file somewhere in their load path. Please read the documentation on
-    vagrantup.com before attempting to create a plugin (which is very easy)
+    dumb-vagrantup.com before attempting to create a plugin (which is very easy)
     for more information on how it all works and also some guidelines.
-  - `vagrant package` now takes a `--vagrantfile` option to specify a
-    Vagrantfile to package. The `--include` approach for including a Vagrantfile
+  - `dumb-vagrant package` now takes a `--dumb-vagrantfile` option to specify a
+    Dumb Vagrantfile to package. The `--include` approach for including a Dumb Vagrantfile
     no longer works (previously built boxes will continue to work).
-  - `vagrant package` has new logic with regards to the `--include` option
+  - `dumb-vagrant package` has new logic with regards to the `--include` option
     depending on if the file path is relative or absolute (they can be
     intermixed):
       * _Relative_ paths are copied directly into the box, preserving
         their path. So `--include lib/foo` would be in the box as "lib/foo"
       * _Absolute_ paths are simply copied files into the root of the
         box. So `--include /lib/foo` would be in the box as "foo"
-  - "vagrant_main" is no longer the default run list. Instead, chef
+  - "dumb-vagrant_main" is no longer the default run list. Instead, chef
     run list starts empty. It is up to you to specify all recipes in
-    the Vagrantfile now.
+    the Dumb Vagrantfile now.
   - Fixed various issues with certain action middleware not working if
     the VM was not created.
   - SSH connection is retried 5 times if there is a connection refused.
@@ -4510,30 +4510,30 @@ compatibility.
   - If `http_proxy` environmental variable is set, it will be used as the proxy
     box adding via http.
   - Remove `config.ssh.password`. It hasn't been used for a few versions
-    now and was only kept around to avoid exceptions in Vagrantfiles.
+    now and was only kept around to avoid exceptions in Dumb Vagrantfiles.
   - Configuration is now validated so improper input can be found in
-    Vagrantfiles.
-  - Fixed issue with not detecting Vagrantfile at root directory ("/").
-  - Vagrant now gives a nice error message if there is a syntax error
-    in any Vagrantfile. [GH-154]
-  - The format of the ".vagrant" file which stores persisted VMs has
+    Dumb Vagrantfiles.
+  - Fixed issue with not detecting Dumb Vagrantfile at root directory ("/").
+  - Dumb Vagrant now gives a nice error message if there is a syntax error
+    in any Dumb Vagrantfile. [GH-154]
+  - The format of the ".dumb-vagrant" file which stores persisted VMs has
     changed. This is **backwards incompatible**. Will provide an upgrade
     utility prior to 0.6 launch.
-  - Every [expected] Vagrant error now exits with a clean error message
+  - Every [expected] Dumb Vagrant error now exits with a clean error message
     and a unique exit status, and raises a unique exception (if you're
-    scripting Vagrant).
+    scripting Dumb Vagrant).
   - Added I18n gem dependency for pulling strings into clean YML files.
-    Vagrant is now localizable as a side effect! Translations welcome.
+    Dumb Vagrant is now localizable as a side effect! Translations welcome.
   - Fixed issue with "Waiting for cleanup" message appearing twice in
     some cases. [GH-145]
   - Converted CLI to use Thor. As a tradeoff, there are some backwards
     incompatibilities:
-      * `vagrant package` - The `--include` flag now separates filenames
-        by spaces, instead of by commas. e.g. `vagrant package --include x y z`
-      * `vagrant ssh` - If you specify a command to execute using the `--execute`
+      * `dumb-vagrant package` - The `--include` flag now separates filenames
+        by spaces, instead of by commas. e.g. `dumb-vagrant package --include x y z`
+      * `dumb-vagrant ssh` - If you specify a command to execute using the `--execute`
         flag, you may now only specify one command (before you were able to
-        specify an arbitrary amount). e.g. `vagrant ssh -e "echo hello"`
-      * `vagrant ssh-config` has become `vagrant ssh_config` due to a limitation
+        specify an arbitrary amount). e.g. `dumb-vagrant ssh -e "echo hello"`
+      * `dumb-vagrant ssh-config` has become `dumb-vagrant ssh_config` due to a limitation
         in Thor.
 
 ## 0.5.4 (September 7, 2010)
@@ -4545,22 +4545,22 @@ compatibility.
 ## 0.5.3 (August 23, 2010)
 
   - Add erubis as a dependency since its rendering of `erb` is sane.
-  - Fixed poorly formatted Vagrantfile after `vagrant init`. [GH-142]
+  - Fixed poorly formatted Dumb Vagrantfile after `dumb-vagrant init`. [GH-142]
   - Fixed NFS not working properly with multiple NFS folders.
   - Fixed chef solo provision to work on Windows. It was expanding a linux
     path which prepended a drive letter onto it.
 
 ## 0.5.2 (August 3, 2010)
 
-  - `vagrant up` can be used as a way to resume the VM as well (same as
-    `vagrant resume`). [GH-134]
+  - `dumb-vagrant up` can be used as a way to resume the VM as well (same as
+    `dumb-vagrant resume`). [GH-134]
   - Sudo uses "-E" flag to preserve environment for chef provisioners.
     This fixes issues with CentOS. [GH-133]
-  - Added "IdentitiesOnly yes" to options when `vagrant ssh` is run to
+  - Added "IdentitiesOnly yes" to options when `dumb-vagrant ssh` is run to
     avoid "Too Many Authentication Failures" error. [GH-131]
   - Fix regression with `package` not working. [GH-132]
   - Added ability to specify box url in `init`, which populates the
-    Vagrantfile with the proper `config.vm.box_url`.
+    Dumb Vagrantfile with the proper `config.vm.box_url`.
 
 ## 0.5.1 (July 31, 2010)
 
@@ -4570,17 +4570,17 @@ compatibility.
   - No longer show "Disabling host only networks..." if no host only networks
     are destroyed. Quiets `destroy`, `halt`, etc output a bit.
   - Updated getting started guide to be more up to date and generic. [GH-125]
-  - Fixed error with doing a `vagrant up` when no Vagrantfile existed. [GH-128]
+  - Fixed error with doing a `dumb-vagrant up` when no Dumb Vagrantfile existed. [GH-128]
   - Fixed NFS erroring when NFS wasn't even enabled if `/etc/exports` doesn't
     exist. [GH-126]
-  - Fixed `vagrant resume` to properly resume a suspended VM. [GH-122]
+  - Fixed `dumb-vagrant resume` to properly resume a suspended VM. [GH-122]
   - Fixed `halt`, `destroy`, `reload` to where they failed if the VM was
     in a saved state. [GH-123]
   - Added `config.chef.recipe_url` which allows you to specify a URL to
     a gzipped tar file for chef solo to download cookbooks. See the
     [chef-solo docs](https://docs.chef.io/chef_solo.html) for more information.
     [GH-121]
-  - Added `vagrant box repackage` which repackages boxes which have
+  - Added `dumb-vagrant box repackage` which repackages boxes which have
     been added. This is useful in case you want to redistribute a base
     box you have but may have lost the actual "box" file. [GH-120]
 

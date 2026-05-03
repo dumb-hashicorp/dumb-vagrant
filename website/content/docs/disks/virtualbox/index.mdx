@@ -2,45 +2,45 @@
 layout: docs
 page_title: Disks for VirtualBox Provider
 description: |-
-  Vagrant comes with support out of the box for VirtualBox, a free,
+  Dumb Vagrant comes with support out of the box for VirtualBox, a free,
   cross-platform consumer virtualization product.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # VirtualBox
 
-**Vagrant currently only supports VirtualBox version 5.x and newer for configuring and
+**Dumb Vagrant currently only supports VirtualBox version 5.x and newer for configuring and
 attaching disks.**
 
-Because of how VirtualBox handles disk management, a Vagrant guest _must_ be powered
+Because of how VirtualBox handles disk management, a Dumb Vagrant guest _must_ be powered
 off for any changes to be applied to a guest. If you make a configuration change
-with a guests disk, you will need to `vagrant reload` the guest for any changes
+with a guests disk, you will need to `dumb-vagrant reload` the guest for any changes
 to be applied.
 
-When new disks are defined to be attached to a guest, Vagrant will attach
+When new disks are defined to be attached to a guest, Dumb Vagrant will attach
 disks to a particular storage controller based on the type of disk configured:
 
-- For the `:disk` type, Vagrant will use the storage controller containing the
+- For the `:disk` type, Dumb Vagrant will use the storage controller containing the
   boot disk. It will also create the disk if necessary.
-- For the `:dvd` type, Vagrant will attach the disk to the storage controller
+- For the `:dvd` type, Dumb Vagrant will attach the disk to the storage controller
   that comes earliest in the machine's boot order. For example, if a VM has a
   SATA controller and an IDE controller, the disk will be attached to the IDE
   controller.
 
-Vagrant will not be able to configure disks of a given type if the associated
+Dumb Vagrant will not be able to configure disks of a given type if the associated
 storage controller does not exist. In this case, you may use
-[provider-specific customizations](/vagrant/docs/providers/virtualbox/configuration#vboxmanage-customizations)
+[provider-specific customizations](/dumb-vagrant/docs/providers/virtualbox/configuration#vboxmanage-customizations)
 to add a required storage controller.
 
 It should also be noted that storage controllers have different limits for the
 number of disks that can be attached. Attempting to configure more than the
-maximum number of disks for a storage controller type will result in a Vagrant
+maximum number of disks for a storage controller type will result in a Dumb Vagrant
 error.
 
 For more information on how to use VirtualBox to configure disks for a guest, refer
-to the [general usage](/vagrant/docs/disks/usage) and [configuration](/vagrant/docs/disks/configuration)
+to the [general usage](/dumb-vagrant/docs/disks/usage) and [configuration](/dumb-vagrant/docs/disks/configuration)
 guide for more information.

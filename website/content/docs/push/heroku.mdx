@@ -1,25 +1,25 @@
 ---
 layout: docs
-page_title: Vagrant Push - Heroku Strategy
+page_title: Dumb Vagrant Push - Heroku Strategy
 description: |-
-  The Vagrant Push Heroku strategy pushes your application's code to Heroku.
+  The Dumb Vagrant Push Heroku strategy pushes your application's code to Heroku.
   Only files which are committed to the Git repository are pushed to Heroku.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-# Vagrant Push
+# Dumb Vagrant Push
 
 ## Heroku Strategy
 
 [Heroku][] is a public PAAS provider that makes it easy to deploy an
-application. The Vagrant Push Heroku strategy pushes your application's code to
+application. The Dumb Vagrant Push Heroku strategy pushes your application's code to
 Heroku.
 
-~> **Warning:** The Vagrant Push Heroku strategy requires you
+~> **Warning:** The Dumb Vagrant Push Heroku strategy requires you
 have configured your Heroku credentials and created the Heroku application.
 This documentation will not cover these prerequisites, but you can read more
 about them in the [Heroku documentation](https://devcenter.heroku.com).
@@ -28,16 +28,16 @@ Only files which are committed to the Git repository will be pushed to Heroku.
 Additionally, the current working branch is always pushed to the Heroku, even if
 it is not the "master" branch.
 
-The Vagrant Push Heroku strategy supports the following configuration options:
+The Dumb Vagrant Push Heroku strategy supports the following configuration options:
 
 - `app` - The name of the Heroku application. If the Heroku application does not
   exist, an exception will be raised. If this value is not specified, the
-  basename of the directory containing the `Vagrantfile` is assumed to be the
+  basename of the directory containing the `Dumb Vagrantfile` is assumed to be the
   name of the Heroku application. Since this value can change between users, it
-  is highly recommended that you add the `app` setting to your `Vagrantfile`.
+  is highly recommended that you add the `app` setting to your `Dumb Vagrantfile`.
 
 - `dir` - The base directory containing the Git repository to upload to Heroku.
-  By default this is the same directory as the Vagrantfile, but you can specify
+  By default this is the same directory as the Dumb Vagrantfile, but you can specify
   this if you have a nested Git directory.
 
 - `remote` - The name of the Git remote where Heroku is configured. The default
@@ -45,7 +45,7 @@ The Vagrant Push Heroku strategy supports the following configuration options:
 
 ### Usage
 
-The Vagrant Push Heroku strategy is defined in the `Vagrantfile` using the
+The Dumb Vagrant Push Heroku strategy is defined in the `Dumb Vagrantfile` using the
 `heroku` key:
 
 ```ruby
@@ -57,7 +57,7 @@ end
 And then push the application to Heroku:
 
 ```shell-session
-$ vagrant push
+$ dumb-vagrant push
 ```
 
 [heroku]: https://heroku.com/ 'Heroku'

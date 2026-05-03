@@ -3,13 +3,13 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class ReadState
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant::hyperv::connection")
+          @logger = Log4r::Logger.new("dumb-vagrant::hyperv::connection")
         end
 
         def call(env)

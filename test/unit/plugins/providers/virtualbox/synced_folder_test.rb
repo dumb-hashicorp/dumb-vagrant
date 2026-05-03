@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
-require Vagrant.source_root.join("test/unit/base")
+require "dumb-vagrant"
+require Dumb Vagrant.source_root.join("test/unit/base")
 
-require Vagrant.source_root.join("plugins/providers/virtualbox/config")
-require Vagrant.source_root.join("plugins/providers/virtualbox/synced_folder")
+require Dumb Vagrant.source_root.join("plugins/providers/virtualbox/config")
+require Dumb Vagrant.source_root.join("plugins/providers/virtualbox/synced_folder")
 
-describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
+describe Dumb VagrantPlugins::ProviderVirtualBox::SyncedFolder do
   include_context "unit"
 
   let(:vm_config) do
@@ -24,7 +24,7 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
 
   let(:machine) do
     double("machine").tap do |m|
-      allow(m).to receive(:provider_config).and_return(VagrantPlugins::ProviderVirtualBox::Config.new)
+      allow(m).to receive(:provider_config).and_return(Dumb VagrantPlugins::ProviderVirtualBox::Config.new)
       allow(m).to receive(:provider_name).and_return(:virtualbox)
       allow(m).to receive(:config).and_return(machine_config)
     end
@@ -33,10 +33,10 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
   let(:folders) { {"/folder"=>
     {:SharedFoldersEnableSymlinksCreate=>true,
      :guestpath=>"/folder",
-     :hostpath=>"/Users/brian/vagrant-folder",
+     :hostpath=>"/Users/brian/dumb-vagrant-folder",
      :automount=>false,
      :disabled=>false,
-     :__vagrantfile=>true}} }
+     :__dumb-vagrantfile=>true}} }
 
   subject { described_class.new }
 
@@ -62,16 +62,16 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
   end
 
   describe "#enable" do
-    let(:ui){ Vagrant::UI::Silent.new }
+    let(:ui){ Dumb Vagrant::UI::Silent.new }
     let(:guest) { double("guest") }
 
     let(:no_guestpath_folder) { {"/no_guestpath_folder"=>
       {:SharedFoldersEnableSymlinksCreate=>false,
        :guestpath=>nil,
-       :hostpath=>"/Users/brian/vagrant-folder",
+       :hostpath=>"/Users/brian/dumb-vagrant-folder",
        :automount=>false,
        :disabled=>true,
-       :__vagrantfile=>true}} }
+       :__dumb-vagrantfile=>true}} }
 
     before do
       allow(subject).to receive(:share_folders).and_return(true)
@@ -88,26 +88,26 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
     let(:folders_disabled) { {"/folder"=>
                                 {:SharedFoldersEnableSymlinksCreate=>false,
                                  :guestpath=>"/folder",
-                                 :hostpath=>"/Users/brian/vagrant-folder",
+                                 :hostpath=>"/Users/brian/dumb-vagrant-folder",
                                  :automount=>false,
                                  :disabled=>false,
-                                 :__vagrantfile=>true}} }
+                                 :__dumb-vagrantfile=>true}} }
 
 
     let(:folders_automount) { {"/folder"=>
                                 {:SharedFoldersEnableSymlinksCreate=>true,
                                  :guestpath=>"/folder",
-                                 :hostpath=>"/Users/brian/vagrant-folder",
+                                 :hostpath=>"/Users/brian/dumb-vagrant-folder",
                                  :disabled=>false,
                                  :automount=>true,
-                                 :__vagrantfile=>true}} }
+                                 :__dumb-vagrantfile=>true}} }
 
     let(:folders_nosymvar) { {"/folder"=>
                                 {:guestpath=>"/folder",
-                                 :hostpath=>"/Users/brian/vagrant-folder",
+                                 :hostpath=>"/Users/brian/dumb-vagrant-folder",
                                  :automount=>false,
                                  :disabled=>false,
-                                 :__vagrantfile=>true}} }
+                                 :__dumb-vagrantfile=>true}} }
 
     before do
       allow(machine).to receive(:provider).and_return(provider)
@@ -116,31 +116,31 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
     end
 
     it "should prepare and share the folders" do
-      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/vagrant-folder", :transient=>false, :automount=>false, :SharedFoldersEnableSymlinksCreate=>true}])
+      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/dumb-vagrant-folder", :transient=>false, :automount=>false, :SharedFoldersEnableSymlinksCreate=>true}])
       subject.prepare(machine, folders, nil)
     end
 
     it "should prepare and share the folders without symlinks enabled" do
-      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/vagrant-folder", :transient=>false, :automount=>false, :SharedFoldersEnableSymlinksCreate=>false}])
+      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/dumb-vagrant-folder", :transient=>false, :automount=>false, :SharedFoldersEnableSymlinksCreate=>false}])
       subject.prepare(machine, folders_disabled, nil)
     end
 
     it "should prepare and share the folders without symlinks enabled with env var set" do
-      stub_env('VAGRANT_DISABLE_VBOXSYMLINKCREATE'=>'1')
+      stub_env('DUMB_VAGRANT_DISABLE_VBOXSYMLINKCREATE'=>'1')
 
-      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/vagrant-folder", :transient=>false, :automount=>false, :SharedFoldersEnableSymlinksCreate=>false}])
+      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/dumb-vagrant-folder", :transient=>false, :automount=>false, :SharedFoldersEnableSymlinksCreate=>false}])
       subject.prepare(machine, folders_nosymvar, nil)
     end
 
     it "should prepare and share the folders and override symlink setting" do
-      stub_env('VAGRANT_DISABLE_VBOXSYMLINKCREATE'=>'1')
+      stub_env('DUMB_VAGRANT_DISABLE_VBOXSYMLINKCREATE'=>'1')
 
-      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/vagrant-folder", :transient=>false, :automount=>false, :SharedFoldersEnableSymlinksCreate=>true}])
+      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/dumb-vagrant-folder", :transient=>false, :automount=>false, :SharedFoldersEnableSymlinksCreate=>true}])
       subject.prepare(machine, folders, nil)
     end
 
     it "should prepare and share the folders with automount enabled" do
-      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/vagrant-folder", :transient=>false, :SharedFoldersEnableSymlinksCreate=>true, :automount=>true}])
+      expect(driver).to receive(:share_folders).with([{:name=>"folder", :hostpath=>"/Users/brian/dumb-vagrant-folder", :transient=>false, :SharedFoldersEnableSymlinksCreate=>true, :automount=>true}])
       subject.prepare(machine, folders_automount, nil)
     end
   end
@@ -155,7 +155,7 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
     end
 
     it "should replace leading underscore" do
-      expect(subject.send(:os_friendly_id, '_vagrant')).to eq('vagrant')
+      expect(subject.send(:os_friendly_id, '_dumb-vagrant')).to eq('dumb-vagrant')
     end
 
     it "should replace slash" do
@@ -163,7 +163,7 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
     end
 
     it "should replace leading underscore and slash" do
-      expect(subject.send(:os_friendly_id, '/vagrant')).to eq('vagrant')
+      expect(subject.send(:os_friendly_id, '/dumb-vagrant')).to eq('dumb-vagrant')
     end
 
     it "should replace backslash" do
@@ -172,8 +172,8 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
   end
 
   describe "#share_folders" do
-    let(:folders){ {'folder1' => {hostpath: '/vagrant', transient: true},
-      'folder2' => {hostpath: '/vagrant2', transient: false}} }
+    let(:folders){ {'folder1' => {hostpath: '/dumb-vagrant', transient: true},
+      'folder2' => {hostpath: '/dumb-vagrant2', transient: false}} }
     let(:symlink_create_disable){ nil }
     let(:driver){ double("driver") }
 
@@ -183,7 +183,7 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
       allow(subject).to receive(:driver).and_return(driver)
       allow(driver).to receive(:share_folders)
       allow(ENV).to receive(:[]).and_call_original
-      allow(ENV).to receive(:[]).with("VAGRANT_DISABLE_VBOXSYMLINKCREATE").and_return(symlink_create_disable)
+      allow(ENV).to receive(:[]).with("DUMB_VAGRANT_DISABLE_VBOXSYMLINKCREATE").and_return(symlink_create_disable)
     end
 
     it "should only add transient folder" do
@@ -216,7 +216,7 @@ describe VagrantPlugins::ProviderVirtualBox::SyncedFolder do
   end
 
   describe "#display_symlink_create_warning" do
-    let(:env){ double("env", ui: Vagrant::UI::Silent.new, data_dir: double("data_dir")) }
+    let(:env){ double("env", ui: Dumb Vagrant::UI::Silent.new, data_dir: double("data_dir")) }
     let(:gate_file){ double("gate") }
 
     before{ allow(gate_file).to receive(:to_path).and_return("PATH") }

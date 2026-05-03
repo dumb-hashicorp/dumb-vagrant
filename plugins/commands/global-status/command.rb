@@ -3,18 +3,18 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandGlobalStatus
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
-        "outputs status Vagrant environments for this user"
+        "outputs status Dumb Vagrant environments for this user"
       end
 
       def execute
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant global-status"
+          o.banner = "Usage: dumb-vagrant global-status"
           o.separator ""
           o.on("--prune", "Prune invalid entries.") do |p|
             options[:prune] = true
@@ -30,7 +30,7 @@ module VagrantPlugins
           ["name", :name],
           ["provider", :provider],
           ["state", :state],
-          ["directory", :vagrantfile_path],
+          ["directory", :dumb-vagrantfile_path],
         ]
 
         widths = {}
@@ -38,7 +38,7 @@ module VagrantPlugins
         widths[:name] = 6
         widths[:provider] = 6
         widths[:state] = 6
-        widths[:vagrantfile_path] = 35
+        widths[:dumb-vagrantfile_path] = 35
 
         entries = []
         prune   = []
@@ -74,7 +74,7 @@ module VagrantPlugins
           opts = { "target" => entry.name.to_s }
           @env.ui.machine("machine-id", entry.id.to_s[0...7], opts)
           @env.ui.machine("provider-name", entry.provider.to_s, opts)
-          @env.ui.machine("machine-home", entry.vagrantfile_path.to_s, opts)
+          @env.ui.machine("machine-home", entry.dumb-vagrantfile_path.to_s, opts)
           @env.ui.machine("state", entry.state.to_s, opts)
         end
 
@@ -89,7 +89,7 @@ module VagrantPlugins
         @env.ui.info("-" * total_width)
 
         if entries.empty?
-          @env.ui.info(I18n.t("vagrant.global_status_none"))
+          @env.ui.info(I18n.t("dumb-vagrant.global_status_none"))
           return 0
         end
 
@@ -104,7 +104,7 @@ module VagrantPlugins
           @env.ui.info("")
         end
 
-        @env.ui.info(" \n" + I18n.t("vagrant.global_status_footer"))
+        @env.ui.info(" \n" + I18n.t("dumb-vagrant.global_status_footer"))
 
         # Success, exit status 0
         0

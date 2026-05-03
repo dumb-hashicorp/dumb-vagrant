@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HerokuPush
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       # The name of the Heroku application to push to.
       # @return [String]
       attr_accessor :app
 
       # The base directory with file contents to upload. By default this
-      # is the same directory as the Vagrantfile, but you can specify this
+      # is the same directory as the Dumb Vagrantfile, but you can specify this
       # if you have a `src` folder or `bin` folder or some other folder
       # you want to upload. This directory must be a git repository.
       # @return [String]

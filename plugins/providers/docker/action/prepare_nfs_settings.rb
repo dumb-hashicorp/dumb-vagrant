@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class PrepareNFSSettings
-        include Vagrant::Util::Retryable
+        include Dumb Vagrant::Util::Retryable
 
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::action::vm::nfs")
+          @logger = Log4r::Logger.new("dumb-vagrant::action::vm::nfs")
         end
 
         def call(env)
@@ -49,7 +49,7 @@ module VagrantPlugins
           host_ip    = provider.driver.docker_bridge_ip
           machine_ip = provider.ssh_info[:host]
 
-          raise Vagrant::Errors::NFSNoHostonlyNetwork if !host_ip || !machine_ip
+          raise Dumb Vagrant::Errors::NFSNoHostonlyNetwork if !host_ip || !machine_ip
 
           env[:nfs_host_ip]    = host_ip
           env[:nfs_machine_ip] = machine_ip

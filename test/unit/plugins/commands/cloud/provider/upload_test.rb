@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/commands/cloud/provider/upload")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/provider/upload")
 
-describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
+describe Dumb VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
   include_context "unit"
 
   let(:access_token) { double("token") }
@@ -25,14 +25,14 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
     let(:argv) { [] }
     let(:options) { {} }
     let(:env) { double("env", ui: ui) }
-    let(:ui) { Vagrant::UI::Silent.new }
+    let(:ui) { Dumb Vagrant::UI::Silent.new }
     let(:upload_url) { double("upload-url") }
     let(:uploader) { double("uploader") }
 
     before do
       allow(I18n).to receive(:t)
       allow(env).to receive(:ui).and_return(ui)
-      allow(VagrantCloud::Account).to receive(:new).
+      allow(Dumb VagrantCloud::Account).to receive(:new).
         with(custom_server: anything, access_token: access_token).
         and_return(account)
       allow(subject).to receive(:with_version).
@@ -40,8 +40,8 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
         and_yield(version)
       allow(provider).to receive(:upload).and_yield(upload_url)
       allow(uploader).to receive(:upload!)
-      allow(Vagrant::UI::Prefixed).to receive(:new).with(ui, "cloud").and_return(ui)
-      allow(Vagrant::Util::Uploader).to receive(:new).and_return(uploader)
+      allow(Dumb Vagrant::UI::Prefixed).to receive(:new).with(ui, "cloud").and_return(ui)
+      allow(Dumb Vagrant::Util::Uploader).to receive(:new).and_return(uploader)
       allow(File).to receive(:stat).with(provider_file).
         and_return(double("provider-stat", size: provider_file_size))
     end
@@ -59,14 +59,14 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
     end
 
     it "should return non-zero on API error" do
-      expect(provider).to receive(:upload).and_raise(VagrantCloud::Error)
+      expect(provider).to receive(:upload).and_raise(Dumb VagrantCloud::Error)
       r = subject.upload_provider(org_name, box_name, box_version, box_version_provider, box_version_provider_arch, provider_file, access_token, options)
       expect(r).not_to eq(0)
       expect(r).to be_a(Integer)
     end
 
     it "should return non-zero on upload error" do
-      expect(provider).to receive(:upload).and_raise(Vagrant::Errors::UploaderError)
+      expect(provider).to receive(:upload).and_raise(Dumb Vagrant::Errors::UploaderError)
       r = subject.upload_provider(org_name, box_name, box_version, box_version_provider, box_version_provider_arch, provider_file, access_token, options)
       expect(r).not_to eq(0)
       expect(r).to be_a(Integer)
@@ -121,10 +121,10 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
   describe "#execute" do
     let(:argv) { [] }
     let(:iso_env) do
-      # We have to create a Vagrantfile so there is a root path
+      # We have to create a Dumb Vagrantfile so there is a root path
       env = isolated_environment
-      env.vagrantfile("")
-      env.create_vagrant_env
+      env.dumb-vagrantfile("")
+      env.create_dumb-vagrant_env
     end
 
     subject { described_class.new(argv, iso_env) }
@@ -142,7 +142,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
@@ -151,7 +151,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
 
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
 
       context "with provider argument" do
@@ -161,7 +161,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
 
         it "shows help" do
           expect { subject.execute }.
-            to raise_error(Vagrant::Errors::CLIInvalidUsage)
+            to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
         end
 
         context "with version argument" do
@@ -171,7 +171,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
 
           it "shows help" do
             expect { subject.execute }.
-              to raise_error(Vagrant::Errors::CLIInvalidUsage)
+              to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
           end
 
           context "with architecture argument" do
@@ -181,7 +181,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Upload do
 
             it "shows help" do
               expect { subject.execute }.
-                to raise_error(Vagrant::Errors::CLIInvalidUsage)
+                to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
             end
 
             context "with file argument" do

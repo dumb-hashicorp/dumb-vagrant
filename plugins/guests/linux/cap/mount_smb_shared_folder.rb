@@ -6,7 +6,7 @@ require "shellwords"
 
 require_relative "../../../synced_folders/unix_mount_helpers"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class MountSMBSharedFolder
@@ -32,7 +32,7 @@ module VagrantPlugins
           username, domain = (options[:smb_username] || '').split('@', 2)
           smb_password = options[:smb_password]
           # Ensure password is scrubbed
-          Vagrant::Util::CredentialScrubber.sensitive(smb_password)
+          Dumb Vagrant::Util::CredentialScrubber.sensitive(smb_password)
         
           if mount_options.include?("mfsymlinks")
             display_mfsymlinks_warning(machine.env)
@@ -56,7 +56,7 @@ SCRIPT
           # Attempt to mount the folder. We retry here a few times because
           # it can fail early on.
           begin
-            retryable(on: Vagrant::Errors::LinuxMountFailed, tries: 10, sleep: 2) do
+            retryable(on: Dumb Vagrant::Errors::LinuxMountFailed, tries: 10, sleep: 2) do
               no_such_device = false
               stderr = ""
               status = machine.communicate.sudo(mount_command, error_check: false) do |type, data|
@@ -66,7 +66,7 @@ SCRIPT
                 end
               end
               if status != 0 || no_such_device
-                raise Vagrant::Errors::LinuxMountFailed,
+                raise Dumb Vagrant::Errors::LinuxMountFailed,
                   command: mount_command,
                   output: stderr
               end
@@ -86,7 +86,7 @@ SCRIPT
           d_file = env.data_dir.join("mfsymlinks_warning")
           if !d_file.exist?
             FileUtils.touch(d_file.to_path)
-            env.ui.warn(I18n.t("vagrant.actions.vm.smb.mfsymlink_warning"))
+            env.ui.warn(I18n.t("dumb-vagrant.actions.vm.smb.mfsymlink_warning"))
           end
         end
       end

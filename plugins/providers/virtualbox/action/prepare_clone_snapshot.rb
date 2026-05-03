@@ -4,13 +4,13 @@
 require "log4r"
 require "digest/md5"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class PrepareCloneSnapshot
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::action::vm::prepare_clone")
+          @logger = Log4r::Logger.new("dumb-vagrant::action::vm::prepare_clone")
         end
 
         def call(env)

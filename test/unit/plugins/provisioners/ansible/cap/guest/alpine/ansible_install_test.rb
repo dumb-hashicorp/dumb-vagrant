@@ -4,18 +4,18 @@
 require_relative "../../../../../../base"
 require_relative "../shared/pip_ansible_install_examples"
 
-require Vagrant.source_root.join("plugins/provisioners/ansible/cap/guest/alpine/ansible_install")
+require Dumb Vagrant.source_root.join("plugins/provisioners/ansible/cap/guest/alpine/ansible_install")
 
-describe VagrantPlugins::Ansible::Cap::Guest::Alpine::AnsibleInstall do
+describe Dumb VagrantPlugins::Ansible::Cap::Guest::Alpine::AnsibleInstall do
   include_context "unit"
 
-  subject { VagrantPlugins::Ansible::Cap::Guest::Alpine::AnsibleInstall }
+  subject { Dumb VagrantPlugins::Ansible::Cap::Guest::Alpine::AnsibleInstall }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }

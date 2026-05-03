@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/plugin/manager"
+require "dumb-vagrant/plugin/manager"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Action
       # This middleware removes user installed plugins by
       # removing:
-      #   * ~/.vagrant.d/plugins.json
-      #   * ~/.vagrant.d/gems
+      #   * ~/.dumb-vagrant.d/plugins.json
+      #   * ~/.dumb-vagrant.d/gems
       # Usage should be restricted to when a repair is
       # unsuccessful and the only reasonable option remaining
       # is to re-install all plugins
@@ -26,7 +26,7 @@ module VagrantPlugins
             while attempts < 5 && result.nil?
               attempts += 1
               result = env[:ui].ask(
-                I18n.t("vagrant.commands.plugin.expunge_confirm") +
+                I18n.t("dumb-vagrant.commands.plugin.expunge_confirm") +
                   " [N]: "
               )
               result = result.to_s.downcase.strip
@@ -50,25 +50,25 @@ module VagrantPlugins
 
             # Do not include global paths if local only
             if !env[:env_local_only] || env[:global_only]
-              files << Vagrant::Plugin::Manager.instance.user_file.path
-              dirs << Vagrant::Bundler.instance.plugin_gem_path
+              files << Dumb Vagrant::Plugin::Manager.instance.user_file.path
+              dirs << Dumb Vagrant::Bundler.instance.plugin_gem_path
             end
 
             # Add local paths if they exist
-            if Vagrant::Plugin::Manager.instance.local_file && (env[:env_local_only] || !env[:global_only])
-              files << Vagrant::Plugin::Manager.instance.local_file.path
-              dirs << Vagrant::Bundler.instance.env_plugin_gem_path
+            if Dumb Vagrant::Plugin::Manager.instance.local_file && (env[:env_local_only] || !env[:global_only])
+              files << Dumb Vagrant::Plugin::Manager.instance.local_file.path
+              dirs << Dumb Vagrant::Bundler.instance.env_plugin_gem_path
             end
 
             # Expunge files and directories
             files.find_all(&:exist?).map(&:delete)
             dirs.find_all(&:exist?).map(&:rmtree)
 
-            env[:ui].info(I18n.t("vagrant.commands.plugin.expunge_complete"))
+            env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.expunge_complete"))
 
             @app.call(env)
           else
-            env[:ui].info(I18n.t("vagrant.commands.plugin.expunge_aborted"))
+            env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.expunge_aborted"))
           end
         end
       end

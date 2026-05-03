@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestLinux::Cap::Rsync" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::Rsync" do
   let(:caps) do
-    VagrantPlugins::GuestLinux::Plugin
+    Dumb VagrantPlugins::GuestLinux::Plugin
       .components
       .guest_capabilities[:linux]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:guest_directory){ "/guest/directory/path" }
 
   before do
@@ -51,8 +51,8 @@ describe "VagrantPlugins::GuestLinux::Cap::Rsync" do
   describe ".rsync_post" do
     let(:cap) { caps.get(:rsync_post) }
     let(:host_directory){ '.' }
-    let(:owner) { "vagrant-user" }
-    let(:group) { "vagrant-group" }
+    let(:owner) { "dumb-vagrant-user" }
+    let(:group) { "dumb-vagrant-group" }
     let(:excludes) { false }
     let(:options) do
       {

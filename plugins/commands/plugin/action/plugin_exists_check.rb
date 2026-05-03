@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/plugin/manager"
+require "dumb-vagrant/plugin/manager"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Action
       # This class checks to see if the plugin is installed already, and
@@ -14,9 +14,9 @@ module VagrantPlugins
         end
 
         def call(env)
-          installed = Vagrant::Plugin::Manager.instance.installed_plugins
+          installed = Dumb Vagrant::Plugin::Manager.instance.installed_plugins
           if !installed.key?(env[:plugin_name])
-            raise Vagrant::Errors::PluginNotInstalled,
+            raise Dumb Vagrant::Errors::PluginNotInstalled,
               name: env[:plugin_name]
           end
 

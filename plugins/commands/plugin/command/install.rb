@@ -6,7 +6,7 @@ require 'optparse'
 require_relative "base"
 require_relative "mixin_install_opts"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
       class Install < Base
@@ -18,7 +18,7 @@ module VagrantPlugins
           options = { verbose: false }
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant plugin install <name>... [-h]"
+            o.banner = "Usage: dumb-vagrant plugin install <name>... [-h]"
             o.separator ""
             build_install_opts(o, options)
 
@@ -36,23 +36,23 @@ module VagrantPlugins
           return if !argv
 
           if argv.length < 1
-            raise Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if !options[:env_local]
+            raise Dumb Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if !options[:env_local]
 
-            errors = @env.vagrantfile.config.vagrant.validate(nil)
-            if !errors["vagrant"].empty?
+            errors = @env.dumb-vagrantfile.config.dumb-vagrant.validate(nil)
+            if !errors["dumb-vagrant"].empty?
               raise Errors::ConfigInvalid,
                 errors: Util::TemplateRenderer.render(
                 "config/validation_failed",
                 errors: errors)
             end
 
-            local_plugins = @env.vagrantfile.config.vagrant.plugins
+            local_plugins = @env.dumb-vagrantfile.config.dumb-vagrant.plugins
             plugin_list = local_plugins.map do |name, info|
               "#{name} (#{info.fetch(:version, "> 0")})"
             end.join("\n")
 
 
-            @env.ui.info(I18n.t("vagrant.plugins.local.install_all",
+            @env.ui.info(I18n.t("dumb-vagrant.plugins.local.install_all",
               plugins: plugin_list) + "\n")
 
             # Pause to allow user to cancel
@@ -62,7 +62,7 @@ module VagrantPlugins
               action(Action.action_install,
                 plugin_entry_point: info[:entry_point],
                 plugin_version:     info[:version],
-                plugin_sources:     info[:sources] || Vagrant::Bundler::DEFAULT_GEM_SOURCES.dup,
+                plugin_sources:     info[:sources] || Dumb Vagrant::Bundler::DEFAULT_GEM_SOURCES.dup,
                 plugin_name:        name,
                 plugin_env_local:   true
               )

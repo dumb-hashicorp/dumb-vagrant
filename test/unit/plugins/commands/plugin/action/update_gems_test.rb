@@ -3,10 +3,10 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-describe VagrantPlugins::CommandPlugin::Action::UpdateGems do
+describe Dumb VagrantPlugins::CommandPlugin::Action::UpdateGems do
   let(:app) { lambda { |env| } }
   let(:env) {{
-    ui: Vagrant::UI::Silent.new
+    ui: Dumb Vagrant::UI::Silent.new
   }}
 
   let(:manager) { double("manager") }
@@ -14,7 +14,7 @@ describe VagrantPlugins::CommandPlugin::Action::UpdateGems do
   subject { described_class.new(app, env) }
 
   before do
-    allow(Vagrant::Plugin::Manager).to receive(:instance).and_return(manager)
+    allow(Dumb Vagrant::Plugin::Manager).to receive(:instance).and_return(manager)
     allow(manager).to receive(:installed_specs).and_return([])
   end
 

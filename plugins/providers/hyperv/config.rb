@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       # Allowed automatic start actions for VM
       ALLOWED_AUTO_START_ACTIONS = [
         "Nothing".freeze,
@@ -116,28 +116,28 @@ module VagrantPlugins
         errors = _detected_errors
 
         if @_differencing_disk_deprecation && machine
-          machine.ui.warn I18n.t("vagrant_hyperv.config.differencing_disk_deprecation")
+          machine.ui.warn I18n.t("dumb-vagrant_hyperv.config.differencing_disk_deprecation")
         end
 
         if !vm_integration_services.is_a?(Hash)
-          errors << I18n.t("vagrant_hyperv.config.invalid_integration_services_type",
+          errors << I18n.t("dumb-vagrant_hyperv.config.invalid_integration_services_type",
             received: vm_integration_services.class)
         else
           vm_integration_services.each do |key, value|
             if ![true, false].include?(value)
-              errors << I18n.t("vagrant_hyperv.config.invalid_integration_services_entry",
+              errors << I18n.t("dumb-vagrant_hyperv.config.invalid_integration_services_entry",
                 entry_name: name, entry_value: value)
             end
           end
         end
 
         if !ALLOWED_AUTO_START_ACTIONS.include?(auto_start_action)
-          errors << I18n.t("vagrant_hyperv.config.invalid_auto_start_action", action: auto_start_action,
+          errors << I18n.t("dumb-vagrant_hyperv.config.invalid_auto_start_action", action: auto_start_action,
             allowed_actions: ALLOWED_AUTO_START_ACTIONS.join(", "))
         end
 
         if !ALLOWED_AUTO_STOP_ACTIONS.include?(auto_stop_action)
-          errors << I18n.t("vagrant_hyperv.config.invalid_auto_stop_action", action: auto_stop_action,
+          errors << I18n.t("dumb-vagrant_hyperv.config.invalid_auto_stop_action", action: auto_stop_action,
             allowed_actions: ALLOWED_AUTO_STOP_ACTIONS.join(", "))
         end
 

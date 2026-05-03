@@ -3,27 +3,27 @@
 
 require 'optparse'
 
-require "vagrant/util/safe_puts"
-require "vagrant/util/platform"
+require "dumb-vagrant/util/safe_puts"
+require "dumb-vagrant/util/platform"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSSHConfig
-    class Command < Vagrant.plugin("2", :command)
-      include Vagrant::Util::SafePuts
+    class Command < Dumb Vagrant.plugin("2", :command)
+      include Dumb Vagrant::Util::SafePuts
 
       def self.synopsis
         "outputs OpenSSH valid configuration to connect to the machine"
       end
 
       def convert_win_paths(paths)
-        paths.map! { |path| Vagrant::Util::Platform.format_windows_path(path, :disable_unc) }
+        paths.map! { |path| Dumb Vagrant::Util::Platform.format_windows_path(path, :disable_unc) }
       end
 
       def execute
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant ssh-config [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant ssh-config [options] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -38,14 +38,14 @@ module VagrantPlugins
 
         with_target_vms(argv) do |machine|
           ssh_info = machine.ssh_info
-          raise Vagrant::Errors::SSHNotReady if ssh_info.nil?
+          raise Dumb Vagrant::Errors::SSHNotReady if ssh_info.nil?
 
-          if Vagrant::Util::Platform.windows?
+          if Dumb Vagrant::Util::Platform.windows?
             ssh_info[:private_key_path] = convert_win_paths(ssh_info[:private_key_path])
           end
 
           variables = {
-            host_key: options[:host] || machine.name || "vagrant",
+            host_key: options[:host] || machine.name || "dumb-vagrant",
             ssh_host: ssh_info[:host],
             ssh_port: ssh_info[:port],
             ssh_user: ssh_info[:username],
@@ -64,7 +64,7 @@ module VagrantPlugins
 
           # Render the template and output directly to STDOUT
           template = "commands/ssh_config/config"
-          config   = Vagrant::Util::TemplateRenderer.render(template, variables)
+          config   = Dumb Vagrant::Util::TemplateRenderer.render(template, variables)
           machine.ui.machine("ssh-config", config)
           safe_puts(config)
           safe_puts

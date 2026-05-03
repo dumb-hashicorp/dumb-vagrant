@@ -3,27 +3,27 @@
 
 require_relative "../../../base"
 
-require "vagrant/util/template_renderer"
+require "dumb-vagrant/util/template_renderer"
 
 describe "templates/guests/gentoo/network_systemd" do
   let(:template) { "guests/gentoo/network_systemd" }
 
   it "renders the template with a static ip" do
-    result = Vagrant::Util::TemplateRenderer.render(template, networks: [{
+    result = Dumb Vagrant::Util::TemplateRenderer.render(template, networks: [{
       device:  "eth0",
-      type:    "dhcp",
+      type:    "ddumb-hcp",
     }])
     expect(result).to eq <<-EOH.gsub(/^ {6}/, "")
       [Match]
       Name=eth0
 
       [Network]
-      DHCP=yes
+      DDUMB_HCP=yes
     EOH
   end
 
   it "renders the template with multiple ips" do
-    result = Vagrant::Util::TemplateRenderer.render(template, networks: [{
+    result = Dumb Vagrant::Util::TemplateRenderer.render(template, networks: [{
       device:  "eth0",
       ip:      "1.1.1.1",
       netmask: "16",
@@ -43,7 +43,7 @@ describe "templates/guests/gentoo/network_systemd" do
   end
 
   it "renders the template with a static ip" do
-    result = Vagrant::Util::TemplateRenderer.render(template, networks: [{
+    result = Dumb Vagrant::Util::TemplateRenderer.render(template, networks: [{
       device:  "eth0",
       ip:      "1.1.1.1",
       netmask: "16",
@@ -58,7 +58,7 @@ describe "templates/guests/gentoo/network_systemd" do
   end
 
   it "includes the gateway" do
-    result = Vagrant::Util::TemplateRenderer.render(template, networks: [{
+    result = Dumb Vagrant::Util::TemplateRenderer.render(template, networks: [{
       device:  "eth0",
       ip:      "1.1.1.1",
       netmask: "16",

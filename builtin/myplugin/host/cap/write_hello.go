@@ -6,7 +6,7 @@ package cap
 import (
 	"os"
 
-	"github.com/hashicorp/vagrant-plugin-sdk/terminal"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/terminal"
 )
 
 func WriteHello(ui terminal.UI) error {

@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module ProviderCommand
       module Command
-        class Root < Vagrant.plugin("2", :command)
+        class Root < Dumb Vagrant.plugin("2", :command)
           def self.synopsis
             "Provider commands"
           end
@@ -14,7 +14,7 @@ module VagrantPlugins
             super
 
             @main_args, @sub_command, @sub_args = split_main_and_subcommand(argv)
-            @subcommands = Vagrant::Registry.new
+            @subcommands = Dumb Vagrant::Registry.new
             @subcommands.register(:create) do
               require File.expand_path("../create", __FILE__)
               Command::Create
@@ -52,9 +52,9 @@ module VagrantPlugins
           # Prints the help out for this command
           def help
             opts = OptionParser.new do |opts|
-              opts.banner = "Usage: vagrant cloud provider <subcommand> [<args>]"
+              opts.banner = "Usage: dumb-vagrant cloud provider <subcommand> [<args>]"
               opts.separator ""
-              opts.separator "For various provider actions with Vagrant Cloud"
+              opts.separator "For various provider actions with Dumb Vagrant Cloud"
               opts.separator ""
               opts.separator "Available subcommands:"
 
@@ -67,7 +67,7 @@ module VagrantPlugins
                 opts.separator "     #{key}"
               end
               opts.separator ""
-              opts.separator "For help on any individual subcommand run `vagrant cloud provider <subcommand> -h`"
+              opts.separator "For help on any individual subcommand run `dumb-vagrant cloud provider <subcommand> -h`"
             end
 
             @env.ui.info(opts.help, prefix: false)

@@ -4,8 +4,8 @@
 package httpdownloader
 
 import (
-	sdk "github.com/hashicorp/vagrant-plugin-sdk"
-	"github.com/hashicorp/vagrant/builtin/httpdownloader/downloader"
+	sdk "github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/httpdownloader/downloader"
 )
 
 //go:generate stringer -type=HTTPMethod -linecomment ./downloader

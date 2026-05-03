@@ -1,14 +1,14 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostLinux
     # Represents a Linux based host, such as Ubuntu.
-    class Host < Vagrant.plugin("2", :host)
+    class Host < Dumb Vagrant.plugin("2", :host)
       def detect?(env)
-        Vagrant::Util::Platform.linux?
+        Dumb Vagrant::Util::Platform.linux?
       end
     end
   end

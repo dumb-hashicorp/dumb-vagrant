@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostVoid
     module Cap
       class NFS
@@ -18,7 +18,7 @@ module VagrantPlugins
         end
 
         def self.nfs_installed(env)
-          result = Vagrant::Util::Subprocess.execute("/usr/bin/xbps-query", "nfs-utils")
+          result = Dumb Vagrant::Util::Subprocess.execute("/usr/bin/xbps-query", "nfs-utils")
           result.exit_code == 0
         end
       end

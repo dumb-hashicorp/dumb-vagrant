@@ -3,9 +3,9 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/providers/docker/synced_folder")
+require Dumb Vagrant.source_root.join("plugins/providers/docker/synced_folder")
 
-describe VagrantPlugins::DockerProvider::SyncedFolder do
+describe Dumb VagrantPlugins::DockerProvider::SyncedFolder do
   subject { described_class.new }
 
   let(:provider_config) { double("provider_config", volumes: []) }
@@ -29,40 +29,40 @@ describe VagrantPlugins::DockerProvider::SyncedFolder do
     it "raises an error if bad provider if specified" do
       allow(machine).to receive(:provider_name).and_return(:virtualbox)
       expect { subject.usable?(machine, true) }.
-        to raise_error(VagrantPlugins::DockerProvider::Errors::SyncedFolderNonDocker)
+        to raise_error(Dumb VagrantPlugins::DockerProvider::Errors::SyncedFolderNonDocker)
     end
   end
 
   describe "#prepare" do
     let(:folders) {{"/guest/dir1"=>
                     {:guestpath=>"/guest/dir1",
-                     :hostpath=>"/Users/brian/code/vagrant-sandbox",
+                     :hostpath=>"/Users/brian/code/dumb-vagrant-sandbox",
                      :disabled=>false,
-                     :__vagrantfile=>true},
-                     "/dev/vagrant"=>
-                    {:guestpath=>"/dev/vagrant",
-                     :hostpath=>"/Users/brian/code/vagrant",
+                     :__dumb-vagrantfile=>true},
+                     "/dev/dumb-vagrant"=>
+                    {:guestpath=>"/dev/dumb-vagrant",
+                     :hostpath=>"/Users/brian/code/dumb-vagrant",
                      :disabled=>false,
-                     :__vagrantfile=>true}}}
+                     :__dumb-vagrantfile=>true}}}
 
     let(:consistency_folders) {{"/guest/dir1"=>
                                 {:docker_consistency=>"cached",
                                  :guestpath=>"/guest/dir1",
-                                 :hostpath=>"/Users/brian/code/vagrant-sandbox",
+                                 :hostpath=>"/Users/brian/code/dumb-vagrant-sandbox",
                                  :disabled=>false,
-                                 :__vagrantfile=>true},
-                                 "/dev/vagrant"=>
+                                 :__dumb-vagrantfile=>true},
+                                 "/dev/dumb-vagrant"=>
                                 {:docker_consistency=>"delegated",
-                                 :guestpath=>"/dev/vagrant",
-                                 :hostpath=>"/Users/brian/code/vagrant",
+                                 :guestpath=>"/dev/dumb-vagrant",
+                                 :hostpath=>"/Users/brian/code/dumb-vagrant",
                                  :disabled=>false,
-                                 :__vagrantfile=>true}}}
+                                 :__dumb-vagrantfile=>true}}}
     let(:options) { {} }
 
-    let(:volumes) { ["/Users/brian/code/vagrant-sandbox:/guest/dir1",
-                     "/Users/brian/code/vagrant:/dev/vagrant"] }
-    let(:consistency_volumes) { ["/Users/brian/code/vagrant-sandbox:/guest/dir1:cached",
-                                 "/Users/brian/code/vagrant:/dev/vagrant:delegated"] }
+    let(:volumes) { ["/Users/brian/code/dumb-vagrant-sandbox:/guest/dir1",
+                     "/Users/brian/code/dumb-vagrant:/dev/dumb-vagrant"] }
+    let(:consistency_volumes) { ["/Users/brian/code/dumb-vagrant-sandbox:/guest/dir1:cached",
+                                 "/Users/brian/code/dumb-vagrant:/dev/dumb-vagrant:delegated"] }
 
     it "prepares folders to mount" do
       subject.prepare(machine, folders, options)

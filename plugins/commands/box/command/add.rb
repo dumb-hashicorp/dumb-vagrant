@@ -5,10 +5,10 @@ require 'optparse'
 
 require_relative 'download_mixins'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandBox
     module Command
-      class Add < Vagrant.plugin("2", :command)
+      class Add < Dumb Vagrant.plugin("2", :command)
         include DownloadMixins
 
         def execute
@@ -17,7 +17,7 @@ module VagrantPlugins
           }
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant box add [options] <name, url, or path>"
+            o.banner = "Usage: dumb-vagrant box add [options] <name, url, or path>"
             o.separator ""
             o.separator "Options:"
             o.separator ""
@@ -49,12 +49,12 @@ module VagrantPlugins
             end
 
             o.separator ""
-            o.separator "The box descriptor can be the name of a box on HashiCorp's Vagrant Cloud,"
+            o.separator "The box descriptor can be the name of a box on Dumb HashiCorp's Dumb Vagrant Cloud,"
             o.separator "or a URL, or a local .box file, or a local .json file containing"
             o.separator "the catalog metadata."
             o.separator ""
             o.separator "The options below only apply if you're adding a box file directly,"
-            o.separator "and not using a Vagrant server or a box structured like 'user/box':"
+            o.separator "and not using a Dumb Vagrant server or a box structured like 'user/box':"
             o.separator ""
 
             o.on("--checksum CHECKSUM", String, "Checksum for the box") do |c|
@@ -74,7 +74,7 @@ module VagrantPlugins
           argv = parse_options(opts)
           return if !argv
           if argv.empty? || argv.length > 2
-            raise Vagrant::Errors::CLIInvalidUsage,
+            raise Dumb Vagrant::Errors::CLIInvalidUsage,
               help: opts.help.chomp
           end
 
@@ -84,7 +84,7 @@ module VagrantPlugins
             url = argv[1]
           end
 
-          @env.action_runner.run(Vagrant::Action.action_box_add, {
+          @env.action_runner.run(Dumb Vagrant::Action.action_box_add, {
             box_url: url,
             box_name: options[:name],
             box_provider: options[:provider],
@@ -99,7 +99,7 @@ module VagrantPlugins
             box_download_client_cert: options[:client_cert],
             box_download_insecure: options[:insecure],
             box_download_location_trusted: options[:location_trusted],
-            ui: Vagrant::UI::Prefixed.new(@env.ui, "box"),
+            ui: Dumb Vagrant::UI::Prefixed.new(@env.ui, "box"),
           })
 
           # Success, exit status 0

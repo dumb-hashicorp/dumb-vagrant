@@ -7,7 +7,7 @@ def get_provisioner_option_names(provisioner_class)
   (config_options - ["!", "=", "=="]).sort
 end
 
-shared_examples_for 'any VagrantConfigProvisioner strict boolean attribute' do |attr_name, attr_default_value|
+shared_examples_for 'any Dumb VagrantConfigProvisioner strict boolean attribute' do |attr_name, attr_default_value|
 
   [true, false].each do |bool|
     it "returns the assigned boolean value (#{bool})" do

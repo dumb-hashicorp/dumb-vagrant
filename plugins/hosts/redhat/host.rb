@@ -3,9 +3,9 @@
 
 require "pathname"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostRedHat
-    class Host < Vagrant.plugin("2", :host)
+    class Host < Dumb Vagrant.plugin("2", :host)
       def detect?(env)
         release_file = Pathname.new("/etc/redhat-release")
 

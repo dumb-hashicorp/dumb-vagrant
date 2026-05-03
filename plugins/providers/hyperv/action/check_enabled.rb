@@ -4,7 +4,7 @@
 require "fileutils"
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class CheckEnabled

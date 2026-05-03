@@ -14,10 +14,10 @@ export ci_bin_dir="${root}/.ci/.ci-utility-files"
 
 # shellcheck source=/dev/null
 if ! source "${ci_bin_dir}/common.sh"; then
-    echo "⛔ ERROR: Failed to source Vagrant CI common file ⛔" >&2
+    echo "⛔ ERROR: Failed to source Dumb Vagrant CI common file ⛔" >&2
     exit 1
 fi
 export PATH="${PATH}:${ci_bin_dir}"
 
 # And we are done!
-debug "VagrantCI Loaded"
+debug "Dumb VagrantCI Loaded"

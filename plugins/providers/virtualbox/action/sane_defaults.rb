@@ -3,12 +3,12 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class SaneDefaults
         def initialize(app, env)
-          @logger = Log4r::Logger.new("vagrant::action::vm::sanedefaults")
+          @logger = Log4r::Logger.new("dumb-vagrant::action::vm::sanedefaults")
           @app = app
         end
 
@@ -58,7 +58,7 @@ module VagrantPlugins
           begin
             @env[:machine].provider.driver.execute_command(
               command + [retryable: true])
-          rescue Vagrant::Errors::VBoxManageError => e
+          rescue Dumb Vagrant::Errors::VBoxManageError => e
             @logger.info("#{log} (error = #{e.inspect})")
           end
         end

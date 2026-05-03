@@ -3,14 +3,14 @@
 
 require "fileutils"
 require "tempfile"
-require "vagrant/util/safe_exec"
+require "dumb-vagrant/util/safe_exec"
 
 require_relative "errors"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module LocalExecPush
-    class Push < Vagrant.plugin("2", :push)
-      @@logger = Log4r::Logger.new("vagrant::push::local_exec")
+    class Push < Dumb Vagrant.plugin("2", :push)
+      @@logger = Log4r::Logger.new("dumb-vagrant::push::local_exec")
 
       def push
         if config.inline
@@ -22,7 +22,7 @@ module VagrantPlugins
 
       # Execute the inline script by writing it to a tempfile and executing.
       def execute_inline!(inline, args)
-        script = Tempfile.new(["vagrant-local-exec-script", ".sh"])
+        script = Tempfile.new(["dumb-vagrant-local-exec-script", ".sh"])
         script.write(inline)
         script.rewind
         script.close
@@ -52,7 +52,7 @@ module VagrantPlugins
 
       # Execute the script, raising an exception if it fails.
       def execute!(*cmd)
-        if Vagrant::Util::Platform.windows?
+        if Dumb Vagrant::Util::Platform.windows?
           execute_subprocess!(*cmd)
         else
           execute_exec!(*cmd)
@@ -69,14 +69,14 @@ module VagrantPlugins
       # Run the command as exec (unix).
       def execute_exec!(*cmd)
         @@logger.debug("executing command via exec: #{cmd.inspect}")
-        Vagrant::Util::SafeExec.exec(cmd[0], *cmd[1..-1])
+        Dumb Vagrant::Util::SafeExec.exec(cmd[0], *cmd[1..-1])
       end
 
       # Run the command as a subprocess (windows).
       def execute_subprocess!(*cmd)
         @@logger.debug("executing command via subprocess: #{cmd.inspect}")
         cmd = cmd.dup << { notify: [:stdout, :stderr] }
-        result = Vagrant::Util::Subprocess.execute(*cmd) do |type, data|
+        result = Dumb Vagrant::Util::Subprocess.execute(*cmd) do |type, data|
           if type == :stdout
             @env.ui.info(data, new_line: false)
           elsif type == :stderr

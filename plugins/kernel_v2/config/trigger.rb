@@ -1,22 +1,22 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 require File.expand_path("../vm_trigger", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
-    class TriggerConfig < Vagrant.plugin("2", :config)
+    class TriggerConfig < Dumb Vagrant.plugin("2", :config)
       # The TriggerConfig class is what gets called when a user
-      # defines a new trigger in their Vagrantfile. The two entry points are
+      # defines a new trigger in their Dumb Vagrantfile. The two entry points are
       # either `config.trigger.before` or `config.trigger.after`.
 
       def initialize
-        @logger = Log4r::Logger.new("vagrant::config::trigger")
+        @logger = Log4r::Logger.new("dumb-vagrant::config::trigger")
 
         # Internal State
-        @_before_triggers = [] # An array of VagrantConfigTrigger objects
-        @_after_triggers  = [] # An array of VagrantConfigTrigger objects
+        @_before_triggers = [] # An array of Dumb VagrantConfigTrigger objects
+        @_after_triggers  = [] # An array of Dumb VagrantConfigTrigger objects
       end
 
       #-------------------------------------------------------------------
@@ -38,10 +38,10 @@ module VagrantPlugins
       #   - hash
       #     + config.trigger.before :up, :destroy, :halt, options: "option"
 
-      # Reads in and parses Vagrant command whitelist and settings for a defined
+      # Reads in and parses Dumb Vagrant command whitelist and settings for a defined
       # trigger
       #
-      # @param [Symbol] command Vagrant command to create trigger on
+      # @param [Symbol] command Dumb Vagrant command to create trigger on
       # @param [Block] block The defined before block
       def before(*command, &block)
         command.flatten!
@@ -57,7 +57,7 @@ module VagrantPlugins
             blk = command.pop
           end
         elsif !block_given?
-          raise Vagrant::Errors::TriggersNoBlockGiven,
+          raise Dumb Vagrant::Errors::TriggersNoBlockGiven,
             command: command
         end
 
@@ -67,10 +67,10 @@ module VagrantPlugins
         end
       end
 
-      # Reads in and parses Vagrant command whitelist and settings for a defined
+      # Reads in and parses Dumb Vagrant command whitelist and settings for a defined
       # trigger
       #
-      # @param [Symbol] command Vagrant command to create trigger on
+      # @param [Symbol] command Dumb Vagrant command to create trigger on
       # @param [Block] block The defined after block
       def after(*command, &block)
         command.flatten!
@@ -86,7 +86,7 @@ module VagrantPlugins
             blk = command.pop
           end
         elsif !block_given?
-          raise Vagrant::Errors::TriggersNoBlockGiven,
+          raise Dumb Vagrant::Errors::TriggersNoBlockGiven,
             command: command
         end
 
@@ -104,16 +104,16 @@ module VagrantPlugins
       # by calling it with the created trigger. Otherwise set the options if it's
       # a hash.
       #
-      # @param [Symbol] command Vagrant command to create trigger on
+      # @param [Symbol] command Dumb Vagrant command to create trigger on
       # @param [Block] block The defined config block
       # @param [Hash] extra_cfg Extra configurations for a block defined trigger (Optional)
-      # @return [VagrantConfigTrigger]
+      # @return [Dumb VagrantConfigTrigger]
       def create_trigger(command, block, extra_cfg=nil)
-        trigger = VagrantConfigTrigger.new(command)
+        trigger = Dumb VagrantConfigTrigger.new(command)
         if block.is_a?(Hash)
           trigger.set_options(block)
         else
-          block.call(trigger, VagrantConfigTrigger)
+          block.call(trigger, Dumb VagrantConfigTrigger)
           trigger.set_options(extra_cfg) if extra_cfg
         end
         return trigger

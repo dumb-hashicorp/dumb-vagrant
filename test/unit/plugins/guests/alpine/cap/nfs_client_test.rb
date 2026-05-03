@@ -3,13 +3,13 @@
 
 require_relative "../../../../base"
 
-describe 'VagrantPlugins::GuestAlpine::Cap::NFSClient' do
+describe 'Dumb VagrantPlugins::GuestAlpine::Cap::NFSClient' do
     let(:described_class) do
-        VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:nfs_client_install)
+        Dumb VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:nfs_client_install)
     end
 
     let(:machine) { double('machine') }
-    let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+    let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
     before do
         allow(machine).to receive(:communicate).and_return(communicator)

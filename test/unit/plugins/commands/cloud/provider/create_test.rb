@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/commands/cloud/provider/create")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/provider/create")
 
-describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Create do
+describe Dumb VagrantPlugins::CloudCommand::ProviderCommand::Command::Create do
   include_context "unit"
 
   let(:access_token) { double("token") }
@@ -22,12 +22,12 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Create do
   describe "#create_provider" do
     let(:options) { {} }
     let(:env) { double("env", ui: ui) }
-    let(:ui) { Vagrant::UI::Silent.new }
+    let(:ui) { Dumb Vagrant::UI::Silent.new }
     let(:argv) { [] }
 
     before do
       allow(env).to receive(:ui).and_return(ui)
-      allow(VagrantCloud::Account).to receive(:new).
+      allow(Dumb VagrantCloud::Account).to receive(:new).
         with(custom_server: anything, access_token: access_token).
         and_return(account)
       allow(subject).to receive(:with_version).with(account: account, org: org_name, box: box_name, version: box_version).
@@ -85,10 +85,10 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Create do
   describe "#execute" do
     let(:argv) { [] }
     let(:iso_env) do
-      # We have to create a Vagrantfile so there is a root path
+      # We have to create a Dumb Vagrantfile so there is a root path
       env = isolated_environment
-      env.vagrantfile("")
-      env.create_vagrant_env
+      env.dumb-vagrantfile("")
+      env.create_dumb-vagrant_env
     end
 
     subject { described_class.new(argv, iso_env) }
@@ -106,7 +106,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Create do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
@@ -115,7 +115,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Create do
 
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
 
       context "with provider argument" do
@@ -125,7 +125,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Create do
 
         it "shows help" do
           expect { subject.execute }.
-            to raise_error(Vagrant::Errors::CLIInvalidUsage)
+            to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
         end
 
         context "with version argument" do
@@ -169,7 +169,7 @@ describe VagrantPlugins::CloudCommand::ProviderCommand::Command::Create do
 
           it "should include detected host architecture by default" do
             host_arch = double("host-arch")
-            expect(Vagrant::Util::Platform).to receive(:architecture).and_return(host_arch)
+            expect(Dumb Vagrant::Util::Platform).to receive(:architecture).and_return(host_arch)
 
             expect(subject).to receive(:create_provider) do |*_, opts|
               expect(opts[:architecture]).to eq(host_arch)

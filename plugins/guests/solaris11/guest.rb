@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-# A general Vagrant system implementation for "solaris 11".
+# A general Dumb Vagrant system implementation for "solaris 11".
 #
 # Contributed by Jan Thomas Moldung <janth@moldung.no>
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSolaris11
-    class Guest < Vagrant.plugin("2", :guest)
+    class Guest < Dumb Vagrant.plugin("2", :guest)
       def detect?(machine)
         success = machine.communicate.test("grep 'Solaris 11' /etc/release")
         return success if success

@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/powershell/command")
+require Dumb Vagrant.source_root.join("plugins/commands/powershell/command")
 
-describe VagrantPlugins::CommandPS::Command do
+describe Dumb VagrantPlugins::CommandPS::Command do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest") }
@@ -46,12 +46,12 @@ describe VagrantPlugins::CommandPS::Command do
     allow(machine.communicate).to receive(:ready?).and_return(true)
     allow(machine).to receive(:config).and_return(config)
 
-    allow(VagrantPlugins::CommunicatorWinRM::Helper).to receive(:winrm_info).and_return(winrm_info)
+    allow(Dumb VagrantPlugins::CommunicatorWinRM::Helper).to receive(:winrm_info).and_return(winrm_info)
     allow(subject).to receive(:ready_ps_remoting_for).and_return(remoting_ready_result)
     allow(host).to receive(:capability).with(:ps_client, any_args)
 
     # Ignore loading up translations
-    allow_any_instance_of(Vagrant::Errors::VagrantError).to receive(:translate_error)
+    allow_any_instance_of(Dumb Vagrant::Errors::Dumb VagrantError).to receive(:translate_error)
   end
 
   describe "#execute" do
@@ -59,7 +59,7 @@ describe VagrantPlugins::CommandPS::Command do
       before { expect(machine.communicate).to receive(:ready?).and_return(false) }
 
       it "should raise error that machine is not created" do
-        expect { subject.execute }.to raise_error(Vagrant::Errors::VMNotCreatedError)
+        expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::VMNotCreatedError)
       end
     end
 
@@ -70,7 +70,7 @@ describe VagrantPlugins::CommandPS::Command do
         let(:argv) { ["-c", "command"] }
 
         it "should raise an error that winrm is not ready" do
-          expect { subject.execute }.to raise_error(VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
+          expect { subject.execute }.to raise_error(Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
         end
       end
 
@@ -87,7 +87,7 @@ describe VagrantPlugins::CommandPS::Command do
 
       context "when no command is provided" do
         it "should raise an error for unsupported host" do
-          expect { subject.execute }.to raise_error(VagrantPlugins::CommandPS::Errors::HostUnsupported)
+          expect { subject.execute }.to raise_error(Dumb VagrantPlugins::CommandPS::Errors::HostUnsupported)
         end
       end
 
@@ -124,7 +124,7 @@ describe VagrantPlugins::CommandPS::Command do
       let(:argv) { ["-e"] }
 
       it "should raise error that command must be provided" do
-        expect { subject.execute }.to raise_error(VagrantPlugins::CommandPS::Errors::ElevatedNoCommand)
+        expect { subject.execute }.to raise_error(Dumb VagrantPlugins::CommandPS::Errors::ElevatedNoCommand)
       end
     end
 

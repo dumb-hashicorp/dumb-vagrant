@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 en:
-  vagrant_ps:
+  dumb-vagrant_ps:
     detecting: |-
       Detecting if a remote PowerShell connection can be made with the guest...
     resetting: |-

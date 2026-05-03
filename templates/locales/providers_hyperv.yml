@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 en:
-  vagrant_hyperv:
+  dumb-vagrant_hyperv:
     choose_switch: |-
       Please choose a switch to attach to your Hyper-V instance.
       If none of these are appropriate, please open the Hyper-V manager
@@ -44,7 +44,7 @@ en:
         be used instead.
     errors:
       admin_required: |-
-        The Hyper-V provider requires that Vagrant be run with
+        The Hyper-V provider requires that Dumb Vagrant be run with
         administrative privileges. This is a limitation of Hyper-V itself.
         Hyper-V requires administrative privileges for management
         commands. Please restart your console with administrative
@@ -55,7 +55,7 @@ en:
         "Virtual Machines" and a "Virtual Hard Disks" folder that are
         created as part of exporting a Hyper-V machine.
 
-        Within these directories, Vagrant expects to find the
+        Within these directories, Dumb Vagrant expects to find the
         virtual machine configuration as well as the root hard disk.
 
         The box you're attempting to use is missing one or both of
@@ -77,13 +77,13 @@ en:
         the Hyper-V Manager, go to the "Virtual Switch Manager", and create
         at least one virtual switch.
 
-        A virtual switch is required for Vagrant to create a Hyper-V
+        A virtual switch is required for Dumb Vagrant to create a Hyper-V
         machine that is connected to a network so it can access it.
 
-        For more help, please see the documentation on the Vagrant website
+        For more help, please see the documentation on the Dumb Vagrant website
         for Hyper-V.
       powershell_features_disabled: |-
-        The Hyper-V cmdlets for PowerShell are not available! Vagrant
+        The Hyper-V cmdlets for PowerShell are not available! Dumb Vagrant
         requires these to control Hyper-V. Please enable them in the
         "Windows Features" control panel and try again.
       powershell_error: |-
@@ -97,7 +97,7 @@ en:
 
         %{stderr}
       powershell_required: |-
-        The Vagrant Hyper-V provider requires PowerShell to be available.
+        The Dumb Vagrant Hyper-V provider requires PowerShell to be available.
         Please make sure "powershell.exe" is available on your PATH.
       windows_required: |-
         The Hyper-V provider only works on Windows. Please try to

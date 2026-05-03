@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Errors
-      class AnsibleError < Vagrant::Errors::VagrantError
-        error_namespace("vagrant.provisioners.ansible.errors")
+      class AnsibleError < Dumb Vagrant::Errors::Dumb VagrantError
+        error_namespace("dumb-vagrant.provisioners.ansible.errors")
       end
 
       class AnsibleCommandFailed < AnsibleError

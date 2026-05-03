@@ -2,45 +2,45 @@
 layout: docs
 page_title: Host Capabilities - Plugin Development
 description: >-
-  This page documents how to add new capabilities for hosts to Vagrant, allowing
-  Vagrant to perform new actions on specific host operating systems. Prior to
+  This page documents how to add new capabilities for hosts to Dumb Vagrant, allowing
+  Dumb Vagrant to perform new actions on specific host operating systems. Prior to
   reading this, you should be familiar with the plugin development basics.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Plugin Development: Host Capabilities
 
-This page documents how to add new capabilities for [hosts](/vagrant/docs/plugins/hosts)
-to Vagrant, allowing Vagrant to perform new actions on specific host
+This page documents how to add new capabilities for [hosts](/dumb-vagrant/docs/plugins/hosts)
+to Dumb Vagrant, allowing Dumb Vagrant to perform new actions on specific host
 operating systems.
 Prior to reading this, you should be familiar
-with the [plugin development basics](/vagrant/docs/plugins/development-basics).
+with the [plugin development basics](/dumb-vagrant/docs/plugins/development-basics).
 
 ~> **Warning: Advanced Topic!** Developing plugins is an
-advanced topic that only experienced Vagrant users who are reasonably
+advanced topic that only experienced Dumb Vagrant users who are reasonably
 comfortable with Ruby should approach.
 
-Host capabilities augment [hosts](/vagrant/docs/plugins/hosts) by attaching
+Host capabilities augment [hosts](/dumb-vagrant/docs/plugins/hosts) by attaching
 specific "capabilities" to the host, which are actions that can be performed
 in the context of that host operating system.
 
 The power of capabilities is that plugins can add new capabilities to
-existing host operating systems without modifying the core of Vagrant.
-In earlier versions of Vagrant, all the host logic was contained in the
-core of Vagrant and was not easily augmented.
+existing host operating systems without modifying the core of Dumb Vagrant.
+In earlier versions of Dumb Vagrant, all the host logic was contained in the
+core of Dumb Vagrant and was not easily augmented.
 
 ## Definition and Implementation
 
 The definition and implementation of host capabilities is identical
-to [guest capabilities](/vagrant/docs/plugins/guest-capabilities).
+to [guest capabilities](/dumb-vagrant/docs/plugins/guest-capabilities).
 
 The main difference from guest capabilities, however, is that instead of
 taking a machine as the first argument, all host capabilities take an
-instance of `Vagrant::Environment` as their first argument.
+instance of `Dumb Vagrant::Environment` as their first argument.
 
 Access to the environment allows host capabilities to access global state,
 specific machines, and also allows them to call other host capabilities.

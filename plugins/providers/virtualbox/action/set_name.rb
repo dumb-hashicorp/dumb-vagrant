@@ -3,12 +3,12 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class SetName
         def initialize(app, env)
-          @logger = Log4r::Logger.new("vagrant::action::vm::setname")
+          @logger = Log4r::Logger.new("dumb-vagrant::action::vm::setname")
           @app = app
         end
 
@@ -28,20 +28,20 @@ module VagrantPlugins
             prefix.gsub!(/[^-a-z0-9_]/i, "")
 
             # milliseconds + random number suffix to allow for simultaneous
-            # `vagrant up` of the same box in different dirs
+            # `dumb-vagrant up` of the same box in different dirs
             name = prefix + "_#{(Time.now.to_f * 1000.0).to_i}_#{rand(100000)}"
           end
 
           # Verify the name is not taken
           vms = env[:machine].provider.driver.read_vms
-          raise Vagrant::Errors::VMNameExists, name: name if \
+          raise Dumb Vagrant::Errors::VMNameExists, name: name if \
             vms.key?(name) && vms[name] != env[:machine].id
 
           if vms.key?(name)
             @logger.info("Not setting the name because our name is already set.")
           else
             env[:ui].info(I18n.t(
-              "vagrant.actions.vm.set_name.setting_name", name: name))
+              "dumb-vagrant.actions.vm.set_name.setting_name", name: name))
             env[:machine].provider.driver.set_name(name)
           end
 

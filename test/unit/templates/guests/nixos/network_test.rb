@@ -3,13 +3,13 @@
 
 require_relative "../../../base"
 
-require "vagrant/util/template_renderer"
+require "dumb-vagrant/util/template_renderer"
 
 describe "templates/guests/nixos/network" do
   let(:template) { "guests/nixos/network" }
 
   it "renders the template" do
-    result = Vagrant::Util::TemplateRenderer.render(template, networks: [{
+    result = Dumb Vagrant::Util::TemplateRenderer.render(template, networks: [{
       device: "en0",
       ip: "1.1.1.1",
       prefix_length: "24",

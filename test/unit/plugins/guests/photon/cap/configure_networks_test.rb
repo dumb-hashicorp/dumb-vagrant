@@ -2,15 +2,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestPhoton::Cap:ConfigureNetworks" do
+describe "Dumb VagrantPlugins::GuestPhoton::Cap:ConfigureNetworks" do
   let(:caps) do
-    VagrantPlugins::GuestPhoton::Plugin
+    Dumb VagrantPlugins::GuestPhoton::Plugin
       .components
       .guest_capabilities[:photon]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -28,7 +28,7 @@ describe "VagrantPlugins::GuestPhoton::Cap:ConfigureNetworks" do
     let(:network_1) do
       {
         interface: 0,
-        type: "dhcp",
+        type: "ddumb-hcp",
       }
     end
 

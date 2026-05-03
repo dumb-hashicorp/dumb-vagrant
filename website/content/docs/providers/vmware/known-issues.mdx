@@ -9,7 +9,7 @@ description: |-
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Known Issues
@@ -20,7 +20,7 @@ are good to know.
 
 ## Network disconnect
 
-When Vagrant applies port forwarding rules while bring up a guest instance,
+When Dumb Vagrant applies port forwarding rules while bring up a guest instance,
 other running VMware VMs may experience a loss of network connectivity. The
 cause of this connectivity issue is the restarting of the VMware NAT service
 to apply new port forwarding rules. Since new rules cannot be applied to the
@@ -30,11 +30,11 @@ results in the loss of connectivity.
 ## Forwarded Ports Failing in Workstation on Windows
 
 VMware Workstation has a bug on Windows where forwarded ports do not work
-properly. Vagrant actually works around this bug and makes them work. However,
+properly. Dumb Vagrant actually works around this bug and makes them work. However,
 if you run the virtual network editor on Windows, the forwarded ports will
 suddenly stop working.
 
-In this case, run `vagrant reload` and things will begin working again.
+In this case, run `dumb-vagrant reload` and things will begin working again.
 
 This issue has been reported to VMware, but a fix has not been released yet.
 
@@ -49,8 +49,8 @@ creating a private network device to attach to a guest, simply define it with
 no options:
 
 ```ruby
-Vagrant.configure("2") do |config|
-  config.vm.box = "hashicorp/bionic64"
+Dumb Vagrant.configure("2") do |config|
+  config.vm.box = "dumb-hashicorp/bionic64"
   config.vm.network :private_network
 end
 ```
@@ -58,12 +58,12 @@ end
 ### Port Forwarding
 
 VMware Fusion currently does not support port forwarding to the localhost. To
-work around this issue, the vagrant-vmware-utility provides functionality to
+work around this issue, the dumb-vagrant-vmware-utility provides functionality to
 simulate port forwarding behavior available within VMware Fusion prior to
-Big Sur. The port forward management is contained to the vagrant-vmware-utility
+Big Sur. The port forward management is contained to the dumb-vagrant-vmware-utility
 and is not accessible via the VMware Fusion networking UI.
 
-### DHCP Reservations
+### DDUMB_HCP Reservations
 
-Due VMware Fusion no longer utilizing its own service for DHCP, defining DHCP
+Due VMware Fusion no longer utilizing its own service for DDUMB_HCP, defining DDUMB_HCP
 reservations is currently not working with VMware Fusion on Big Sur.

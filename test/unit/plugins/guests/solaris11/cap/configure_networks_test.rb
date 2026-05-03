@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSolaris11::Cap::ConfigureNetworks" do
+describe "Dumb VagrantPlugins::GuestSolaris11::Cap::ConfigureNetworks" do
   let(:caps) do
-    VagrantPlugins::GuestSolaris11::Plugin
+    Dumb VagrantPlugins::GuestSolaris11::Plugin
       .components
       .guest_capabilities[:solaris11]
   end
 
   let(:machine) { double("machine", config: double("config", solaris11: double("solaris11", suexec_cmd: 'sudo', device: 'net'))) }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -26,7 +26,7 @@ describe "VagrantPlugins::GuestSolaris11::Cap::ConfigureNetworks" do
     let(:network_1) do
       {
         interface: 0,
-        type: "dhcp",
+        type: "ddumb-hcp",
       }
     end
 
@@ -50,7 +50,7 @@ describe "VagrantPlugins::GuestSolaris11::Cap::ConfigureNetworks" do
       expect(comm.received_commands[2]).to eq("sudo ipadm create-addr -T static -a 33.33.33.10/16 net1/v4")
     end
 
-    it "configures the guests network if dhcp" do
+    it "configures the guests network if ddumb-hcp" do
       allow(machine.communicate).to receive(:test).and_return(true)
       cap.configure_networks(machine, networks)
       expect(comm.received_commands[0]).to eq("sudo ipadm create-addr -T addrconf net0/v4")

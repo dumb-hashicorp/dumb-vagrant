@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestBSD::Cap::NFS" do
+describe "Dumb VagrantPlugins::GuestBSD::Cap::NFS" do
   let(:caps) do
-    VagrantPlugins::GuestBSD::Plugin
+    Dumb VagrantPlugins::GuestBSD::Plugin
       .components
       .guest_capabilities[:bsd]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -27,7 +27,7 @@ describe "VagrantPlugins::GuestBSD::Cap::NFS" do
 
     it "mounts the folder" do
       folders = {
-        "/vagrant-nfs" => {
+        "/dumb-vagrant-nfs" => {
           guestpath: "/guest",
           hostpath: "/host",
         }
@@ -41,7 +41,7 @@ describe "VagrantPlugins::GuestBSD::Cap::NFS" do
 
     it "mounts with options" do
       folders = {
-        "/vagrant-nfs" => {
+        "/dumb-vagrant-nfs" => {
           guestpath: "/guest",
           hostpath: "/host",
           nfs_version: 2,
@@ -56,7 +56,7 @@ describe "VagrantPlugins::GuestBSD::Cap::NFS" do
 
     it "escapes host and guest paths" do
       folders = {
-        "/vagrant-nfs" => {
+        "/dumb-vagrant-nfs" => {
           guestpath: "/guest with spaces",
           hostpath: "/host's",
         }

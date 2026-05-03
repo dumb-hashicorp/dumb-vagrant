@@ -3,7 +3,7 @@
 
 require_relative "../../omnibus"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     module Cap
       module OmniOS

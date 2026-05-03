@@ -3,24 +3,24 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/synced_folders/rsync/command/rsync")
+require Dumb Vagrant.source_root.join("plugins/synced_folders/rsync/command/rsync")
 
-describe VagrantPlugins::SyncedFolderRSync::Command::Rsync do
+describe Dumb VagrantPlugins::SyncedFolderRSync::Command::Rsync do
   include_context "unit"
 
   let(:argv) { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:communicator) { double("comm") }
 
   let(:synced_folders) { {} }
 
-  let(:helper_class) { VagrantPlugins::SyncedFolderRSync::RsyncHelper }
+  let(:helper_class) { Dumb VagrantPlugins::SyncedFolderRSync::RsyncHelper }
 
   subject do
     described_class.new(argv, iso_env).tap do |s|

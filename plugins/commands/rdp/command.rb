@@ -3,9 +3,9 @@
 
 require "optparse"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandRDP
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
         "connects to machine via RDP"
       end
@@ -14,7 +14,7 @@ module VagrantPlugins
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant rdp [options] [name|id] [-- extra args]"
+          o.banner = "Usage: dumb-vagrant rdp [options] [name|id] [-- extra args]"
         end
 
         # Parse out the extra args to send to the RDP client, which
@@ -35,10 +35,10 @@ module VagrantPlugins
         # Execute RDP if we can
         with_target_vms(argv, single_target: true) do |machine|
           if !machine.communicate.ready?
-            raise Vagrant::Errors::VMNotCreatedError
+            raise Dumb Vagrant::Errors::VMNotCreatedError
           end
 
-          machine.ui.output(I18n.t("vagrant_rdp.detecting"))
+          machine.ui.output(I18n.t("dumb-vagrant_rdp.detecting"))
           rdp_info = get_rdp_info(machine)
           raise Errors::RDPUndetected if !rdp_info
 
@@ -49,7 +49,7 @@ module VagrantPlugins
             "Address: #{rdp_info[:host]}:#{rdp_info[:port]}")
           machine.ui.detail("Username: #{rdp_info[:username]}")
 
-          machine.ui.success(I18n.t("vagrant_rdp.connecting"))
+          machine.ui.success(I18n.t("dumb-vagrant_rdp.connecting"))
           @env.host.capability(:rdp_client, rdp_info)
         end
       end

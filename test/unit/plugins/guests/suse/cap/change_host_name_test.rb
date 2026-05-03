@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSUSE::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestSUSE::Cap::ChangeHostName" do
   let(:caps) do
-    VagrantPlugins::GuestSUSE::Plugin
+    Dumb VagrantPlugins::GuestSUSE::Plugin
       .components
       .guest_capabilities[:suse]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:cap) { caps.get(:change_host_name) }
   let(:name) { "banana-rama.example.com" }
   let(:basename) { "banana-rama" }

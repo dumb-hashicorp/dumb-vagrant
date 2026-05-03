@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestNixos
-    class Guest < Vagrant.plugin("2", :guest)
+    class Guest < Dumb Vagrant.plugin("2", :guest)
       def detect?(machine)
         # For some reason our test passes on Windows, so just short
         # circuit because we're not Windows.

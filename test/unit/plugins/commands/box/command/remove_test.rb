@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/box/command/remove")
+require Dumb Vagrant.source_root.join("plugins/commands/box/command/remove")
 
-describe VagrantPlugins::CommandBox::Command::Remove do
+describe Dumb VagrantPlugins::CommandBox::Command::Remove do
   include_context "unit"
 
   let(:argv)     { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   subject { described_class.new(argv, iso_env) }
@@ -27,7 +27,7 @@ describe VagrantPlugins::CommandBox::Command::Remove do
   context "with no arguments" do
     it "shows help" do
       expect { subject.execute }.
-        to raise_error(Vagrant::Errors::CLIInvalidUsage)
+        to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
     end
   end
 
@@ -78,7 +78,7 @@ describe VagrantPlugins::CommandBox::Command::Remove do
 
     it "shows help" do
       expect { subject.execute }.
-        to raise_error(Vagrant::Errors::CLIInvalidUsage)
+        to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
     end
   end
 

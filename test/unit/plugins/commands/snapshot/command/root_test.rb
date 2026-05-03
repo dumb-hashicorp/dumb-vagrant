@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/snapshot/command/root")
+require Dumb Vagrant.source_root.join("plugins/commands/snapshot/command/root")
 
-describe VagrantPlugins::CommandSnapshot::Command::Root do
+describe Dumb VagrantPlugins::CommandSnapshot::Command::Root do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:argv) { [] }
@@ -24,7 +24,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Root do
       let(:argv)     { ["--help"] }
       it "shows help" do
         expect(iso_env.ui).
-          to receive(:info).with(/Usage: vagrant snapshot <subcommand>/, anything)
+          to receive(:info).with(/Usage: dumb-vagrant snapshot <subcommand>/, anything)
         expect(subject.execute).to eq(0)
       end
     end
@@ -33,7 +33,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Root do
       let(:argv)     { [] }
       it "shows help and fails" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
@@ -41,7 +41,7 @@ describe VagrantPlugins::CommandSnapshot::Command::Root do
       let(:argv)     { ["invalid"] }
       it "shows help and fails" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
   end

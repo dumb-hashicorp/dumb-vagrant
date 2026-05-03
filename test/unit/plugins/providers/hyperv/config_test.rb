@@ -3,12 +3,12 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/config")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/config")
 
-describe VagrantPlugins::HyperV::Config do
+describe Dumb VagrantPlugins::HyperV::Config do
 
   let(:machine){ double("machine", ui: ui) }
-  let(:ui){ Vagrant::UI::Silent.new }
+  let(:ui){ Dumb Vagrant::UI::Silent.new }
 
   describe "#ip_address_timeout" do
     it "can be set" do

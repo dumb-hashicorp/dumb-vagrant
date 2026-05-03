@@ -3,7 +3,7 @@
 
 require "set"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandUp
     module StartMixins
       # This adds the standard `start` command line flags to the given
@@ -45,9 +45,9 @@ module VagrantPlugins
 
         if (provisioner_names & options[:provision_types]).empty?
           (options[:provision_types] || []).each do |type|
-              klass = Vagrant.plugin("2").manager.provisioners[type]
+              klass = Dumb Vagrant.plugin("2").manager.provisioners[type]
               if !klass
-                raise Vagrant::Errors::ProvisionerFlagInvalid,
+                raise Dumb Vagrant::Errors::ProvisionerFlagInvalid,
                   name: type.to_s
               end
           end

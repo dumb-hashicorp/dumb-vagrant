@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/chef/config/chef_client")
+require Dumb Vagrant.source_root.join("plugins/provisioners/chef/config/chef_client")
 
-describe VagrantPlugins::Chef::Config::ChefClient do
+describe Dumb VagrantPlugins::Chef::Config::ChefClient do
   include_context "unit"
 
   subject { described_class.new }
@@ -72,7 +72,7 @@ describe VagrantPlugins::Chef::Config::ChefClient do
       it "returns an error" do
         subject.chef_server_url = nil
         subject.finalize!
-        expect(errors).to eq([I18n.t("vagrant.config.chef.server_url_empty")])
+        expect(errors).to eq([I18n.t("dumb-vagrant.config.chef.server_url_empty")])
       end
     end
 
@@ -80,7 +80,7 @@ describe VagrantPlugins::Chef::Config::ChefClient do
       it "returns an error" do
         subject.chef_server_url = "  "
         subject.finalize!
-        expect(errors).to eq([I18n.t("vagrant.config.chef.server_url_empty")])
+        expect(errors).to eq([I18n.t("dumb-vagrant.config.chef.server_url_empty")])
       end
     end
 
@@ -88,7 +88,7 @@ describe VagrantPlugins::Chef::Config::ChefClient do
       it "returns an error" do
         subject.validation_key_path = nil
         subject.finalize!
-        expect(errors).to eq([I18n.t("vagrant.config.chef.validation_key_path")])
+        expect(errors).to eq([I18n.t("dumb-vagrant.config.chef.validation_key_path")])
       end
     end
 
@@ -96,7 +96,7 @@ describe VagrantPlugins::Chef::Config::ChefClient do
       it "returns an error" do
         subject.validation_key_path = "  "
         subject.finalize!
-        expect(errors).to eq([I18n.t("vagrant.config.chef.validation_key_path")])
+        expect(errors).to eq([I18n.t("dumb-vagrant.config.chef.validation_key_path")])
       end
     end
   end

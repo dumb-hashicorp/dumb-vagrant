@@ -3,10 +3,10 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandBox
     module Command
-      class Root < Vagrant.plugin("2", :command)
+      class Root < Dumb Vagrant.plugin("2", :command)
         def self.synopsis
           "manages boxes: installation, removal, etc."
         end
@@ -16,7 +16,7 @@ module VagrantPlugins
 
           @main_args, @sub_command, @sub_args = split_main_and_subcommand(argv)
 
-          @subcommands = Vagrant::Registry.new
+          @subcommands = Dumb Vagrant::Registry.new
           @subcommands.register(:add) do
             require File.expand_path("../add", __FILE__)
             Add
@@ -72,7 +72,7 @@ module VagrantPlugins
         # Prints the help out for this command
         def help
           opts = OptionParser.new do |opts|
-            opts.banner = "Usage: vagrant box <subcommand> [<args>]"
+            opts.banner = "Usage: dumb-vagrant box <subcommand> [<args>]"
             opts.separator ""
             opts.separator "Available subcommands:"
 
@@ -85,7 +85,7 @@ module VagrantPlugins
               opts.separator "     #{key}"
             end
             opts.separator ""
-            opts.separator "For help on any individual subcommand run `vagrant box <subcommand> -h`"
+            opts.separator "For help on any individual subcommand run `dumb-vagrant box <subcommand> -h`"
           end
 
           @env.ui.info(opts.help, prefix: false)

@@ -3,22 +3,22 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSnapshot
     module Command
-      class Save < Vagrant.plugin("2", :command)
+      class Save < Dumb Vagrant.plugin("2", :command)
         def execute
           options = {}
           options[:force] = false
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant snapshot save [options] [vm-name] <name>"
+            o.banner = "Usage: dumb-vagrant snapshot save [options] [vm-name] <name>"
             o.separator ""
             o.separator "Take a snapshot of the current state of the machine. The snapshot"
-            o.separator "can be restored via `vagrant snapshot restore` at any point in the"
+            o.separator "can be restored via `dumb-vagrant snapshot restore` at any point in the"
             o.separator "future to get back to this exact machine state."
             o.separator ""
-            o.separator "If no vm-name is given, Vagrant will take a snapshot of"
+            o.separator "If no vm-name is given, Dumb Vagrant will take a snapshot of"
             o.separator "the entire environment with the same snapshot name."
             o.separator ""
             o.separator "Snapshots are useful for experimenting in a machine and being able"
@@ -33,7 +33,7 @@ module VagrantPlugins
           argv = parse_options(opts)
           return if !argv
           if argv.empty? || argv.length > 2
-            raise Vagrant::Errors::CLIInvalidUsage,
+            raise Dumb Vagrant::Errors::CLIInvalidUsage,
               help: opts.help.chomp
           end
 
@@ -41,14 +41,14 @@ module VagrantPlugins
 
           with_target_vms(argv) do |vm|
             if !vm.provider.capability?(:snapshot_list)
-              raise Vagrant::Errors::SnapshotNotSupported
+              raise Dumb Vagrant::Errors::SnapshotNotSupported
             end
 
             # In this case, no vm name was given, and we are iterating over the
             # entire environment. If a vm hasn't been created yet, we can't list
             # its snapshots
             if vm.id.nil?
-              @env.ui.warn(I18n.t("vagrant.commands.snapshot.save.vm_not_created",
+              @env.ui.warn(I18n.t("dumb-vagrant.commands.snapshot.save.vm_not_created",
                                   name: vm.name))
               next
             end
@@ -62,7 +62,7 @@ module VagrantPlugins
               vm.action(:snapshot_delete, snapshot_name: name)
               vm.action(:snapshot_save, snapshot_name: name)
             else
-              raise Vagrant::Errors::SnapshotConflictFailed
+              raise Dumb Vagrant::Errors::SnapshotConflictFailed
             end
           end
 

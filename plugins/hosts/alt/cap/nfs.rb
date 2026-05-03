@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/subprocess"
-require "vagrant/util/which"
+require "dumb-vagrant/util/subprocess"
+require "dumb-vagrant/util/which"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostALT
     module Cap
       class NFS
@@ -37,7 +37,7 @@ module VagrantPlugins
         # This tests to see if systemd is used on the system. This is used
         # in newer versions of ALT, and requires a change in behavior.
         def self.systemd?
-          result = Vagrant::Util::Subprocess.execute("ps", "-o", "comm=", "1")
+          result = Dumb Vagrant::Util::Subprocess.execute("ps", "-o", "comm=", "1")
           return result.stdout.chomp == "systemd"
         end
       end

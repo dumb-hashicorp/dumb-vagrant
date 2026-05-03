@@ -1,33 +1,33 @@
 ---
 layout: docs
-page_title: vagrant global-status - Command-Line Interface
+page_title: dumb-vagrant global-status - Command-Line Interface
 description: |-
-  The "vagrant global-status" command is used to determine the state of all
-  active Vagrant environments on the system for the currently logged in user.
+  The "dumb-vagrant global-status" command is used to determine the state of all
+  active Dumb Vagrant environments on the system for the currently logged in user.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Global Status
 
-**Command: `vagrant global-status`**
+**Command: `dumb-vagrant global-status`**
 
-This command will tell you the state of all active Vagrant environments
+This command will tell you the state of all active Dumb Vagrant environments
 on the system for the currently logged in user.
 
 ~> **This command does not actively verify the state of machines**,
 and is instead based on a cache. Because of this, it is possible to see
 stale results (machines say they're running but they're not). For example,
-if you restart your computer, Vagrant would not know. To prune the invalid
+if you restart your computer, Dumb Vagrant would not know. To prune the invalid
 entries, run global status with the `--prune` flag.
 
 The IDs in the output that look like `a1b2c3` can be used to control
-the Vagrant machine from anywhere on the system. Any Vagrant command
+the Dumb Vagrant machine from anywhere on the system. Any Dumb Vagrant command
 that takes a target machine (such as `up`, `halt`, `destroy`) can be
-used with this ID to control it. For example: `vagrant destroy a1b2c3`.
+used with this ID to control it. For example: `dumb-vagrant destroy a1b2c3`.
 
 ## Options
 
@@ -36,8 +36,8 @@ used with this ID to control it. For example: `vagrant destroy a1b2c3`.
 
 ## Environment Not Showing Up
 
-If your environment is not showing up, you may have to do a `vagrant destroy`
-followed by a `vagrant up`.
+If your environment is not showing up, you may have to do a `dumb-vagrant destroy`
+followed by a `dumb-vagrant up`.
 
-If you just upgraded from a previous version of Vagrant, existing environments
+If you just upgraded from a previous version of Dumb Vagrant, existing environments
 will not show up in global-status until they are destroyed and recreated.

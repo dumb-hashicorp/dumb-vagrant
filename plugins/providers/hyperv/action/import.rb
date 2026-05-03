@@ -4,7 +4,7 @@
 require "fileutils"
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class Import
@@ -13,7 +13,7 @@ module VagrantPlugins
 
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::hyperv::import")
+          @logger = Log4r::Logger.new("dumb-vagrant::hyperv::import")
         end
 
         def call(env)
@@ -64,11 +64,11 @@ module VagrantPlugins
           dest_path = env[:machine].data_dir.join("Virtual Hard Disks").join(image_path.basename).to_s
 
           options = {
-            "VMConfigFile" => Vagrant::Util::Platform.wsl_to_windows_path(config_path).gsub("/", "\\"),
-            "DestinationPath" => Vagrant::Util::Platform.wsl_to_windows_path(dest_path).gsub("/", "\\"),
-            "DataPath" => Vagrant::Util::Platform.wsl_to_windows_path(env[:machine].data_dir).gsub("/", "\\"),
+            "VMConfigFile" => Dumb Vagrant::Util::Platform.wsl_to_windows_path(config_path).gsub("/", "\\"),
+            "DestinationPath" => Dumb Vagrant::Util::Platform.wsl_to_windows_path(dest_path).gsub("/", "\\"),
+            "DataPath" => Dumb Vagrant::Util::Platform.wsl_to_windows_path(env[:machine].data_dir).gsub("/", "\\"),
             "LinkedClone" => !!env[:machine].provider_config.linked_clone,
-            "SourcePath" => Vagrant::Util::Platform.wsl_to_windows_path(image_path).gsub("/", "\\"),
+            "SourcePath" => Dumb Vagrant::Util::Platform.wsl_to_windows_path(image_path).gsub("/", "\\"),
             "VMName" => env[:machine].provider_config.vmname,
             "Memory" => env[:machine].provider_config.memory,
             "MaxMemory" => env[:machine].provider_config.maxmemory,

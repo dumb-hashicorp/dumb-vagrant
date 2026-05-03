@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class ClearForwardedPorts
@@ -11,7 +11,7 @@ module VagrantPlugins
 
         def call(env)
           if !env[:machine].provider.driver.read_forwarded_ports.empty?
-            env[:ui].info I18n.t("vagrant.actions.vm.clear_forward_ports.deleting")
+            env[:ui].info I18n.t("dumb-vagrant.actions.vm.clear_forward_ports.deleting")
             env[:machine].provider.driver.clear_forwarded_ports
           end
 

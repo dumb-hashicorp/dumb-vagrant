@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module FileUpload
-    class Provisioner < Vagrant.plugin("2", :provisioner)
+    class Provisioner < Dumb Vagrant.plugin("2", :provisioner)
       def provision
         @machine.communicate.tap do |comm|
           source = File.expand_path(config.source, @machine.env.cwd)
@@ -24,7 +24,7 @@ module VagrantPlugins
             end
           end
 
-          @machine.ui.detail(I18n.t("vagrant.actions.vm.provision.file.locations",
+          @machine.ui.detail(I18n.t("dumb-vagrant.actions.vm.provision.file.locations",
                                    src: config.source, dst: config.destination))
           # now upload the file
           comm.upload(source, destination)

@@ -3,15 +3,15 @@
 
 require_relative "../../base"
 
-require Vagrant.source_root.join("plugins/synced_folders/unix_mount_helpers")
+require Dumb Vagrant.source_root.join("plugins/synced_folders/unix_mount_helpers")
 
-describe VagrantPlugins::SyncedFolder::UnixMountHelpers do
+describe Dumb VagrantPlugins::SyncedFolder::UnixMountHelpers do
   include_context "unit"
 
   subject{
     Class.new do |c|
       def self.name; "UnixMountHelpersTest"; end
-      extend VagrantPlugins::SyncedFolder::UnixMountHelpers
+      extend Dumb VagrantPlugins::SyncedFolder::UnixMountHelpers
     end
   }
 

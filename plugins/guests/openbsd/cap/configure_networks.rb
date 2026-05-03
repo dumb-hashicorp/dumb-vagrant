@@ -3,25 +3,25 @@
 
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestOpenBSD
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
+        include Dumb Vagrant::Util
 
         def self.configure_networks(machine, networks)
           networks.each do |network|
             entry = TemplateRenderer.render("guests/openbsd/network_#{network[:type]}",
                                             options: network)
 
-            Tempfile.open("vagrant-openbsd-configure-networks") do |f|
+            Tempfile.open("dumb-vagrant-openbsd-configure-networks") do |f|
               f.binmode
               f.write(entry)
               f.fsync
               f.close
-              machine.communicate.upload(f.path, "/tmp/vagrant-network-entry")
+              machine.communicate.upload(f.path, "/tmp/dumb-vagrant-network-entry")
             end
 
             # Determine the interface prefix...
@@ -37,7 +37,7 @@ module VagrantPlugins
               end
             end
 
-            machine.communicate.sudo("mv /tmp/vagrant-network-entry /etc/hostname.#{ifname}")
+            machine.communicate.sudo("mv /tmp/dumb-vagrant-network-entry /etc/hostname.#{ifname}")
 
             # apply new configurations
             machine.communicate.sudo("sh /etc/netstart #{ifname}")

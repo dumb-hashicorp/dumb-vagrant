@@ -1,20 +1,20 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util"
+require "dumb-vagrant/util"
 
 require_relative "../../../synced_folders/unix_mount_helpers"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class PersistMountSharedFolder
         extend SyncedFolder::UnixMountHelpers
 
-        @@logger = Log4r::Logger.new("vagrant::guest::linux::persist_mount_shared_folders")
+        @@logger = Log4r::Logger.new("dumb-vagrant::guest::linux::persist_mount_shared_folders")
 
         # Inserts fstab entry for a set of synced folders. Will fully replace
-        # the currently managed group of Vagrant managed entries. Note, passing
+        # the currently managed group of Dumb Vagrant managed entries. Note, passing
         # empty list of folders will just remove entries
         #
         # @param [Machine] machine The machine to run the action on
@@ -22,7 +22,7 @@ module VagrantPlugins
         def self.persist_mount_shared_folder(machine, folders)
           if folders.nil?
             @@logger.info("clearing /etc/fstab")
-            self.remove_vagrant_managed_fstab(machine)
+            self.remove_dumb-vagrant_managed_fstab(machine)
             return
           end
 
@@ -53,8 +53,8 @@ module VagrantPlugins
           }.flatten.compact
 
 
-          fstab_entry = Vagrant::Util::TemplateRenderer.render('guests/linux/etc_fstab', folders: export_folders)
-          self.remove_vagrant_managed_fstab(machine)
+          fstab_entry = Dumb Vagrant::Util::TemplateRenderer.render('guests/linux/etc_fstab', folders: export_folders)
+          self.remove_dumb-vagrant_managed_fstab(machine)
           machine.communicate.sudo("echo '#{fstab_entry}' >> /etc/fstab")
         end
 
@@ -64,16 +64,16 @@ module VagrantPlugins
           machine.communicate.test("test -f /etc/fstab")
         end
 
-        def self.contains_vagrant_data?(machine)
-          machine.communicate.test("grep '#VAGRANT-BEGIN' /etc/fstab")
+        def self.contains_dumb-vagrant_data?(machine)
+          machine.communicate.test("grep '#DUMB_VAGRANT-BEGIN' /etc/fstab")
         end
 
-        def self.remove_vagrant_managed_fstab(machine)
+        def self.remove_dumb-vagrant_managed_fstab(machine)
           if fstab_exists?(machine)
-            if contains_vagrant_data?(machine)
-                machine.communicate.sudo("sed -i '/\#VAGRANT-BEGIN/,/\#VAGRANT-END/d' /etc/fstab")
+            if contains_dumb-vagrant_data?(machine)
+                machine.communicate.sudo("sed -i '/\#DUMB_VAGRANT-BEGIN/,/\#DUMB_VAGRANT-END/d' /etc/fstab")
             else
-                @@logger.info("no vagrant data in fstab file, carrying on")
+                @@logger.info("no dumb-vagrant data in fstab file, carrying on")
             end
           else
             @@logger.info("no fstab file found, carrying on")

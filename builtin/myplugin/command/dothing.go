@@ -4,11 +4,11 @@
 package command
 
 import (
-	"github.com/hashicorp/vagrant-plugin-sdk/component"
-	"github.com/hashicorp/vagrant-plugin-sdk/docs"
-	"github.com/hashicorp/vagrant-plugin-sdk/localizer"
-	"github.com/hashicorp/vagrant-plugin-sdk/terminal"
-	"github.com/hashicorp/vagrant/builtin/myplugin/locales"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/component"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/docs"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/localizer"
+	"github.com/dumb-hashicorp/dumb-vagrant-plugin-sdk/terminal"
+	"github.com/dumb-hashicorp/dumb-vagrant/builtin/myplugin/locales"
 	"golang.org/x/text/language"
 )
 
@@ -62,7 +62,7 @@ func (c *DoThing) Synopsis() string {
 }
 
 func (c *DoThing) Help() string {
-	return "Usage: vagrant myplugin dothing"
+	return "Usage: dumb-vagrant myplugin dothing"
 }
 
 func (c *DoThing) Flags() component.CommandFlags {

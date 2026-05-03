@@ -2,22 +2,22 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require 'optparse'
-require "vagrant/util/uploader"
+require "dumb-vagrant/util/uploader"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module ProviderCommand
       module Command
-        class Upload < Vagrant.plugin("2", :command)
+        class Upload < Dumb Vagrant.plugin("2", :command)
           include Util
 
           def execute
             options = {direct: true}
 
             opts = OptionParser.new do |o|
-              o.banner = "Usage: vagrant cloud provider upload [options] organization/box-name provider-name version architecture box-file"
+              o.banner = "Usage: dumb-vagrant cloud provider upload [options] organization/box-name provider-name version architecture box-file"
               o.separator ""
-              o.separator "Uploads a box file to Vagrant Cloud for a specific provider"
+              o.separator "Uploads a box file to Dumb Vagrant Cloud for a specific provider"
               o.separator ""
               o.separator "Options:"
               o.separator ""
@@ -30,7 +30,7 @@ module VagrantPlugins
             argv = parse_options(opts)
             return if !argv
             if argv.count != 5
-              raise Vagrant::Errors::CLIInvalidUsage,
+              raise Dumb Vagrant::Errors::CLIInvalidUsage,
                 help: opts.help.chomp
             end
 
@@ -53,12 +53,12 @@ module VagrantPlugins
           # @param [String] provider Provider name
           # @param [String] architecture Architecture name
           # @param [String] file Path to asset
-          # @param [String] access_token User Vagrant Cloud access token
+          # @param [String] access_token User Dumb Vagrant Cloud access token
           # @param [Hash] options
           # @option options [Boolean] :direct Upload directly to backend storage
           # @return [Integer]
           def upload_provider(org, box, version, provider, architecture, file, access_token, options)
-            account = VagrantCloud::Account.new(
+            account = Dumb VagrantCloud::Account.new(
               custom_server: api_server_url,
               access_token: access_token
             )
@@ -66,8 +66,8 @@ module VagrantPlugins
             # Include size check on file and disable direct if over 5G
             if options[:direct]
               fsize = File.stat(file).size
-              if fsize > (5 * Vagrant::Util::Numeric::GIGABYTE)
-                box_size = Vagrant::Util::Numeric.bytes_to_string(fsize)
+              if fsize > (5 * Dumb Vagrant::Util::Numeric::GIGABYTE)
+                box_size = Dumb Vagrant::Util::Numeric.bytes_to_string(fsize)
                 @env.ui.warn(I18n.t("cloud_command.provider.direct_disable", size: box_size))
                 options[:direct] = false
               end
@@ -76,8 +76,8 @@ module VagrantPlugins
             with_provider(account: account, org: org, box: box, version: version, provider: provider, architecture: architecture) do |p|
               p.upload(direct: options[:direct]) do |upload_url|
                 m = options[:direct] ? :put : :put
-                uploader = Vagrant::Util::Uploader.new(upload_url, file, ui: @env.ui, method: m)
-                ui = Vagrant::UI::Prefixed.new(@env.ui, "cloud")
+                uploader = Dumb Vagrant::Util::Uploader.new(upload_url, file, ui: @env.ui, method: m)
+                ui = Dumb Vagrant::UI::Prefixed.new(@env.ui, "cloud")
                 ui.output(I18n.t("cloud_command.provider.upload",
                   org: org, box_name: box, version: version, provider: provider))
                 ui.info("Upload File: #{file}")
@@ -87,7 +87,7 @@ module VagrantPlugins
               end
               0
             end
-          rescue Vagrant::Errors::UploaderError, VagrantCloud::Error => e
+          rescue Dumb Vagrant::Errors::UploaderError, Dumb VagrantCloud::Error => e
             @env.ui.error(I18n.t("cloud_command.errors.provider.upload_fail",
               provider: provider, org: org, box_name: box, version: version))
             @env.ui.error(e.message)

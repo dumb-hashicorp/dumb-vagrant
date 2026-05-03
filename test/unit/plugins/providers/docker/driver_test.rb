@@ -3,9 +3,9 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/providers/docker/driver")
+require Dumb Vagrant.source_root.join("plugins/providers/docker/driver")
 
-describe VagrantPlugins::DockerProvider::Driver do
+describe Dumb VagrantPlugins::DockerProvider::Driver do
   let(:cmd_executed) { @cmd }
   let(:cid)          { 'side-1-song-10' }
   let(:execute_result) {
@@ -20,18 +20,18 @@ describe VagrantPlugins::DockerProvider::Driver do
   let(:stdout) { "" }
 
   before do
-    allow(Vagrant::Util::Subprocess).to receive(:execute) { |*args|
+    allow(Dumb Vagrant::Util::Subprocess).to receive(:execute) { |*args|
       if args.last.is_a?(Hash)
         args = args[0, args.size - 1]
       end
       invalid = args.detect { |a| !a.is_a?(String) }
       if invalid
         raise TypeError,
-          "Vagrant::Util::Subprocess#execute only accepts signle option Hash and String arguments, received `#{invalid.class}'"
+          "Dumb Vagrant::Util::Subprocess#execute only accepts signle option Hash and String arguments, received `#{invalid.class}'"
       end
       @cmd = args.join(" ")
     }.and_return(execute_result)
-    allow_any_instance_of(Vagrant::Errors::VagrantError).
+    allow_any_instance_of(Dumb Vagrant::Errors::Dumb VagrantError).
       to receive(:translate_error) { |*args| args.join(" ") }
   end
 
@@ -63,7 +63,7 @@ describe VagrantPlugins::DockerProvider::Driver do
         "ConfigOnly": false,
         "Containers": {
             "a1ee9b12bcea8268495b1f43e8d1285df1925b7174a695075f6140adb9415d87": {
-                "Name": "vagrant-sandbox_docker-1_1553116237",
+                "Name": "dumb-vagrant-sandbox_docker-1_1553116237",
                 "EndpointID": "fc1b0ed6e4f700cf88bb26a98a0722655191542e90df3e3492461f4d1f3c0cae",
                 "MacAddress": "02:42:ac:11:00:02",
                 "IPv4Address": "172.17.0.2/16",
@@ -104,7 +104,7 @@ describe VagrantPlugins::DockerProvider::Driver do
         "Labels": {}
     },
     {
-        "Name": "vagrant_network",
+        "Name": "dumb-vagrant_network",
         "Id": "93385d4fd3cf7083a36e62fa72a0ad0a21203d0ddf48409c32b550cd8462b3ba",
         "Created": "2019-03-20T14:10:36.828235585-07:00",
         "Scope": "local",
@@ -129,7 +129,7 @@ describe VagrantPlugins::DockerProvider::Driver do
         "ConfigOnly": false,
         "Containers": {
             "a1ee9b12bcea8268495b1f43e8d1285df1925b7174a695075f6140adb9415d87": {
-                "Name": "vagrant-sandbox_docker-1_1553116237",
+                "Name": "dumb-vagrant-sandbox_docker-1_1553116237",
                 "EndpointID": "9502cd9d37ae6815e3ffeb0bc2de9b84f79e7223e8a1f8f4ccc79459e96c7914",
                 "MacAddress": "02:42:ac:12:00:02",
                 "IPv4Address": "172.18.0.2/16",
@@ -140,7 +140,7 @@ describe VagrantPlugins::DockerProvider::Driver do
         "Labels": {}
     },
     {
-        "Name": "vagrant_network_172.20.0.0/16",
+        "Name": "dumb-vagrant_network_172.20.0.0/16",
         "Id": "649f0ab3ef0eef6f2a025c0d0398bd7b9b4d05ec88b0d7bd573b44153d903cfb",
         "Created": "2019-03-20T14:10:37.088885647-07:00",
         "Scope": "local",
@@ -164,7 +164,7 @@ describe VagrantPlugins::DockerProvider::Driver do
         "ConfigOnly": false,
         "Containers": {
             "a1ee9b12bcea8268495b1f43e8d1285df1925b7174a695075f6140adb9415d87": {
-                "Name": "vagrant-sandbox_docker-1_1553116237",
+                "Name": "dumb-vagrant-sandbox_docker-1_1553116237",
                 "EndpointID": "e19156f8018f283468227fa97c145f4ea0eaba652fb7e977a0c759b1c3ec168a",
                 "MacAddress": "02:42:ac:14:80:02",
                 "IPv4Address": "172.20.0.2/16",
@@ -330,7 +330,7 @@ describe VagrantPlugins::DockerProvider::Driver do
     let(:translated_path) { "//c/Users/BobDylan/AllAlong:/The/Watchtower" }
 
     before do
-      allow(Vagrant::Util::Platform).to receive(:windows?).and_return(true)
+      allow(Dumb Vagrant::Util::Platform).to receive(:windows?).and_return(true)
       subject.create(params)
     end
 
@@ -641,7 +641,7 @@ describe VagrantPlugins::DockerProvider::Driver do
         "ConfigOnly": false,
         "Containers": {
             "a1ee9b12bcea8268495b1f43e8d1285df1925b7174a695075f6140adb9415d87": {
-                "Name": "vagrant-sandbox_docker-1_1553116237",
+                "Name": "dumb-vagrant-sandbox_docker-1_1553116237",
                 "EndpointID": "fc1b0ed6e4f700cf88bb26a98a0722655191542e90df3e3492461f4d1f3c0cae",
                 "MacAddress": "02:42:ac:11:00:02",
                 "IPv4Address": "172.17.0.2/16",
@@ -679,8 +679,8 @@ describe VagrantPlugins::DockerProvider::Driver do
     let(:opts) { ["--ip", "172.20.128.2"] }
 
     it 'connects a network to a container' do
-      subject.connect_network("vagrant_network", cid, opts)
-      expect(cmd_executed).to eq("docker network connect vagrant_network #{cid} --ip 172.20.128.2")
+      subject.connect_network("dumb-vagrant_network", cid, opts)
+      expect(cmd_executed).to eq("docker network connect dumb-vagrant_network #{cid} --ip 172.20.128.2")
     end
   end
 
@@ -688,22 +688,22 @@ describe VagrantPlugins::DockerProvider::Driver do
     let(:opts) { ["--subnet", "172.20.0.0/16"] }
 
     it 'creates a network' do
-      subject.create_network("vagrant_network", opts)
-      expect(cmd_executed).to eq("docker network create vagrant_network --subnet 172.20.0.0/16")
+      subject.create_network("dumb-vagrant_network", opts)
+      expect(cmd_executed).to eq("docker network create dumb-vagrant_network --subnet 172.20.0.0/16")
     end
   end
 
   describe '#docker_disconnet_network' do
     it 'disconnects a network from a container' do
-      subject.disconnect_network("vagrant_network", cid)
-      expect(cmd_executed).to eq("docker network disconnect vagrant_network #{cid} --force")
+      subject.disconnect_network("dumb-vagrant_network", cid)
+      expect(cmd_executed).to eq("docker network disconnect dumb-vagrant_network #{cid} --force")
     end
   end
 
   describe '#docker_inspect_network' do
     it 'gets info about a network' do
-      subject.inspect_network("vagrant_network")
-      expect(cmd_executed).to eq("docker network inspect vagrant_network")
+      subject.inspect_network("dumb-vagrant_network")
+      expect(cmd_executed).to eq("docker network inspect dumb-vagrant_network")
     end
   end
 
@@ -716,14 +716,14 @@ describe VagrantPlugins::DockerProvider::Driver do
 
   describe '#docker_rm_network' do
     it 'deletes a docker network' do
-      subject.rm_network("vagrant_network")
-      expect(cmd_executed).to eq("docker network rm vagrant_network")
+      subject.rm_network("dumb-vagrant_network")
+      expect(cmd_executed).to eq("docker network rm dumb-vagrant_network")
     end
   end
 
   describe '#network_defined?' do
     let(:subnet_string) { "172.20.0.0/16" }
-    let(:network_names) { ["vagrant_network_172.20.0.0/16", "bridge", "null" ] }
+    let(:network_names) { ["dumb-vagrant_network_172.20.0.0/16", "bridge", "null" ] }
 
     before do
       allow(subject).to receive(:list_network_names).and_return(network_names)
@@ -732,7 +732,7 @@ describe VagrantPlugins::DockerProvider::Driver do
 
     it "returns network name if defined" do
       network_name = subject.network_defined?(subnet_string)
-      expect(network_name).to eq("vagrant_network_172.20.0.0/16")
+      expect(network_name).to eq("dumb-vagrant_network_172.20.0.0/16")
     end
 
     it "returns nil name if not defined" do
@@ -763,7 +763,7 @@ describe VagrantPlugins::DockerProvider::Driver do
             "ConfigOnly": false,
             "Containers": {
               "a1ee9b12bcea8268495b1f43e8d1285df1925b7174a695075f6140adb9415d87": {
-                "Name": "vagrant-sandbox_docker-1_1553116237",
+                "Name": "dumb-vagrant-sandbox_docker-1_1553116237",
                 "EndpointID": "fc1b0ed6e4f700cf88bb26a98a0722655191542e90df3e3492461f4d1f3c0cae",
                 "MacAddress": "02:42:ac:11:00:02",
                 "IPv4Address": "172.17.0.2/16",
@@ -807,7 +807,7 @@ describe VagrantPlugins::DockerProvider::Driver do
             "ConfigOnly": false,
             "Containers": {
               "a1ee9b12bcea8268495b1f43e8d1285df1925b7174a695075f6140adb9415d87": {
-                "Name": "vagrant-sandbox_docker-1_1553116237",
+                "Name": "dumb-vagrant-sandbox_docker-1_1553116237",
                 "EndpointID": "fc1b0ed6e4f700cf88bb26a98a0722655191542e90df3e3492461f4d1f3c0cae",
                 "MacAddress": "02:42:ac:11:00:02",
                 "IPv4Address": "172.17.0.2/16",
@@ -835,14 +835,14 @@ describe VagrantPlugins::DockerProvider::Driver do
 
   describe '#network_containing_address' do
     let(:address) { "172.20.128.2" }
-    let(:network_names) { ["vagrant_network_172.20.0.0/16", "bridge", "null" ] }
+    let(:network_names) { ["dumb-vagrant_network_172.20.0.0/16", "bridge", "null" ] }
 
     it "returns the network name if it contains the requested address" do
       allow(subject).to receive(:list_network_names).and_return(network_names)
       allow(subject).to receive(:inspect_network).and_return(JSON.load(docker_network_struct))
 
       network_name = subject.network_containing_address(address)
-      expect(network_name).to eq("vagrant_network_172.20.0.0/16")
+      expect(network_name).to eq("dumb-vagrant_network_172.20.0.0/16")
     end
 
     it "returns nil if no networks contain the requested address" do
@@ -855,24 +855,24 @@ describe VagrantPlugins::DockerProvider::Driver do
   end
 
   describe '#existing_named_network?' do
-    let(:network_names) { ["vagrant_network_172.20.0.0/16", "bridge", "null" ] }
+    let(:network_names) { ["dumb-vagrant_network_172.20.0.0/16", "bridge", "null" ] }
 
     it "returns true if the network exists" do
       allow(subject).to receive(:list_network_names).and_return(network_names)
 
-      expect(subject.existing_named_network?("vagrant_network_172.20.0.0/16")).to be_truthy
+      expect(subject.existing_named_network?("dumb-vagrant_network_172.20.0.0/16")).to be_truthy
     end
 
     it "returns false if the network does not exist" do
       allow(subject).to receive(:list_network_names).and_return(network_names)
 
-      expect(subject.existing_named_network?("vagrant_network_17.0.0/16")).to be_falsey
+      expect(subject.existing_named_network?("dumb-vagrant_network_17.0.0/16")).to be_falsey
     end
   end
 
   describe '#list_network_names' do
-    let(:unparsed_network_names) { "vagrant_network_172.20.0.0/16\nbridge\nnull" }
-    let(:network_names) { ["vagrant_network_172.20.0.0/16", "bridge", "null" ] }
+    let(:unparsed_network_names) { "dumb-vagrant_network_172.20.0.0/16\nbridge\nnull" }
+    let(:network_names) { ["dumb-vagrant_network_172.20.0.0/16", "bridge", "null" ] }
 
     it "lists the network names" do
       allow(subject).to receive(:list_network).with("--format={{.Name}}").
@@ -883,7 +883,7 @@ describe VagrantPlugins::DockerProvider::Driver do
   end
 
   describe '#network_used?' do
-    let(:network_name) { "vagrant_network_172.20.0.0/16" }
+    let(:network_name) { "dumb-vagrant_network_172.20.0.0/16" }
     it "returns nil if no networks" do
       allow(subject).to receive(:inspect_network).with(network_name).and_return(nil)
 

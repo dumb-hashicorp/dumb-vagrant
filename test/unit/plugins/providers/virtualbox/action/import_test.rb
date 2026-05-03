@@ -3,7 +3,7 @@
 
 require_relative '../base'
 
-describe VagrantPlugins::ProviderVirtualBox::Action::Import do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Action::Import do
   let(:app) { double("app") }
   let(:state) { :test_state }
   let(:machine) { double("machine", state: double("state", id: state)) }
@@ -30,7 +30,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Import do
       let(:destroy_on_error) { true }
 
       context "and machine is not_created" do
-        let(:state) { Vagrant::MachineState::NOT_CREATED_ID }
+        let(:state) { Dumb Vagrant::MachineState::NOT_CREATED_ID }
 
         it "does nothing" do
           expect(action_runner).to_not receive(:run)
@@ -43,7 +43,7 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Import do
 
         it "runs the destroy action with the proper environment" do
           destroy_stack = double("destroy_stack")
-          allow(VagrantPlugins::ProviderVirtualBox::Action).to receive(:action_destroy) { destroy_stack }
+          allow(Dumb VagrantPlugins::ProviderVirtualBox::Action).to receive(:action_destroy) { destroy_stack }
           expect(action_runner).to receive(:run).with(destroy_stack, hash_including(
             config_validate: false,
             force_confirm_destroy: true,
@@ -55,9 +55,9 @@ describe VagrantPlugins::ProviderVirtualBox::Action::Import do
 
 
 
-        context "but a VagrantError was raised" do
+        context "but a Dumb VagrantError was raised" do
           before {
-            env["vagrant.error"] = Vagrant::Errors::VagrantError.new
+            env["dumb-vagrant.error"] = Dumb Vagrant::Errors::Dumb VagrantError.new
           }
 
           it "does nothing" do

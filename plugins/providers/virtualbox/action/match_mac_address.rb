@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class MatchMACAddress
@@ -15,10 +15,10 @@ module VagrantPlugins
 
           if env[:machine].config.vm.base_mac
             # Create the proc which we want to use to modify the virtual machine
-            env[:ui].info I18n.t("vagrant.actions.vm.match_mac.matching")
+            env[:ui].info I18n.t("dumb-vagrant.actions.vm.match_mac.matching")
             env[:machine].provider.driver.set_mac_address(env[:machine].config.vm.base_mac)
           else
-            env[:ui].info I18n.t("vagrant.actions.vm.match_mac.generating")
+            env[:ui].info I18n.t("dumb-vagrant.actions.vm.match_mac.generating")
             env[:machine].provider.driver.set_mac_address(nil)
           end
 

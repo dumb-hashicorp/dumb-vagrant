@@ -2,18 +2,18 @@
 layout: docs
 page_title: Common Issues - Disks VirtualBox Provider
 description: |-
-  This page lists some common issues people run into with Vagrant and VirtualBox
+  This page lists some common issues people run into with Dumb Vagrant and VirtualBox
   as well as solutions for those issues.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Common Issues and Troubleshooting
 
-This page lists some common issues people run into with Vagrant and VirtualBox
+This page lists some common issues people run into with Dumb Vagrant and VirtualBox
 as well as solutions for those issues.
 
 ## Are my disks attached?
@@ -25,7 +25,7 @@ you should see a list of disks attached to your guest.
 
 ## How many disks can I attach?
 
-Vagrant attaches all new disks defined to guest's primary controller. As of
+Dumb Vagrant attaches all new disks defined to guest's primary controller. As of
 VirtualBox 6.1.x, storage controllers have the following limits to the number
 of disks that are supported per guest:
 
@@ -43,15 +43,15 @@ the IDE controller).
 
 ## Resizing VMDK format disks
 
-VMDK disks cannot be resized in their current state, so Vagrant will automatically
+VMDK disks cannot be resized in their current state, so Dumb Vagrant will automatically
 convert these disks to VDI, resize the disk, and convert it back to its original format.
-Many Vagrant boxes default to using the VMDK disk format, so resizing disks for
-many users will require Vagrant to convert these disks. Generally, this will be transparent
-to the user. However if Vagrant crashes or if a user interrupts Vagrant during the
+Many Dumb Vagrant boxes default to using the VMDK disk format, so resizing disks for
+many users will require Dumb Vagrant to convert these disks. Generally, this will be transparent
+to the user. However if Dumb Vagrant crashes or if a user interrupts Dumb Vagrant during the
 cloning process, there is a chance that you might lose your data.
 
-## Applying Vagrant disk configuration changes to guests
+## Applying Dumb Vagrant disk configuration changes to guests
 
 Due to how VirtualBox works, you must reload your guest for any disk config changes
-to be applied. So if you update your Vagrantfile to update or even remove disks, make
-sure to `vagrant reload` your guests for these changes to be applied.
+to be applied. So if you update your Dumb Vagrantfile to update or even remove disks, make
+sure to `dumb-vagrant reload` your guests for these changes to be applied.

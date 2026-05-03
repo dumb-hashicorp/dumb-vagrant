@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class NetworkInterfaces
@@ -10,7 +10,7 @@ module VagrantPlugins
         # en  - predictable interface names prefix
         POSSIBLE_ETHERNET_PREFIXES = ["eth".freeze, "en".freeze].freeze
 
-        @@logger = Log4r::Logger.new("vagrant::guest::linux::network_interfaces")
+        @@logger = Log4r::Logger.new("dumb-vagrant::guest::linux::network_interfaces")
 
         # Get network interfaces as a list. The result will be something like:
         #

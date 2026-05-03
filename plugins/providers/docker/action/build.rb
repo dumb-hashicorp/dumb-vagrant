@@ -3,17 +3,17 @@
 
 require "log4r"
 
-require "vagrant/util/ansi_escape_code_remover"
+require "dumb-vagrant/util/ansi_escape_code_remover"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class Build
-        include Vagrant::Util::ANSIEscapeCodeRemover
+        include Dumb Vagrant::Util::ANSIEscapeCodeRemover
 
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::docker::build")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::build")
         end
 
         def call(env)

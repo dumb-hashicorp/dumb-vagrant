@@ -3,7 +3,7 @@
 
 require "shellwords"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderRSync
     # This module provides default rsync capabilities for
     # unix type operating systems.

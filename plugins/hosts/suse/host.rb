@@ -3,9 +3,9 @@
 
 require "pathname"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostSUSE
-    class Host < Vagrant.plugin("2", :host)
+    class Host < Dumb Vagrant.plugin("2", :host)
       def detect?(env)
         old_release_file = Pathname.new("/etc/SuSE-release")
 

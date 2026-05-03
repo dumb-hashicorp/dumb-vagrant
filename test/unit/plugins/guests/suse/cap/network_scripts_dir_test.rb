@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSUSE::Cap::NetworkScriptsDir" do
+describe "Dumb VagrantPlugins::GuestSUSE::Cap::NetworkScriptsDir" do
   let(:caps) do
-    VagrantPlugins::GuestSUSE::Plugin
+    Dumb VagrantPlugins::GuestSUSE::Plugin
       .components
       .guest_capabilities[:suse]
   end

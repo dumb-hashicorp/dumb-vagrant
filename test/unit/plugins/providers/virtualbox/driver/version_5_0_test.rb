@@ -4,13 +4,13 @@
 require "pathname"
 require_relative "../base"
 
-describe VagrantPlugins::ProviderVirtualBox::Driver::Version_5_0 do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Driver::Version_5_0 do
   include_context "virtualbox"
 
   let(:vbox_version) { "5.0.0" }
   let(:controller_name) { "controller" }
 
-  subject { VagrantPlugins::ProviderVirtualBox::Driver::Version_5_0.new(uuid) }
+  subject { Dumb VagrantPlugins::ProviderVirtualBox::Driver::Version_5_0.new(uuid) }
 
   it_behaves_like "a version 4.x virtualbox driver"
   it_behaves_like "a version 5.x virtualbox driver"
@@ -20,7 +20,7 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Version_5_0 do
     let(:machine_id) { double("machine_id") }
     let(:output) {<<-OUTPUT
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
-Interpreting /home/user/.vagrant.d/boxes/hashicorp-VAGRANTSLASH-precise64/1.1.0/virtualbox/box.ovf...
+Interpreting /home/user/.dumb-vagrant.d/boxes/dumb-hashicorp-DUMB_VAGRANTSLASH-precise64/1.1.0/virtualbox/box.ovf...
 OK.
 Disks:
    vmdisk1       85899345920     -1      http://www.vmware.com/interfaces/specifications/vmdk.html#streamOptimized       box-disk1.vmdk  -1      -1
@@ -50,7 +50,7 @@ OUTPUT
     }
 
     before do
-      allow(Vagrant::Util::Platform).to receive(:windows_path).
+      allow(Dumb Vagrant::Util::Platform).to receive(:windows_path).
         with(ovf).and_return(ovf)
       allow(subject).to receive(:execute).with("import", "-n", ovf).
         and_return(output)
@@ -90,7 +90,7 @@ OUTPUT
       before { output.sub!(/Suggested VM name/, "") }
 
       it "should raise an error" do
-        expect { subject.import(ovf) }.to raise_error(Vagrant::Errors::VirtualBoxNoName)
+        expect { subject.import(ovf) }.to raise_error(Dumb Vagrant::Errors::VirtualBoxNoName)
       end
     end
   end

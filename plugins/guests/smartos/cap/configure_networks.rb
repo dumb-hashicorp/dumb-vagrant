@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSmartos
     module Cap
       class ConfigureNetworks
@@ -18,8 +18,8 @@ module VagrantPlugins
               machine.communicate.execute("#{ifconfig_cmd} inet #{network[:ip]} netmask #{network[:netmask]}")
               machine.communicate.execute("#{ifconfig_cmd} up")
               machine.communicate.execute("#{su_cmd} sh -c \"echo '#{network[:ip]}' > /etc/hostname.#{device}\"")
-            elsif network[:type].to_sym == :dhcp
-              machine.communicate.execute("#{ifconfig_cmd} dhcp start")
+            elsif network[:type].to_sym == :ddumb-hcp
+              machine.communicate.execute("#{ifconfig_cmd} ddumb-hcp start")
             end
           end
         end

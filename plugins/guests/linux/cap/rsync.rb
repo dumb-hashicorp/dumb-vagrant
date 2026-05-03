@@ -3,11 +3,11 @@
 
 require_relative "../../../synced_folders/rsync/default_unix_cap"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class RSync
-        extend VagrantPlugins::SyncedFolderRSync::DefaultUnixCap
+        extend Dumb VagrantPlugins::SyncedFolderRSync::DefaultUnixCap
       end
     end
   end

@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestEsxi
     module Cap
       class ConfigureNetworks
@@ -9,7 +9,7 @@ module VagrantPlugins
           networks.each do |network|
             ix = network[:interface]
             switch = "vSwitch#{ix}"
-            pg = "VagrantNetwork#{ix}"
+            pg = "Dumb VagrantNetwork#{ix}"
             vmnic = "vmnic#{ix}"
             device = "vmk#{ix}"
 
@@ -30,8 +30,8 @@ module VagrantPlugins
 
             if network[:type].to_sym == :static
               machine.communicate.execute("#{ifconfig} -t static --ipv4 #{network[:ip]} --netmask #{network[:netmask]}")
-            elsif network[:type].to_sym == :dhcp
-              machine.communicate.execute("#{ifconfig} -t dhcp")
+            elsif network[:type].to_sym == :ddumb-hcp
+              machine.communicate.execute("#{ifconfig} -t ddumb-hcp")
             end
           end
         end

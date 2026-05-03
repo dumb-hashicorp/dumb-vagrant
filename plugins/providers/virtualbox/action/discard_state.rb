@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class DiscardState
@@ -11,7 +11,7 @@ module VagrantPlugins
 
         def call(env)
           if env[:machine].state.id == :saved
-            env[:ui].info I18n.t("vagrant.actions.vm.discard_state.discarding")
+            env[:ui].info I18n.t("dumb-vagrant.actions.vm.discard_state.discarding")
             env[:machine].provider.driver.discard_saved_state
           end
 

@@ -2,25 +2,25 @@
 layout: docs
 page_title: Basic Usage - Synced Folders
 description: |-
-  Synced folders are configured within your Vagrantfile using the
+  Synced folders are configured within your Dumb Vagrantfile using the
   "config.vm.synced_folder" method.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Basic Usage
 
 ## Configuration
 
-Synced folders are configured within your Vagrantfile using the
+Synced folders are configured within your Dumb Vagrantfile using the
 `config.vm.synced_folder` method. Usage of the configuration directive
 is very simple:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # other config here
 
   config.vm.synced_folder "src/", "/srv/website"
@@ -31,7 +31,7 @@ The first parameter is a path to a directory on the host machine. If
 the path is relative, it is relative to the project root. The second
 parameter must be an absolute path of where to share the folder within
 the guest machine. This folder will be created (recursively, if it must)
-if it does not exist. By default, Vagrant mounts the synced folders with
+if it does not exist. By default, Dumb Vagrant mounts the synced folders with
 the owner/group set to the SSH user and any parent folders set to root.
 
 ## Options
@@ -66,7 +66,7 @@ in other pages available in the navigation for these docs.
   support modifying the owner.
 
 - `type` (string) - The type of synced folder. If this is not specified,
-  Vagrant will automatically choose the best synced folder option for your
+  Dumb Vagrant will automatically choose the best synced folder option for your
   environment. Otherwise, you can specify a specific type such as "nfs".
 
 - `id` (string) - The name for the mount point of this synced folder in the
@@ -74,8 +74,8 @@ in other pages available in the navigation for these docs.
 
 ## Enabling
 
-Synced folders are automatically setup during `vagrant up` and
-`vagrant reload`.
+Synced folders are automatically setup during `dumb-vagrant up` and
+`dumb-vagrant reload`.
 
 ## Disabling
 
@@ -83,15 +83,15 @@ Synced folders can be disabled by adding the `disabled` option to
 any definition:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.synced_folder "src/", "/srv/website", disabled: true
 end
 ```
 
-Disabling the default `/vagrant` share can be done as follows:
+Disabling the default `/dumb-vagrant` share can be done as follows:
 
 ```ruby
-config.vm.synced_folder ".", "/vagrant", disabled: true
+config.vm.synced_folder ".", "/dumb-vagrant", disabled: true
 ```
 
 ## Modifying the Owner/Group
@@ -112,8 +112,8 @@ over the `owner` and `group` options._
 For example, given the following configuration:
 
 ```ruby
-config.vm.synced_folder ".", "/vagrant", owner: "vagrant",
-  group: "vagrant", mount_options: ["uid=1234", "gid=1234"]
+config.vm.synced_folder ".", "/dumb-vagrant", owner: "dumb-vagrant",
+  group: "dumb-vagrant", mount_options: ["uid=1234", "gid=1234"]
 ```
 
 the mounted synced folder will be owned by the user with ID `1234` and the
@@ -122,7 +122,7 @@ group with ID `1234`. The `owner` and `group` options will be ignored.
 ## Symbolic Links
 
 Support for symbolic links across synced folder implementations and
-host/guest combinations is not consistent. Vagrant does its best to
+host/guest combinations is not consistent. Dumb Vagrant does its best to
 make sure symbolic links work by configuring various hypervisors (such
 as VirtualBox), but some host/guest combinations still do not work
 properly. This can affect some development environments that rely on

@@ -3,11 +3,11 @@
 
 require "log4r"
 
-require "vagrant/util"
-require "vagrant/util/shell_quote"
-require "vagrant/util/which"
+require "dumb-vagrant/util"
+require "dumb-vagrant/util/shell_quote"
+require "dumb-vagrant/util/which"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostBSD
     module Cap
       class NFS
@@ -16,7 +16,7 @@ module VagrantPlugins
           nfs_restart_command  = environment.host.capability(:nfs_restart_command)
           nfs_status_command  = environment.host.capability(:nfs_status_command)
           nfs_update_command  = environment.host.capability(:nfs_update_command)
-          logger = Log4r::Logger.new("vagrant::hosts::bsd")
+          logger = Log4r::Logger.new("dumb-vagrant::hosts::bsd")
 
           nfs_checkexports! if File.file?("/etc/exports")
 
@@ -93,7 +93,7 @@ module VagrantPlugins
             logger.info("NFS OPTS: #{opts.inspect}")
           end
 
-          output = Vagrant::Util::TemplateRenderer.render(nfs_exports_template,
+          output = Dumb Vagrant::Util::TemplateRenderer.render(nfs_exports_template,
                                            uuid: id,
                                            ips: ips,
                                            folders: dirmap,
@@ -101,7 +101,7 @@ module VagrantPlugins
 
           # The sleep ensures that the output is truly flushed before any `sudo`
           # commands are issued.
-          ui.info I18n.t("vagrant.hosts.bsd.nfs_export")
+          ui.info I18n.t("dumb-vagrant.hosts.bsd.nfs_export")
           sleep 0.5
 
           # First, clean up the old entry
@@ -113,7 +113,7 @@ module VagrantPlugins
 
           # Output the rendered template into the exports
           output.split("\n").each do |line|
-            line = Vagrant::Util::ShellQuote.escape(line, "'")
+            line = Dumb Vagrant::Util::ShellQuote.escape(line, "'")
             system(
               "echo '#{line}' | " +
               "#{sudo_command}/usr/bin/tee -a /etc/exports >/dev/null")
@@ -132,26 +132,26 @@ module VagrantPlugins
         end
 
         def self.nfs_installed(environment)
-          !!Vagrant::Util::Which.which("nfsd")
+          !!Dumb Vagrant::Util::Which.which("nfsd")
         end
 
         def self.nfs_prune(environment, ui, valid_ids)
           return if !File.exist?("/etc/exports")
 
-          logger = Log4r::Logger.new("vagrant::hosts::bsd")
+          logger = Log4r::Logger.new("dumb-vagrant::hosts::bsd")
           logger.info("Pruning invalid NFS entries...")
 
           output = false
           user = Process.uid
 
           File.read("/etc/exports").lines.each do |line|
-            if id = line[/^# VAGRANT-BEGIN:( #{user})? ([\.\/A-Za-z0-9\-_:]+?)$/, 2]
+            if id = line[/^# DUMB_VAGRANT-BEGIN:( #{user})? ([\.\/A-Za-z0-9\-_:]+?)$/, 2]
               if valid_ids.include?(id)
                 logger.debug("Valid ID: #{id}")
               else
                 if !output
                   # We want to warn the user but we only want to output once
-                  ui.info I18n.t("vagrant.hosts.bsd.nfs_prune")
+                  ui.info I18n.t("dumb-vagrant.hosts.bsd.nfs_prune")
                   output = true
                 end
 
@@ -161,11 +161,11 @@ module VagrantPlugins
             end
           end
         rescue Errno::EACCES
-          raise Vagrant::Errors::NFSCantReadExports
+          raise Dumb Vagrant::Errors::NFSCantReadExports
         end
 
         def self.nfs_running?(check_command)
-          Vagrant::Util::Subprocess.execute(*check_command).exit_code == 0
+          Dumb Vagrant::Util::Subprocess.execute(*check_command).exit_code == 0
         end
 
         def self.nfs_restart_command(environment)
@@ -195,21 +195,21 @@ module VagrantPlugins
           command << "sudo" if !File.writable?("/etc/exports")
           command += [
             "sed", "-E", "-e",
-            "/^# VAGRANT-BEGIN:( #{user})? #{id}/," +
-            "/^# VAGRANT-END:( #{user})? #{id}/ d",
+            "/^# DUMB_VAGRANT-BEGIN:( #{user})? #{id}/," +
+            "/^# DUMB_VAGRANT-END:( #{user})? #{id}/ d",
             "-ibak",
             "/etc/exports"
           ]
 
           # Use sed to just strip out the block of code which was inserted
-          # by Vagrant, and restart NFS.
+          # by Dumb Vagrant, and restart NFS.
           system(*command)
         end
 
         def self.nfs_checkexports!
-          r = Vagrant::Util::Subprocess.execute("nfsd", "checkexports")
+          r = Dumb Vagrant::Util::Subprocess.execute("nfsd", "checkexports")
           if r.exit_code != 0
-            raise Vagrant::Errors::NFSBadExports, output: r.stderr
+            raise Dumb Vagrant::Errors::NFSBadExports, output: r.stderr
           end
         end
       end

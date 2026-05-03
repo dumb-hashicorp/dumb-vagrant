@@ -3,19 +3,19 @@
 
 require "tempfile"
 
-require "vagrant/util/template_renderer"
+require "dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestDarwin
     module Cap
       class ConfigureNetworks
-        @@logger = Log4r::Logger.new("vagrant::guest::darwin::configure_networks")
+        @@logger = Log4r::Logger.new("dumb-vagrant::guest::darwin::configure_networks")
 
-        include Vagrant::Util
+        include Dumb Vagrant::Util
 
         def self.configure_networks(machine, networks)
           if !machine.provider.capability?(:nic_mac_addresses)
-            raise Vagrant::Errors::CantReadMACAddresses,
+            raise Dumb Vagrant::Errors::CantReadMACAddresses,
                   provider: machine.provider_name.to_s
           end
 
@@ -43,14 +43,14 @@ module VagrantPlugins
               command = "networksetup -setmanual \"#{service_name}\" #{network[:ip]} #{network[:netmask]} #{network[:router]}"
             when :static6
               command = "networksetup -setv6manual \"#{service_name}\" #{network[:ip]} #{network[:netmask]} #{network[:router]}"
-            when :dhcp
-              command = "networksetup -setdhcp \"#{service_name}\""
-            when :dhcp6
-              # This is not actually possible yet in Vagrant, but when we do
+            when :ddumb-hcp
+              command = "networksetup -setddumb-hcp \"#{service_name}\""
+            when :ddumb-hcp6
+              # This is not actually possible yet in Dumb Vagrant, but when we do
               # enable IPv6 across the board, Darwin will already have support.
               command = "networksetup -setv6automatic \"#{service_name}\""
             else
-              raise Vagrant::Errors::NetworkTypeNotSupported, type: network_type
+              raise Dumb Vagrant::Errors::NetworkTypeNotSupported, type: network_type
             end
 
             machine.communicate.sudo(command)
@@ -65,10 +65,10 @@ module VagrantPlugins
 
           machine.communicate.tap do |comm|
             comm.sudo("networksetup -detectnewhardware")
-            comm.sudo("networksetup -listnetworkserviceorder > /tmp/vagrant.interfaces")
-            comm.sudo("networksetup -listallhardwareports > /tmp/vagrant.hardware")
-            comm.download("/tmp/vagrant.interfaces", tmp_ints)
-            comm.download("/tmp/vagrant.hardware", tmp_hw)
+            comm.sudo("networksetup -listnetworkserviceorder > /tmp/dumb-vagrant.interfaces")
+            comm.sudo("networksetup -listallhardwareports > /tmp/dumb-vagrant.hardware")
+            comm.download("/tmp/dumb-vagrant.interfaces", tmp_ints)
+            comm.download("/tmp/dumb-vagrant.hardware", tmp_hw)
           end
 
           interface_map = {}

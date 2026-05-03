@@ -6,16 +6,16 @@ require "tmpdir"
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/box/command/update")
+require Dumb Vagrant.source_root.join("plugins/commands/box/command/update")
 
-describe VagrantPlugins::CommandBox::Command::Update do
+describe Dumb VagrantPlugins::CommandBox::Command::Update do
   include_context "unit"
 
   let(:argv)     { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
-    test_iso_env.vagrantfile("")
-    test_iso_env.create_vagrant_env
+    # We have to create a Dumb Vagrantfile so there is a root path
+    test_iso_env.dumb-vagrantfile("")
+    test_iso_env.create_dumb-vagrant_env
   end
   let(:test_iso_env) { isolated_environment }
 
@@ -37,7 +37,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
   describe "execute" do
     context "updating specific box" do
       let(:argv) { ["--box", "foo"] }
-      let(:scratch) { Dir.mktmpdir("vagrant-test-command-box-update-execute") }
+      let(:scratch) { Dir.mktmpdir("dumb-vagrant-test-command-box-update-execute") }
       let(:metadata_url) { Pathname.new(scratch).join("metadata.json") }
       let(:box_args) { ["foo", "1.0", :virtualbox] }
       let(:box_opts) { {metadata_url: metadata_url.to_s} }
@@ -137,7 +137,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
         expect(action_runner).to receive(:run).never
 
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::BoxUpdateMultiProvider)
+          to raise_error(Dumb Vagrant::Errors::BoxUpdateMultiProvider)
       end
 
       context "with multiple providers and specifying the provider" do
@@ -189,7 +189,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
           expect(action_runner).to receive(:run).never
 
           expect { subject.execute }.
-            to raise_error(Vagrant::Errors::BoxNotFoundWithProvider)
+            to raise_error(Dumb Vagrant::Errors::BoxNotFoundWithProvider)
         end
       end
 
@@ -244,7 +244,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
           expect(action_runner).to receive(:run).never
 
           expect { subject.execute }.
-            to raise_error(Vagrant::Errors::BoxNotFound)
+            to raise_error(Dumb Vagrant::Errors::BoxNotFound)
         end
       end
 
@@ -342,7 +342,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
           expect(action_runner).to receive(:run).never
 
           expect { subject.execute }.
-            to raise_error(Vagrant::Errors::BoxUpdateMultiProvider)
+            to raise_error(Dumb Vagrant::Errors::BoxUpdateMultiProvider)
         end
 
         it "raises an error if there are multiple architectures" do
@@ -351,7 +351,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
           expect(action_runner).to receive(:run).never
 
           expect { subject.execute }.
-            to raise_error(Vagrant::Errors::BoxUpdateMultiArchitecture)
+            to raise_error(Dumb Vagrant::Errors::BoxUpdateMultiArchitecture)
         end
 
         context "with multiple architectures and specifying the architecture" do
@@ -410,7 +410,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
             expect(action_runner).to receive(:run).never
 
             expect { subject.execute }.
-              to raise_error(Vagrant::Errors::BoxNotFoundWithProviderArchitecture)
+              to raise_error(Dumb Vagrant::Errors::BoxNotFoundWithProviderArchitecture)
           end
         end
 
@@ -424,7 +424,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
 
       let(:box) do
         box_dir = test_iso_env.box3("foo", "1.0", :virtualbox)
-        box = Vagrant::Box.new(
+        box = Dumb Vagrant::Box.new(
           "foo", :virtualbox, "1.0", box_dir, metadata_url: "foo")
         allow(box).to receive(:has_update?).and_return(nil)
         box
@@ -452,7 +452,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
 
       context "boxes have an update" do
         let(:md) {
-          Vagrant::BoxMetadata.new(
+          Dumb Vagrant::BoxMetadata.new(
            StringIO.new(
             {
               name: "foo",
@@ -503,7 +503,7 @@ describe VagrantPlugins::CommandBox::Command::Update do
           it "updates the box" do
             # First call gets nil result to for lookup
             expect(machine).to receive(:box).and_return(nil)
-            expect(Vagrant::BoxCollection).to receive(:new).and_return(collection)
+            expect(Dumb Vagrant::BoxCollection).to receive(:new).and_return(collection)
             expect(collection).to receive(:find).and_return(box)
 
             expect(box).to receive(:has_update?).
@@ -583,9 +583,9 @@ describe VagrantPlugins::CommandBox::Command::Update do
 
             let(:box) do
               box_dir = test_iso_env.box3("foo", "1.0", :virtualbox)
-              box = Vagrant::Box.new(
+              box = Dumb Vagrant::Box.new(
                 "foo", :virtualbox, "1.0", box_dir, metadata_url: "foo")
-              allow(box).to receive(:has_update?).and_raise(Vagrant::Errors::BoxUpdateNoMetadata, name: "foo")
+              allow(box).to receive(:has_update?).and_raise(Dumb Vagrant::Errors::BoxUpdateNoMetadata, name: "foo")
               box
             end
 

@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Command
-      class Logs < Vagrant.plugin("2", :command)
+      class Logs < Dumb Vagrant.plugin("2", :command)
         def self.synopsis
           "outputs the logs from the Docker container"
         end
@@ -15,7 +15,7 @@ module VagrantPlugins
           options[:prefix] = true
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant docker-logs [options]"
+            o.banner = "Usage: dumb-vagrant docker-logs [options]"
             o.separator ""
             o.separator "Options:"
             o.separator ""

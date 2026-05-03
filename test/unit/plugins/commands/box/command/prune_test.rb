@@ -3,22 +3,22 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/box/command/prune")
+require Dumb Vagrant.source_root.join("plugins/commands/box/command/prune")
 
-describe VagrantPlugins::CommandBox::Command::Prune do
+describe Dumb VagrantPlugins::CommandBox::Command::Prune do
   include_context "unit"
   include_context "command plugin helpers"
 
-  let(:entry_klass) { Vagrant::MachineIndex::Entry }
+  let(:entry_klass) { Dumb Vagrant::MachineIndex::Entry }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     isolated_environment.tap do |env|
-      env.vagrantfile("")
+      env.dumb-vagrantfile("")
     end
   end
 
-  let(:iso_vagrant_env) { iso_env.create_vagrant_env }
+  let(:iso_dumb-vagrant_env) { iso_env.create_dumb-vagrant_env }
 
   let(:argv) { [] }
 
@@ -26,7 +26,7 @@ describe VagrantPlugins::CommandBox::Command::Prune do
   def new_entry(name, box_name, box_provider, version)
     entry_klass.new.tap do |e|
       e.name = name
-      e.vagrantfile_path = "/bar"
+      e.dumb-vagrantfile_path = "/bar"
       e.extra_data["box"] = {
           "name" => box_name,
           "provider" => box_provider,
@@ -35,7 +35,7 @@ describe VagrantPlugins::CommandBox::Command::Prune do
     end
   end
 
-  subject { described_class.new(argv, iso_vagrant_env) }
+  subject { described_class.new(argv, iso_dumb-vagrant_env) }
 
   describe "execute" do
     context "with no args" do
@@ -47,15 +47,15 @@ describe VagrantPlugins::CommandBox::Command::Prune do
         iso_env.box3("barbox", "1.0", :vmware);
         iso_env.box3("barbox", "1.1", :vmware);
 
-        iso_vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
+        iso_dumb-vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
 
         output = ""
-        allow(iso_vagrant_env.ui).to receive(:info) do |data|
+        allow(iso_dumb-vagrant_env.ui).to receive(:info) do |data|
           output << data
         end
-        expect(iso_vagrant_env.boxes.all.count).to eq(4)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(4)
         expect(subject.execute).to eq(0)
-        expect(iso_vagrant_env.boxes.all.count).to eq(2)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(2)
 
         expect(output).to include("barbox (vmware, 1.1)")
         expect(output).to include("Removing box 'barbox' (v1.0) with provider 'vmware'...")
@@ -68,14 +68,14 @@ describe VagrantPlugins::CommandBox::Command::Prune do
         iso_env.box3("foobox", "1.0", :virtualbox);
         iso_env.box3("barbox", "1.0", :vmware);
 
-        iso_vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
+        iso_dumb-vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
 
-        allow(iso_vagrant_env.ui).to receive(:info).and_call_original
-        expect(iso_vagrant_env.ui).to receive(:info).with(/No old versions of boxes/).
+        allow(iso_dumb-vagrant_env.ui).to receive(:info).and_call_original
+        expect(iso_dumb-vagrant_env.ui).to receive(:info).with(/No old versions of boxes/).
           and_call_original
-        expect(iso_vagrant_env.boxes.all.count).to eq(2)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(2)
         expect(subject.execute).to eq(0)
-        expect(iso_vagrant_env.boxes.all.count).to eq(2)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(2)
       end
     end
 
@@ -90,16 +90,16 @@ describe VagrantPlugins::CommandBox::Command::Prune do
         iso_env.box3("barbox", "1.0", :vmware);
         iso_env.box3("barbox", "1.1", :vmware);
 
-        iso_vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
+        iso_dumb-vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
 
         output = ""
-        allow(iso_vagrant_env.ui).to receive(:info) do |data|
+        allow(iso_dumb-vagrant_env.ui).to receive(:info) do |data|
           output << "\n" + data
         end
 
-        expect(iso_vagrant_env.boxes.all.count).to eq(4)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(4)
         expect(subject.execute).to eq(0)
-        expect(iso_vagrant_env.boxes.all.count).to eq(3)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(3)
 
         expect(output).to include("foobox (virtualbox, 1.1)")
         expect(output).to include("Removing box 'foobox' (v1.0) with provider 'virtualbox'...")
@@ -116,16 +116,16 @@ describe VagrantPlugins::CommandBox::Command::Prune do
         iso_env.box3("foobox", "1.0", :virtualbox);
         iso_env.box3("foobox", "1.1", :virtualbox);
 
-        iso_vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
+        iso_dumb-vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
 
         output = ""
-        allow(iso_vagrant_env.ui).to receive(:info) do |data|
+        allow(iso_dumb-vagrant_env.ui).to receive(:info) do |data|
           output << "\n" + data
         end
 
-        expect(iso_vagrant_env.boxes.all.count).to eq(2)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(2)
         expect(subject.execute).to eq(0)
-        expect(iso_vagrant_env.boxes.all.count).to eq(2)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(2)
 
 
         expect(output).to include("foobox (virtualbox, 1.1)")
@@ -146,16 +146,16 @@ describe VagrantPlugins::CommandBox::Command::Prune do
         iso_env.box3("barbox", "1.0", :vmware);
         iso_env.box3("barbox", "1.1", :vmware);
 
-        iso_vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
+        iso_dumb-vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
 
         output = ""
-        allow(iso_vagrant_env.ui).to receive(:info) do |data|
+        allow(iso_dumb-vagrant_env.ui).to receive(:info) do |data|
           output << "\n" + data
         end
 
-        expect(iso_vagrant_env.boxes.all.count).to eq(4)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(4)
         expect(subject.execute).to eq(0)
-        expect(iso_vagrant_env.boxes.all.count).to eq(3)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(3)
 
         expect(output).to include("barbox (vmware, 1.1)")
         expect(output).to include("Removing box 'barbox' (v1.0) with provider 'vmware'...")
@@ -175,16 +175,16 @@ describe VagrantPlugins::CommandBox::Command::Prune do
         iso_env.box3("barbox", "1.0", :vmware);
         iso_env.box3("barbox", "1.1", :vmware);
 
-        iso_vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
+        iso_dumb-vagrant_env.machine_index.set(new_entry("foo", "foobox", "virtualbox", 1))
 
         output = ""
-        allow(iso_vagrant_env.ui).to receive(:info) do |data|
+        allow(iso_dumb-vagrant_env.ui).to receive(:info) do |data|
           output << "\n" + data
         end
 
-        expect(iso_vagrant_env.boxes.all.count).to eq(6)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(6)
         expect(subject.execute).to eq(0)
-        expect(iso_vagrant_env.boxes.all.count).to eq(5)
+        expect(iso_dumb-vagrant_env.boxes.all.count).to eq(5)
 
         expect(output).to include("Removing box 'foobox' (v1.0) with provider 'virtualbox'...")
       end

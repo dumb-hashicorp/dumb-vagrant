@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/busy"
-require "vagrant/util/subprocess"
+require "dumb-vagrant/util/busy"
+require "dumb-vagrant/util/subprocess"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Executor
       # The Local executor executes a Docker client that is running
@@ -16,8 +16,8 @@ module VagrantPlugins
 
           interrupted  = false
           int_callback = ->{ interrupted = true }
-          result = ::Vagrant::Util::Busy.busy(int_callback) do
-            ::Vagrant::Util::Subprocess.execute(*cmd, &block)
+          result = ::Dumb Vagrant::Util::Busy.busy(int_callback) do
+            ::Dumb Vagrant::Util::Subprocess.execute(*cmd, &block)
           end
 
           result.stderr.gsub!("\r\n", "\n")
@@ -40,7 +40,7 @@ module VagrantPlugins
         end
 
         def windows?
-          ::Vagrant::Util::Platform.windows? || ::Vagrant::Util::Platform.wsl?
+          ::Dumb Vagrant::Util::Platform.windows? || ::Dumb Vagrant::Util::Platform.wsl?
         end
       end
     end

@@ -5,9 +5,9 @@ require_relative "../../../../base"
 
 require_relative "../../../../../../plugins/hosts/darwin/cap/configured_ip_addresses"
 
-describe VagrantPlugins::HostDarwin::Cap::ConfiguredIPAddresses do
+describe Dumb VagrantPlugins::HostDarwin::Cap::ConfiguredIPAddresses do
 
-  let(:subject){ VagrantPlugins::HostDarwin::Cap::ConfiguredIPAddresses }
+  let(:subject){ Dumb VagrantPlugins::HostDarwin::Cap::ConfiguredIPAddresses }
   let(:interfaces){ ["192.168.1.2"] }
   before{ allow(Socket).to receive(:getifaddrs).and_return(
     interfaces.map{|i| double(:socket, addr: Addrinfo.ip(i))}) }

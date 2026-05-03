@@ -9,7 +9,7 @@ shared_examples_for "Ansible setup via pip" do
 
     it "installs pip and calls Cap::Guest::Pip::pip_install" do
       expect(communicator).to receive(:sudo).at_least(1).times.ordered
-      expect(VagrantPlugins::Ansible::Cap::Guest::Pip).to receive(:pip_install).once.ordered.
+      expect(Dumb VagrantPlugins::Ansible::Cap::Guest::Pip).to receive(:pip_install).once.ordered.
         with(machine, "ansible", anything, anything, true)
 
       subject.ansible_install(machine, :pip, "", "", "")
@@ -20,10 +20,10 @@ shared_examples_for "Ansible setup via pip" do
     before { allow(communicator).to receive(:test) }
 
     it "installs pip and calls Cap::Guest::Pip::pip_install with 'pip_args' parameter" do
-      pip_args = "-r /vagrant/requirements.txt"
+      pip_args = "-r /dumb-vagrant/requirements.txt"
 
       expect(communicator).to receive(:sudo).at_least(1).times.ordered
-      expect(VagrantPlugins::Ansible::Cap::Guest::Pip).to receive(:pip_install).with(machine, "", "", pip_args, false).ordered
+      expect(Dumb VagrantPlugins::Ansible::Cap::Guest::Pip).to receive(:pip_install).with(machine, "", "", pip_args, false).ordered
 
       subject.ansible_install(machine, :pip_args_only, "", pip_args, "")
     end
@@ -95,7 +95,7 @@ shared_examples_for "Ansible setup via pip is not implemented" do
 
   describe "when install_mode is different from :default" do
     it "raises an AnsiblePipInstallIsNotSupported error" do
-      expect { subject.ansible_install(machine, :ansible_the_hardway, "", "", "") }.to raise_error(VagrantPlugins::Ansible::Errors::AnsiblePipInstallIsNotSupported)
+      expect { subject.ansible_install(machine, :ansible_the_hardway, "", "", "") }.to raise_error(Dumb VagrantPlugins::Ansible::Errors::AnsiblePipInstallIsNotSupported)
     end
   end
 

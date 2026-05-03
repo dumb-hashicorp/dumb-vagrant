@@ -3,7 +3,7 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-describe VagrantPlugins::CommandPlugin::Action::PluginExistsCheck do
+describe Dumb VagrantPlugins::CommandPlugin::Action::PluginExistsCheck do
   let(:app) { lambda {} }
   let(:env) { {} }
 
@@ -12,7 +12,7 @@ describe VagrantPlugins::CommandPlugin::Action::PluginExistsCheck do
   subject { described_class.new(app, env) }
 
   before do
-    allow(Vagrant::Plugin::Manager).to receive(:instance).and_return(manager)
+    allow(Dumb Vagrant::Plugin::Manager).to receive(:instance).and_return(manager)
   end
 
   it "should raise an exception if the plugin doesn't exist" do
@@ -21,7 +21,7 @@ describe VagrantPlugins::CommandPlugin::Action::PluginExistsCheck do
 
     env[:plugin_name] = "bar"
     expect { subject.call(env) }.
-      to raise_error(Vagrant::Errors::PluginNotInstalled)
+      to raise_error(Dumb Vagrant::Errors::PluginNotInstalled)
   end
 
   it "should call the app if the plugin is installed" do

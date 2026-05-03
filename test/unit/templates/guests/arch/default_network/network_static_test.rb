@@ -3,13 +3,13 @@
 
 require_relative "../../../../base"
 
-require "vagrant/util/template_renderer"
+require "dumb-vagrant/util/template_renderer"
 
 describe "templates/guests/arch/default_network/network_static" do
   let(:template) { "guests/arch/default_network/network_static" }
 
   it "renders the template" do
-    result = Vagrant::Util::TemplateRenderer.render(template, options: {
+    result = Dumb Vagrant::Util::TemplateRenderer.render(template, options: {
       device:  "eth1",
       ip:      "1.1.1.1",
       netmask: "24",
@@ -24,7 +24,7 @@ describe "templates/guests/arch/default_network/network_static" do
   end
 
   it "includes the gateway" do
-    result = Vagrant::Util::TemplateRenderer.render(template, options: {
+    result = Dumb Vagrant::Util::TemplateRenderer.render(template, options: {
       device:  "eth1",
       ip:      "1.1.1.1",
       gateway: "1.2.3.4",

@@ -3,7 +3,7 @@
 
 require "shellwords"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
     module CommandFilters
       # Converts a *nix 'mkdir' command to a PowerShell equivalent

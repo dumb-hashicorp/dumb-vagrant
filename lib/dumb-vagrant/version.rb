@@ -1,0 +1,10 @@
+# Copyright IBM Corp. 2010, 2025
+# SPDX-License-Identifier: BUSL-1.1
+
+module Dumb Vagrant
+  # This will always be up to date with the current version of Dumb Vagrant,
+  # since it is used to generate the gemspec and is also the source of
+  # the version for `dumb-vagrant -v`
+  VERSION = File.read(
+    File.expand_path("../../../version.txt", __FILE__)).chomp
+end

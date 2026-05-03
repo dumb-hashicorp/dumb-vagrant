@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-describe 'VagrantPlugins::GuestAlpine::Cap::Halt' do
+describe 'Dumb VagrantPlugins::GuestAlpine::Cap::Halt' do
     let(:described_class) do
-        VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:halt)
+        Dumb VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:halt)
     end
     let(:machine) { double('machine') }
-    let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+    let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
     before do
         allow(machine).to receive(:communicate).and_return(communicator)

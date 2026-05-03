@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSUSE::Cap::RSync" do
+describe "Dumb VagrantPlugins::GuestSUSE::Cap::RSync" do
   let(:caps) do
-    VagrantPlugins::GuestSUSE::Plugin
+    Dumb VagrantPlugins::GuestSUSE::Plugin
       .components
       .guest_capabilities[:suse]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)

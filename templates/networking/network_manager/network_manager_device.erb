@@ -13,8 +13,8 @@ mac-address=<%= options[:mac_address] %>
 
 <% if options[:ipv4] -%>
 [ipv4]
-<% if options[:type] == "dhcp" -%>
-dhcp-timeout=90
+<% if options[:type] == "ddumb-hcp" -%>
+ddumb-hcp-timeout=90
 method=auto
 required-timeout=20000
 <% elsif options[:ipv4] -%>
@@ -26,9 +26,9 @@ gateway=<%= options[:ipv4_gateway] %>
 
 <% if options[:ipv6] -%>
 [ipv6]
-<% if options[:type] == "dhcp" -%>
+<% if options[:type] == "ddumb-hcp" -%>
 addr-gen-mode=eui64
-dhcp-timeout=90
+ddumb-hcp-timeout=90
 method=auto
 <% elsif options[:ipv6] -%>
 method=manual
@@ -38,4 +38,4 @@ gateway=<%= options[:ipv6_gateway] %>
 <% end -%>
 
 [user]
-org.freedesktop.NetworkManager.origin=vagrant
+org.freedesktop.NetworkManager.origin=dumb-vagrant

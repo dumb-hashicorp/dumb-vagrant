@@ -3,17 +3,17 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module Command
-      class List < Vagrant.plugin("2", :command)
+      class List < Dumb Vagrant.plugin("2", :command)
         include Util
 
         def execute
           options = {}
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant cloud list [options] organization"
+            o.banner = "Usage: dumb-vagrant cloud list [options] organization"
             o.separator ""
             o.separator "Search for boxes managed by a specific user/organization"
             o.separator ""
@@ -38,7 +38,7 @@ module VagrantPlugins
           argv = parse_options(opts)
           return if !argv
           if argv.length > 1
-            raise Vagrant::Errors::CLIInvalidUsage,
+            raise Dumb Vagrant::Errors::CLIInvalidUsage,
               help: opts.help.chomp
           end
 

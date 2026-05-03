@@ -3,21 +3,21 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestBSD::Cap::MountVirtualBoxSharedFolder" do
+describe "Dumb VagrantPlugins::GuestBSD::Cap::MountVirtualBoxSharedFolder" do
   let(:caps) do
-    VagrantPlugins::GuestBSD::Plugin
+    Dumb VagrantPlugins::GuestBSD::Plugin
       .components
       .guest_capabilities[:bsd]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
-  let(:mount_owner){ "vagrant" }
-  let(:mount_group){ "vagrant" }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:mount_owner){ "dumb-vagrant" }
+  let(:mount_group){ "dumb-vagrant" }
   let(:mount_uid){ "1000" }
   let(:mount_gid){ "1000" }
-  let(:mount_name){ "vagrant" }
-  let(:mount_guest_path){ "/vagrant" }
+  let(:mount_name){ "dumb-vagrant" }
+  let(:mount_guest_path){ "/dumb-vagrant" }
   let(:folder_options) do
     {
       owner: mount_owner,
@@ -38,7 +38,7 @@ describe "VagrantPlugins::GuestBSD::Cap::MountVirtualBoxSharedFolder" do
   describe ".mount_virtualbox_shared_folder" do
     it "raises an error as unsupported" do
       expect {cap.mount_virtualbox_shared_folder(machine, mount_name, mount_guest_path, folder_options) }.
-        to raise_error(Vagrant::Errors::VirtualBoxMountNotSupportedBSD)
+        to raise_error(Dumb Vagrant::Errors::VirtualBoxMountNotSupportedBSD)
     end
   end
 end

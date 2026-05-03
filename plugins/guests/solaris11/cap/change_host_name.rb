@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-# A general Vagrant system implementation for "solaris 11".
+# A general Dumb Vagrant system implementation for "solaris 11".
 #
 # Contributed by Jan Thomas Moldung <janth@moldung.no>
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestSolaris11
     module Cap
       class ChangeHostName

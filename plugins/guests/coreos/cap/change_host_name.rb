@@ -4,17 +4,17 @@
 require "tempfile"
 require "yaml"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestCoreOS
     module Cap
       class ChangeHostName
-        extend Vagrant::Util::GuestInspection::Linux
+        extend Dumb Vagrant::Util::GuestInspection::Linux
 
         def self.change_host_name(machine, name)
           comm = machine.communicate
 
           if systemd_unit_file?(comm, "system-cloudinit*")
-            file = Tempfile.new("vagrant-coreos-hostname")
+            file = Tempfile.new("dumb-vagrant-coreos-hostname")
             file.puts("#cloud-config\n")
             file.puts({"hostname" => name}.to_yaml)
             file.close

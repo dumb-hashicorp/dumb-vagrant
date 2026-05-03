@@ -3,5 +3,5 @@
  * SPDX-License-Identifier: BUSL-1.1
  */
 
-export const productName = 'Vagrant'
-export const productSlug = 'vagrant'
+export const productName = 'Dumb Vagrant'
+export const productSlug = 'dumb-vagrant'

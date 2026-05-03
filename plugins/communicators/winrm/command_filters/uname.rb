@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
     module CommandFilters
       # Converts a *nix 'uname' command to a PowerShell equivalent (none)
@@ -16,7 +16,7 @@ module VagrantPlugins
           # uname -sr | grep SunOS | grep -v 5.11
           # uname -sr | grep 'SunOS 5.11'
 
-          # uname is used to detect the guest type in Vagrant, so don't bother running
+          # uname is used to detect the guest type in Dumb Vagrant, so don't bother running
           # to speed up OS detection
           ''
         end

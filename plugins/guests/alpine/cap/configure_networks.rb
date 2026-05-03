@@ -10,19 +10,19 @@
 require 'set'
 require 'tempfile'
 require 'pathname'
-require 'vagrant/util/template_renderer'
+require 'dumb-vagrant/util/template_renderer'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestAlpine
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
+        include Dumb Vagrant::Util
         def self.configure_networks(machine, networks)
           machine.communicate.tap do |comm|
             # First, remove any previous network modifications
             # from the interface file.
-            comm.sudo("sed -e '/^#VAGRANT-BEGIN/,$ d' /etc/network/interfaces > /tmp/vagrant-network-interfaces.pre")
-            comm.sudo("sed -ne '/^#VAGRANT-END/,$ p' /etc/network/interfaces | tail -n +2 > /tmp/vagrant-network-interfaces.post")
+            comm.sudo("sed -e '/^#DUMB_VAGRANT-BEGIN/,$ d' /etc/network/interfaces > /tmp/dumb-vagrant-network-interfaces.pre")
+            comm.sudo("sed -ne '/^#DUMB_VAGRANT-END/,$ p' /etc/network/interfaces | tail -n +2 > /tmp/dumb-vagrant-network-interfaces.post")
 
             # Accumulate the configurations to add to the interfaces file as
             # well as what interfaces we're actually configuring since we use that
@@ -37,12 +37,12 @@ module VagrantPlugins
 
             # Perform the careful dance necessary to reconfigure
             # the network interfaces
-            temp = Tempfile.new('vagrant')
+            temp = Tempfile.new('dumb-vagrant')
             temp.binmode
             temp.write(entries.join("\n"))
             temp.close
 
-            comm.upload(temp.path, '/tmp/vagrant-network-entry')
+            comm.upload(temp.path, '/tmp/dumb-vagrant-network-entry')
 
             # Bring down all the interfaces we're reconfiguring. By bringing down
             # each specifically, we avoid reconfiguring eth0 (the NAT interface) so
@@ -52,8 +52,8 @@ module VagrantPlugins
               comm.sudo("/sbin/ip addr flush dev eth#{interface} 2> /dev/null")
             end
 
-            comm.sudo('cat /tmp/vagrant-network-interfaces.pre /tmp/vagrant-network-entry /tmp/vagrant-network-interfaces.post > /etc/network/interfaces')
-            comm.sudo('rm -f /tmp/vagrant-network-interfaces.pre /tmp/vagrant-network-entry /tmp/vagrant-network-interfaces.post')
+            comm.sudo('cat /tmp/dumb-vagrant-network-interfaces.pre /tmp/dumb-vagrant-network-entry /tmp/dumb-vagrant-network-interfaces.post > /etc/network/interfaces')
+            comm.sudo('rm -f /tmp/dumb-vagrant-network-interfaces.pre /tmp/dumb-vagrant-network-entry /tmp/dumb-vagrant-network-interfaces.post')
 
             # Bring back up each network interface, reconfigured
             interfaces.each do |interface|

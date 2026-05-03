@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-describe 'VagrantPlugins::GuestAlpine::Cap::RSync' do
+describe 'Dumb VagrantPlugins::GuestAlpine::Cap::RSync' do
     let(:machine) { double('machine') }
-    let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+    let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
     before do
         allow(machine).to receive(:communicate).and_return(communicator)
@@ -16,7 +16,7 @@ describe 'VagrantPlugins::GuestAlpine::Cap::RSync' do
     end
 
     let(:described_class) do
-        VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:rsync_install)
+        Dumb VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:rsync_install)
     end
 
     it 'should install rsync with --update-cache flag' do
@@ -27,7 +27,7 @@ describe 'VagrantPlugins::GuestAlpine::Cap::RSync' do
     end
 
     let(:described_class) do
-        VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:rsync_installed)
+        Dumb VagrantPlugins::GuestAlpine::Plugin.components.guest_capabilities[:alpine].get(:rsync_installed)
     end
 
     it 'should verify rsync installed' do

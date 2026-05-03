@@ -1,45 +1,45 @@
 ---
 layout: docs
-page_title: Vagrant Push - Local Exec Strategy
+page_title: Dumb Vagrant Push - Local Exec Strategy
 description: |-
-  The Vagrant Push Local Exec strategy pushes your application's code using a
+  The Dumb Vagrant Push Local Exec strategy pushes your application's code using a
   user-defined script.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
-# Vagrant Push
+# Dumb Vagrant Push
 
 ## Local Exec Strategy
 
-The Vagrant Push Local Exec strategy allows the user to invoke an arbitrary
+The Dumb Vagrant Push Local Exec strategy allows the user to invoke an arbitrary
 shell command or script as part of a push.
 
-~> **Warning:** The Vagrant Push Local Exec strategy does not
+~> **Warning:** The Dumb Vagrant Push Local Exec strategy does not
 perform any validation on the correctness of the shell script.
 
-The Vagrant Push Local Exec strategy supports the following configuration
+The Dumb Vagrant Push Local Exec strategy supports the following configuration
 options:
 
-- `script` - The path to a script on disk (relative to the `Vagrantfile`) to
-  execute. Vagrant will attempt to convert this script to an executable, but an
+- `script` - The path to a script on disk (relative to the `Dumb Vagrantfile`) to
+  execute. Dumb Vagrant will attempt to convert this script to an executable, but an
   exception will be raised if that fails.
 - `inline` - The inline script to execute (as a string).
 - `args` (string or array) - Optional arguments to pass to the shell script when executing it
   as a single string. These arguments must be written as if they were typed
   directly on the command line, so be sure to escape characters, quote,
   etc. as needed. You may also pass the arguments in using an array. In this
-  case, Vagrant will handle quoting for you.
+  case, Dumb Vagrant will handle quoting for you.
 
 Please note - only one of the `script` and `inline` options may be specified in
 a single push definition.
 
 ### Usage
 
-The Vagrant Push Local Exec strategy is defined in the `Vagrantfile` using the
+The Dumb Vagrant Push Local Exec strategy is defined in the `Dumb Vagrantfile` using the
 `local-exec` key:
 
 Remote path:
@@ -63,7 +63,7 @@ end
 ```
 
 For more complicated scripts, you may store them in a separate file and read
-them from the `Vagrantfile` like so:
+them from the `Dumb Vagrantfile` like so:
 
 ```ruby
 config.push.define "local-exec" do |push|
@@ -71,12 +71,12 @@ config.push.define "local-exec" do |push|
 end
 ```
 
-And then invoke the push with Vagrant:
+And then invoke the push with Dumb Vagrant:
 
 ```shell-session
-$ vagrant push
+$ dumb-vagrant push
 ```
 
 ### Script Arguments
 
-Refer to [Shell Provisioner](/vagrant/docs/provisioning/shell).
+Refer to [Shell Provisioner](/dumb-vagrant/docs/provisioning/shell).

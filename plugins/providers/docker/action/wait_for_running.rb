@@ -4,13 +4,13 @@
 require "thread"
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class WaitForRunning
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::docker::waitforrunning")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::waitforrunning")
         end
 
         def call(env)

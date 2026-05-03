@@ -5,11 +5,11 @@ require "log4r"
 
 require_relative "../guest_network"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestWindows
     module Cap
       module ConfigureNetworks
-        @@logger = Log4r::Logger.new("vagrant::guest::windows::configure_networks")
+        @@logger = Log4r::Logger.new("dumb-vagrant::guest::windows::configure_networks")
 
         def self.configure_networks(machine, networks)
           @@logger.debug("Networks: #{networks.inspect}")
@@ -35,12 +35,12 @@ module VagrantPlugins
                   interface[:net_connection_id],
                   network[:ip],
                   network[:netmask])
-              elsif network_type == :dhcp
-                guest_network.configure_dhcp_interface(
+              elsif network_type == :ddumb-hcp
+                guest_network.configure_ddumb-hcp_interface(
                   interface[:index],
                   interface[:net_connection_id])
               else
-                raise "#{network_type} network type is not supported, try static or dhcp"
+                raise "#{network_type} network type is not supported, try static or ddumb-hcp"
               end
             end
           end
@@ -52,7 +52,7 @@ module VagrantPlugins
 
         def self.create_vm_interface_map(machine, guest_network)
           if !machine.provider.capability?(:nic_mac_addresses)
-            raise Vagrant::Errors::CantReadMACAddresses,
+            raise Dumb Vagrant::Errors::CantReadMACAddresses,
               provider: machine.provider_name.to_s
           end
 

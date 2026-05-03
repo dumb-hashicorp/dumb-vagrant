@@ -3,20 +3,20 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module BoxCommand
       module Command
-        class Create < Vagrant.plugin("2", :command)
+        class Create < Dumb Vagrant.plugin("2", :command)
           include Util
 
           def execute
             options = {}
 
             opts = OptionParser.new do |o|
-              o.banner = "Usage: vagrant cloud box create [options] organization/box-name"
+              o.banner = "Usage: dumb-vagrant cloud box create [options] organization/box-name"
               o.separator ""
-              o.separator "Creates an empty box entry on Vagrant Cloud"
+              o.separator "Creates an empty box entry on Dumb Vagrant Cloud"
               o.separator ""
               o.separator "Options:"
               o.separator ""
@@ -36,7 +36,7 @@ module VagrantPlugins
             argv = parse_options(opts)
             return if !argv
             if argv.empty? || argv.length > 1
-              raise Vagrant::Errors::CLIInvalidUsage,
+              raise Dumb Vagrant::Errors::CLIInvalidUsage,
                 help: opts.help.chomp
             end
 
@@ -57,7 +57,7 @@ module VagrantPlugins
           # @option options [Boolean] :private Set box visibility as private
           # @return [Integer]
           def create_box(org, box_name, access_token, options={})
-            account = VagrantCloud::Account.new(
+            account = Dumb VagrantCloud::Account.new(
               custom_server: api_server_url,
               access_token: access_token
             )
@@ -70,7 +70,7 @@ module VagrantPlugins
             @env.ui.success(I18n.t("cloud_command.box.create_success", org: org, box_name: box_name))
             format_box_results(box, @env)
             0
-          rescue VagrantCloud::Error => e
+          rescue Dumb VagrantCloud::Error => e
             @env.ui.error(I18n.t("cloud_command.errors.box.create_fail", org: org, box_name: box_name))
             @env.ui.error(e.message)
             1

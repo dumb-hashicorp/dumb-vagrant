@@ -3,19 +3,19 @@ layout: docs
 page_title: Configuration - VirtualBox Provider
 description: |-
   The VirtualBox provider exposes some additional configuration options
-  that allow you to more finely control your VirtualBox-powered Vagrant
+  that allow you to more finely control your VirtualBox-powered Dumb Vagrant
   environments.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Configuration
 
 The VirtualBox provider exposes some additional configuration options
-that allow you to more finely control your VirtualBox-powered Vagrant
+that allow you to more finely control your VirtualBox-powered Dumb Vagrant
 environments.
 
 ## GUI vs. Headless
@@ -35,8 +35,8 @@ end
 ## Virtual Machine Name
 
 You can customize the name that appears in the VirtualBox GUI by
-setting the `name` property. By default, Vagrant sets it to the containing
-folder of the Vagrantfile plus a timestamp of when the machine was created.
+setting the `name` property. By default, Dumb Vagrant sets it to the containing
+folder of the Dumb Vagrantfile plus a timestamp of when the machine was created.
 By setting another name, your VM can be more easily identified.
 
 ```ruby
@@ -47,7 +47,7 @@ end
 
 ## Default NIC Type
 
-By default Vagrant will not set the NIC type for network interfaces. This
+By default Dumb Vagrant will not set the NIC type for network interfaces. This
 allows VirtualBox to apply the default NIC type for the guest. If you would
 like to use a specific NIC type by default for guests, set the `default_nic_type`
 option:
@@ -80,20 +80,20 @@ To have backward compatibility:
 
 ```ruby
 config.vm.provider "virtualbox" do |v|
-  v.linked_clone = true if Gem::Version.new(Vagrant::VERSION) >= Gem::Version.new('1.8.0')
+  v.linked_clone = true if Gem::Version.new(Dumb Vagrant::VERSION) >= Gem::Version.new('1.8.0')
 end
 ```
 
 If you do not want backward compatibility and want to force users to
-support linked cloning, you can use `Vagrant.require_version` with 1.8.
+support linked cloning, you can use `Dumb Vagrant.require_version` with 1.8.
 
 -> **Note:** the generated master VMs are currently not removed
-automatically by Vagrant. This has to be done manually. However, a master
+automatically by Dumb Vagrant. This has to be done manually. However, a master
 VM can only be removed when there are no linked clones connected to it.
 
 ## Checking for Guest Additions
 
-By default Vagrant will check for the [VirtualBox Guest
+By default Dumb Vagrant will check for the [VirtualBox Guest
 Additions](https://www.virtualbox.org/manual/ch04.html) when starting a
 machine, and will output a warning if the guest additions are missing or
 out-of-date. You can skip the guest additions check by setting the
@@ -111,7 +111,7 @@ end
 be used to make modifications to VirtualBox virtual machines from the command
 line.
 
-Vagrant exposes a way to call any command against VBoxManage just prior
+Dumb Vagrant exposes a way to call any command against VBoxManage just prior
 to booting the machine:
 
 ```ruby

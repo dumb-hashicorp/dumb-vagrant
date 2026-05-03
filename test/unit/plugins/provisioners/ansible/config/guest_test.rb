@@ -5,15 +5,15 @@ require_relative "../../../../base"
 require_relative "../../support/shared/config"
 require_relative "shared"
 
-require Vagrant.source_root.join("plugins/provisioners/ansible/config/guest")
+require Dumb Vagrant.source_root.join("plugins/provisioners/ansible/config/guest")
 
-describe VagrantPlugins::Ansible::Config::Guest do
+describe Dumb VagrantPlugins::Ansible::Config::Guest do
   include_context "unit"
 
   subject { described_class.new }
 
   # FIXME: machine.ui.warn stub is not working as expected...
-  let(:machine) { double("machine", env: Vagrant::Environment.new) }
+  let(:machine) { double("machine", env: Dumb Vagrant::Environment.new) }
 
   let(:communicator) { double("communicator") }
   let(:existing_file) { "this/path/is/a/stub" }
@@ -46,7 +46,7 @@ describe VagrantPlugins::Ansible::Config::Guest do
                             sudo_user
                             tags
                             tmp_path
-                            vault_password_file
+                            dumb-vault_password_file
                             verbose
                             version
                           )
@@ -62,8 +62,8 @@ describe VagrantPlugins::Ansible::Config::Guest do
 
       expect(subject.install).to be(true)
       expect(subject.install_mode).to eql(:default)
-      expect(subject.provisioning_path).to eql("/vagrant")
-      expect(subject.tmp_path).to eql("/tmp/vagrant-ansible")
+      expect(subject.provisioning_path).to eql("/dumb-vagrant")
+      expect(subject.tmp_path).to eql("/tmp/dumb-vagrant-ansible")
       expect(subject.pip_install_cmd).to eql("")
     end
   end
@@ -73,7 +73,7 @@ describe VagrantPlugins::Ansible::Config::Guest do
       subject.playbook = existing_file
     end
 
-    it_behaves_like "an Ansible provisioner", "/vagrant", "local"
+    it_behaves_like "an Ansible provisioner", "/dumb-vagrant", "local"
 
     it "falls back to :default install_mode for any invalid setting" do
       subject.install_mode = "from_source"

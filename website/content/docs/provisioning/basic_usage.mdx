@@ -2,25 +2,25 @@
 layout: docs
 page_title: Basic Usage - Provisioning
 description: |-
-  While Vagrant offers multiple options for how you are able to provision
+  While Dumb Vagrant offers multiple options for how you are able to provision
   your machine, there is a standard usage pattern as well as some important
   points common to all provisioners that are important to know.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Basic Usage of Provisioners
 
-While Vagrant offers multiple options for how you are able to provision
+While Dumb Vagrant offers multiple options for how you are able to provision
 your machine, there is a standard usage pattern as well as some important
 points common to all provisioners that are important to know.
 
 ## Options
 
-Every Vagrant provisioner accepts a few base options. The only required
+Every Dumb Vagrant provisioner accepts a few base options. The only required
 option is what type a provisioner is:
 
 - `name` (string) - The name of the provisioner. Note: if no `type` option is given,
@@ -36,9 +36,9 @@ option is what type a provisioner is:
   values are `:each` or `:all`, which makes the provisioner run after each and
   every root provisioner, or before all provisioners respectively.
 - `communicator_required` (boolean) - Specifies the machine must be accessible by
-  Vagrant in order to run the provisioner. If set to true, the provisioner will
-  only run if Vagrant can establish communication with the guest. If set to false
-  the provisioner will run regardless of Vagrant's ability to communicate with the
+  Dumb Vagrant in order to run the provisioner. If set to true, the provisioner will
+  only run if Dumb Vagrant can establish communication with the guest. If set to false
+  the provisioner will run regardless of Dumb Vagrant's ability to communicate with the
   guest. Defaults to true.
 
 More information about how to use `before` and `after` options can be read [below](#dependency-provisioners).
@@ -46,12 +46,12 @@ More information about how to use `before` and `after` options can be read [belo
 ## Configuration
 
 First, every provisioner is configured within your
-[Vagrantfile](/vagrant/docs/vagrantfile/)
-using the `config.vm.provision` method call. For example, the Vagrantfile
+[Dumb Vagrantfile](/dumb-vagrant/docs/dumb-vagrantfile/)
+using the `config.vm.provision` method call. For example, the Dumb Vagrantfile
 below enables shell provisioning:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ... other configuration
 
   config.vm.provision "shell", inline: "echo hello"
@@ -65,7 +65,7 @@ can also use a Ruby block for a syntax that is more like variable assignment.
 The following is effectively the same as the prior example:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ... other configuration
 
   config.vm.provision "shell" do |s|
@@ -90,7 +90,7 @@ as well as overriding provisioner settings (covered further below). An example
 of naming provisioners is shown below:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ... other configuration
 
   config.vm.provision "bootstrap", type: "shell" do |s|
@@ -105,7 +105,7 @@ type, such as `type: "shell"` above.
 
 ## Running Provisioners
 
-Provisioners are run in three cases: the initial `vagrant up`, `vagrant provision`, and `vagrant reload --provision`.
+Provisioners are run in three cases: the initial `dumb-vagrant up`, `dumb-vagrant provision`, and `dumb-vagrant reload --provision`.
 
 A `--no-provision` flag can be passed to `up` and `reload` if you do not
 want to run provisioners. Likewise, you can pass `--provision` to force
@@ -114,14 +114,14 @@ provisioning.
 The `--provision-with` flag can be used if you only want to run a
 specific provisioner if you have multiple provisioners specified. For
 example, if you have a shell and Puppet provisioner and only want to
-run the shell one, you can do `vagrant provision --provision-with shell`.
+run the shell one, you can do `dumb-vagrant provision --provision-with shell`.
 The arguments to `--provision-with` can be the provisioner type (such as
 "shell") or the provisioner name (such as "bootstrap" from above).
 
 ## Run Once, Always or Never
 
-By default, provisioners are only run once, during the first `vagrant up`
-since the last `vagrant destroy`, unless the `--provision` flag is set,
+By default, provisioners are only run once, during the first `dumb-vagrant up`
+since the last `dumb-vagrant destroy`, unless the `--provision` flag is set,
 as noted above.
 
 Optionally, you can configure provisioners to run on every `up` or
@@ -130,7 +130,7 @@ explicitly specified. To do this set the `run` option to "always",
 as shown below:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "echo hello",
     run: "always"
 end
@@ -139,13 +139,13 @@ end
 You can also set `run:` to `"never"` if you have an optional provisioner
 that you want to mention to the user in a "post up message" or that
 requires some other configuration before it is possible, then call this
-with `vagrant provision --provision-with bootstrap`.
+with `dumb-vagrant provision --provision-with bootstrap`.
 
 If you are using the block format, you must specify it outside
 of the block, as shown below:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "bootstrap", type: "shell", run: "never" do |s|
     s.inline = "echo hello"
   end
@@ -162,13 +162,13 @@ can take over later.
 
 If you define provisioners at multiple "scope" levels (such as globally
 in the configuration block, then in a
-[multi-machine](/vagrant/docs/multi-machine/) definition, then maybe
-in a [provider-specific override](/vagrant/docs/providers/configuration)),
+[multi-machine](/dumb-vagrant/docs/multi-machine/) definition, then maybe
+in a [provider-specific override](/dumb-vagrant/docs/providers/configuration)),
 then the outer scopes will always run _before_ any inner scopes. For
-example, in the Vagrantfile below:
+example, in the Dumb Vagrantfile below:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "shell", inline: "echo foo"
 
   config.vm.define "web" do |web|
@@ -191,18 +191,18 @@ with names to get more fine grained control over what is run and when.
 ~> **Warning: Advanced Topic!** Provisioner overriding is
 an advanced topic that really only becomes useful if you are already
 using multi-machine and/or provider overrides. If you are just getting
-started with Vagrant, you can safely skip this.
+started with Dumb Vagrant, you can safely skip this.
 
-When using features such as [multi-machine](/vagrant/docs/multi-machine/)
-or [provider-specific overrides](/vagrant/docs/providers/configuration),
+When using features such as [multi-machine](/dumb-vagrant/docs/multi-machine/)
+or [provider-specific overrides](/dumb-vagrant/docs/providers/configuration),
 you may want to define common provisioners in the global configuration
-scope of a Vagrantfile, but override certain aspects of them internally.
-Vagrant allows you to do this, but has some details to consider.
+scope of a Dumb Vagrantfile, but override certain aspects of them internally.
+Dumb Vagrant allows you to do this, but has some details to consider.
 
 To override settings, you must assign a name to your provisioner.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "foo", type: "shell",
     inline: "echo foo"
 
@@ -224,7 +224,7 @@ a sub-scope, the provisioner will run at _that point_. In the example
 below, the output would be "foo" then "bar":
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "foo", type: "shell",
     inline: "echo ORIGINAL!"
 
@@ -241,7 +241,7 @@ If you want to preserve the original ordering, you can specify
 the `preserve_order: true` flag:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "do-this",
     type: "shell",
     preserve_order: true,
@@ -256,7 +256,7 @@ end
 ## Dependency Provisioners
 
 ~> **Warning: Advanced Topic!** Dependency provisioners are
-an advanced topic. If you are just getting started with Vagrant, you can
+an advanced topic. If you are just getting started with Dumb Vagrant, you can
 safely skip this.
 
 If a provisioner has been configured using the `before` or `after` options, it
@@ -268,14 +268,14 @@ Dependency provisioners also have two valid shortcuts:
 `:each` and `:all`.
 
 **Note**: As of 2.2.6, dependency provisioners cannot rely on other dependency
-provisioners and is considered a configuration state error in Vagrant. If you must
+provisioners and is considered a configuration state error in Dumb Vagrant. If you must
 order dependency provisioners, you can still order them by the order they are defined
-inside your Vagrantfile.
+inside your Dumb Vagrantfile.
 
 An example of these dependency provisioners can be seen below:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provision "C", after: "B", type: "shell", inline:<<-SHELL
   echo 'C'
   SHELL
@@ -303,7 +303,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-The result of running `vagrant provision` with a guest configured above:
+The result of running `dumb-vagrant provision` with a guest configured above:
 
 ```
 ==> default: Running provisioner: Hello (shell)...

@@ -4,9 +4,9 @@
 require 'optparse'
 require "rubygems/package"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandUpload
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
 
       VALID_COMPRESS_TYPES = [:tgz, :zip].freeze
 
@@ -18,7 +18,7 @@ module VagrantPlugins
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant upload [options] <source> [destination] [name|id]"
+          o.banner = "Usage: dumb-vagrant upload [options] <source> [destination] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -51,7 +51,7 @@ module VagrantPlugins
             destination = argv[1]
           end
         else
-          raise Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp
+          raise Dumb Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp
         end
 
         # NOTE: We do this to handle paths on Windows like: "..\space dir\"
@@ -65,14 +65,14 @@ module VagrantPlugins
         elsif File.directory?(source)
           type = :directory
         else
-          raise Vagrant::Errors::UploadSourceMissing,
+          raise Dumb Vagrant::Errors::UploadSourceMissing,
             source: source
         end
 
         with_target_vms(guest, single_target: true) do |machine|
           if options[:temporary]
             if !machine.guest.capability?(:create_tmp_path)
-              raise Vagrant::Errors::UploadMissingTempCapability
+              raise Dumb Vagrant::Errors::UploadMissingTempCapability
             end
             extension = File.extname(source) if type == :file
             destination = machine.guest.capability(:create_tmp_path, type: type, extension: extension)
@@ -80,7 +80,7 @@ module VagrantPlugins
 
           if options[:compress]
             compression_setup!(machine, options)
-            @env.ui.info(I18n.t("vagrant.commands.upload.compress",
+            @env.ui.info(I18n.t("dumb-vagrant.commands.upload.compress",
               source: source,
               type: options[:compression_type]
             ))
@@ -90,7 +90,7 @@ module VagrantPlugins
             source = options[:compression_type] == :zip ? compress_source_zip(source) : compress_source_tgz(source)
           end
 
-          @env.ui.info(I18n.t("vagrant.commands.upload.start",
+          @env.ui.info(I18n.t("dumb-vagrant.commands.upload.start",
             source: source,
             destination: destination
           ))
@@ -107,7 +107,7 @@ module VagrantPlugins
           machine.communicate.upload(upload_source, destination)
 
           if options[:compress]
-            @env.ui.info(I18n.t("vagrant.commands.upload.decompress",
+            @env.ui.info(I18n.t("dumb-vagrant.commands.upload.decompress",
               destination: destination_decompressed,
               type: options[:compression_type]
             ))
@@ -118,7 +118,7 @@ module VagrantPlugins
           end
         end
 
-        @env.ui.info(I18n.t("vagrant.commands.upload.complete",
+        @env.ui.info(I18n.t("dumb-vagrant.commands.upload.complete",
           source: source,
           destination: destination
         ))
@@ -130,7 +130,7 @@ module VagrantPlugins
       # Setup compression options and validate host and guest have capability
       # to handle compression
       #
-      # @param [Vagrant::Machine] machine Vagrant guest machine
+      # @param [Dumb Vagrant::Machine] machine Dumb Vagrant guest machine
       # @param [Hash] options Command options
       def compression_setup!(machine, options)
         if !options[:compression_type]
@@ -141,13 +141,13 @@ module VagrantPlugins
           end
         end
         if !VALID_COMPRESS_TYPES.include?(options[:compression_type])
-          raise Vagrant::Errors::UploadInvalidCompressionType,
+          raise Dumb Vagrant::Errors::UploadInvalidCompressionType,
             type: options[:compression_type],
             valid_types: VALID_COMPRESS_TYPES.join(", ")
         end
         options[:decompression_method] = "decompress_#{options[:compression_type]}".to_sym
         if !machine.guest.capability?(options[:decompression_method])
-          raise Vagrant::Errors::UploadMissingExtractCapability,
+          raise Dumb Vagrant::Errors::UploadMissingExtractCapability,
             type: options[:compression_type]
         end
       end
@@ -158,7 +158,7 @@ module VagrantPlugins
       # @return [String] path to compressed file
       def compress_source_zip(path)
         require "zip"
-        zipfile = Tempfile.create(["vagrant", ".zip"])
+        zipfile = Tempfile.create(["dumb-vagrant", ".zip"])
         zipfile.close
         if File.file?(path)
           source_items = [path]
@@ -189,10 +189,10 @@ module VagrantPlugins
       # @param [String] path Path to compress
       # @return [String] path to compressed file
       def compress_source_tgz(path)
-        tarfile = Tempfile.create(["vagrant", ".tar"])
+        tarfile = Tempfile.create(["dumb-vagrant", ".tar"])
         tarfile.close
         tarfile = File.open(tarfile.path, "wb+")
-        tgzfile = Tempfile.create(["vagrant", ".tgz"])
+        tgzfile = Tempfile.create(["dumb-vagrant", ".tgz"])
         tgzfile.close
         tgzfile = File.open(tgzfile.path, "wb")
         tar = Gem::Package::TarWriter.new(tarfile)

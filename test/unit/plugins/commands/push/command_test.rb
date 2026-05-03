@@ -3,21 +3,21 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/push/command")
+require Dumb Vagrant.source_root.join("plugins/commands/push/command")
 
-describe VagrantPlugins::CommandPush::Command do
+describe Dumb VagrantPlugins::CommandPush::Command do
   include_context "unit"
   include_context "command plugin helpers"
 
   let(:iso_env) { isolated_environment }
   let(:env) do
-    iso_env.vagrantfile(<<-VF)
-      Vagrant.configure("2") do |config|
-        config.vm.box = "hashicorp/precise64"
-        config.vm.synced_folder ".", "/vagrant", disabled: true
+    iso_env.dumb-vagrantfile(<<-VF)
+      Dumb Vagrant.configure("2") do |config|
+        config.vm.box = "dumb-hashicorp/precise64"
+        config.vm.synced_folder ".", "/dumb-vagrant", disabled: true
       end
     VF
-    iso_env.create_vagrant_env
+    iso_env.create_dumb-vagrant_env
   end
 
   let(:argv)   { [] }
@@ -26,7 +26,7 @@ describe VagrantPlugins::CommandPush::Command do
   subject { described_class.new(argv, env) }
 
   before do
-    allow(Vagrant.plugin("2").manager).to receive(:pushes).and_return(pushes)
+    allow(Dumb Vagrant.plugin("2").manager).to receive(:pushes).and_return(pushes)
   end
 
   describe "#execute" do
@@ -48,10 +48,10 @@ describe VagrantPlugins::CommandPush::Command do
     end
 
     it "validates the configuration" do
-      iso_env.vagrantfile <<-EOH
-        Vagrant.configure("2") do |config|
-          config.vm.box = "hashicorp/precise64"
-          config.vm.synced_folder ".", "/vagrant", disabled: true
+      iso_env.dumb-vagrantfile <<-EOH
+        Dumb Vagrant.configure("2") do |config|
+          config.vm.box = "dumb-hashicorp/precise64"
+          config.vm.synced_folder ".", "/dumb-vagrant", disabled: true
 
           config.push.define "noop" do |push|
             push.bad = "ham"
@@ -59,11 +59,11 @@ describe VagrantPlugins::CommandPush::Command do
         end
       EOH
 
-      subject = described_class.new(argv, iso_env.create_vagrant_env)
+      subject = described_class.new(argv, iso_env.create_dumb-vagrant_env)
       allow(subject).to receive(:validate_pushes!)
         .and_return(:noop)
 
-      expect { subject.execute }.to raise_error(Vagrant::Errors::ConfigInvalid) { |err|
+      expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::ConfigInvalid) { |err|
         expect(err.message).to include("The following settings shouldn't exist: bad")
       }
     end
@@ -76,14 +76,14 @@ describe VagrantPlugins::CommandPush::Command do
       context "when a strategy is given" do
         it "raises an exception" do
           expect { subject.validate_pushes!(pushes, :noop) }
-            .to raise_error(Vagrant::Errors::PushesNotDefined)
+            .to raise_error(Dumb Vagrant::Errors::PushesNotDefined)
         end
       end
 
       context "when no strategy is given" do
         it "raises an exception" do
           expect { subject.validate_pushes!(pushes) }
-            .to raise_error(Vagrant::Errors::PushesNotDefined)
+            .to raise_error(Dumb Vagrant::Errors::PushesNotDefined)
         end
       end
     end
@@ -96,7 +96,7 @@ describe VagrantPlugins::CommandPush::Command do
         context "when that strategy is not defined" do
           it "raises an exception" do
             expect { subject.validate_pushes!(pushes, :bacon) }
-              .to raise_error(Vagrant::Errors::PushStrategyNotDefined)
+              .to raise_error(Dumb Vagrant::Errors::PushStrategyNotDefined)
           end
         end
 
@@ -123,7 +123,7 @@ describe VagrantPlugins::CommandPush::Command do
         context "when that strategy is not defined" do
           it "raises an exception" do
             expect { subject.validate_pushes!(pushes, :bacon) }
-              .to raise_error(Vagrant::Errors::PushStrategyNotDefined)
+              .to raise_error(Dumb Vagrant::Errors::PushStrategyNotDefined)
           end
         end
 
@@ -138,7 +138,7 @@ describe VagrantPlugins::CommandPush::Command do
       context "when no strategy is given" do
         it "raises an exception" do
           expect { subject.validate_pushes!(pushes) }
-            .to raise_error(Vagrant::Errors::PushStrategyNotProvided)
+            .to raise_error(Dumb Vagrant::Errors::PushStrategyNotProvided)
         end
       end
     end

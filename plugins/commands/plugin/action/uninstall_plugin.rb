@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Action
       # This middleware uninstalls a plugin by simply removing it from
@@ -14,10 +14,10 @@ module VagrantPlugins
 
         def call(env)
           # Remove it!
-          env[:ui].info(I18n.t("vagrant.commands.plugin.uninstalling",
+          env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.uninstalling",
                                name: env[:plugin_name]))
 
-          manager = Vagrant::Plugin::Manager.instance
+          manager = Dumb Vagrant::Plugin::Manager.instance
           manager.uninstall_plugin(env[:plugin_name], env_local: env[:env_local])
 
           @app.call(env)

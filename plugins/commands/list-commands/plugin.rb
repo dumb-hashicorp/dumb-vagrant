@@ -1,14 +1,14 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandListCommands
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "list-commands command"
       description <<-DESC
-      The `list-commands` command will list all commands that Vagrant
+      The `list-commands` command will list all commands that Dumb Vagrant
       understands, even hidden ones.
       DESC
 

@@ -1,23 +1,23 @@
 ---
 layout: docs
-page_title: vagrant rsync-auto - Command-Line Interface
+page_title: dumb-vagrant rsync-auto - Command-Line Interface
 description: |-
-  The "vagrant rsync-auto" command watches all local directories of any rsync
+  The "dumb-vagrant rsync-auto" command watches all local directories of any rsync
   configured synced folders and automatically initiates an rsync transfer when
   changes are detected.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # rsync-auto
 
-**Command: `vagrant rsync-auto`**
+**Command: `dumb-vagrant rsync-auto`**
 
 This command watches all local directories of any
-[rsync synced folders](/vagrant/docs/synced-folders/rsync) and automatically
+[rsync synced folders](/dumb-vagrant/docs/synced-folders/rsync) and automatically
 initiates an rsync transfer when changes are detected. This command does
 not exit until an interrupt is received.
 
@@ -30,7 +30,7 @@ for filesystem changes, and does not simply poll the directory.
   this option can result in faster completion due to a secondary process not being
   required to update ownership. By default this is disabled.
 
-- `--[no-]poll` - Force Vagrant to watch for changes using filesystem
+- `--[no-]poll` - Force Dumb Vagrant to watch for changes using filesystem
   polling instead of filesystem events. This is required for some filesystems
   that do not support events. Warning: enabling this will make `rsync-auto`
   _much_ slower. By default, polling is disabled.
@@ -46,13 +46,13 @@ To ensure that the command works properly, you should start `rsync-auto`
 only when the machine is running, and shut it down before any machine
 state changes.
 
-You can always force a resync with the [rsync](/vagrant/docs/cli/rsync) command.
+You can always force a resync with the [rsync](/dumb-vagrant/docs/cli/rsync) command.
 
-## Vagrantfile Changes
+## Dumb Vagrantfile Changes
 
-If you change or move your Vagrantfile, the `rsync-auto` command will have
-to be restarted. For example, if you add synced folders to the Vagrantfile,
-or move the directory that contains the Vagrantfile, the `rsync-auto`
+If you change or move your Dumb Vagrantfile, the `rsync-auto` command will have
+to be restarted. For example, if you add synced folders to the Dumb Vagrantfile,
+or move the directory that contains the Dumb Vagrantfile, the `rsync-auto`
 command will either not pick up the changes or may begin experiencing
 strange behavior.
 

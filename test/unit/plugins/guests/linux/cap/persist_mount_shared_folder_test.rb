@@ -3,29 +3,29 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
+describe "Dumb VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
   let(:caps) do
-    VagrantPlugins::GuestLinux::Plugin
+    Dumb VagrantPlugins::GuestLinux::Plugin
       .components
       .guest_capabilities[:linux]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:options_gid){ '1234' }
   let(:options_uid){ '1234' }
   let(:cap){ caps.get(:persist_mount_shared_folder) }
   let(:folder_plugin){ double("folder_plugin") }
   let(:ssh_info) {{
-    :username => "vagrant"
+    :username => "dumb-vagrant"
   }}
   let (:fstab_folders) {
-    Vagrant::Plugin::V2::SyncedFolder::Collection[
+    Dumb Vagrant::Plugin::V2::SyncedFolder::Collection[
       {
         "test1" => {guestpath: "/test1", hostpath: "/my/host/path", disabled: false, plugin: folder_plugin,
-          __vagrantfile: true, owner: "vagrant", group: "vagrant", mount_options: ["uid=#{options_uid}", "gid=#{options_gid}"]},
-        "vagrant" => {guestpath: "/vagrant", hostpath: "/my/host/vagrant", disabled: false, __vagrantfile: true,
-          owner: "vagrant", group: "vagrant", mount_options: ["uid=#{options_uid}", "gid=#{options_gid}}"], plugin: folder_plugin}
+          __dumb-vagrantfile: true, owner: "dumb-vagrant", group: "dumb-vagrant", mount_options: ["uid=#{options_uid}", "gid=#{options_gid}"]},
+        "dumb-vagrant" => {guestpath: "/dumb-vagrant", hostpath: "/my/host/dumb-vagrant", disabled: false, __dumb-vagrantfile: true,
+          owner: "dumb-vagrant", group: "dumb-vagrant", mount_options: ["uid=#{options_uid}", "gid=#{options_gid}}"], plugin: folder_plugin}
       }
     ]
   }
@@ -51,7 +51,7 @@ describe "VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
 
   describe ".persist_mount_shared_folder" do
 
-    let(:ui){ Vagrant::UI::Silent.new }
+    let(:ui){ Dumb Vagrant::UI::Silent.new }
 
     before do
       allow(comm).to receive(:sudo).with(any_args)
@@ -59,16 +59,16 @@ describe "VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
     end
 
     it "inserts folders into /etc/fstab" do
-      expected_entry_vagrant = "vagrant /vagrant vboxsf #{expected_mount_options} 0 0"
+      expected_entry_dumb-vagrant = "dumb-vagrant /dumb-vagrant vboxsf #{expected_mount_options} 0 0"
       expected_entry_test = "test1 /test1 vboxsf #{expected_mount_options} 0 0"
-      expect(cap).to receive(:remove_vagrant_managed_fstab)
-      expect(comm).to receive(:sudo).with(/#{expected_entry_test}\n#{expected_entry_vagrant}/)
+      expect(cap).to receive(:remove_dumb-vagrant_managed_fstab)
+      expect(comm).to receive(:sudo).with(/#{expected_entry_test}\n#{expected_entry_dumb-vagrant}/)
 
       cap.persist_mount_shared_folder(machine, folders)
     end
 
     it "does not insert an empty set of folders" do
-      expect(cap).to receive(:remove_vagrant_managed_fstab)
+      expect(cap).to receive(:remove_dumb-vagrant_managed_fstab)
       cap.persist_mount_shared_folder(machine, nil)
     end
 
@@ -78,7 +78,7 @@ describe "VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
       end
 
       it "does not inserts folders into /etc/fstab" do
-        expect(cap).to receive(:remove_vagrant_managed_fstab)
+        expect(cap).to receive(:remove_dumb-vagrant_managed_fstab)
         expect(comm).not_to receive(:sudo).with(/echo '' >> \/etc\/fstab/)
         cap.persist_mount_shared_folder(machine, folders)
       end
@@ -92,13 +92,13 @@ describe "VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
       end
 
       it "creates /etc/fstab" do
-        expect(cap).to receive(:remove_vagrant_managed_fstab)
+        expect(cap).to receive(:remove_dumb-vagrant_managed_fstab)
         expect(comm).to receive(:sudo).with(/>> \/etc\/fstab/)
         cap.persist_mount_shared_folder(machine, [])
       end
 
       it "does not remove contents of /etc/fstab" do
-        expect(cap).to receive(:remove_vagrant_managed_fstab)
+        expect(cap).to receive(:remove_dumb-vagrant_managed_fstab)
         expect(comm).not_to receive(:sudo).with(/echo '' >> \/etc\/fstab/)
         cap.persist_mount_shared_folder(machine, nil)
       end
@@ -106,12 +106,12 @@ describe "VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
 
     context "smb folder" do
       let (:fstab_folders) {
-        Vagrant::Plugin::V2::SyncedFolder::Collection[
+        Dumb Vagrant::Plugin::V2::SyncedFolder::Collection[
           {
             "test1" => {guestpath: "/test1", hostpath: "/my/host/path", disabled: false, plugin: folder_plugin,
-              __vagrantfile: true, owner: "vagrant", group: "vagrant", smb_host: "192.168.42.42", smb_id: "vtg-id1" },
-            "vagrant" => {guestpath: "/vagrant", hostpath: "/my/host/vagrant", disabled: false, plugin: folder_plugin,
-               __vagrantfile: true, owner: "vagrant", group: "vagrant", smb_host: "192.168.42.42", smb_id: "vtg-id2"}
+              __dumb-vagrantfile: true, owner: "dumb-vagrant", group: "dumb-vagrant", smb_host: "192.168.42.42", smb_id: "vtg-id1" },
+            "dumb-vagrant" => {guestpath: "/dumb-vagrant", hostpath: "/my/host/dumb-vagrant", disabled: false, plugin: folder_plugin,
+               __dumb-vagrantfile: true, owner: "dumb-vagrant", group: "dumb-vagrant", smb_host: "192.168.42.42", smb_id: "vtg-id2"}
           }
         ]
       }
@@ -127,17 +127,17 @@ describe "VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
         end
 
         it "inserts folders into /etc/fstab" do
-          expected_entry_vagrant = "//192.168.42.42/dummyname /vagrant cifs #{expected_mount_options} 0 0"
+          expected_entry_dumb-vagrant = "//192.168.42.42/dummyname /dumb-vagrant cifs #{expected_mount_options} 0 0"
           expected_entry_test = "//192.168.42.42/dummyname /test1 cifs #{expected_mount_options} 0 0"
-          expect(cap).to receive(:remove_vagrant_managed_fstab)
-          expect(comm).to receive(:sudo).with(/#{expected_entry_test}\n#{expected_entry_vagrant}/)
+          expect(cap).to receive(:remove_dumb-vagrant_managed_fstab)
+          expect(comm).to receive(:sudo).with(/#{expected_entry_test}\n#{expected_entry_dumb-vagrant}/)
 
           cap.persist_mount_shared_folder(machine, folders)
         end
       end
     end
   end
-  describe ".remove_vagrant_managed_fstab" do
+  describe ".remove_dumb-vagrant_managed_fstab" do
     let(:fstab_exists) { true }
 
     before do
@@ -145,30 +145,30 @@ describe "VagrantPlugins::GuestLinux::Cap::PersistMountSharedFolder" do
       allow(cap).to receive(:fstab_exists?).and_return(fstab_exists)
     end
 
-    it "removes vagrant managed fstab entries" do
-      expect(cap).to receive(:contains_vagrant_data?).and_return(true)
-      expect(comm).to receive(:sudo).with("sed -i '/#VAGRANT-BEGIN/,/#VAGRANT-END/d' /etc/fstab")
-      cap.remove_vagrant_managed_fstab(machine)
+    it "removes dumb-vagrant managed fstab entries" do
+      expect(cap).to receive(:contains_dumb-vagrant_data?).and_return(true)
+      expect(comm).to receive(:sudo).with("sed -i '/#DUMB_VAGRANT-BEGIN/,/#DUMB_VAGRANT-END/d' /etc/fstab")
+      cap.remove_dumb-vagrant_managed_fstab(machine)
     end
 
     context "fstab does not exist" do
       let(:fstab_exists) { false }
 
       it "does not try to remove fstab entries" do
-        expect(cap).not_to receive(:contains_vagrant_data?)
-        expect(comm).not_to receive(:sudo).with("sed -i '/#VAGRANT-BEGIN/,/#VAGRANT-END/d' /etc/fstab")
-        cap.remove_vagrant_managed_fstab(machine)
+        expect(cap).not_to receive(:contains_dumb-vagrant_data?)
+        expect(comm).not_to receive(:sudo).with("sed -i '/#DUMB_VAGRANT-BEGIN/,/#DUMB_VAGRANT-END/d' /etc/fstab")
+        cap.remove_dumb-vagrant_managed_fstab(machine)
       end
     end
 
-    context "fstab does not contain vagrant data" do
+    context "fstab does not contain dumb-vagrant data" do
       before do
-        expect(comm).to receive(:test).with("grep '#VAGRANT-BEGIN' /etc/fstab").and_return(false)
+        expect(comm).to receive(:test).with("grep '#DUMB_VAGRANT-BEGIN' /etc/fstab").and_return(false)
       end
 
       it "does not try to remove fstab entries" do
-        expect(comm).not_to receive(:sudo).with("sed -i '/#VAGRANT-BEGIN/,/#VAGRANT-END/d' /etc/fstab")
-        cap.remove_vagrant_managed_fstab(machine)
+        expect(comm).not_to receive(:sudo).with("sed -i '/#DUMB_VAGRANT-BEGIN/,/#DUMB_VAGRANT-END/d' /etc/fstab")
+        cap.remove_dumb-vagrant_managed_fstab(machine)
       end
     end
 

@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestOmniOS::Cap:RSync" do
+describe "Dumb VagrantPlugins::GuestOmniOS::Cap:RSync" do
   let(:caps) do
-    VagrantPlugins::GuestOmniOS::Plugin
+    Dumb VagrantPlugins::GuestOmniOS::Plugin
       .components
       .guest_capabilities[:omnios]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -31,7 +31,7 @@ describe "VagrantPlugins::GuestOmniOS::Cap:RSync" do
 
     it "mounts the folder" do
       folders = {
-        "/vagrant-nfs" => {
+        "/dumb-vagrant-nfs" => {
           type: :nfs,
           guestpath: "/guest",
           hostpath: "/host",

@@ -3,19 +3,19 @@
 
 require 'optparse'
 
-require "vagrant"
+require "dumb-vagrant"
 
-require Vagrant.source_root.join("plugins/commands/up/start_mixins")
+require Dumb Vagrant.source_root.join("plugins/commands/up/start_mixins")
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandReload
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       # We assume that the `up` plugin exists and that we'll have access
       # to this.
-      include VagrantPlugins::CommandUp::StartMixins
+      include Dumb VagrantPlugins::CommandUp::StartMixins
 
       def self.synopsis
-        "restarts vagrant machine, loads new Vagrantfile configuration"
+        "restarts dumb-vagrant machine, loads new Dumb Vagrantfile configuration"
       end
 
       def execute
@@ -23,7 +23,7 @@ module VagrantPlugins
         options[:provision_ignore_sentinel] = false
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant reload [vm-name]"
+          o.banner = "Usage: dumb-vagrant reload [vm-name]"
           o.separator ""
           build_start_options(o, options)
           o.on("-f", "--force", "Force shut down (equivalent of pulling power)") do |f|
@@ -54,7 +54,7 @@ module VagrantPlugins
           @env.ui.info("", prefix: false)
 
           m.ui.success(I18n.t(
-            "vagrant.post_up_message",
+            "dumb-vagrant.post_up_message",
             name: m.name.to_s,
             message: m.config.vm.post_up_message))
         end

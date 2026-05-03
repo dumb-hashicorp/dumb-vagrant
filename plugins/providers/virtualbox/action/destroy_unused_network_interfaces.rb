@@ -3,13 +3,13 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class DestroyUnusedNetworkInterfaces
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::plugins::virtualbox::destroy_unused_netifs")
+          @logger = Log4r::Logger.new("dumb-vagrant::plugins::virtualbox::destroy_unused_netifs")
         end
 
         def call(env)

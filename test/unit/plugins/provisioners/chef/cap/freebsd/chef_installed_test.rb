@@ -3,20 +3,20 @@
 
 require_relative "../../../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/chef/cap/freebsd/chef_installed")
+require Dumb Vagrant.source_root.join("plugins/provisioners/chef/cap/freebsd/chef_installed")
 
-describe VagrantPlugins::Chef::Cap::FreeBSD::ChefInstalled do
+describe Dumb VagrantPlugins::Chef::Cap::FreeBSD::ChefInstalled do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:machine) { iso_env.machine(iso_env.machine_names[0], :dummy) }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:config)  { double("config") }
 
   subject { described_class }

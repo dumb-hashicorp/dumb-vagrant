@@ -3,11 +3,11 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::VagrantPlugins::Cap::Rsync" do
-  let(:plugin) { VagrantPlugins::GuestSmartos::Plugin.components.guest_capabilities[:smartos].get(:rsync_installed) }
+describe "Dumb VagrantPlugins::Dumb VagrantPlugins::Cap::Rsync" do
+  let(:plugin) { Dumb VagrantPlugins::GuestSmartos::Plugin.components.guest_capabilities[:smartos].get(:rsync_installed) }
   let(:machine) { double("machine") }
-  let(:config) { double("config", smartos: VagrantPlugins::GuestSmartos::Config.new) }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:config) { double("config", smartos: Dumb VagrantPlugins::GuestSmartos::Config.new) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(communicator)

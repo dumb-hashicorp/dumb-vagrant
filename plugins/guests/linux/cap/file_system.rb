@@ -1,17 +1,17 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class FileSystem
         # Create a temporary file or directory on the guest
         #
-        # @param [Vagrant::Machine] machine Vagrant guest machine
+        # @param [Dumb Vagrant::Machine] machine Dumb Vagrant guest machine
         # @param [Hash] opts Path options
         # @return [String] path to temporary file or directory
         def self.create_tmp_path(machine, opts)
-          template = "vagrant-XXXXXX"
+          template = "dumb-vagrant-XXXXXX"
           if opts[:extension]
             template << opts[:extension].to_s
           end
@@ -31,7 +31,7 @@ module VagrantPlugins
 
         # Decompress tgz file on guest to given location
         #
-        # @param [Vagrant::Machine] machine Vagrant guest machine
+        # @param [Dumb Vagrant::Machine] machine Dumb Vagrant guest machine
         # @param [String] compressed_file Path to compressed file on guest
         # @param [String] destination Path for decompressed files on guest
         def self.decompress_tgz(machine, compressed_file, destination, opts={})
@@ -55,7 +55,7 @@ module VagrantPlugins
 
         # Decompress zip file on guest to given location
         #
-        # @param [Vagrant::Machine] machine Vagrant guest machine
+        # @param [Dumb Vagrant::Machine] machine Dumb Vagrant guest machine
         # @param [String] compressed_file Path to compressed file on guest
         # @param [String] destination Path for decompressed files on guest
         def self.decompress_zip(machine, compressed_file, destination, opts={})

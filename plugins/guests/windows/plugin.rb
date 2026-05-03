@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestWindows
     autoload :Errors, File.expand_path("../errors", __FILE__)
 
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "Windows guest."
       description "Windows guest support."
 
@@ -107,7 +107,7 @@ module VagrantPlugins
       def self.init!
         return if defined?(@_init)
         I18n.load_path << File.expand_path(
-          "templates/locales/guest_windows.yml", Vagrant.source_root)
+          "templates/locales/guest_windows.yml", Dumb Vagrant.source_root)
         I18n.reload!
         @_init = true
       end

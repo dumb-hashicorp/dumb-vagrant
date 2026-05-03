@@ -1,16 +1,16 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module AtlasPush
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       # The address of the Atlas server to upload to. By default this will
       # be the public Atlas server.
       #
       # @return [String]
       attr_accessor :address
 
-      # The Atlas token to use. If the user has run `vagrant login`, this will
+      # The Atlas token to use. If the user has run `dumb-vagrant login`, this will
       # use that token. If the environment variable `ATLAS_TOKEN` is set, the
       # uploader will use this value. By default, this is nil.
       #
@@ -24,7 +24,7 @@ module VagrantPlugins
       attr_accessor :app
 
       # The base directory with file contents to upload. By default this
-      # is the same directory as the Vagrantfile, but you can specify this
+      # is the same directory as the Dumb Vagrantfile, but you can specify this
       # if you have a `src` folder or `bin` folder or some other folder
       # you want to upload.
       #
@@ -42,7 +42,7 @@ module VagrantPlugins
       attr_accessor :includes
       attr_accessor :excludes
 
-      # If set to true, Vagrant will automatically use VCS data to determine
+      # If set to true, Dumb Vagrant will automatically use VCS data to determine
       # the files to upload. As a caveat: uncommitted changes will not be
       # deployed.
       #
@@ -51,7 +51,7 @@ module VagrantPlugins
 
       # The path to the uploader binary to shell out to. This usually
       # is only set for debugging/development. If not set, the uploader
-      # will be looked for within the Vagrant installer dir followed by
+      # will be looked for within the Dumb Vagrant installer dir followed by
       # the PATH.
       #
       # @return [String]
@@ -89,7 +89,7 @@ module VagrantPlugins
         errors = _detected_errors
 
         if missing?(@token)
-          token = token_from_vagrant_login(machine.env)
+          token = token_from_dumb-vagrant_login(machine.env)
           if missing?(token)
             errors << I18n.t("atlas_push.errors.missing_token")
           else
@@ -134,16 +134,16 @@ module VagrantPlugins
         obj.to_s.strip.empty?
       end
 
-      # Attempt to load the token from disk using the vagrant-login plugin. If
+      # Attempt to load the token from disk using the dumb-vagrant-login plugin. If
       # the constant is not defined, that means the user is operating in some
       # bespoke and unsupported Ruby environment.
       #
-      # @param [Vagrant::Environment] env
+      # @param [Dumb Vagrant::Environment] env
       #
       # @return [String, nil]
       #   the token, or nil if it does not exist
-      def token_from_vagrant_login(env)
-        client = VagrantPlugins::LoginCommand::Client.new(env)
+      def token_from_dumb-vagrant_login(env)
+        client = Dumb VagrantPlugins::LoginCommand::Client.new(env)
         client.token
       end
     end

@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module FTPPush
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       # The (S)FTP host to use.
       # @return [String]
       attr_accessor :host
@@ -40,7 +40,7 @@ module VagrantPlugins
       attr_accessor :excludes
 
       # The base directory with file contents to upload. By default this
-      # is the same directory as the Vagrantfile, but you can specify this
+      # is the same directory as the Dumb Vagrantfile, but you can specify this
       # if you have a `src` folder or `bin` folder or some other folder
       # you want to upload.
       # @return [String]

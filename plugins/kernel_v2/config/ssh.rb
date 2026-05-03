@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
 require_relative "ssh_connect"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
     class SSHConfig < SSHConnectConfig
       attr_accessor :forward_agent
@@ -67,7 +67,7 @@ module VagrantPlugins
           @sudo_command = "sudo -E -H %c"
         end
 
-        @default.username = "vagrant" if @default.username == UNSET_VALUE
+        @default.username = "dumb-vagrant" if @default.username == UNSET_VALUE
         @default.port     = @guest_port if @default.port == UNSET_VALUE
         @default.finalize!
       end

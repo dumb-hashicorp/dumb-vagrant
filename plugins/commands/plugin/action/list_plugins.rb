@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/plugin/manager"
+require "dumb-vagrant/plugin/manager"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Action
       # This middleware lists all the installed plugins.
@@ -19,7 +19,7 @@ module VagrantPlugins
         end
 
         def call(env)
-          manager = Vagrant::Plugin::Manager.instance
+          manager = Dumb Vagrant::Plugin::Manager.instance
           plugins = manager.installed_plugins
           specs   = Hash[
             manager.installed_specs.map do |spec|
@@ -29,7 +29,7 @@ module VagrantPlugins
 
           # Output!
           if specs.empty?
-            env[:ui].info(I18n.t("vagrant.commands.plugin.no_plugins"))
+            env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.no_plugins"))
             return @app.call(env)
           end
 
@@ -52,7 +52,7 @@ module VagrantPlugins
 
             if plugin["gem_version"] && plugin["gem_version"] != ""
               env[:ui].info(I18n.t(
-                "vagrant.commands.plugin.plugin_version",
+                "dumb-vagrant.commands.plugin.plugin_version",
                 version: plugin["gem_version"]))
               env[:ui].machine(
                 "plugin-version-constraint",
@@ -62,7 +62,7 @@ module VagrantPlugins
 
             if plugin["require"] && plugin["require"] != ""
               env[:ui].info(I18n.t(
-                "vagrant.commands.plugin.plugin_require",
+                "dumb-vagrant.commands.plugin.plugin_require",
                 require: plugin["require"]))
               env[:ui].machine(
                 "plugin-custom-entrypoint",

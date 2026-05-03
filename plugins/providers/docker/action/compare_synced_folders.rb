@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/action/builtin/mixin_synced_folders"
+require "dumb-vagrant/action/builtin/mixin_synced_folders"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class CompareSyncedFolders
-        include Vagrant::Action::Builtin::MixinSyncedFolders
+        include Dumb Vagrant::Action::Builtin::MixinSyncedFolders
 
         def initialize(app, env)
           @app = app

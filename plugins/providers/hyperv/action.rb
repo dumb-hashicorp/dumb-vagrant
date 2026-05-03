@@ -3,20 +3,20 @@
 
 require "pathname"
 
-require "vagrant/action/builder"
+require "dumb-vagrant/action/builder"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       # Include the built-in modules so we can use them as top-level things.
-      include Vagrant::Action::Builtin
+      include Dumb Vagrant::Action::Builtin
 
       def self.action_reload
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              b2.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b2.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
@@ -27,10 +27,10 @@ module VagrantPlugins
       end
 
       def self.action_destroy
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use Call, IsState, :not_created do |env1, b1|
             if env1[:result]
-              b1.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b1.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
@@ -51,11 +51,11 @@ module VagrantPlugins
       end
 
       def self.action_halt
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              b2.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b2.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
@@ -70,11 +70,11 @@ module VagrantPlugins
 
       # This action packages the virtual machine into a single box file.
       def self.action_package
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use CheckEnabled
           b.use Call, IsState, :not_created do |env1, b2|
             if env1[:result]
-              b2.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b2.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
@@ -83,7 +83,7 @@ module VagrantPlugins
             b2.use action_halt
             b2.use SyncedFolderCleanup
             b2.use Package
-            b2.use PackageVagrantfile
+            b2.use PackageDumb Vagrantfile
             b2.use PackageMetadataJson
             b2.use Export
           end
@@ -91,17 +91,17 @@ module VagrantPlugins
       end
 
       def self.action_provision
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              b2.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b2.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
             b2.use Call, IsState, :running do |env1, b3|
               if !env1[:result]
-                b3.use Message, I18n.t("vagrant_hyperv.message_not_running")
+                b3.use Message, I18n.t("dumb-vagrant_hyperv.message_not_running")
                 next
               end
 
@@ -112,12 +112,12 @@ module VagrantPlugins
       end
 
       def self.action_resume
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use HandleBox
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b1|
             if env[:result]
-              b1.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b1.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
@@ -129,7 +129,7 @@ module VagrantPlugins
       end
 
       def self.action_start
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use Call, IsState, :running do |env1, b1|
             if env1[:result]
               b1.use action_provision
@@ -169,7 +169,7 @@ module VagrantPlugins
       end
 
       def self.action_up
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use CheckEnabled
           b.use CheckAccess
           b.use HandleBox
@@ -185,23 +185,23 @@ module VagrantPlugins
       end
 
       def self.action_read_state
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use ReadState
         end
       end
 
       def self.action_ssh
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              raise Vagrant::Errors::VMNotCreatedError
+              raise Dumb Vagrant::Errors::VMNotCreatedError
             end
 
             b2.use Call, IsState, :running do |env1, b3|
               if !env1[:result]
-                raise Vagrant::Errors::VMNotRunningError
+                raise Dumb Vagrant::Errors::VMNotRunningError
               end
 
               b3.use SSHExec
@@ -211,16 +211,16 @@ module VagrantPlugins
       end
 
       def self.action_ssh_run
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              raise Vagrant::Errors::VMNotCreatedError
+              raise Dumb Vagrant::Errors::VMNotCreatedError
             end
 
             b2.use Call, IsState, :running do |env1, b3|
               if !env1[:result]
-                raise Vagrant::Errors::VMNotRunningError
+                raise Dumb Vagrant::Errors::VMNotRunningError
               end
 
               b3.use SSHRun
@@ -230,11 +230,11 @@ module VagrantPlugins
       end
 
       def self.action_suspend
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              b2.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b2.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
@@ -244,11 +244,11 @@ module VagrantPlugins
       end
 
       def self.action_snapshot_delete
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              b2.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b2.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
@@ -259,11 +259,11 @@ module VagrantPlugins
       end
 
       def self.action_snapshot_restore
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              b2.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b2.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
 
@@ -283,11 +283,11 @@ module VagrantPlugins
       end
 
       def self.action_snapshot_save
-        Vagrant::Action::Builder.new.tap do |b|
+        Dumb Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
           b.use Call, IsState, :not_created do |env, b2|
             if env[:result]
-              b2.use Message, I18n.t("vagrant_hyperv.message_not_created")
+              b2.use Message, I18n.t("dumb-vagrant_hyperv.message_not_created")
               next
             end
             b2.use SnapshotSave
@@ -299,7 +299,7 @@ module VagrantPlugins
       action_root = Pathname.new(File.expand_path("../action", __FILE__))
       autoload :PackageSetupFolders, action_root.join("package_setup_folders")
       autoload :PackageSetupFiles, action_root.join("package_setup_files")
-      autoload :PackageVagrantfile, action_root.join("package_vagrantfile")
+      autoload :PackageDumb Vagrantfile, action_root.join("package_dumb-vagrantfile")
       autoload :PackageMetadataJson, action_root.join("package_metadata_json")
       autoload :Export, action_root.join("export")
 

@@ -9,11 +9,11 @@ require_relative "helper"
 require_relative "shell"
 require_relative "command_filter"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommunicatorWinRM
-    # Provides communication channel for Vagrant commands via WinRM.
-    class Communicator < Vagrant.plugin("2", :communicator)
-      include Vagrant::Util
+    # Provides communication channel for Dumb Vagrant commands via WinRM.
+    class Communicator < Dumb Vagrant.plugin("2", :communicator)
+      include Dumb Vagrant::Util
 
       def self.match?(machine)
         # This is useless, and will likely be removed in the future (this
@@ -23,7 +23,7 @@ module VagrantPlugins
 
       def initialize(machine)
         @cmd_filter = CommandFilter.new()
-        @logger     = Log4r::Logger.new("vagrant::communication::winrm")
+        @logger     = Log4r::Logger.new("dumb-vagrant::communication::winrm")
         @machine    = machine
         @shell      = nil
 
@@ -58,7 +58,7 @@ module VagrantPlugins
             begin
               begin
                 return true if ready?
-              rescue Vagrant::Errors::VagrantError => e
+              rescue Dumb Vagrant::Errors::Dumb VagrantError => e
                 @logger.info("WinRM not ready: #{e.inspect}")
                 raise
               end
@@ -112,7 +112,7 @@ module VagrantPlugins
 
         @logger.info("WinRM is ready!")
         return true
-      rescue Errors::TransientError, VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady => e
+      rescue Errors::TransientError, Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady => e
         # We catch a `TransientError` which would signal that something went
         # that might work if we wait and retry.
         @logger.info("WinRM not up: #{e.inspect}")
@@ -200,7 +200,7 @@ module VagrantPlugins
       end
 
       # Handles the raw WinRM shell result and converts it to a
-      # standard Vagrant communicator result
+      # standard Dumb Vagrant communicator result
       def execution_output(output, opts)
         if opts[:shell] == :wql
           return output

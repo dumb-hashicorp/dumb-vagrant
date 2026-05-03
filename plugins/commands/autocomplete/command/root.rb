@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "optparse"
-require 'vagrant/util/install_cli_autocomplete'
+require 'dumb-vagrant/util/install_cli_autocomplete'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandAutocomplete
     module Command
-      class Root < Vagrant.plugin("2", :command)
+      class Root < Dumb Vagrant.plugin("2", :command)
         def self.synopsis
           "manages autocomplete installation on host"
         end
@@ -17,7 +17,7 @@ module VagrantPlugins
 
           @main_args, @sub_command, @sub_args = split_main_and_subcommand(argv)
 
-          @subcommands = Vagrant::Registry.new
+          @subcommands = Dumb Vagrant::Registry.new
           @subcommands.register(:install) do
             require File.expand_path("../install", __FILE__)
             Install
@@ -42,7 +42,7 @@ module VagrantPlugins
 
         def help
           opts = OptionParser.new do |opts|
-            opts.banner = "Usage: vagrant autocomplete <subcommand>"
+            opts.banner = "Usage: dumb-vagrant autocomplete <subcommand>"
             opts.separator ""
             opts.separator "Available subcommands:"
 
@@ -56,7 +56,7 @@ module VagrantPlugins
             end
 
             opts.separator ""
-            opts.separator "For help on any individual subcommand run `vagrant autocomplete <subcommand> -h`"
+            opts.separator "For help on any individual subcommand run `dumb-vagrant autocomplete <subcommand> -h`"
           end
 
           @env.ui.info(opts.help, prefix: false)

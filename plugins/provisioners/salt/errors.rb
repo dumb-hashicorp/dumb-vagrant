@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Salt
     module Errors
-      class SaltError < Vagrant::Errors::VagrantError
-        error_namespace("vagrant.provisioners.salt")
+      class SaltError < Dumb Vagrant::Errors::Dumb VagrantError
+        error_namespace("dumb-vagrant.provisioners.salt")
       end
 
       class InvalidShasumError < SaltError

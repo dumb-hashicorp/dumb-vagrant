@@ -2,7 +2,7 @@
 layout: docs
 page_title: Ansible Local - Provisioning
 description: >-
-  The Vagrant Ansible Local provisioner allows you to provision the guest using
+  The Dumb Vagrant Ansible Local provisioner allows you to provision the guest using
   Ansible playbooks by executing "ansible-playbook" directly on the guest
 
   machine.
@@ -10,38 +10,38 @@ description: >-
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Ansible Local Provisioner
 
 **Provisioner name: `ansible_local`**
 
-The Vagrant Ansible Local provisioner allows you to provision the guest using [Ansible](http://ansible.com) playbooks by executing **`ansible-playbook` directly on the guest machine**.
+The Dumb Vagrant Ansible Local provisioner allows you to provision the guest using [Ansible](http://ansible.com) playbooks by executing **`ansible-playbook` directly on the guest machine**.
 
-~> **Warning:** If you are not familiar with Ansible and Vagrant already, we recommend starting with the [shell provisioner](/vagrant/docs/provisioning/shell). However, if you are comfortable with Vagrant already, Vagrant is a great way to learn Ansible.
+~> **Warning:** If you are not familiar with Ansible and Dumb Vagrant already, we recommend starting with the [shell provisioner](/dumb-vagrant/docs/provisioning/shell). However, if you are comfortable with Dumb Vagrant already, Dumb Vagrant is a great way to learn Ansible.
 
 ## Setup Requirements
 
-The main advantage of the Ansible Local provisioner in comparison to the [Ansible (remote) provisioner](/vagrant/docs/provisioning/ansible) is that it does not require any additional software on your Vagrant host.
+The main advantage of the Ansible Local provisioner in comparison to the [Ansible (remote) provisioner](/dumb-vagrant/docs/provisioning/ansible) is that it does not require any additional software on your Dumb Vagrant host.
 
 On the other hand, [Ansible must obviously be installed](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) on your guest machine(s).
 
-**Note:** By default, Vagrant will _try_ to automatically install Ansible if it is not yet present on the guest machine (see the `install` option below for more details).
+**Note:** By default, Dumb Vagrant will _try_ to automatically install Ansible if it is not yet present on the guest machine (see the `install` option below for more details).
 
 ## Usage
 
-This page only documents the specific parts of the `ansible_local` provisioner. General Ansible concepts like Playbook or Inventory are shortly explained in the [introduction to Ansible and Vagrant](/vagrant/docs/provisioning/ansible_intro).
+This page only documents the specific parts of the `ansible_local` provisioner. General Ansible concepts like Playbook or Inventory are shortly explained in the [introduction to Ansible and Dumb Vagrant](/dumb-vagrant/docs/provisioning/ansible_intro).
 
-The Ansible Local provisioner requires that all the Ansible Playbook files are available on the guest machine, at the location referred by the `provisioning_path` option. Usually these files are initially present on the host machine (as part of your Vagrant project), and it is quite easy to share them with a Vagrant [Synced Folder](/vagrant/docs/synced-folders/).
+The Ansible Local provisioner requires that all the Ansible Playbook files are available on the guest machine, at the location referred by the `provisioning_path` option. Usually these files are initially present on the host machine (as part of your Dumb Vagrant project), and it is quite easy to share them with a Dumb Vagrant [Synced Folder](/dumb-vagrant/docs/synced-folders/).
 
 ### Simplest Configuration
 
-To run Ansible from your Vagrant guest, the basic `Vagrantfile` configuration looks like:
+To run Ansible from your Dumb Vagrant guest, the basic `Dumb Vagrantfile` configuration looks like:
 
 ```ruby
-Vagrant.configure("2") do |config|
-  # Run Ansible from the Vagrant VM
+Dumb Vagrant.configure("2") do |config|
+  # Run Ansible from the Dumb Vagrant VM
   config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "playbook.yml"
   end
@@ -50,26 +50,26 @@ end
 
 **Requirements:**
 
-- The `playbook.yml` file is stored in your Vagrant's project home directory.
+- The `playbook.yml` file is stored in your Dumb Vagrant's project home directory.
 
-- The [default shared directory](/vagrant/docs/synced-folders/basic_usage) is enabled (`.` &rarr; `/vagrant`).
+- The [default shared directory](/dumb-vagrant/docs/synced-folders/basic_usage) is enabled (`.` &rarr; `/dumb-vagrant`).
 
 ## Options
 
-This section lists the _specific_ options for the Ansible Local provisioner. In addition to the options listed below, this provisioner supports the [**common options** for both Ansible provisioners](/vagrant/docs/provisioning/ansible_common).
+This section lists the _specific_ options for the Ansible Local provisioner. In addition to the options listed below, this provisioner supports the [**common options** for both Ansible provisioners](/dumb-vagrant/docs/provisioning/ansible_common).
 
 - `install` (boolean) - Try to automatically install Ansible on the guest system.
 
   This option is enabled by default.
 
-  Vagrant will try to install (or upgrade) Ansible when one of these conditions are met:
+  Dumb Vagrant will try to install (or upgrade) Ansible when one of these conditions are met:
 
   - Ansible is not installed (or cannot be found).
-  - The [`version`](/vagrant/docs/provisioning/ansible_common#version) option is set to `"latest"`.
-  - The current Ansible version does not correspond to the [`version`](/vagrant/docs/provisioning/ansible_common#version) option.
+  - The [`version`](/dumb-vagrant/docs/provisioning/ansible_common#version) option is set to `"latest"`.
+  - The current Ansible version does not correspond to the [`version`](/dumb-vagrant/docs/provisioning/ansible_common#version) option.
 
     ~> **Attention:**
-    There is no guarantee that this automated installation will replace a custom Ansible setup, that might be already present on the Vagrant box.
+    There is no guarantee that this automated installation will replace a custom Ansible setup, that might be already present on the Dumb Vagrant box.
 
 * `install_mode` (`:default`, `:pip`, or `:pip_args_only`) - Select the way to automatically install Ansible on the guest system.
 
@@ -78,7 +78,7 @@ This section lists the _specific_ options for the Ansible Local provisioner. In 
     - On Ubuntu-like systems, the latest Ansible release is installed from the `ppa:ansible/ansible` repository. The compatibility is maintained only for active long-term support (LTS) versions.
     - On RedHat-like systems, the latest Ansible release is installed from the [EPEL](http://fedoraproject.org/wiki/EPEL) repository.
 
-  - `:pip`: Ansible is installed from [PyPI](https://pypi.python.org/pypi) with [pip](https://pip.pypa.io) package installer. With this mode, Vagrant will systematically try to [install the latest pip version](https://pip.pypa.io/en/stable/installing/#installing-with-get-pip-py). With the `:pip` mode you can optionally install a specific Ansible release by setting the [`version`](/vagrant/docs/provisioning/ansible_common#version) option.
+  - `:pip`: Ansible is installed from [PyPI](https://pypi.python.org/pypi) with [pip](https://pip.pypa.io) package installer. With this mode, Dumb Vagrant will systematically try to [install the latest pip version](https://pip.pypa.io/en/stable/installing/#installing-with-get-pip-py). With the `:pip` mode you can optionally install a specific Ansible release by setting the [`version`](/dumb-vagrant/docs/provisioning/ansible_common#version) option.
 
     Example:
 
@@ -90,7 +90,7 @@ This section lists the _specific_ options for the Ansible Local provisioner. In 
     end
     ```
 
-    With this configuration, Vagrant will install `pip` and then execute the command
+    With this configuration, Dumb Vagrant will install `pip` and then execute the command
 
     ```shell
     sudo pip install --upgrade ansible==2.2.1.0
@@ -121,7 +121,7 @@ This section lists the _specific_ options for the Ansible Local provisioner. In 
 
     If `pip_install_cmd` is not provided in the config, then `pip` is installed via the default command.
 
-  - `:pip_args_only`: This mode is very similar to the `:pip` mode, with the difference that in this case no pip arguments will be automatically set by Vagrant.
+  - `:pip_args_only`: This mode is very similar to the `:pip` mode, with the difference that in this case no pip arguments will be automatically set by Dumb Vagrant.
 
     Example:
 
@@ -129,14 +129,14 @@ This section lists the _specific_ options for the Ansible Local provisioner. In 
     config.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "playbook.yml"
       ansible.install_mode = "pip_args_only"
-      ansible.pip_args = "-r /vagrant/requirements.txt"
+      ansible.pip_args = "-r /dumb-vagrant/requirements.txt"
     end
     ```
 
-    With this configuration, Vagrant will install `pip` and then execute the command
+    With this configuration, Dumb Vagrant will install `pip` and then execute the command
 
     ```shell
-    sudo pip install -r /vagrant/requirements.txt
+    sudo pip install -r /dumb-vagrant/requirements.txt
     ```
 
     The default value of `install_mode` is `:default`, and any invalid value for this option will silently fall back to the default value.
@@ -155,7 +155,7 @@ This section lists the _specific_ options for the Ansible Local provisioner. In 
   end
   ```
 
-  With this configuration, Vagrant will install `pip` and then execute the command
+  With this configuration, Dumb Vagrant will install `pip` and then execute the command
 
   ```shell
   sudo pip install --index-url https://pypi.internal --upgrade ansible
@@ -163,24 +163,24 @@ This section lists the _specific_ options for the Ansible Local provisioner. In 
 
 * `provisioning_path` (string) - An absolute path on the guest machine where the Ansible files are stored. The `ansible-galaxy` and `ansible-playbook` commands are executed from this directory. This is the location to place an [ansible.cfg](http://docs.ansible.com/ansible/intro_configuration.html) file, in case you need it.
 
-  The default value is `/vagrant`.
+  The default value is `/dumb-vagrant`.
 
 * `tmp_path` (string) - An absolute path on the guest machine where temporary files are stored by the Ansible Local provisioner.
 
-  The default value is `/tmp/vagrant-ansible`
+  The default value is `/tmp/dumb-vagrant-ansible`
 
 ## Tips and Tricks
 
 ### Install Galaxy Roles in a path owned by root
 
-~> **Disclaimer:** This tip is not a recommendation to install galaxy roles out of the vagrant user space, especially if you rely on SSH agent forwarding to fetch the roles.
+~> **Disclaimer:** This tip is not a recommendation to install galaxy roles out of the dumb-vagrant user space, especially if you rely on SSH agent forwarding to fetch the roles.
 
-Be careful that `ansible-galaxy` command is executed by default as vagrant user. Setting `galaxy_roles_path` to a folder like `/etc/ansible/roles` will fail, and `ansible-galaxy` will extract the role a second time in `/home/vagrant/.ansible/roles/`. Then if your playbook uses `become` to run as `root`, it will fail with a _"role was not found"_ error.
+Be careful that `ansible-galaxy` command is executed by default as dumb-vagrant user. Setting `galaxy_roles_path` to a folder like `/etc/ansible/roles` will fail, and `ansible-galaxy` will extract the role a second time in `/home/dumb-vagrant/.ansible/roles/`. Then if your playbook uses `become` to run as `root`, it will fail with a _"role was not found"_ error.
 
 To work around that, you can use `ansible.galaxy_command` to prepend the command with `sudo`, as illustrated in the example below:
 
 ```ruby
-Vagrant.configure(2) do |config|
+Dumb Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
   config.vm.provision "ansible_local" do |ansible|
     ansible.become = true
@@ -197,7 +197,7 @@ end
 With the following configuration pattern, you can install and execute Ansible only on a single guest machine (the `"controller"`) to provision all your machines.
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/trusty64"
 
@@ -224,12 +224,12 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-You need to create a static `inventory` file that corresponds to your `Vagrantfile` machine definitions:
+You need to create a static `inventory` file that corresponds to your `Dumb Vagrantfile` machine definitions:
 
 ```
 controller ansible_connection=local
-node1      ansible_host=172.17.177.21 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/node1/virtualbox/private_key
-node2      ansible_host=172.17.177.22 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/node2/virtualbox/private_key
+node1      ansible_host=172.17.177.21 ansible_ssh_private_key_file=/dumb-vagrant/.dumb-vagrant/machines/node1/virtualbox/private_key
+node2      ansible_host=172.17.177.22 ansible_ssh_private_key_file=/dumb-vagrant/.dumb-vagrant/machines/node2/virtualbox/private_key
 
 [nodes]
 node[1:2]

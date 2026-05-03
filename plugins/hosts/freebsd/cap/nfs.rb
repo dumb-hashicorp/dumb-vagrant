@@ -1,19 +1,19 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util"
-require "vagrant/util/retryable"
+require "dumb-vagrant/util"
+require "dumb-vagrant/util/retryable"
 
-require Vagrant.source_root.join("plugins", "hosts", "bsd", "cap", "nfs")
+require Dumb Vagrant.source_root.join("plugins", "hosts", "bsd", "cap", "nfs")
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostFreeBSD
     module Cap
       class NFS
         def self.nfs_export(environment, ui, id, ips, folders)
           folders.each do |folder_name, folder_values|
             if folder_values[:hostpath] =~ /\s+/
-              raise Vagrant::Errors::VagrantError,
+              raise Dumb Vagrant::Errors::Dumb VagrantError,
                 _key: :freebsd_nfs_whitespace
             end
           end

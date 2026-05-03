@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSlackware::Cap::ConfigureNetworks" do
+describe "Dumb VagrantPlugins::GuestSlackware::Cap::ConfigureNetworks" do
   let(:caps) do
-    VagrantPlugins::GuestSlackware::Plugin
+    Dumb VagrantPlugins::GuestSlackware::Plugin
       .components
       .guest_capabilities[:slackware]
   end
 
   let(:guest) { double("guest") }
   let(:machine) { double("machine", guest: guest) }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)
@@ -33,7 +33,7 @@ describe "VagrantPlugins::GuestSlackware::Cap::ConfigureNetworks" do
     let(:network_1) do
       {
         interface: 0,
-        type: "dhcp",
+        type: "ddumb-hcp",
       }
     end
 

@@ -1,12 +1,12 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/plugin/state_file"
+require "dumb-vagrant/plugin/state_file"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
-      class Base < Vagrant.plugin("2", :command)
+      class Base < Dumb Vagrant.plugin("2", :command)
         # This is a helper for executing an action sequence with the proper
         # environment hash setup so that the plugin specific helpers are
         # in.

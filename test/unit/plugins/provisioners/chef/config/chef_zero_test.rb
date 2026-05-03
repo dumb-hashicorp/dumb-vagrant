@@ -3,9 +3,9 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/chef/config/chef_zero")
+require Dumb Vagrant.source_root.join("plugins/provisioners/chef/config/chef_zero")
 
-describe VagrantPlugins::Chef::Config::ChefZero do
+describe Dumb VagrantPlugins::Chef::Config::ChefZero do
   include_context "unit"
 
   subject { described_class.new }
@@ -85,7 +85,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
       it "returns an error" do
         subject.cookbooks_path = nil
         subject.finalize!
-        expect(errors).to include(I18n.t("vagrant.config.chef.cookbooks_path_empty"))
+        expect(errors).to include(I18n.t("dumb-vagrant.config.chef.cookbooks_path_empty"))
       end
     end
 
@@ -93,7 +93,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
       it "returns an error" do
         subject.cookbooks_path = []
         subject.finalize!
-        expect(errors).to include(I18n.t("vagrant.config.chef.cookbooks_path_empty"))
+        expect(errors).to include(I18n.t("dumb-vagrant.config.chef.cookbooks_path_empty"))
       end
     end
 
@@ -101,7 +101,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
       it "returns an error" do
         subject.cookbooks_path = [nil, nil]
         subject.finalize!
-        expect(errors).to include(I18n.t("vagrant.config.chef.cookbooks_path_empty"))
+        expect(errors).to include(I18n.t("dumb-vagrant.config.chef.cookbooks_path_empty"))
       end
     end
 
@@ -109,7 +109,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
       it "returns an error" do
         subject.nodes_path = nil
         subject.finalize!
-        expect(errors).to include(I18n.t("vagrant.config.chef.nodes_path_empty"))
+        expect(errors).to include(I18n.t("dumb-vagrant.config.chef.nodes_path_empty"))
       end
     end
 
@@ -118,7 +118,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
         nodes_path = ["/path/to/nodes/that/will/never/exist"]
         subject.nodes_path = nodes_path
         subject.finalize!
-        expect(errors).to include(I18n.t("vagrant.config.chef.nodes_path_missing",
+        expect(errors).to include(I18n.t("dumb-vagrant.config.chef.nodes_path_missing",
           path: nodes_path
         ))
       end
@@ -128,7 +128,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
       it "returns an error" do
         subject.nodes_path = []
         subject.finalize!
-        expect(errors).to include(I18n.t("vagrant.config.chef.nodes_path_empty"))
+        expect(errors).to include(I18n.t("dumb-vagrant.config.chef.nodes_path_empty"))
       end
     end
 
@@ -136,7 +136,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
       it "returns an error" do
         subject.nodes_path = [nil, nil]
         subject.finalize!
-        expect(errors).to include(I18n.t("vagrant.config.chef.nodes_path_empty"))
+        expect(errors).to include(I18n.t("dumb-vagrant.config.chef.nodes_path_empty"))
       end
     end
 
@@ -149,7 +149,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
         it "returns an error" do
           subject.environments_path = nil
           subject.finalize!
-          expect(errors).to include(I18n.t("vagrant.config.chef.environment_path_required"))
+          expect(errors).to include(I18n.t("dumb-vagrant.config.chef.environment_path_required"))
         end
       end
 
@@ -157,7 +157,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
         it "returns an error" do
           subject.environments_path = []
           subject.finalize!
-          expect(errors).to include(I18n.t("vagrant.config.chef.environment_path_required"))
+          expect(errors).to include(I18n.t("dumb-vagrant.config.chef.environment_path_required"))
         end
       end
 
@@ -165,7 +165,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
         it "returns an error" do
           subject.environments_path = [nil, nil]
           subject.finalize!
-          expect(errors).to include(I18n.t("vagrant.config.chef.environment_path_required"))
+          expect(errors).to include(I18n.t("dumb-vagrant.config.chef.environment_path_required"))
         end
       end
 
@@ -174,7 +174,7 @@ describe VagrantPlugins::Chef::Config::ChefZero do
           env_path = "/path/to/environments/that/will/never/exist"
           subject.environments_path = env_path
           subject.finalize!
-          expect(errors).to include(I18n.t("vagrant.config.chef.environment_path_missing",
+          expect(errors).to include(I18n.t("dumb-vagrant.config.chef.environment_path_missing",
             path: env_path,
           ))
         end

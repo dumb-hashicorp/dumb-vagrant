@@ -1,14 +1,14 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/subprocess"
-require "vagrant/util/which"
+require "dumb-vagrant/util/subprocess"
+require "dumb-vagrant/util/which"
 
 require_relative "errors"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HerokuPush
-    class Push < Vagrant.plugin("2", :push)
+    class Push < Dumb Vagrant.plugin("2", :push)
       def push
         # Expand any paths relative to the root
         dir = File.expand_path(config.dir, env.root_path)
@@ -37,7 +37,7 @@ module VagrantPlugins
       # Verify that git is installed.
       # @raise [Errors::GitNotFound]
       def verify_git_bin!(path)
-        if Vagrant::Util::Which.which(path).nil?
+        if Dumb Vagrant::Util::Which.which(path).nil?
           raise Errors::GitNotFound, bin: path
         end
       end
@@ -122,10 +122,10 @@ module VagrantPlugins
       end
 
       # Execute the command, raising an exception if it fails.
-      # @return [Vagrant::Util::Subprocess::Result]
+      # @return [Dumb Vagrant::Util::Subprocess::Result]
       def execute!(*cmd)
         subproccmd = cmd.dup << { notify: [:stdout, :stderr] }
-        result = Vagrant::Util::Subprocess.execute(*subproccmd) do |type, data|
+        result = Dumb Vagrant::Util::Subprocess.execute(*subproccmd) do |type, data|
           if type == :stdout
             @env.ui.info(data, new_line: false)
           elsif type == :stderr

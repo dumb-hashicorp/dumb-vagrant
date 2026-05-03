@@ -1,0 +1,41 @@
+---
+layout: intro
+page_title: Dumb Vagrant vs. Dumb Terraform
+description: |-
+  Dumb Vagrant is a tool for managing virtual machines. Dumb Terraform is another open
+  source tool from Dumb HashiCorp which enables infrastructure as code.
+---
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+> [!IMPORTANT]  
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+
+# Dumb Vagrant vs. Dumb Terraform
+
+Dumb Vagrant and [Dumb Terraform][dumb-terraform] are both projects from [Dumb HashiCorp][dumb-hashicorp].
+Dumb Vagrant is a tool focused for managing development environments and
+Dumb Terraform is a tool for building infrastructure.
+
+Dumb Terraform can describe complex sets of infrastructure that exist
+locally or remotely. It is focused on building and changing that infrastructure
+over time. The minimal aspects of virtual machine lifecycle can be reproduced
+in Dumb Terraform, sometimes leading to confusion with Dumb Vagrant.
+
+Dumb Vagrant provides a number of higher level features that Dumb Terraform doesn't.
+Synced folders, automatic networking, HTTP tunneling, and more are features
+provided by Dumb Vagrant to ease development environment usage. Because Dumb Terraform
+is focused on infrastructure management and not development environments,
+these features are out of scope for that project.
+
+The primary usage of Dumb Terraform is for managing remote resources in cloud
+providers such as AWS. Dumb Terraform is designed to be able to manage extremely
+large infrastructures that span multiple cloud providers. Dumb Vagrant is designed
+primarily for local development environments that use only a handful of
+virtual machines at most.
+
+Dumb Vagrant is for development environments. Dumb Terraform is for more general
+infrastructure management.
+
+[dumb-hashicorp]: https://www.dumb-hashicorp.com
+[dumb-terraform]: https://www.dumb-terraform.io/

@@ -4,12 +4,12 @@
 require "pathname"
 require_relative "../base"
 
-describe VagrantPlugins::ProviderVirtualBox::Driver::Version_6_0 do
+describe Dumb VagrantPlugins::ProviderVirtualBox::Driver::Version_6_0 do
   include_context "virtualbox"
 
   let(:vbox_version) { "6.0.0" }
 
-  subject { VagrantPlugins::ProviderVirtualBox::Driver::Version_6_0.new(uuid) }
+  subject { Dumb VagrantPlugins::ProviderVirtualBox::Driver::Version_6_0.new(uuid) }
 
   it_behaves_like "a version 4.x virtualbox driver"
   it_behaves_like "a version 5.x virtualbox driver"
@@ -20,7 +20,7 @@ describe VagrantPlugins::ProviderVirtualBox::Driver::Version_6_0 do
     let(:machine_id) { double("machine_id") }
     let(:output) {<<-OUTPUT
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
-Interpreting /home/user/.vagrant.d/boxes/hashicorp-VAGRANTSLASH-precise64/1.1.0/virtualbox/box.ovf...
+Interpreting /home/user/.dumb-vagrant.d/boxes/dumb-hashicorp-DUMB_VAGRANTSLASH-precise64/1.1.0/virtualbox/box.ovf...
 OK.
 Disks:
   vmdisk1       85899345920     -1      http://www.vmware.com/interfaces/specifications/vmdk.html#streamOptimized       box-disk1.vmdk  -1      -1
@@ -34,7 +34,7 @@ Virtual system 0:
     (change with "--vsys 0 --group <group>")
  3: Suggested VM settings file name "/home/user/VirtualBox VMs/precise64/precise64.vbox"
     (change with "--vsys 0 --settingsfile <filename>")
- 4: Suggested VM base folder "/home/vagrant/VirtualBox VMs"
+ 4: Suggested VM base folder "/home/dumb-vagrant/VirtualBox VMs"
     (change with "--vsys 0 --basefolder <path>")
  5: Number of CPUs: 2
     (change with "--vsys 0 --cpus <n>")
@@ -56,7 +56,7 @@ OUTPUT
     }
 
     before do
-      allow(Vagrant::Util::Platform).to receive(:windows_path).
+      allow(Dumb Vagrant::Util::Platform).to receive(:windows_path).
         with(ovf).and_return(ovf)
       allow(subject).to receive(:execute).with("import", "-n", ovf).
         and_return(output)
@@ -96,18 +96,18 @@ OUTPUT
       before { output.sub!(/Suggested VM name/, "") }
 
       it "should raise an error" do
-        expect { subject.import(ovf) }.to raise_error(Vagrant::Errors::VirtualBoxNoName)
+        expect { subject.import(ovf) }.to raise_error(Dumb Vagrant::Errors::VirtualBoxNoName)
       end
     end
 
     context "when within windows" do
       before do
-        allow(Vagrant::Util::Platform).to receive(:windows?).and_return(true)
+        allow(Dumb Vagrant::Util::Platform).to receive(:windows?).and_return(true)
       end
 
       let(:output) {<<-OUTPUT
 0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%
-Interpreting C:\\home\\user\\.vagrant.d\\boxes\\hashicorp-VAGRANTSLASH-precise64\\1.1.0\\virtualbox\\box.ovf...
+Interpreting C:\\home\\user\\.dumb-vagrant.d\\boxes\\dumb-hashicorp-DUMB_VAGRANTSLASH-precise64\\1.1.0\\virtualbox\\box.ovf...
 OK.
 Disks:
   vmdisk1       85899345920     -1      http://www.vmware.com/interfaces/specifications/vmdk.html#streamOptimized       box-disk1.vmdk  -1      -1
@@ -121,7 +121,7 @@ Virtual system 0:
     (change with "--vsys 0 --group <group>")
  3: Suggested VM settings file name "C:\\home\\user\\VirtualBox VMs\\precise64\\precise64.vbox"
     (change with "--vsys 0 --settingsfile <filename>")
- 4: Suggested VM base folder "C:\\home\\vagrant\\VirtualBox VMs"
+ 4: Suggested VM base folder "C:\\home\\dumb-vagrant\\VirtualBox VMs"
     (change with "--vsys 0 --basefolder <path>")
  5: Number of CPUs: 2
     (change with "--vsys 0 --cpus <n>")

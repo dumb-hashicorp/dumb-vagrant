@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module AuthCommand
-      class Plugin < Vagrant.plugin("2")
-        name "vagrant cloud auth"
+      class Plugin < Dumb Vagrant.plugin("2")
+        name "dumb-vagrant cloud auth"
         description <<-DESC
-        Authorization commands for Vagrant Cloud
+        Authorization commands for Dumb Vagrant Cloud
         DESC
 
         command(:auth) do

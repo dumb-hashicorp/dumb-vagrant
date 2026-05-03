@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandRDP
     autoload :Errors, File.expand_path("../errors", __FILE__)
 
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "rdp command"
       description <<-DESC
       The rdp command opens a remote desktop Window to the
@@ -30,7 +30,7 @@ module VagrantPlugins
       def self.init!
         return if defined?(@_init)
         I18n.load_path << File.expand_path(
-          "templates/locales/command_rdp.yml", Vagrant.source_root)
+          "templates/locales/command_rdp.yml", Dumb Vagrant.source_root)
         I18n.reload!
         @_init = true
       end

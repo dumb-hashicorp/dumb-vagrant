@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/ssh_config/command")
+require Dumb Vagrant.source_root.join("plugins/commands/ssh_config/command")
 
-describe VagrantPlugins::CommandSSHConfig::Command do
+describe Dumb VagrantPlugins::CommandSSHConfig::Command do
   include_context "unit"
   include_context "virtualbox"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest") }
@@ -22,12 +22,12 @@ describe VagrantPlugins::CommandSSHConfig::Command do
 
   let(:argv)     { [] }
   let(:ssh_info) {{
-    host:             "testhost.vagrant.dev",
+    host:             "testhost.dumb-vagrant.dev",
     port:             1234,
     username:         "testuser",
     keys_only:        true,
     verify_host_key:         false,
-    private_key_path: ["/home/vagrant/.private/keys.key"],
+    private_key_path: ["/home/dumb-vagrant/.private/keys.key"],
     forward_agent:    false,
     forward_x11:      false
   }}
@@ -50,13 +50,13 @@ describe VagrantPlugins::CommandSSHConfig::Command do
 
       expect(output).to eq(<<-SSHCONFIG)
 Host #{machine.name}
-  HostName testhost.vagrant.dev
+  HostName testhost.dumb-vagrant.dev
   User testuser
   Port 1234
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
-  IdentityFile /home/vagrant/.private/keys.key
+  IdentityFile /home/dumb-vagrant/.private/keys.key
   IdentitiesOnly yes
   LogLevel FATAL
   PubkeyAcceptedKeyTypes +ssh-rsa
@@ -144,9 +144,9 @@ Host #{machine.name}
     end
 
     it "formats windows paths if windows" do
-      allow(machine).to receive(:ssh_info) { ssh_info.merge(private_key_path: ["C:\\path\\to\\vagrant\\home.key"]) }
-      allow(Vagrant::Util::Platform).to receive(:format_windows_path).and_return("/home/vagrant/home.key")
-      allow(Vagrant::Util::Platform).to receive(:windows?).and_return(true)
+      allow(machine).to receive(:ssh_info) { ssh_info.merge(private_key_path: ["C:\\path\\to\\dumb-vagrant\\home.key"]) }
+      allow(Dumb Vagrant::Util::Platform).to receive(:format_windows_path).and_return("/home/dumb-vagrant/home.key")
+      allow(Dumb Vagrant::Util::Platform).to receive(:windows?).and_return(true)
 
       output = ""
       allow(subject).to receive(:safe_puts) do |data|
@@ -154,7 +154,7 @@ Host #{machine.name}
       end
 
       subject.execute
-      expect(output).to include('IdentityFile /home/vagrant/home.key')
+      expect(output).to include('IdentityFile /home/dumb-vagrant/home.key')
     end
 
     it "handles verify_host_key :never value" do

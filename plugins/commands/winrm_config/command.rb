@@ -3,27 +3,27 @@
 
 require 'optparse'
 
-require "vagrant/util/safe_puts"
+require "dumb-vagrant/util/safe_puts"
 require_relative "../../communicators/winrm/helper"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandWinRMConfig
-    class Command < Vagrant.plugin("2", :command)
-      include Vagrant::Util::SafePuts
+    class Command < Dumb Vagrant.plugin("2", :command)
+      include Dumb Vagrant::Util::SafePuts
 
       def self.synopsis
         "outputs WinRM configuration to connect to the machine"
       end
 
       def convert_win_paths(paths)
-        paths.map! { |path| Vagrant::Util::Platform.format_windows_path(path, :disable_unc) }
+        paths.map! { |path| Dumb Vagrant::Util::Platform.format_windows_path(path, :disable_unc) }
       end
 
       def execute
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant winrm-config [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant winrm-config [options] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -38,12 +38,12 @@ module VagrantPlugins
 
         with_target_vms(argv) do |machine|
           winrm_info = CommunicatorWinRM::Helper.winrm_info(machine)
-          raise Vagrant::Errors::WinRMNotRead if winrm_info.nil?
+          raise Dumb Vagrant::Errors::WinRMNotRead if winrm_info.nil?
 
           rdp_info = get_rdp_info(machine) || {}
 
           variables = {
-            host_key: options[:host] || machine.name || "vagrant",
+            host_key: options[:host] || machine.name || "dumb-vagrant",
             rdp_host: rdp_info[:host] || winrm_info[:host],
             rdp_port: rdp_info[:port],
             rdp_user: rdp_info[:username],
@@ -55,7 +55,7 @@ module VagrantPlugins
           }
 
           template = "commands/winrm_config/config"
-          config = Vagrant::Util::TemplateRenderer.render(template, variables)
+          config = Dumb Vagrant::Util::TemplateRenderer.render(template, variables)
           machine.ui.machine("winrm-config", config)
           safe_puts(config)
           safe_puts
@@ -69,7 +69,7 @@ module VagrantPlugins
 
       # Generate RDP information for machine
       #
-      # @param [Vagrant::Machine] machine Guest machine
+      # @param [Dumb Vagrant::Machine] machine Guest machine
       # @return [Hash, nil]
       def get_rdp_info(machine)
         rdp_info = {}

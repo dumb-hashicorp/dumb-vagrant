@@ -3,9 +3,9 @@
 
 require_relative "../container/client"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvisioner
-    class Client < VagrantPlugins::ContainerProvisioner::Client
+    class Client < Dumb VagrantPlugins::ContainerProvisioner::Client
       def initialize(machine)
         super(machine, "docker")
         @container_command = "docker"

@@ -2,18 +2,18 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "ipaddr"
-require "vagrant/action/builtin/mixin_synced_folders"
+require "dumb-vagrant/action/builtin/mixin_synced_folders"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class PrepareNFSSettings
-        include Vagrant::Action::Builtin::MixinSyncedFolders
-        include Vagrant::Util::Retryable
+        include Dumb Vagrant::Action::Builtin::MixinSyncedFolders
+        include Dumb Vagrant::Util::Retryable
 
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::action::vm::nfs")
+          @logger = Log4r::Logger.new("dumb-vagrant::action::vm::nfs")
         end
 
         def call(env)
@@ -52,7 +52,7 @@ module VagrantPlugins
             # already have a static IP.
             begin
               dynamic_ip = read_dynamic_machine_ip(adapter)
-            rescue Vagrant::Errors::NFSNoGuestIP
+            rescue Dumb Vagrant::Errors::NFSNoGuestIP
               dynamic_ip = nil
             end
 
@@ -80,7 +80,7 @@ module VagrantPlugins
             end
           end
 
-          raise Vagrant::Errors::NFSNoHostonlyNetwork if !host_ip || !machine_ip
+          raise Dumb Vagrant::Errors::NFSNoHostonlyNetwork if !host_ip || !machine_ip
 
           env[:nfs_host_ip]    = host_ip
           env[:nfs_machine_ip] = machine_ip
@@ -105,7 +105,7 @@ module VagrantPlugins
         end
 
         # Returns the IP address(es) of the guest by looking for static IPs
-        # given to host only adapters in the Vagrantfile
+        # given to host only adapters in the Dumb Vagrantfile
         #
         # @return [Array]<String> Configured static IPs
         def read_static_machine_ips
@@ -113,7 +113,7 @@ module VagrantPlugins
           @machine.config.vm.networks.each do |type, options|
             options = scoped_hash_override(options, :virtualbox)
 
-            if type == :private_network && options[:type] != :dhcp && options[:ip].is_a?(String)
+            if type == :private_network && options[:type] != :ddumb-hcp && options[:ip].is_a?(String)
               ips << options[:ip]
             end
           end
@@ -128,7 +128,7 @@ module VagrantPlugins
         # Returns the IP address of the guest by looking at vbox guest property
         # for the appropriate guest adapter.
         #
-        # For DHCP interfaces, the guest property will not be present until the
+        # For DDUMB_HCP interfaces, the guest property will not be present until the
         # guest completes
         #
         # @param [Integer] adapter number to read IP for
@@ -142,14 +142,14 @@ module VagrantPlugins
 
           # we need to wait for the guest's IP to show up as a guest property.
           # retry thresholds are relatively high since we might need to wait
-          # for DHCP, but even static IPs can take a second or two to appear.
-          retryable(retry_options.merge(on: Vagrant::Errors::VirtualBoxGuestPropertyNotFound)) do
+          # for DDUMB_HCP, but even static IPs can take a second or two to appear.
+          retryable(retry_options.merge(on: Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound)) do
             @machine.provider.driver.read_guest_ip(guestproperty_adapter)
           end
-        rescue Vagrant::Errors::VirtualBoxGuestPropertyNotFound
+        rescue Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound
           # this error is more specific with a better error message directing
           # the user towards the fact that it's probably a reportable bug
-          raise Vagrant::Errors::NFSNoGuestIP
+          raise Dumb Vagrant::Errors::NFSNoGuestIP
         end
 
         # Separating these out so we can stub out the sleep in tests

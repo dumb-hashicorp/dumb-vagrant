@@ -3,9 +3,9 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/publish")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/publish")
 
-describe VagrantPlugins::CloudCommand::Command::Publish do
+describe Dumb VagrantPlugins::CloudCommand::Command::Publish do
   include_context "unit"
 
   let(:argv) { [] }
@@ -17,7 +17,7 @@ describe VagrantPlugins::CloudCommand::Command::Publish do
   let(:version) { double("version") }
   let(:provider) { double("provider") }
   let(:uploader) { double("uploader") }
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
   let(:upload_url) { double("upload_url") }
   let(:access_token) { double("access_token") }
   let(:default_architecture) { double("default-architecture") }
@@ -25,12 +25,12 @@ describe VagrantPlugins::CloudCommand::Command::Publish do
   subject { described_class.new(argv, iso_env) }
 
   before do
-    allow(Vagrant::Util::Platform).to receive(:architecture).
+    allow(Dumb Vagrant::Util::Platform).to receive(:architecture).
       and_return(default_architecture)
     allow(iso_env).to receive(:ui).and_return(ui)
     allow(File).to receive(:stat).with(box).
       and_return(double("box_stat", size: box_size))
-    allow(VagrantCloud::Account).to receive(:new).
+    allow(Dumb VagrantCloud::Account).to receive(:new).
       with(custom_server: anything, access_token: anything).
       and_return(account)
     allow(provider).to receive(:architecture=).with(default_architecture)
@@ -41,7 +41,7 @@ describe VagrantPlugins::CloudCommand::Command::Publish do
       allow(provider).to receive(:upload).and_yield(upload_url)
       allow(uploader).to receive(:upload!)
       allow(File).to receive(:absolute_path).and_return(box)
-      allow(Vagrant::Util::Uploader).to receive(:new).and_return(uploader)
+      allow(Dumb Vagrant::Util::Uploader).to receive(:new).and_return(uploader)
     end
 
     it "should get absolute path for box file" do
@@ -55,20 +55,20 @@ describe VagrantPlugins::CloudCommand::Command::Publish do
     end
 
     it "should create uploader with given url" do
-      expect(Vagrant::Util::Uploader).to receive(:new).
+      expect(Dumb Vagrant::Util::Uploader).to receive(:new).
         with(upload_url, any_args).and_return(uploader)
       subject.upload_box_file(provider, box)
     end
 
     it "should upload with PUT method by default" do
-      expect(Vagrant::Util::Uploader).to receive(:new).
+      expect(Dumb Vagrant::Util::Uploader).to receive(:new).
         with(upload_url, anything, hash_including(method: :put)).and_return(uploader)
       subject.upload_box_file(provider, box)
     end
 
     context "with direct upload option enabled" do
       it "should upload with PUT method when direct upload option set" do
-        expect(Vagrant::Util::Uploader).to receive(:new).
+        expect(Dumb Vagrant::Util::Uploader).to receive(:new).
           with(upload_url, anything, hash_including(method: :put)).and_return(uploader)
         subject.upload_box_file(provider, box, direct_upload: true)
       end
@@ -286,10 +286,10 @@ describe VagrantPlugins::CloudCommand::Command::Publish do
 
   context "#execute" do
     let(:iso_env) do
-      # We have to create a Vagrantfile so there is a root path
+      # We have to create a Dumb Vagrantfile so there is a root path
       env = isolated_environment
-      env.vagrantfile("")
-      env.create_vagrant_env
+      env.dumb-vagrantfile("")
+      env.create_dumb-vagrant_env
     end
     let(:client) { double("client", token: "1234token1234") }
     let(:action_runner) { double("action_runner") }
@@ -314,31 +314,31 @@ describe VagrantPlugins::CloudCommand::Command::Publish do
     context "with no arguments" do
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
     context "missing required arguments" do
-      let(:argv) { ["vagrant/box", "1.0.0", "virtualbox"] }
+      let(:argv) { ["dumb-vagrant/box", "1.0.0", "virtualbox"] }
 
       it "shows help" do
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::CLIInvalidUsage)
+          to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 
     context "missing box file" do
-      let(:argv) { ["vagrant/box", "1.0.0", "virtualbox", "/notreal/file.box"] }
+      let(:argv) { ["dumb-vagrant/box", "1.0.0", "virtualbox", "/notreal/file.box"] }
 
       it "raises an exception" do
         allow(File).to receive(:file?).and_return(false)
         expect { subject.execute }.
-          to raise_error(Vagrant::Errors::BoxFileNotExist)
+          to raise_error(Dumb Vagrant::Errors::BoxFileNotExist)
       end
     end
 
     context "with arguments" do
-      let(:org_name) { "vagrant" }
+      let(:org_name) { "dumb-vagrant" }
       let(:box_name) { "box" }
       let(:box_version) { "1.0.0" }
       let(:box_version_provider) { "virtualbox" }
@@ -384,8 +384,8 @@ describe VagrantPlugins::CloudCommand::Command::Publish do
         end
       end
 
-      context "when Vagrant Cloud error is encountered" do
-        before { expect(box).to receive(:save).and_raise(VagrantCloud::Error) }
+      context "when Dumb Vagrant Cloud error is encountered" do
+        before { expect(box).to receive(:save).and_raise(Dumb VagrantCloud::Error) }
 
         it "should return non-zero result" do
           result = subject.execute

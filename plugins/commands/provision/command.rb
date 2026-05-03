@@ -3,11 +3,11 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandProvision
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
-        "provisions the vagrant machine"
+        "provisions the dumb-vagrant machine"
       end
 
       def execute
@@ -15,7 +15,7 @@ module VagrantPlugins
         options[:provision_types] = nil
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant provision [vm-name] [--provision-with x,y,z]"
+          o.banner = "Usage: dumb-vagrant provision [vm-name] [--provision-with x,y,z]"
 
           o.on("--provision-with x,y,z", Array,
                     "Enable only certain provisioners, by type or by name.") do |list|

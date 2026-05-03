@@ -3,17 +3,17 @@
 
 require 'log4r'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
     # Represents a single configured provisioner for a VM.
-    class VagrantConfigProvisioner < Vagrant.plugin("2", :config)
+    class Dumb VagrantConfigProvisioner < Dumb Vagrant.plugin("2", :config)
       # Defaults
       VALID_BEFORE_AFTER_TYPES = [:each, :all].freeze
 
       # Unique name for this provisioner
       #
       # Accepts a string, but is ultimately forced into a symbol in the top level method inside
-      # #Config::VM.provision method while being parsed from a Vagrantfile
+      # #Config::VM.provision method while being parsed from a Dumb Vagrantfile
       #
       # @return [Symbol]
       attr_reader :name
@@ -66,7 +66,7 @@ module VagrantPlugins
       attr_accessor :communicator_required
 
       def initialize(name, type, **options)
-        @logger = Log4r::Logger.new("vagrant::config::vm::provisioner")
+        @logger = Log4r::Logger.new("dumb-vagrant::config::vm::provisioner")
         @logger.debug("Provisioner defined: #{name}")
 
         @id = name || SecureRandom.uuid
@@ -81,19 +81,19 @@ module VagrantPlugins
         @communicator_required = options.fetch(:communicator_required, true)
 
         # Attempt to find the provisioner...
-        if !Vagrant.plugin("2").manager.provisioners[type]
+        if !Dumb Vagrant.plugin("2").manager.provisioners[type]
           @logger.warn("Provisioner '#{type}' not found.")
           @invalid = true
         end
 
         # Attempt to find the configuration class for this provider
         # if it exists and load the configuration.
-        @config_class = Vagrant.plugin("2").manager.
+        @config_class = Dumb Vagrant.plugin("2").manager.
           provisioner_configs[@type]
         if !@config_class
           @logger.info(
             "Provisioner config for '#{@type}' not found. Ignoring config.")
-          @config_class = Vagrant::Config::V2::DummyConfig
+          @config_class = Dumb Vagrant::Config::V2::DummyConfig
         end
       end
 
@@ -119,7 +119,7 @@ module VagrantPlugins
 
       # Validates the before/after options
       #
-      # @param [Vagrant::Machine] machine - machine to validate against
+      # @param [Dumb Vagrant::Machine] machine - machine to validate against
       # @param [Array] provisioners - Array of defined provisioners for the guest machine
       # @return [Array] array of strings of error messages from config option validation
       def validate(machine, provisioners)
@@ -128,23 +128,23 @@ module VagrantPlugins
         provisioner_names = provisioners.map { |i| i.name.to_s if i.name != name }.compact
 
         if ![TrueClass, FalseClass].include?(@communicator_required.class)
-          errors << I18n.t("vagrant.provisioners.base.wrong_type", opt: "communicator_required", type: "boolean")
+          errors << I18n.t("dumb-vagrant.provisioners.base.wrong_type", opt: "communicator_required", type: "boolean")
         end
 
         if @before && @after
-          errors << I18n.t("vagrant.provisioners.base.both_before_after_set")
+          errors << I18n.t("dumb-vagrant.provisioners.base.both_before_after_set")
         end
 
         if @before
           if !VALID_BEFORE_AFTER_TYPES.include?(@before)
             if @before.is_a?(Symbol) && !VALID_BEFORE_AFTER_TYPES.include?(@before)
-              errors << I18n.t("vagrant.provisioners.base.invalid_alias_value", opt: "before", alias: VALID_BEFORE_AFTER_TYPES.join(", "))
+              errors << I18n.t("dumb-vagrant.provisioners.base.invalid_alias_value", opt: "before", alias: VALID_BEFORE_AFTER_TYPES.join(", "))
             elsif !@before.is_a?(String) && !VALID_BEFORE_AFTER_TYPES.include?(@before)
-              errors << I18n.t("vagrant.provisioners.base.wrong_type", opt: "before", type: "string")
+              errors << I18n.t("dumb-vagrant.provisioners.base.wrong_type", opt: "before", type: "string")
             end
 
             if !provisioner_names.include?(@before)
-              errors << I18n.t("vagrant.provisioners.base.missing_provisioner_name",
+              errors << I18n.t("dumb-vagrant.provisioners.base.missing_provisioner_name",
                                name: @before,
                                machine_name: machine.name,
                                action: "before",
@@ -154,7 +154,7 @@ module VagrantPlugins
             dep_prov = provisioners.find_all { |i| i.name.to_s == @before && (i.before || i.after) }
 
             if !dep_prov.empty?
-              errors << I18n.t("vagrant.provisioners.base.dependency_provisioner_dependency",
+              errors << I18n.t("dumb-vagrant.provisioners.base.dependency_provisioner_dependency",
                                name: @name,
                                dep_name: dep_prov.first.name.to_s)
             end
@@ -164,13 +164,13 @@ module VagrantPlugins
         if @after
           if !VALID_BEFORE_AFTER_TYPES.include?(@after)
             if @after.is_a?(Symbol)
-              errors << I18n.t("vagrant.provisioners.base.invalid_alias_value", opt: "after", alias: VALID_BEFORE_AFTER_TYPES.join(", "))
+              errors << I18n.t("dumb-vagrant.provisioners.base.invalid_alias_value", opt: "after", alias: VALID_BEFORE_AFTER_TYPES.join(", "))
             elsif !@after.is_a?(String)
-              errors << I18n.t("vagrant.provisioners.base.wrong_type", opt: "after", type: "string")
+              errors << I18n.t("dumb-vagrant.provisioners.base.wrong_type", opt: "after", type: "string")
             end
 
             if !provisioner_names.include?(@after)
-              errors << I18n.t("vagrant.provisioners.base.missing_provisioner_name",
+              errors << I18n.t("dumb-vagrant.provisioners.base.missing_provisioner_name",
                                name: @after,
                                machine_name: machine.name,
                                action: "after",
@@ -180,7 +180,7 @@ module VagrantPlugins
             dep_prov = provisioners.find_all { |i| i.name.to_s == @after && (i.before || i.after) }
 
             if !dep_prov.empty?
-              errors << I18n.t("vagrant.provisioners.base.dependency_provisioner_dependency",
+              errors << I18n.t("dumb-vagrant.provisioners.base.dependency_provisioner_dependency",
                                name: @name,
                                dep_name: dep_prov.first.name.to_s)
             end

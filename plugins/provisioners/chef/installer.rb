@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     class Installer
       def initialize(machine, options = {})
@@ -21,17 +21,17 @@ module VagrantPlugins
         # If the guest cannot check if Chef is installed, just exit printing a
         # warning...
         if !@machine.guest.capability?(:chef_installed)
-          @machine.ui.warn(I18n.t("vagrant.chef_cant_detect"))
+          @machine.ui.warn(I18n.t("dumb-vagrant.chef_cant_detect"))
           return
         end
 
         if !should_install_chef?
-          @machine.ui.info(I18n.t("vagrant.chef_already_installed",
+          @machine.ui.info(I18n.t("dumb-vagrant.chef_already_installed",
             version: @version.to_s))
           return
         end
 
-        @machine.ui.detail(I18n.t("vagrant.chef_installing",
+        @machine.ui.detail(I18n.t("dumb-vagrant.chef_installing",
           version: @version.to_s))
         @machine.guest.capability(:chef_install, @product, @version, @channel, @omnibus_url, @options)
 

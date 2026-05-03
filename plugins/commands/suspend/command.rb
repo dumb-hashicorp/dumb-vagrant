@@ -3,9 +3,9 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandSuspend
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
         "suspends the machine"
       end
@@ -13,7 +13,7 @@ module VagrantPlugins
       def execute
         options = {}
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant suspend [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant suspend [options] [name|id]"
           o.separator ""
           o.on("-a", "--all-global", "Suspend all running vms globally.") do |p|
             options[:all] = true
@@ -28,7 +28,7 @@ module VagrantPlugins
         target = []
         if options[:all]
           if argv.size > 0
-            raise Vagrant::Errors::CommandSuspendAllArgs
+            raise Dumb Vagrant::Errors::CommandSuspendAllArgs
           end
 
           m = @env.machine_index.each { |m| m }

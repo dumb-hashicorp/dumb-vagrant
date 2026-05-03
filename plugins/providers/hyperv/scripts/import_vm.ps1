@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-#Requires -Modules VagrantVM, VagrantMessages
+#Requires -Modules Dumb VagrantVM, Dumb VagrantMessages
 
 param(
     [parameter (Mandatory=$true)]
@@ -33,7 +33,7 @@ try {
         $linked = $false
     }
 
-    $VM = New-VagrantVM -VMConfigFile $VMConfigFile -DestinationPath $DestinationPath `
+    $VM = New-Dumb VagrantVM -VMConfigFile $VMConfigFile -DestinationPath $DestinationPath `
       -DataPath $DataPath -SourcePath $SourcePath -LinkedClone $linked -Memory $Memory `
       -MaxMemory $MaxMemory -CPUCount $Processors -VMName $VMName
 

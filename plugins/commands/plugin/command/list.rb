@@ -5,22 +5,22 @@ require 'optparse'
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
       class List < Base
         def execute
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant plugin list [-h]"
+            o.banner = "Usage: dumb-vagrant plugin list [-h]"
 
-            # Stub option to allow Vagrantfile loading
+            # Stub option to allow Dumb Vagrantfile loading
             o.on("--local", "Include local project plugins"){|_|}
           end
 
           # Parse the options
           argv = parse_options(opts)
           return if !argv
-          raise Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if argv.length > 0
+          raise Dumb Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if argv.length > 0
 
           # List the installed plugins
           action(Action.action_list)

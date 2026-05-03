@@ -12,16 +12,16 @@ shared_examples 'provider/linked_clone' do |provider, options|
 
   before do
     environment.skeleton('linked_clone')
-    assert_execute('vagrant', 'box', 'add', 'box', options[:box])
+    assert_execute('dumb-vagrant', 'box', 'add', 'box', options[:box])
   end
 
   after do
-    assert_execute('vagrant', 'destroy', '--force')
+    assert_execute('dumb-vagrant', 'destroy', '--force')
   end
 
   it 'creates machine as linked clone' do
     status('Test: machine is created successfully')
-    result = execute('vagrant', 'up', "--provider=#{provider}")
+    result = execute('dumb-vagrant', 'up', "--provider=#{provider}")
     expect(result).to exit_with(0)
 
     status('Test: master VM is created')
@@ -31,7 +31,7 @@ shared_examples 'provider/linked_clone' do |provider, options|
     expect(result.stdout).to match(/Cloning/)
 
     status('Test: machine is available by ssh')
-    result = execute('vagrant', 'ssh', '-c', 'echo foo')
+    result = execute('dumb-vagrant', 'ssh', '-c', 'echo foo')
     expect(result).to exit_with(0)
     expect(result.stdout).to match(/foo\n$/)
   end

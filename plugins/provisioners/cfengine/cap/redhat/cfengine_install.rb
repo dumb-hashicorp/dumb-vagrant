@@ -3,13 +3,13 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CFEngine
     module Cap
       module RedHat
         module CFEngineInstall
           def self.cfengine_install(machine, config)
-            logger = Log4r::Logger.new("vagrant::plugins::cfengine::cap_redhat_cfengine_install")
+            logger = Log4r::Logger.new("dumb-vagrant::plugins::cfengine::cap_redhat_cfengine_install")
 
             machine.communicate.tap do |comm|
               logger.info("Adding the CFEngine repository to #{config.yum_repo_file}")

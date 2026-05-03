@@ -5,7 +5,7 @@ require_relative "../../../../base"
 
 require_relative "../../../../../../plugins/hosts/darwin/cap/rdp"
 
-describe VagrantPlugins::HostDarwin::Cap::RDP do
+describe Dumb VagrantPlugins::HostDarwin::Cap::RDP do
   let(:rdp_info) do
     {
       host: "host",
@@ -33,7 +33,7 @@ describe VagrantPlugins::HostDarwin::Cap::RDP do
   it "opens the RDP file" do
     env = double(:env)
     allow(described_class).to receive(:generate_config_file).and_return("/path")
-    expect(Vagrant::Util::Subprocess).to receive(:execute).with("open", "/path")
+    expect(Dumb Vagrant::Util::Subprocess).to receive(:execute).with("open", "/path")
     described_class.rdp_client(env, rdp_info)
   end
 end

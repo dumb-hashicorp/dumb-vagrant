@@ -5,22 +5,22 @@ require "tempfile"
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/communicators/winssh/communicator"
 
-describe "VagrantPlugins::GuestWindows::Cap::RemovePublicKey" do
+describe "Dumb VagrantPlugins::GuestWindows::Cap::RemovePublicKey" do
   let(:caps) do
-    VagrantPlugins::GuestWindows::Plugin
+    Dumb VagrantPlugins::GuestWindows::Plugin
       .components
       .guest_capabilities[:windows]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:public_key_insecure){ "ssh-rsa...insecure" }
   let(:public_key_other){ "ssh-rsa...other" }
 
   let(:auth_keys_check_result){ 1 }
 
   before do
-    @tempfile = Tempfile.new("vagrant-test")
+    @tempfile = Tempfile.new("dumb-vagrant-test")
     @tempfile.puts(public_key_insecure)
     @tempfile.puts(public_key_other)
     @tempfile.flush

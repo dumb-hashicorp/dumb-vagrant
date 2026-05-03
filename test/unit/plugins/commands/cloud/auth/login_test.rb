@@ -3,13 +3,13 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/auth/login")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/auth/login")
 
-describe VagrantPlugins::CloudCommand::AuthCommand::Command::Login do
+describe Dumb VagrantPlugins::CloudCommand::AuthCommand::Command::Login do
   include_context "unit"
 
   let(:argv) { [] }
-  let(:env)  { isolated_environment.create_vagrant_env }
+  let(:env)  { isolated_environment.create_dumb-vagrant_env }
   let(:action_runner) { double("action_runner") }
   let(:client) { double("client", logged_in?: logged_in) }
   let(:logged_in) { true }
@@ -17,7 +17,7 @@ describe VagrantPlugins::CloudCommand::AuthCommand::Command::Login do
   before do
     allow(env).to receive(:action_runner).
       and_return(action_runner)
-    allow(VagrantPlugins::CloudCommand::Client).
+    allow(Dumb VagrantPlugins::CloudCommand::Client).
       to receive(:new).and_return(client)
   end
 
@@ -102,7 +102,7 @@ describe VagrantPlugins::CloudCommand::AuthCommand::Command::Login do
       before { argv << "argument" }
 
       it "should print help" do
-        expect { subject.execute }.to raise_error(Vagrant::Errors::CLIInvalidUsage)
+        expect { subject.execute }.to raise_error(Dumb Vagrant::Errors::CLIInvalidUsage)
       end
     end
 

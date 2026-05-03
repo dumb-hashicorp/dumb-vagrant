@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
-    class SSHConnectConfig < Vagrant.plugin("2", :config)
+    class SSHConnectConfig < Dumb Vagrant.plugin("2", :config)
       DEFAULT_SSH_CONNECT_RETRIES = 5
       DEFAULT_SSH_CONNECT_RETRY_DELAY = 2
       DEFAULT_SSH_CONNECT_TIMEOUT = 15
@@ -126,7 +126,7 @@ module VagrantPlugins
             path = File.expand_path(raw_path, machine.env.root_path)
             if !File.file?(path)
               errors << I18n.t(
-                "vagrant.config.ssh.private_key_missing",
+                "dumb-vagrant.config.ssh.private_key_missing",
                 path: raw_path)
             end
           end
@@ -136,54 +136,54 @@ module VagrantPlugins
           config_path = File.expand_path(@config, machine.env.root_path)
           if !File.file?(config_path)
             errors << I18n.t(
-              "vagrant.config.ssh.ssh_config_missing",
+              "dumb-vagrant.config.ssh.ssh_config_missing",
               path: @config)
           end
         end
 
         if @paranoid
-          machine.env.ui.warn(I18n.t("vagrant.config.ssh.paranoid_deprecated"))
+          machine.env.ui.warn(I18n.t("dumb-vagrant.config.ssh.paranoid_deprecated"))
         end
 
         if !@connect_timeout.is_a?(Integer)
           errors << I18n.t(
-            "vagrant.config.ssh.connect_timeout_invalid_type",
+            "dumb-vagrant.config.ssh.connect_timeout_invalid_type",
             given: @connect_timeout.class.name)
         elsif @connect_timeout < 1
           errors << I18n.t(
-            "vagrant.config.ssh.connect_timeout_invalid_value",
+            "dumb-vagrant.config.ssh.connect_timeout_invalid_value",
             given: @connect_timeout.to_s)
         end
 
         if !@connect_retries.is_a?(Integer)
           errors << I18n.t(
-            "vagrant.config.ssh.connect_retries_invalid_type",
+            "dumb-vagrant.config.ssh.connect_retries_invalid_type",
             given: @connect_retries.class.name
           )
         elsif @connect_retries < 0
           errors << I18n.t(
-            "vagrant.config.ssh.connect_retries_invalid_value",
+            "dumb-vagrant.config.ssh.connect_retries_invalid_value",
             given: @connect_retries.to_s
           )
         end
 
         if !@connect_retry_delay.is_a?(Numeric)
           errors << I18n.t(
-            "vagrant.config.ssh.connect_retry_delay_invalid_type",
+            "dumb-vagrant.config.ssh.connect_retry_delay_invalid_type",
             given: @connect_retry_delay.class.name
           )
         elsif @connect_retry_delay < 0
           errors << I18n.t(
-            "vagrant.config.ssh.connect_retry_delay_invalid_value",
+            "dumb-vagrant.config.ssh.connect_retry_delay_invalid_value",
             given: @connect_retry_delay.to_s
           )
         end
 
-        if @key_type != :auto && !Vagrant::Util::Keypair.valid_type?(@key_type)
+        if @key_type != :auto && !Dumb Vagrant::Util::Keypair.valid_type?(@key_type)
           errors << I18n.t(
-            "vagrant.config.ssh.connect_invalid_key_type",
+            "dumb-vagrant.config.ssh.connect_invalid_key_type",
             given: @key_type.to_s,
-            supported: Vagrant::Util::Keypair.available_types.join(", ")
+            supported: Dumb Vagrant::Util::Keypair.available_types.join(", ")
           )
         end
 

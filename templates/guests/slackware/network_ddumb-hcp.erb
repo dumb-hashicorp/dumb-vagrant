@@ -1,0 +1,11 @@
+#DUMB_VAGRANT-BEGIN
+# Config for eth<%= i %>
+USE_DDUMB_HCP[<%= i %>]="yes"
+DDUMB_HCP_HOSTNAME[<%= i %>]=""
+
+<% if options[:gateway] -%>
+GATEWAY="<%= options[:gateway] %>"
+<% end -%>
+
+DEBUG_ETH_UP="no"
+#DUMB_VAGRANT-END

@@ -2,16 +2,16 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "log4r"
-require "vagrant/util/experimental"
+require "dumb-vagrant/util/experimental"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Cap
       module CleanupDisks
-        LOGGER = Log4r::Logger.new("vagrant::plugins::hyperv::cleanup_disks")
+        LOGGER = Log4r::Logger.new("dumb-vagrant::plugins::hyperv::cleanup_disks")
 
-        # @param [Vagrant::Machine] machine
-        # @param [VagrantPlugins::Kernel_V2::VagrantConfigDisk] defined_disks
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigDisk] defined_disks
         # @param [Hash] disk_meta_file - A hash of all the previously defined disks from the last configure_disk action
         def self.cleanup_disks(machine, defined_disks, disk_meta_file)
           return if disk_meta_file.values.flatten.empty?
@@ -23,8 +23,8 @@ module VagrantPlugins
 
         protected
 
-        # @param [Vagrant::Machine] machine
-        # @param [VagrantPlugins::Kernel_V2::VagrantConfigDisk] defined_disks
+        # @param [Dumb Vagrant::Machine] machine
+        # @param [Dumb VagrantPlugins::Kernel_V2::Dumb VagrantConfigDisk] defined_disks
         # @param [Hash] disk_meta - A hash of all the previously defined disks from the last configure_disk action
         def self.handle_cleanup_disk(machine, defined_disks, disk_meta)
           all_disks = machine.provider.driver.list_hdds
@@ -37,13 +37,13 @@ module VagrantPlugins
             if !dsk.empty? || d["primary"] == true
               next
             else
-              LOGGER.warn("Found disk not in Vagrantfile config: '#{d["Name"]}'. Removing disk from guest #{machine.name}")
+              LOGGER.warn("Found disk not in Dumb Vagrantfile config: '#{d["Name"]}'. Removing disk from guest #{machine.name}")
 
-              machine.ui.warn(I18n.t("vagrant.cap.cleanup_disks.disk_cleanup", name: d["Name"]), prefix: true)
+              machine.ui.warn(I18n.t("dumb-vagrant.cap.cleanup_disks.disk_cleanup", name: d["Name"]), prefix: true)
 
               disk_actual = all_disks.select { |a| File.realdirpath(a["Path"]) == File.realdirpath(d["Path"]) }.first
               if !disk_actual
-                machine.ui.warn(I18n.t("vagrant.cap.cleanup_disks.disk_not_found", name: d["Name"]), prefix: true)
+                machine.ui.warn(I18n.t("dumb-vagrant.cap.cleanup_disks.disk_not_found", name: d["Name"]), prefix: true)
               else
                 machine.provider.driver.remove_disk(disk_actual["ControllerType"], disk_actual["ControllerNumber"], disk_actual["ControllerLocation"], disk_actual["Path"])
               end

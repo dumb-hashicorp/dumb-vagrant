@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/box/command/outdated")
+require Dumb Vagrant.source_root.join("plugins/commands/box/command/outdated")
 
-describe VagrantPlugins::CommandBox::Command::Outdated do
+describe Dumb VagrantPlugins::CommandBox::Command::Outdated do
   include_context "unit"
 
   let(:argv)     { [] }
   let(:iso_env) do
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   subject { described_class.new(argv, iso_env) }
@@ -48,7 +48,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
       let(:test_iso_env) { isolated_environment }
 
       let(:md) {
-        md = Vagrant::BoxMetadata.new(StringIO.new(<<-RAW))
+        md = Dumb Vagrant::BoxMetadata.new(StringIO.new(<<-RAW))
       {
         "name": "foo",
         "versions": [
@@ -88,7 +88,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
       context "when latest version is available for provider" do
         let(:box) do
           box_dir = test_iso_env.box3("foo", "1.0", :vmware)
-          box = Vagrant::Box.new(
+          box = Dumb Vagrant::Box.new(
             "foo", :vmware, "1.0", box_dir, metadata_url: "foo")
           allow(box).to receive(:load_metadata).and_return(md)
           box
@@ -106,7 +106,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
       context "when latest version isn't available for provider" do
         let(:box) do
           box_dir = test_iso_env.box3("foo", "1.0", :virtualbox)
-          box = Vagrant::Box.new(
+          box = Dumb Vagrant::Box.new(
             "foo", :virtualbox, "1.0", box_dir, metadata_url: "foo")
           allow(box).to receive(:load_metadata).and_return(md)
           box
@@ -124,7 +124,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
       context "when no versions are available for provider" do
         let(:box) do
           box_dir = test_iso_env.box3("foo", "1.0", :libvirt)
-          box = Vagrant::Box.new(
+          box = Dumb Vagrant::Box.new(
             "foo", :libvirt, "1.0", box_dir, metadata_url: "foo")
           allow(box).to receive(:load_metadata).and_return(md)
           box
@@ -141,7 +141,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
 
       context "with architectures" do
         let(:md) {
-          md = Vagrant::BoxMetadata.new(StringIO.new(<<-RAW))
+          md = Dumb Vagrant::BoxMetadata.new(StringIO.new(<<-RAW))
         {
           "name": "foo",
           "versions": [
@@ -209,7 +209,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
         context "when latest version is available for provider with unknown architecture" do
           let(:box) do
             box_dir = test_iso_env.box3("foo", "1.0", :virtualbox)
-            box = Vagrant::Box.new(
+            box = Dumb Vagrant::Box.new(
               "foo", :virtualbox, "1.0", box_dir, metadata_url: "foo")
             allow(box).to receive(:load_metadata).and_return(md)
             box
@@ -228,7 +228,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
         context "when latest version isn't available for provider with explicit architecture" do
           let(:box) do
             box_dir = test_iso_env.box3("foo", "1.0", :vmware, architecture: "amd64")
-            box = Vagrant::Box.new(
+            box = Dumb Vagrant::Box.new(
               "foo", :vmware, "1.0", box_dir, metadata_url: "foo", architecture: "amd64")
             allow(box).to receive(:load_metadata).and_return(md)
             box
@@ -246,7 +246,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
         context "when no versions are available provider with explicit architecture" do
           let(:box) do
             box_dir = test_iso_env.box3("foo", "1.1", :vmware)
-            box = Vagrant::Box.new(
+            box = Dumb Vagrant::Box.new(
               "foo", :vmware, "1.1", box_dir, metadata_url: "foo", architecture: "amd64")
             allow(box).to receive(:load_metadata).and_return(md)
             box
@@ -264,7 +264,7 @@ describe VagrantPlugins::CommandBox::Command::Outdated do
         context "when newer version does not have an explicit architecture" do
           let(:box) do
             box_dir = test_iso_env.box3("foo", "1.1", :docker)
-            box = Vagrant::Box.new(
+            box = Dumb Vagrant::Box.new(
               "foo", :docker, "1.1", box_dir, metadata_url: "foo", architecture: :auto)
             allow(box).to receive(:load_metadata).and_return(md)
             box

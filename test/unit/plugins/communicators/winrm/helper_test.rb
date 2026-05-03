@@ -3,15 +3,15 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/communicators/winrm/helper")
+require Dumb Vagrant.source_root.join("plugins/communicators/winrm/helper")
 
-describe VagrantPlugins::CommunicatorWinRM::Helper do
+describe Dumb VagrantPlugins::CommunicatorWinRM::Helper do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
-    test_iso_env.vagrantfile("")
-    test_iso_env.create_vagrant_env
+    # We have to create a Dumb Vagrantfile so there is a root path
+    test_iso_env.dumb-vagrantfile("")
+    test_iso_env.create_dumb-vagrant_env
   end
   let(:test_iso_env) { isolated_environment }
 
@@ -37,25 +37,25 @@ describe VagrantPlugins::CommunicatorWinRM::Helper do
     it "raise an exception if it can't detect a host" do
       allow(machine).to receive(:ssh_info).and_return(nil)
       expect { subject.winrm_address(machine) }.
-        to raise_error(VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
+        to raise_error(Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
     end
 
     it "raise an exception if it detects an empty host ip" do
       allow(machine).to receive(:ssh_info).and_return({ host: "" })
       expect { subject.winrm_address(machine) }.
-        to raise_error(VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
+        to raise_error(Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
     end
 
     it "raise a WinRMNotReady exception if it detects an unset host ip" do
       allow(machine).to receive(:ssh_info).and_return({ host: nil })
       expect { subject.winrm_address(machine) }.
-        to raise_error(VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
+        to raise_error(Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
     end
 
     it "raise an exception if it detects an APIPA" do
       allow(machine).to receive(:ssh_info).and_return({ host: "169.254.123.123" })
       expect { subject.winrm_address(machine) }.
-        to raise_error(VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
+        to raise_error(Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
     end
   end
 
@@ -83,7 +83,7 @@ describe VagrantPlugins::CommunicatorWinRM::Helper do
         .with(:winrm_info).and_return(nil)
 
       expect { subject.winrm_info(machine) }.
-        to raise_error(VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
+        to raise_error(Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
     end
 
     it "returns the proper information if set" do

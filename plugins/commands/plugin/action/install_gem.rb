@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "log4r"
-require "vagrant/plugin/manager"
-require "vagrant/util/platform"
+require "dumb-vagrant/plugin/manager"
+require "dumb-vagrant/util/platform"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Action
       # This action takes the `:plugin_name` variable in the environment
@@ -13,7 +13,7 @@ module VagrantPlugins
       class InstallGem
         def initialize(app, env)
           @app    = app
-          @logger = Log4r::Logger.new("vagrant::plugins::plugincommand::installgem")
+          @logger = Log4r::Logger.new("dumb-vagrant::plugins::plugincommand::installgem")
         end
 
         def call(env)
@@ -26,10 +26,10 @@ module VagrantPlugins
           # Install the gem
           plugin_name_label = plugin_name
           plugin_name_label += " --version '#{version}'" if version
-          env[:ui].info(I18n.t("vagrant.commands.plugin.installing",
+          env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.installing",
                                name: plugin_name_label))
 
-          manager = Vagrant::Plugin::Manager.instance
+          manager = Dumb Vagrant::Plugin::Manager.instance
           plugin_spec = manager.install_plugin(
             plugin_name,
             version:   version,
@@ -43,7 +43,7 @@ module VagrantPlugins
           @installed_plugin_name = plugin_spec.name
 
           # Tell the user
-          env[:ui].success(I18n.t("vagrant.commands.plugin.installed",
+          env[:ui].success(I18n.t("dumb-vagrant.commands.plugin.installed",
                                   name: plugin_spec.name,
                                   version: plugin_spec.version.to_s))
 
@@ -54,7 +54,7 @@ module VagrantPlugins
               post_install_message = post_install_message.join(" ")
             end
 
-            env[:ui].info(I18n.t("vagrant.commands.plugin.post_install",
+            env[:ui].info(I18n.t("dumb-vagrant.commands.plugin.post_install",
                                  name: plugin_spec.name,
                                  message: post_install_message.to_s))
           end

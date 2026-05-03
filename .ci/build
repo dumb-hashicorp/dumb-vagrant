@@ -21,19 +21,19 @@ popd
 # Move to root of project
 pushd "${root}"
 
-info "Building Vagrant RubyGem..."
+info "Building Dumb Vagrant RubyGem..."
 wrap gem build ./*.gemspec \
-     "Failed to build Vagrant RubyGem"
+     "Failed to build Dumb Vagrant RubyGem"
 
 # Get the path of the gem
-files=( vagrant*.gem )
+files=( dumb-vagrant*.gem )
 gem="${files[0]}"
 if [ ! -f "${gem}" ]; then
      debug "could not locate gem in %s" "${files[*]}"
-     failure "Unable to locate built Vagrant RubyGem"
+     failure "Unable to locate built Dumb Vagrant RubyGem"
 fi
 
 wrap mv "${gem}" "${dest}" \
-     "Failed to relocate Vagrant RubyGem"
+     "Failed to relocate Dumb Vagrant RubyGem"
 
 printf "build-artifacts-path=%s\n" "${dest}"

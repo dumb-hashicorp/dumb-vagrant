@@ -3,17 +3,17 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/provisioners/file/config")
+require Dumb Vagrant.source_root.join("plugins/provisioners/file/config")
 
-describe VagrantPlugins::FileUpload::Config do
+describe Dumb VagrantPlugins::FileUpload::Config do
   include_context "unit"
 
   subject { described_class.new }
 
   let(:env) do
     iso_env = isolated_environment
-    iso_env.vagrantfile("")
-    iso_env.create_vagrant_env
+    iso_env.dumb-vagrantfile("")
+    iso_env.create_dumb-vagrant_env
   end
 
   let(:machine) { double("machine", env: env) }
@@ -27,7 +27,7 @@ describe VagrantPlugins::FileUpload::Config do
 
       result = subject.validate(machine)
       expect(result["File provisioner"]).to eql([
-        I18n.t("vagrant.provisioners.file.no_dest_file")
+        I18n.t("dumb-vagrant.provisioners.file.no_dest_file")
       ])
     end
 
@@ -37,7 +37,7 @@ describe VagrantPlugins::FileUpload::Config do
 
       result = subject.validate(machine)
       expect(result["File provisioner"]).to eql([
-        I18n.t("vagrant.provisioners.file.no_source_file")
+        I18n.t("dumb-vagrant.provisioners.file.no_source_file")
       ])
     end
 
@@ -50,7 +50,7 @@ describe VagrantPlugins::FileUpload::Config do
 
       result = subject.validate(machine)
       expect(result["File provisioner"]).to eql([
-        I18n.t("vagrant.provisioners.file.path_invalid",
+        I18n.t("dumb-vagrant.provisioners.file.path_invalid",
                path: File.expand_path(non_existing_file))
       ])
     end

@@ -3,7 +3,7 @@
 
 require_relative "../../../errors"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Ansible
     module Cap
       module Guest

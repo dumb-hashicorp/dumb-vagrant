@@ -1,17 +1,17 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant_cloud'
+require 'dumb-vagrant_cloud'
 
-require Vagrant.source_root.join("plugins/commands/cloud/util")
-require Vagrant.source_root.join("plugins/commands/cloud/client/client")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/util")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/client/client")
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
-    class Plugin < Vagrant.plugin("2")
-      name "vagrant-cloud"
+    class Plugin < Dumb Vagrant.plugin("2")
+      name "dumb-vagrant-cloud"
       description <<-DESC
-      Provides the cloud command and internal API access to Vagrant Cloud.
+      Provides the cloud command and internal API access to Dumb Vagrant Cloud.
       DESC
 
       command(:cloud) do
@@ -36,7 +36,7 @@ module VagrantPlugins
         # Set this to match Vagant logging level so we get
         # desired request/response information within the
         # logger output
-        ENV["VAGRANT_CLOUD_LOG"] = Vagrant.log_level
+        ENV["DUMB_VAGRANT_CLOUD_LOG"] = Dumb Vagrant.log_level
         
         return if defined?(@_init)
         I18n.load_path << File.expand_path("../locales/en.yml", __FILE__)

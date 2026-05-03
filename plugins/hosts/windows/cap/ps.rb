@@ -4,14 +4,14 @@
 require "pathname"
 require "tmpdir"
 
-require "vagrant/util/safe_exec"
+require "dumb-vagrant/util/safe_exec"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostWindows
     module Cap
       class PS
         def self.ps_client(env, ps_info)
-          logger = Log4r::Logger.new("vagrant::hosts::windows")
+          logger = Log4r::Logger.new("dumb-vagrant::hosts::windows")
 
           command = <<-EOS
             $plain_password = "#{ps_info[:password]}"
@@ -37,7 +37,7 @@ module VagrantPlugins
           end
 
           # Launch it
-          Vagrant::Util::SafeExec.exec("powershell", *args)
+          Dumb Vagrant::Util::SafeExec.exec("powershell", *args)
         end
 
         def self.encoded(script)

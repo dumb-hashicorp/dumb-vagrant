@@ -1,9 +1,9 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module SyncedFolderNFS
     # This plugin implements NFS synced folders. In order to take advantage
     # of NFS synced folders, some provider-specific assistance is required.
@@ -21,7 +21,7 @@ module VagrantPlugins
     # If any of these variables are not set, an internal exception will be
     # raised.
     #
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "NFS synced folders"
       description <<-EOF
       The NFS synced folders plugin enables you to use NFS as a synced folder
@@ -41,7 +41,7 @@ module VagrantPlugins
       action_hook("nfs_cleanup") do |hook|
         require_relative "action_cleanup"
         hook.before(
-          Vagrant::Action::Builtin::SyncedFolderCleanup,
+          Dumb Vagrant::Action::Builtin::SyncedFolderCleanup,
           ActionCleanup)
       end
     end

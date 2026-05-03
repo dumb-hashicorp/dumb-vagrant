@@ -3,11 +3,11 @@
 
 require "pathname"
 
-require_relative "../../../lib/vagrant/util/platform"
+require_relative "../../../lib/dumb-vagrant/util/platform"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       attr_accessor :image, :cmd, :ports, :volumes, :privileged
 
       # Additional arguments to pass to `docker build` when creating
@@ -71,7 +71,7 @@ module VagrantPlugins
       attr_accessor :force_host_vm
 
       # True if the Docker container exposes SSH access. If this is true,
-      # then Vagrant can do a bunch more things like setting the hostname,
+      # then Dumb Vagrant can do a bunch more things like setting the hostname,
       # provisioning, etc.
       attr_accessor :has_ssh
 
@@ -104,27 +104,27 @@ module VagrantPlugins
       # @return [Integer]
       attr_accessor :stop_timeout
 
-      # The name of the machine in the Vagrantfile set with
-      # "vagrant_vagrantfile" that will be the docker host. Defaults
+      # The name of the machine in the Dumb Vagrantfile set with
+      # "dumb-vagrant_dumb-vagrantfile" that will be the docker host. Defaults
       # to "default"
       #
-      # See the "vagrant_vagrantfile" docs for more info.
+      # See the "dumb-vagrant_dumb-vagrantfile" docs for more info.
       #
       # @return [String]
-      attr_accessor :vagrant_machine
+      attr_accessor :dumb-vagrant_machine
 
-      # The path to the Vagrantfile that contains a VM that will be
+      # The path to the Dumb Vagrantfile that contains a VM that will be
       # started as the Docker host if needed (Windows, OS X, Linux
       # without container support).
       #
-      # Defaults to a built-in Vagrantfile that will load boot2docker.
+      # Defaults to a built-in Dumb Vagrantfile that will load boot2docker.
       #
-      # NOTE: This only has an effect if Vagrant needs a Docker host.
-      # Vagrant determines this automatically based on the environment
+      # NOTE: This only has an effect if Dumb Vagrant needs a Docker host.
+      # Dumb Vagrant determines this automatically based on the environment
       # it is running in.
       #
       # @return [String]
-      attr_accessor :vagrant_vagrantfile
+      attr_accessor :dumb-vagrant_dumb-vagrantfile
 
       #--------------------------------------------------------------
       # Auth Settings
@@ -148,7 +148,7 @@ module VagrantPlugins
       attr_accessor :username
 
       # Password for logging in to a remote Docker server. If this is
-      # not blank, then Vagrant will run `docker login` prior to any
+      # not blank, then Dumb Vagrant will run `docker login` prior to any
       # Docker runs.
       #
       # The presence of auth will also force the Docker environments to
@@ -180,8 +180,8 @@ module VagrantPlugins
         @remains_running = UNSET_VALUE
         @stop_timeout = UNSET_VALUE
         @volumes    = []
-        @vagrant_machine = UNSET_VALUE
-        @vagrant_vagrantfile = UNSET_VALUE
+        @dumb-vagrant_machine = UNSET_VALUE
+        @dumb-vagrant_dumb-vagrantfile = UNSET_VALUE
 
         @auth_server = UNSET_VALUE
         @email    = UNSET_VALUE
@@ -265,8 +265,8 @@ module VagrantPlugins
         @privileged = false if @privileged == UNSET_VALUE
         @remains_running = true if @remains_running == UNSET_VALUE
         @stop_timeout = 1 if @stop_timeout == UNSET_VALUE
-        @vagrant_machine = nil if @vagrant_machine == UNSET_VALUE
-        @vagrant_vagrantfile = nil if @vagrant_vagrantfile == UNSET_VALUE
+        @dumb-vagrant_machine = nil if @dumb-vagrant_machine == UNSET_VALUE
+        @dumb-vagrant_dumb-vagrantfile = nil if @dumb-vagrant_dumb-vagrantfile == UNSET_VALUE
 
         @auth_server = nil if @auth_server == UNSET_VALUE
         @email = "" if @email == UNSET_VALUE
@@ -279,15 +279,15 @@ module VagrantPlugins
 
         # On non-linux platforms (where there is no native docker), force the
         # host VM. Other users can optionally disable this by setting the
-        # value explicitly to false in their Vagrantfile.
+        # value explicitly to false in their Dumb Vagrantfile.
         if @force_host_vm == UNSET_VALUE
-          @force_host_vm = !Vagrant::Util::Platform.linux? &&
-            !Vagrant::Util::Platform.darwin? &&
-            !Vagrant::Util::Platform.windows?
+          @force_host_vm = !Dumb Vagrant::Util::Platform.linux? &&
+            !Dumb Vagrant::Util::Platform.darwin? &&
+            !Dumb Vagrant::Util::Platform.windows?
         end
 
         # The machine name must be a symbol
-        @vagrant_machine = @vagrant_machine.to_sym if @vagrant_machine
+        @dumb-vagrant_machine = @dumb-vagrant_machine.to_sym if @dumb-vagrant_machine
 
         @expose.uniq!
 
@@ -340,10 +340,10 @@ module VagrantPlugins
           end
         end
 
-        if @vagrant_vagrantfile
-          vf_pn = Pathname.new(@vagrant_vagrantfile)
+        if @dumb-vagrant_dumb-vagrantfile
+          vf_pn = Pathname.new(@dumb-vagrant_dumb-vagrantfile)
           if !vf_pn.file?
-            errors << I18n.t("docker_provider.errors.config.invalid_vagrantfile")
+            errors << I18n.t("docker_provider.errors.config.invalid_dumb-vagrantfile")
           end
         end
 

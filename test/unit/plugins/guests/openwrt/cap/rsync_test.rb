@@ -3,15 +3,15 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::VagrantPlugins::Cap::Rsync" do
+describe "Dumb VagrantPlugins::Dumb VagrantPlugins::Cap::Rsync" do
   let(:caps) do
-    VagrantPlugins::GuestOpenWrt::Plugin
+    Dumb VagrantPlugins::GuestOpenWrt::Plugin
         .components
         .guest_capabilities[:openwrt]
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:guest_directory) { "/guest/directory/path" }
 
   before do

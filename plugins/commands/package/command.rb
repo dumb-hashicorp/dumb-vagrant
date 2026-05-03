@@ -4,18 +4,18 @@
 require 'optparse'
 require 'securerandom'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPackage
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
-        "packages a running vagrant environment into a box"
+        "packages a running dumb-vagrant environment into a box"
       end
 
       def execute
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant package [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant package [options] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -36,8 +36,8 @@ module VagrantPlugins
             options[:info] = info
           end
 
-          o.on("--vagrantfile FILE", "Vagrantfile to package with the box") do |v|
-            options[:vagrantfile] = v
+          o.on("--dumb-vagrantfile FILE", "Dumb Vagrantfile to package with the box") do |v|
+            options[:dumb-vagrantfile] = v
           end
         end
 
@@ -60,19 +60,19 @@ module VagrantPlugins
 
       def package_base(options)
         # XXX: This whole thing is hardcoded and very temporary. The whole
-        # `vagrant package --base` process is deprecated for something much
+        # `dumb-vagrant package --base` process is deprecated for something much
         # better in the future. We just hardcode this to keep VirtualBox working
         # for now.
-        provider = Vagrant.plugin("2").manager.providers[:virtualbox]
+        provider = Dumb Vagrant.plugin("2").manager.providers[:virtualbox]
         tmp_data_directory = File.join(@env.tmp_path, SecureRandom.uuid)
         FileUtils.mkdir_p(tmp_data_directory)
         begin
-          vm = Vagrant::Machine.new(
+          vm = Dumb Vagrant::Machine.new(
             options[:base],
             :virtualbox, provider[0], nil, provider[1],
-            @env.vagrantfile.config,
+            @env.dumb-vagrantfile.config,
             Pathname.new(tmp_data_directory), nil,
-            @env, @env.vagrantfile, true)
+            @env, @env.dumb-vagrantfile, true)
           @logger.debug("Packaging base VM: #{vm.name}")
           package_vm(vm, options)
         ensure

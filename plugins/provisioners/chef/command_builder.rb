@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Chef
     class CommandBuilder
       def self.command(type, config, options = {})
@@ -65,10 +65,10 @@ module VagrantPlugins
 
       def provisioning_path(file)
         if windows?
-          path = config.provisioning_path || "C:/vagrant-chef"
+          path = config.provisioning_path || "C:/dumb-vagrant-chef"
           return windows_friendly_path(File.join(path, file))
         else
-          path = config.provisioning_path || "/tmp/vagrant-chef"
+          path = config.provisioning_path || "/tmp/dumb-vagrant-chef"
           return File.join(path, file)
         end
       end

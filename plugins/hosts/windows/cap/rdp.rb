@@ -4,9 +4,9 @@
 require "pathname"
 require "tmpdir"
 
-require "vagrant/util/subprocess"
+require "dumb-vagrant/util/subprocess"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostWindows
     module Cap
       class RDP
@@ -17,7 +17,7 @@ module VagrantPlugins
             "/user:#{rdp_info[:username]}",
             "/pass:#{rdp_info[:password]}",
           ]
-          Vagrant::Util::Subprocess.execute("cmdkey", *cmdKeyArgs)
+          Dumb Vagrant::Util::Subprocess.execute("cmdkey", *cmdKeyArgs)
 
           # Build up the args to mstsc
           args = ["/v:#{rdp_info[:host]}:#{rdp_info[:port]}"]
@@ -25,7 +25,7 @@ module VagrantPlugins
             args = rdp_info[:extra_args] + args
           end
           # Launch it
-          Vagrant::Util::Subprocess.execute("mstsc", *args, {:detach => true})
+          Dumb Vagrant::Util::Subprocess.execute("mstsc", *args, {:detach => true})
         end
       end
     end

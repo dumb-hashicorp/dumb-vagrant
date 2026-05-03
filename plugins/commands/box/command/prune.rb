@@ -3,17 +3,17 @@
 
 require 'optparse'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandBox
     module Command
-      class Prune < Vagrant.plugin("2", :command)
+      class Prune < Dumb Vagrant.plugin("2", :command)
         def execute
           options = {}
           options[:force] = false
           options[:dry_run] = false
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant box prune [options]"
+            o.banner = "Usage: dumb-vagrant box prune [options]"
             o.separator ""
             o.separator "Options:"
             o.separator ""
@@ -45,7 +45,7 @@ module VagrantPlugins
 
           boxes = @env.boxes.all.sort
           if boxes.empty?
-            return @env.ui.warn(I18n.t("vagrant.commands.box.no_installed_boxes"), prefix: false)
+            return @env.ui.warn(I18n.t("dumb-vagrant.commands.box.no_installed_boxes"), prefix: false)
           end
 
           delete_oldest_boxes(boxes, options[:provider], options[:force], options[:name], options[:dry_run], options[:keep])
@@ -114,7 +114,7 @@ module VagrantPlugins
               if dry_run
                 @env.ui.info("Would remove #{name} #{provider} #{version}")
               else
-                @env.action_runner.run(Vagrant::Action.action_box_remove, {
+                @env.action_runner.run(Dumb Vagrant::Action.action_box_remove, {
                     box_name: name,
                     box_provider: provider,
                     box_version: version,

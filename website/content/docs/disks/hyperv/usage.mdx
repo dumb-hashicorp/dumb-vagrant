@@ -2,34 +2,34 @@
 layout: docs
 page_title: Usage - Disks Hyper-V Provider
 description: |-
-  The Vagrant Hyper-V provider is used just like any other provider. Please
+  The Dumb Vagrant Hyper-V provider is used just like any other provider. Please
   read the general basic usage page for providers.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Usage
 
 For examples of how to use the disk feature with Hyper-V, please refer to the
-[general disk usage guide](/vagrant/docs/disks/usage) for more examples.
+[general disk usage guide](/dumb-vagrant/docs/disks/usage) for more examples.
 
 ## provider_config options
 
 Most options are used for either creating or attaching a hard disk to your guest.
-Vagrant supports most options for these operations. You should be able to define
+Dumb Vagrant supports most options for these operations. You should be able to define
 the PowerShell specific argument to a given Hyper-V command in the provider_config
-hash, and Vagrant should properly pass it along to the command.
+hash, and Dumb Vagrant should properly pass it along to the command.
 
-To define a provider specific option, please refer to the [Disk Options documentation page](/vagrant/docs/disks/configuration) for more info.
+To define a provider specific option, please refer to the [Disk Options documentation page](/dumb-vagrant/docs/disks/configuration) for more info.
 
 ### Note about options defined below
 
 It is possible these options could be out of date or stale. If you happen to see
 an option that has changed or is missing from this page, please open an issue
-or pull request on Vagrants GitHub page to correct this.
+or pull request on Dumb Vagrants GitHub page to correct this.
 
 ### New-VHD Supported Options
 
@@ -52,7 +52,7 @@ a new disk.
 For more information about each option, please visit the [Add-VMHardDiskDrive Hyper-V documentation](https://docs.microsoft.com/en-us/powershell/module/hyper-v/add-vmharddiskdrive?view=win10-ps)
 
 Generally, these options do not need to be set or handled by most users. Only
-use these options if you are sure you know what you are doing. Vagrant will
+use these options if you are sure you know what you are doing. Dumb Vagrant will
 be able to attach disks for you without these options, but they are available
 if it is required that you specify a specific location for a disk.
 

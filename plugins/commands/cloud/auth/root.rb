@@ -1,20 +1,20 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module AuthCommand
       module Command
-        class Root < Vagrant.plugin("2", :command)
+        class Root < Dumb Vagrant.plugin("2", :command)
           def self.synopsis
-            "Manages Vagrant Cloud authorization related to Vagrant Cloud"
+            "Manages Dumb Vagrant Cloud authorization related to Dumb Vagrant Cloud"
           end
 
           def initialize(argv, env)
             super
 
             @main_args, @sub_command, @sub_args = split_main_and_subcommand(argv)
-            @subcommands = Vagrant::Registry.new
+            @subcommands = Dumb Vagrant::Registry.new
             @subcommands.register(:login) do
               require File.expand_path("../login", __FILE__)
               Command::Login
@@ -48,9 +48,9 @@ module VagrantPlugins
           # Prints the help out for this command
           def help
             opts = OptionParser.new do |opts|
-              opts.banner = "Usage: vagrant cloud auth <subcommand> [<args>]"
+              opts.banner = "Usage: dumb-vagrant cloud auth <subcommand> [<args>]"
               opts.separator ""
-              opts.separator "Authorization with Vagrant Cloud"
+              opts.separator "Authorization with Dumb Vagrant Cloud"
               opts.separator ""
               opts.separator "Available subcommands:"
 
@@ -63,7 +63,7 @@ module VagrantPlugins
                 opts.separator "     #{key}"
               end
               opts.separator ""
-              opts.separator "For help on any individual subcommand run `vagrant cloud auth <subcommand> -h`"
+              opts.separator "For help on any individual subcommand run `dumb-vagrant cloud auth <subcommand> -h`"
             end
 
             @env.ui.info(opts.help, prefix: false)

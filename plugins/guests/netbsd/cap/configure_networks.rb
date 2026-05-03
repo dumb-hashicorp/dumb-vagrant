@@ -3,19 +3,19 @@
 
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestNetBSD
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
+        include Dumb Vagrant::Util
 
         def self.configure_networks(machine, networks)
 
           # setup a new rc.conf file
-          newrcconf = "/tmp/rc.conf.vagrant_configurenetworks"
-          machine.communicate.sudo("sed -e '/^#VAGRANT-BEGIN/,/^#VAGRANT-END/ d' /etc/rc.conf > #{newrcconf}")
+          newrcconf = "/tmp/rc.conf.dumb-vagrant_configurenetworks"
+          machine.communicate.sudo("sed -e '/^#DUMB_VAGRANT-BEGIN/,/^#DUMB_VAGRANT-END/ d' /etc/rc.conf > #{newrcconf}")
 
           networks.each do |network|
 
@@ -23,27 +23,27 @@ module VagrantPlugins
             entry = TemplateRenderer.render("guests/netbsd/network_#{network[:type]}",
                                             options: network)
 
-            Tempfile.open("vagrant-netbsd-configure-networks") do |f|
+            Tempfile.open("dumb-vagrant-netbsd-configure-networks") do |f|
               f.binmode
               f.write(entry)
               f.fsync
               f.close
-              machine.communicate.upload(f.path, "/tmp/vagrant-network-entry")
+              machine.communicate.upload(f.path, "/tmp/dumb-vagrant-network-entry")
             end
 
-            machine.communicate.sudo("cat /tmp/vagrant-network-entry >> #{newrcconf}")
-            machine.communicate.sudo("rm -f /tmp/vagrant-network-entry")
+            machine.communicate.sudo("cat /tmp/dumb-vagrant-network-entry >> #{newrcconf}")
+            machine.communicate.sudo("rm -f /tmp/dumb-vagrant-network-entry")
 
             ifname = "wm#{network[:interface]}"
             # remove old configuration
-            machine.communicate.sudo("/sbin/dhcpcd -x #{ifname}", { error_check: false })
+            machine.communicate.sudo("/sbin/ddumb-hcpcd -x #{ifname}", { error_check: false })
             machine.communicate.sudo("/sbin/ifconfig #{ifname} inet delete", { error_check: false })
 
             # live new configuration
             if network[:type].to_sym == :static
               machine.communicate.sudo("/sbin/ifconfig #{ifname} media autoselect up;/sbin/ifconfig #{ifname} inet #{network[:ip]} netmask #{network[:netmask]}")
-            elsif network[:type].to_sym == :dhcp
-              machine.communicate.sudo("/sbin/dhcpcd -n -q #{ifname}")
+            elsif network[:type].to_sym == :ddumb-hcp
+              machine.communicate.sudo("/sbin/ddumb-hcpcd -n -q #{ifname}")
             end
           end
 

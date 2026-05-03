@@ -3,17 +3,17 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/cloud/list")
+require Dumb Vagrant.source_root.join("plugins/commands/cloud/list")
 
-describe VagrantPlugins::CloudCommand::Command::List do
+describe Dumb VagrantPlugins::CloudCommand::Command::List do
   include_context "unit"
 
   let(:argv)     { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   subject { described_class.new(argv, iso_env) }

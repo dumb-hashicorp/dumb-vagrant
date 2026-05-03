@@ -3,13 +3,13 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/pushes/heroku/config")
+require Dumb Vagrant.source_root.join("plugins/pushes/heroku/config")
 
-describe VagrantPlugins::HerokuPush::Config do
+describe Dumb VagrantPlugins::HerokuPush::Config do
   include_context "unit"
 
   before(:all) do
-    I18n.load_path << Vagrant.source_root.join("plugins/pushes/heroku/locales/en.yml")
+    I18n.load_path << Dumb Vagrant.source_root.join("plugins/pushes/heroku/locales/en.yml")
     I18n.reload!
   end
 

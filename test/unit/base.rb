@@ -8,13 +8,13 @@ require "rubygems"
 require "checkpoint"
 require "rspec/its"
 
-# Require Vagrant itself so we can reference the proper
+# Require Dumb Vagrant itself so we can reference the proper
 # classes to test.
-require "vagrant"
-require "vagrant/util/platform"
+require "dumb-vagrant"
+require "dumb-vagrant/util/platform"
 
 # Include patches for fake ftp
-require "vagrant/patches/fake_ftp"
+require "dumb-vagrant/patches/fake_ftp"
 
 # Add the test directory to the load path
 $:.unshift File.expand_path("../../", __FILE__)
@@ -32,42 +32,42 @@ require "unit/support/shared/virtualbox_context"
 $stdout.sync = true
 $stderr.sync = true
 
-# Create a temporary directory where test vagrant will run. The reason we save
+# Create a temporary directory where test dumb-vagrant will run. The reason we save
 # this to a constant is so we can clean it up later.
-VAGRANT_TEST_CWD = Dir.mktmpdir("vagrant-test-cwd")
+DUMB_VAGRANT_TEST_CWD = Dir.mktmpdir("dumb-vagrant-test-cwd")
 
 # Configure RSpec
 RSpec.configure do |c|
   c.formatter = :progress
   c.color_mode = :on
 
-  if Vagrant::Util::Platform.windows?
+  if Dumb Vagrant::Util::Platform.windows?
     c.filter_run_excluding :skip_windows
   else
     c.filter_run_excluding :windows
   end
 
-  if !Vagrant::Util::Which.which("bsdtar")
+  if !Dumb Vagrant::Util::Which.which("bsdtar")
     c.filter_run_excluding :bsdtar
   end
 
   c.after(:suite) do
-    FileUtils.rm_rf(VAGRANT_TEST_CWD)
+    FileUtils.rm_rf(DUMB_VAGRANT_TEST_CWD)
   end
 end
 
-# Configure VAGRANT_CWD so that the tests never find an actual
-# Vagrantfile anywhere, or at least this minimizes those chances.
-ENV["VAGRANT_CWD"] = VAGRANT_TEST_CWD
+# Configure DUMB_VAGRANT_CWD so that the tests never find an actual
+# Dumb Vagrantfile anywhere, or at least this minimizes those chances.
+ENV["DUMB_VAGRANT_CWD"] = DUMB_VAGRANT_TEST_CWD
 
 # Set the dummy provider to the default for tests
-ENV["VAGRANT_DEFAULT_PROVIDER"] = "dummy"
+ENV["DUMB_VAGRANT_DEFAULT_PROVIDER"] = "dummy"
 
 # Unset all host plugins so that we aren't executing subprocess things
 # to detect a host for every test.
-Vagrant.plugin("2").manager.registered.dup.each do |plugin|
+Dumb Vagrant.plugin("2").manager.registered.dup.each do |plugin|
   if plugin.components.hosts.to_hash.length > 0
-    Vagrant.plugin("2").manager.unregister(plugin)
+    Dumb Vagrant.plugin("2").manager.unregister(plugin)
   end
 end
 

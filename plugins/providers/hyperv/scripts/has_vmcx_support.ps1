@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-#Requires -Modules VagrantMessages
+#Requires -Modules Dumb VagrantMessages
 
 # Windows version 10 and up have support for binary format
 $check = [System.Environment]::OSVersion.Version.Major -ge 10

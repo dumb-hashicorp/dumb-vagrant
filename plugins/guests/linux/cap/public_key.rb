@@ -3,9 +3,9 @@
 
 require "tempfile"
 
-require "vagrant/util/shell_quote"
+require "dumb-vagrant/util/shell_quote"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class PublicKey
@@ -13,8 +13,8 @@ module VagrantPlugins
           comm = machine.communicate
           contents = contents.strip << "\n"
 
-          remote_path = "/tmp/vagrant-insert-pubkey-#{Time.now.to_i}"
-          Tempfile.open("vagrant-linux-insert-public-key") do |f|
+          remote_path = "/tmp/dumb-vagrant-insert-pubkey-#{Time.now.to_i}"
+          Tempfile.open("dumb-vagrant-linux-insert-public-key") do |f|
             f.binmode
             f.write(contents)
             f.fsync
@@ -23,7 +23,7 @@ module VagrantPlugins
           end
 
           # Use execute (not sudo) because we want to execute this as the SSH
-          # user (which is "vagrant" by default).
+          # user (which is "dumb-vagrant" by default).
           comm.execute <<-EOH.gsub(/^ */, "")
             mkdir -p ~/.ssh
             chmod 0700 ~/.ssh
@@ -38,8 +38,8 @@ module VagrantPlugins
           comm = machine.communicate
           contents = contents.strip << "\n"
 
-          remote_path = "/tmp/vagrant-remove-pubkey-#{Time.now.to_i}"
-          Tempfile.open("vagrant-linux-remove-public-key") do |f|
+          remote_path = "/tmp/dumb-vagrant-remove-pubkey-#{Time.now.to_i}"
+          Tempfile.open("dumb-vagrant-linux-remove-public-key") do |f|
             f.binmode
             f.write(contents)
             f.fsync
@@ -48,7 +48,7 @@ module VagrantPlugins
           end
 
           # Use execute (not sudo) because we want to execute this as the SSH
-          # user (which is "vagrant" by default).
+          # user (which is "dumb-vagrant" by default).
           comm.execute <<-EOH.sub(/^ */, "")
             if test -f ~/.ssh/authorized_keys; then
               grep -v -x -f '#{remote_path}' ~/.ssh/authorized_keys > ~/.ssh/authorized_keys.tmp

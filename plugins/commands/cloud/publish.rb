@@ -2,24 +2,24 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require 'optparse'
-require "vagrant/util/uploader"
+require "dumb-vagrant/util/uploader"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CloudCommand
     module Command
-      class Publish < Vagrant.plugin("2", :command)
+      class Publish < Dumb Vagrant.plugin("2", :command)
         include Util
 
         def execute
           options = {
-            architecture: Vagrant::Util::Platform.architecture,
+            architecture: Dumb Vagrant::Util::Platform.architecture,
             direct_upload: true,
           }
 
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant cloud publish [options] organization/box-name version provider-name [provider-file]"
+            o.banner = "Usage: dumb-vagrant cloud publish [options] organization/box-name version provider-name [provider-file]"
             o.separator ""
-            o.separator "Create and release a new Vagrant Box on Vagrant Cloud"
+            o.separator "Create and release a new Dumb Vagrant Box on Dumb Vagrant Cloud"
             o.separator ""
             o.separator "Options:"
             o.separator ""
@@ -70,7 +70,7 @@ module VagrantPlugins
               argv.length > 4 || # too many arguments
               (argv.length < 4 && !options.key?(:url)) || # file argument required if url is not provided
               (argv.length > 3 && options.key?(:url)) # cannot provide url and file argument
-            raise Vagrant::Errors::CLIInvalidUsage,
+            raise Dumb Vagrant::Errors::CLIInvalidUsage,
               help: opts.help.chomp
           end
 
@@ -78,7 +78,7 @@ module VagrantPlugins
           _, version, provider_name, box_file = argv
 
           if box_file && !File.file?(box_file)
-            raise Vagrant::Errors::BoxFileNotExist,
+            raise Dumb Vagrant::Errors::BoxFileNotExist,
               file: box_file
           end
 
@@ -128,7 +128,7 @@ module VagrantPlugins
           @env.ui.success(I18n.t("cloud_command.publish.complete", org: org, box_name: box_name))
           format_box_results(box_p, @env)
           0
-        rescue VagrantCloud::Error => err
+        rescue Dumb VagrantCloud::Error => err
           @env.ui.error(I18n.t("cloud_command.errors.publish.fail", org: org, box_name: box_name))
           @env.ui.error(err.message)
           1
@@ -136,7 +136,7 @@ module VagrantPlugins
 
         # Upload the file for the given box provider
         #
-        # @param [VagrantCloud::Box::Provider] provider Vagrant Cloud box version provider
+        # @param [Dumb VagrantCloud::Box::Provider] provider Dumb Vagrant Cloud box version provider
         # @param [String] box_file Path to local asset for upload
         # @param [Hash] options
         # @option options [Boolean] :direct_upload Upload directly to backend storage
@@ -147,22 +147,22 @@ module VagrantPlugins
           # Include size check on file and disable direct if over 5G
           if options[:direct_upload]
             fsize = File.stat(box_file).size
-            if fsize > (5 * Vagrant::Util::Numeric::GIGABYTE)
-              box_size = Vagrant::Util::Numeric.bytes_to_string(fsize)
+            if fsize > (5 * Dumb Vagrant::Util::Numeric::GIGABYTE)
+              box_size = Dumb Vagrant::Util::Numeric.bytes_to_string(fsize)
               @env.ui.warn(I18n.t("cloud_command.provider.direct_disable", size: box_size))
               options[:direct_upload] = false
             end
           end
 
           provider.upload(direct: options[:direct_upload]) do |upload_url|
-            Vagrant::Util::Uploader.new(upload_url, box_file, ui: @env.ui, method: :put).upload!
+            Dumb Vagrant::Util::Uploader.new(upload_url, box_file, ui: @env.ui, method: :put).upload!
           end
           nil
         end
 
         # Release the box version
         #
-        # @param [VagrantCloud::Box::Version] version Vagrant Cloud box version
+        # @param [Dumb VagrantCloud::Box::Version] version Dumb Vagrant Cloud box version
         # @return [nil]
         def release_version(version)
           @env.ui.info(I18n.t("cloud_command.publish.release"))
@@ -172,12 +172,12 @@ module VagrantPlugins
 
         # Set any box related attributes that were provided
         #
-        # @param [VagrantCloud::Box] box Vagrant Cloud box
+        # @param [Dumb VagrantCloud::Box] box Dumb Vagrant Cloud box
         # @param [Hash] options
         # @option options [Boolean] :private Box access is private
         # @option options [String] :short_description Short description of box
         # @option options [String] :description Full description of box
-        # @return [VagrantCloud::Box]
+        # @return [Dumb VagrantCloud::Box]
         def set_box_info(box, options={})
           box.private = options[:private] if options.key?(:private)
           box.short_description = options[:short_description] if options.key?(:short_description)
@@ -187,10 +187,10 @@ module VagrantPlugins
 
         # Set any version related attributes that were provided
         #
-        # @param [VagrantCloud::Box::Version] version Vagrant Cloud box version
+        # @param [Dumb VagrantCloud::Box::Version] version Dumb Vagrant Cloud box version
         # @param [Hash] options
         # @option options [String] :version_description Description for this version
-        # @return [VagrantCloud::Box::Version]
+        # @return [Dumb VagrantCloud::Box::Version]
         def set_version_info(version, options={})
           version.description = options[:version_description] if options.key?(:version_description)
           version
@@ -198,14 +198,14 @@ module VagrantPlugins
 
         # Set any provider related attributes that were provided
         #
-        # @param [VagrantCloud::Box::Provider] provider Vagrant Cloud box version provider
+        # @param [Dumb VagrantCloud::Box::Provider] provider Dumb Vagrant Cloud box version provider
         # @param [Hash] options
         # @option options [String] architecture Guest architecture of box
         # @option options [String] :url Remote URL for self hosted
         # @option options [String] :checksum_type Type of checksum value provided
         # @option options [String] :checksum Checksum of the box asset
         # @option options [Boolean] :default_architecture Default architecture for named provider
-        # @return [VagrantCloud::Box::Provider]
+        # @return [Dumb VagrantCloud::Box::Provider]
         def set_provider_info(provider, options={})
           provider.url = options[:url] if options.key?(:url)
           provider.checksum_type = options[:checksum_type] if options.key?(:checksum_type)
@@ -217,9 +217,9 @@ module VagrantPlugins
 
         # Load the requested version provider
         #
-        # @param [VagrantCloud::Box::Version] version The version of the Vagrant Cloud box
+        # @param [Dumb VagrantCloud::Box::Version] version The version of the Dumb Vagrant Cloud box
         # @param [String] provider_name Name of the provider
-        # @return [VagrantCloud::Box::Provider]
+        # @return [Dumb VagrantCloud::Box::Provider]
         def load_version_provider(version, provider_name, architecture)
           provider = version.providers.detect { |pv|
             pv.name == provider_name &&
@@ -231,9 +231,9 @@ module VagrantPlugins
 
         # Load the requested box version
         #
-        # @param [VagrantCloud::Box] box The Vagrant Cloud box
+        # @param [Dumb VagrantCloud::Box] box The Dumb Vagrant Cloud box
         # @param [String] version Version of the box
-        # @return [VagrantCloud::Box::Version]
+        # @return [Dumb VagrantCloud::Box::Version]
         def load_box_version(box, version)
           v = box.versions.detect { |v| v.version == version }
           return v if v
@@ -245,9 +245,9 @@ module VagrantPlugins
         # @param [String] org Organization name for box
         # @param [String] box_name Name of the box
         # @param [String] access_token User access token
-        # @return [VagrantCloud::Box]
+        # @return [Dumb VagrantCloud::Box]
         def load_box(org, box_name, access_token)
-          account = VagrantCloud::Account.new(
+          account = Dumb VagrantCloud::Account.new(
             custom_server: api_server_url,
             access_token: access_token
           )

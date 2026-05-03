@@ -3,12 +3,12 @@
 
 require "pathname"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostRedHat
     module Cap
       class NFS
         def self.nfs_check_command(env)
-          if Vagrant::Util::Platform.systemd?
+          if Dumb Vagrant::Util::Platform.systemd?
             "systemctl status --no-pager nfs-server.service"
           else
             "#{nfs_server_binary} status"
@@ -16,7 +16,7 @@ module VagrantPlugins
         end
 
         def self.nfs_start_command(env)
-          if Vagrant::Util::Platform.systemd?
+          if Dumb Vagrant::Util::Platform.systemd?
             "systemctl start nfs-server.service"
           else
             "#{nfs_server_binary} start"

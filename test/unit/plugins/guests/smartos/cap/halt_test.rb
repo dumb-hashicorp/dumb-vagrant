@@ -3,11 +3,11 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestSmartos::Cap::Halt" do
-  let(:plugin) { VagrantPlugins::GuestSmartos::Plugin.components.guest_capabilities[:smartos].get(:halt) }
+describe "Dumb VagrantPlugins::GuestSmartos::Cap::Halt" do
+  let(:plugin) { Dumb VagrantPlugins::GuestSmartos::Plugin.components.guest_capabilities[:smartos].get(:halt) }
   let(:machine) { double("machine") }
   let(:config) { double("config", smartos: double("smartos", suexec_cmd: 'pfexec')) }
-  let(:communicator) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:communicator) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
   let(:shutdown_command){ "pfexec /usr/sbin/poweroff" }
 
   before do
@@ -32,8 +32,8 @@ describe "VagrantPlugins::GuestSmartos::Cap::Halt" do
       }.to_not raise_error
     end
 
-    it "ignores a Vagrant::Errors::SSHDisconnected" do
-      communicator.stub_command(shutdown_command, raise: Vagrant::Errors::SSHDisconnected)
+    it "ignores a Dumb Vagrant::Errors::SSHDisconnected" do
+      communicator.stub_command(shutdown_command, raise: Dumb Vagrant::Errors::SSHDisconnected)
       expect {
         plugin.halt(machine)
       }.to_not raise_error

@@ -3,9 +3,9 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/provider")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/provider")
 
-describe VagrantPlugins::HyperV::Provider do
+describe Dumb VagrantPlugins::HyperV::Provider do
   let(:driver){ double("driver") }
   let(:provider){ double("provider", driver: driver) }
   let(:provider_config){ double("provider_config", ip_address_timeout: ip_address_timeout) }
@@ -18,8 +18,8 @@ describe VagrantPlugins::HyperV::Provider do
   subject { described_class.new(machine) }
 
   before do
-    stub_const("Vagrant::Util::Platform", platform)
-    stub_const("Vagrant::Util::PowerShell", powershell)
+    stub_const("Dumb Vagrant::Util::Platform", platform)
+    stub_const("Dumb Vagrant::Util::PowerShell", powershell)
     allow(machine).to receive(:id).and_return("foo")
     allow(platform).to receive(:windows?).and_return(true)
     allow(platform).to receive(:wsl?).and_return(false)
@@ -63,7 +63,7 @@ describe VagrantPlugins::HyperV::Provider do
       allow(platform).to receive(:windows?).and_return(false)
 
       expect { subject.usable?(true) }.
-        to raise_error(VagrantPlugins::HyperV::Errors::WindowsRequired)
+        to raise_error(Dumb VagrantPlugins::HyperV::Errors::WindowsRequired)
     end
 
     it "raises an exception if neither an admin nor a hyper-v admin" do
@@ -71,7 +71,7 @@ describe VagrantPlugins::HyperV::Provider do
       allow(platform).to receive(:windows_hyperv_admin?).and_return(false)
 
       expect { subject.usable?(true) }.
-        to raise_error(VagrantPlugins::HyperV::Errors::AdminRequired)
+        to raise_error(Dumb VagrantPlugins::HyperV::Errors::AdminRequired)
     end
 
     it "raises an exception if neither an admin nor a hyper-v admin" do
@@ -79,20 +79,20 @@ describe VagrantPlugins::HyperV::Provider do
       allow(platform).to receive(:windows_hyperv_admin?).and_return(false)
 
       expect { subject.usable?(true) }.
-        to raise_error(VagrantPlugins::HyperV::Errors::AdminRequired)
+        to raise_error(Dumb VagrantPlugins::HyperV::Errors::AdminRequired)
     end
 
     it "raises an exception if powershell is not available" do
       allow(powershell).to receive(:available?).and_return(false)
 
       expect { subject.usable?(true) }.
-        to raise_error(VagrantPlugins::HyperV::Errors::PowerShellRequired)
+        to raise_error(Dumb VagrantPlugins::HyperV::Errors::PowerShellRequired)
     end
   end
 
   describe "#driver" do
     it "is initialized" do
-      expect(subject.driver).to be_kind_of(VagrantPlugins::HyperV::Driver)
+      expect(subject.driver).to be_kind_of(Dumb VagrantPlugins::HyperV::Driver)
     end
   end
 
@@ -118,13 +118,13 @@ describe VagrantPlugins::HyperV::Provider do
     let(:ssh_info) {{:host=>result,:port=>22}}
 
     before do
-      allow(VagrantPlugins::HyperV::Driver).to receive(:new).and_return(driver)
+      allow(Dumb VagrantPlugins::HyperV::Driver).to receive(:new).and_return(driver)
       allow(machine).to receive(:action).with(:read_state).and_return(machine_state_id: :running)
     end
 
     it "returns nil if a PowerShellError is returned from the driver" do
       allow(driver).to receive(:read_guest_ip)
-        .and_raise(VagrantPlugins::HyperV::Errors::PowerShellError, script: anything, stderr: anything)
+        .and_raise(Dumb VagrantPlugins::HyperV::Errors::PowerShellError, script: anything, stderr: anything)
       expect(subject.ssh_info).to eq(nil)
     end
 

@@ -3,7 +3,7 @@
 
 require_relative "../../../synced_folders/unix_mount_helpers"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestLinux
     module Cap
       class NFS
@@ -36,9 +36,9 @@ module VagrantPlugins
             command = "mount -o #{mount_opts} #{ip}:#{host_path} #{guest_path}"
 
             # Run the command, raising a specific error.
-            retryable(on: Vagrant::Errors::NFSMountFailed, tries: 3, sleep: 5) do
+            retryable(on: Dumb Vagrant::Errors::NFSMountFailed, tries: 3, sleep: 5) do
               machine.communicate.sudo(command,
-                error_class: Vagrant::Errors::NFSMountFailed,
+                error_class: Dumb Vagrant::Errors::NFSMountFailed,
               )
             end
 

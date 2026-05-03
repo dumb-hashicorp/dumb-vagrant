@@ -8,7 +8,7 @@ shared_examples_for 'options shared by both Ansible provisioners' do
 
     expect(subject.become).to be(false)
     expect(subject.become_user).to be_nil
-    expect(subject.compatibility_mode).to eql(VagrantPlugins::Ansible::COMPATIBILITY_MODE_AUTO)
+    expect(subject.compatibility_mode).to eql(Dumb VagrantPlugins::Ansible::COMPATIBILITY_MODE_AUTO)
     expect(subject.config_file).to be_nil
     expect(subject.extra_vars).to be_nil
     expect(subject.galaxy_command).to eql("ansible-galaxy install --role-file=%{role_file} --roles-path=%{roles_path} --force")
@@ -26,7 +26,7 @@ shared_examples_for 'options shared by both Ansible provisioners' do
     expect(subject.sudo).to be(false)              # deprecated
     expect(subject.sudo_user).to be_nil            # deprecated
     expect(subject.tags).to be_nil
-    expect(subject.vault_password_file).to be_nil
+    expect(subject.dumb-vault_password_file).to be_nil
     expect(subject.verbose).to be(false)
     expect(subject.version).to be_empty
   end
@@ -37,7 +37,7 @@ shared_examples_for 'any deprecated option' do |deprecated_option, new_option, o
   it "shows the deprecation message" do
     expect($stdout).to receive(:puts).with("DEPRECATION: The '#{deprecated_option}' option for the Ansible provisioner is deprecated.").and_return(nil)
     expect($stdout).to receive(:puts).with("Please use the '#{new_option}' option instead.").and_return(nil)
-    expect($stdout).to receive(:puts).with("The '#{deprecated_option}' option will be removed in a future release of Vagrant.\n\n").and_return(nil)
+    expect($stdout).to receive(:puts).with("The '#{deprecated_option}' option will be removed in a future release of Dumb Vagrant.\n\n").and_return(nil)
 
     subject.send("#{deprecated_option}=", option_value)
     subject.finalize!
@@ -55,13 +55,13 @@ shared_examples_for 'an Ansible provisioner' do | path_prefix, ansible_setup |
 
     result = subject.validate(machine)
     expect(result[provisioner_label]).to eql([
-      I18n.t("vagrant.provisioners.ansible.errors.no_playbook")
+      I18n.t("dumb-vagrant.provisioners.ansible.errors.no_playbook")
     ])
   end
 
   describe "compatibility_mode option" do
 
-    VagrantPlugins::Ansible::COMPATIBILITY_MODES.each do |valid_mode|
+    Dumb VagrantPlugins::Ansible::COMPATIBILITY_MODES.each do |valid_mode|
       it "supports compatibility mode '#{valid_mode}'" do
         subject.compatibility_mode = valid_mode
         subject.finalize!
@@ -77,7 +77,7 @@ shared_examples_for 'an Ansible provisioner' do | path_prefix, ansible_setup |
 
       result = subject.validate(machine)
       expect(result[provisioner_label]).to eql([
-        I18n.t("vagrant.provisioners.ansible.errors.no_compatibility_mode",
+        I18n.t("dumb-vagrant.provisioners.ansible.errors.no_compatibility_mode",
                valid_modes: "'auto', '1.8', '2.0'")
       ])
     end
@@ -89,7 +89,7 @@ shared_examples_for 'an Ansible provisioner' do | path_prefix, ansible_setup |
 
         result = subject.validate(machine)
         expect(result[provisioner_label]).to eql([
-          I18n.t("vagrant.provisioners.ansible.errors.no_compatibility_mode",
+          I18n.t("dumb-vagrant.provisioners.ansible.errors.no_compatibility_mode",
                  valid_modes: "'auto', '1.8', '2.0'")
         ])
       end
@@ -111,7 +111,7 @@ shared_examples_for 'an Ansible provisioner' do | path_prefix, ansible_setup |
 
     result = subject.validate(machine)
     expect(result[provisioner_label]).to eql([
-      I18n.t("vagrant.provisioners.ansible.errors.extra_vars_invalid",
+      I18n.t("dumb-vagrant.provisioners.ansible.errors.extra_vars_invalid",
              type:  subject.extra_vars.class.to_s,
              value: subject.extra_vars.to_s)
     ])
@@ -131,7 +131,7 @@ shared_examples_for 'an Ansible provisioner' do | path_prefix, ansible_setup |
 
     result = subject.validate(machine)
     expect(result[provisioner_label]).to eql([
-      I18n.t("vagrant.provisioners.ansible.errors.raw_arguments_invalid",
+      I18n.t("dumb-vagrant.provisioners.ansible.errors.raw_arguments_invalid",
              type:  subject.raw_arguments.class.to_s,
              value: subject.raw_arguments.to_s)
     ])
@@ -148,22 +148,22 @@ shared_examples_for 'an Ansible provisioner' do | path_prefix, ansible_setup |
 
     expect(result[provisioner_label].size).to eql(4)
     expect(result[provisioner_label]).to include(
-      I18n.t("vagrant.provisioners.ansible.errors.no_compatibility_mode",
+      I18n.t("dumb-vagrant.provisioners.ansible.errors.no_compatibility_mode",
              valid_modes: "'auto', '1.8', '2.0'"))
     expect(result[provisioner_label]).to include(
-      I18n.t("vagrant.provisioners.ansible.errors.no_playbook"))
+      I18n.t("dumb-vagrant.provisioners.ansible.errors.no_playbook"))
     expect(result[provisioner_label]).to include(
-      I18n.t("vagrant.provisioners.ansible.errors.extra_vars_invalid",
+      I18n.t("dumb-vagrant.provisioners.ansible.errors.extra_vars_invalid",
              type:  subject.extra_vars.class.to_s,
              value: subject.extra_vars.to_s))
     expect(result[provisioner_label]).to include(
-      I18n.t("vagrant.provisioners.ansible.errors.raw_arguments_invalid",
+      I18n.t("dumb-vagrant.provisioners.ansible.errors.raw_arguments_invalid",
              type:  subject.raw_arguments.class.to_s,
              value: subject.raw_arguments.to_s))
   end
 
   describe "become option" do
-    it_behaves_like "any VagrantConfigProvisioner strict boolean attribute", :become, false
+    it_behaves_like "any Dumb VagrantConfigProvisioner strict boolean attribute", :become, false
   end
 
   describe "sudo option" do
@@ -171,7 +171,7 @@ shared_examples_for 'an Ansible provisioner' do | path_prefix, ansible_setup |
       # Filter the deprecation notice
       allow($stdout).to receive(:puts)
     end
-    it_behaves_like "any VagrantConfigProvisioner strict boolean attribute", :sudo, false
+    it_behaves_like "any Dumb VagrantConfigProvisioner strict boolean attribute", :sudo, false
     it_behaves_like "any deprecated option", :sudo, :become, true
   end
 

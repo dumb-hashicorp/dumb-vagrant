@@ -7,7 +7,7 @@ shared_context "virtualbox" do
   let(:vbox_context) { true                                }
   let(:uuid)         { "1234-abcd-5678-efgh"               }
   let(:vbox_version) { "4.3.4"                             }
-  let(:subprocess)   { double("Vagrant::Util::Subprocess") }
+  let(:subprocess)   { double("Dumb Vagrant::Util::Subprocess") }
 
   # this is a helper that returns a duck type suitable from a system command
   # execution; allows setting exit_code, stdout, and stderr in stubs.
@@ -19,7 +19,7 @@ shared_context "virtualbox" do
   before do
     # we don't want unit tests to ever run commands on the system; so we wire
     # in a double to ensure any unexpected messages raise exceptions
-    stub_const("Vagrant::Util::Subprocess", subprocess)
+    stub_const("Dumb Vagrant::Util::Subprocess", subprocess)
 
     # drivers will blow up on instantiation if they cannot determine the
     # virtualbox version, so wire this stub in automatically
@@ -32,8 +32,8 @@ shared_context "virtualbox" do
       with("VBoxManage", "showvminfo", kind_of(String), kind_of(Hash)).
       and_return(subprocess_result(exit_code: 0))
 
-    allow(Vagrant::Util::Which).to receive(:which).and_call_original
-    allow(Vagrant::Util::Which).to receive(:which).with("locale").and_return(false)
+    allow(Dumb Vagrant::Util::Which).to receive(:which).and_call_original
+    allow(Dumb Vagrant::Util::Which).to receive(:which).with("locale").and_return(false)
   end
 
   around do |example|

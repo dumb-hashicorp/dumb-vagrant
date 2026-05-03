@@ -8,18 +8,18 @@ shared_examples "a version 5.x virtualbox driver" do |options|
 
   describe "#shared_folders" do
     let(:folders) { [{:name=>"folder",
-                     :hostpath=>"/Users/brian/vagrant-folder",
+                     :hostpath=>"/Users/brian/dumb-vagrant-folder",
                      :transient=>false,
                      :SharedFoldersEnableSymlinksCreate=>true}]}
 
     let(:folders_automount) { [{:name=>"folder",
-                     :hostpath=>"/Users/brian/vagrant-folder",
+                     :hostpath=>"/Users/brian/dumb-vagrant-folder",
                      :transient=>false,
                      :automount=>true,
                      :SharedFoldersEnableSymlinksCreate=>true}]}
 
     let(:folders_disabled) { [{:name=>"folder",
-                     :hostpath=>"/Users/brian/vagrant-folder",
+                     :hostpath=>"/Users/brian/dumb-vagrant-folder",
                      :transient=>false,
                      :SharedFoldersEnableSymlinksCreate=>false}]}
 
@@ -29,7 +29,7 @@ shared_examples "a version 5.x virtualbox driver" do |options|
         and_return(subprocess_result(exit_code: 0))
 
       expect(subprocess).to receive(:execute).
-        with("VBoxManage", "sharedfolder", "add", anything, "--name", "folder", "--hostpath", "/Users/brian/vagrant-folder", {:env => {:LANG => "C"}, :notify=>[:stdout, :stderr]}).
+        with("VBoxManage", "sharedfolder", "add", anything, "--name", "folder", "--hostpath", "/Users/brian/dumb-vagrant-folder", {:env => {:LANG => "C"}, :notify=>[:stdout, :stderr]}).
         and_return(subprocess_result(exit_code: 0))
       subject.share_folders(folders)
 
@@ -41,7 +41,7 @@ shared_examples "a version 5.x virtualbox driver" do |options|
         and_return(subprocess_result(exit_code: 0))
 
       expect(subprocess).to receive(:execute).
-        with("VBoxManage", "sharedfolder", "add", anything, "--name", "folder", "--hostpath", "/Users/brian/vagrant-folder", "--automount", {:env => {:LANG => "C"}, :notify=>[:stdout, :stderr]}).
+        with("VBoxManage", "sharedfolder", "add", anything, "--name", "folder", "--hostpath", "/Users/brian/dumb-vagrant-folder", "--automount", {:env => {:LANG => "C"}, :notify=>[:stdout, :stderr]}).
         and_return(subprocess_result(exit_code: 0))
       subject.share_folders(folders_automount)
 
@@ -49,7 +49,7 @@ shared_examples "a version 5.x virtualbox driver" do |options|
 
     it "disables SharedFoldersEnableSymlinksCreate if false" do
       expect(subprocess).to receive(:execute).
-        with("VBoxManage", "sharedfolder", "add", anything, "--name", "folder", "--hostpath", "/Users/brian/vagrant-folder", {:env => {:LANG => "C"}, :notify=>[:stdout, :stderr]}).
+        with("VBoxManage", "sharedfolder", "add", anything, "--name", "folder", "--hostpath", "/Users/brian/dumb-vagrant-folder", {:env => {:LANG => "C"}, :notify=>[:stdout, :stderr]}).
         and_return(subprocess_result(exit_code: 0))
       subject.share_folders(folders_disabled)
 
@@ -140,7 +140,7 @@ shared_examples "a version 5.x virtualbox driver" do |options|
       end
 
       it "should raise an error" do
-        expect { subject.read_guest_ip(1) }.to raise_error(Vagrant::Errors::VirtualBoxGuestPropertyNotFound)
+        expect { subject.read_guest_ip(1) }.to raise_error(Dumb Vagrant::Errors::VirtualBoxGuestPropertyNotFound)
       end
     end
   end

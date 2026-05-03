@@ -3,15 +3,15 @@
 
 require "tempfile"
 
-require_relative "../../../../lib/vagrant/util/template_renderer"
+require_relative "../../../../lib/dumb-vagrant/util/template_renderer"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestDebian
     module Cap
       class ConfigureNetworks
-        include Vagrant::Util
-        extend Vagrant::Util::GuestInspection::Linux
-        extend Vagrant::Util::Retryable
+        include Dumb Vagrant::Util
+        extend Dumb Vagrant::Util::GuestInspection::Linux
+        extend Dumb Vagrant::Util::Retryable
 
         NETPLAN_DEFAULT_VERSION = 2
         NETPLAN_DIRECTORY = "/etc/netplan".freeze
@@ -40,8 +40,8 @@ module VagrantPlugins
           ethernets = {}.tap do |e_nets|
             networks.each do |network|
               e_config = {}.tap do |entry|
-                if network[:type].to_s == "dhcp"
-                  entry["dhcp4"] = true
+                if network[:type].to_s == "ddumb-hcp"
+                  entry["ddumb-hcp4"] = true
                 else
                   mask = network[:netmask]
                   if mask && IPAddr.new(network[:ip]).ipv4?
@@ -70,7 +70,7 @@ module VagrantPlugins
               if nm_controlled?(comm, k)
                 renderer = "NetworkManager"
                 if !nmcli?(comm)
-                  raise Vagrant::Errors::NetworkManagerNotInstalled, device: k
+                  raise Dumb Vagrant::Errors::NetworkManagerNotInstalled, device: k
                 end
                 break
               end
@@ -78,14 +78,14 @@ module VagrantPlugins
           elsif nmcli?(comm)
             renderer = "NetworkManager"
           else
-            raise Vagrant::Errors::NetplanNoAvailableRenderers
+            raise Dumb Vagrant::Errors::NetplanNoAvailableRenderers
           end
 
           np_config = {"network" => {"version" => NETPLAN_DEFAULT_VERSION,
             "renderer" => renderer, "ethernets" => ethernets}}
 
           remote_path = upload_tmp_file(comm, np_config.to_yaml)
-          dest_path = "#{NETPLAN_DIRECTORY}/50-vagrant.yaml"
+          dest_path = "#{NETPLAN_DIRECTORY}/50-dumb-vagrant.yaml"
           comm.sudo(["mv -f '#{remote_path}' '#{dest_path}'",
             "chown root:root '#{dest_path}'",
             "chmod 0644 '#{dest_path}'",
@@ -100,8 +100,8 @@ module VagrantPlugins
             net_conf << "[Match]"
             net_conf << "Name=#{dev_name}"
             net_conf << "[Network]"
-            if network[:type].to_s == "dhcp"
-              net_conf << "DHCP=yes"
+            if network[:type].to_s == "ddumb-hcp"
+              net_conf << "DDUMB_HCP=yes"
             else
               mask = network[:netmask]
               if mask && IPAddr.new(network[:ip]).ipv4?
@@ -112,13 +112,13 @@ module VagrantPlugins
                 end
               end
               address = [network[:ip], mask].compact.join("/")
-              net_conf << "DHCP=no"
+              net_conf << "DDUMB_HCP=no"
               net_conf << "Address=#{address}"
               net_conf << "Gateway=#{network[:gateway]}" if network[:gateway]
             end
 
             remote_path = upload_tmp_file(comm, net_conf.join("\n"))
-            dest_path = "#{NETWORKD_DIRECTORY}/50-vagrant-#{dev_name}.network"
+            dest_path = "#{NETWORKD_DIRECTORY}/50-dumb-vagrant-#{dev_name}.network"
             comm.sudo(["mkdir -p #{NETWORKD_DIRECTORY}",
               "mv -f '#{remote_path}' '#{dest_path}'",
               "chown root:root '#{dest_path}'",
@@ -143,13 +143,13 @@ module VagrantPlugins
           end
 
           content = entries.join("\n")
-          remote_path = "/tmp/vagrant-network-entry"
+          remote_path = "/tmp/dumb-vagrant-network-entry"
           upload_tmp_file(comm, content, remote_path)
 
           networks.each do |network|
             # Ubuntu 16.04+ returns an error when downing an interface that
             # does not exist. The `|| true` preserves the behavior that older
-            # Ubuntu versions exhibit and Vagrant expects (GH-7155)
+            # Ubuntu versions exhibit and Dumb Vagrant expects (GH-7155)
             commands << "/sbin/ifdown '#{network[:device]}' || true"
             commands << "/sbin/ip addr flush dev '#{network[:device]}'"
           end
@@ -157,16 +157,16 @@ module VagrantPlugins
           # Reconfigure /etc/network/interfaces.
           commands << <<-EOH.gsub(/^ {12}/, "")
             # Remove any previous network modifications from the interfaces file
-            sed -e '/^#VAGRANT-BEGIN/,$ d' /etc/network/interfaces > /tmp/vagrant-network-interfaces.pre
-            sed -ne '/^#VAGRANT-END/,$ p' /etc/network/interfaces | tac | sed -e '/^#VAGRANT-END/,$ d' | tac > /tmp/vagrant-network-interfaces.post
+            sed -e '/^#DUMB_VAGRANT-BEGIN/,$ d' /etc/network/interfaces > /tmp/dumb-vagrant-network-interfaces.pre
+            sed -ne '/^#DUMB_VAGRANT-END/,$ p' /etc/network/interfaces | tac | sed -e '/^#DUMB_VAGRANT-END/,$ d' | tac > /tmp/dumb-vagrant-network-interfaces.post
             cat \\
-              /tmp/vagrant-network-interfaces.pre \\
-              /tmp/vagrant-network-entry \\
-              /tmp/vagrant-network-interfaces.post \\
+              /tmp/dumb-vagrant-network-interfaces.pre \\
+              /tmp/dumb-vagrant-network-entry \\
+              /tmp/dumb-vagrant-network-interfaces.post \\
               > /etc/network/interfaces
-            rm -f /tmp/vagrant-network-interfaces.pre
-            rm -f /tmp/vagrant-network-entry
-            rm -f /tmp/vagrant-network-interfaces.post
+            rm -f /tmp/dumb-vagrant-network-interfaces.pre
+            rm -f /tmp/dumb-vagrant-network-entry
+            rm -f /tmp/dumb-vagrant-network-interfaces.post
           EOH
 
           comm.sudo(commands.join("\n"))
@@ -176,21 +176,21 @@ module VagrantPlugins
           networks.each do |network|
             network_up_commands << "/sbin/ifup '#{network[:device]}'"
           end
-          retryable(on: Vagrant::Errors::VagrantError, sleep: 2, tries: 2) do
+          retryable(on: Dumb Vagrant::Errors::Dumb VagrantError, sleep: 2, tries: 2) do
             comm.sudo(network_up_commands.join("\n"))
           end
         end
 
         # Simple helper to upload content to guest temporary file
         #
-        # @param [Vagrant::Plugin::Communicator] comm
+        # @param [Dumb Vagrant::Plugin::Communicator] comm
         # @param [String] content
         # @return [String] remote path
         def self.upload_tmp_file(comm, content, remote_path=nil)
           if remote_path.nil?
-            remote_path = "/tmp/vagrant-network-entry-#{Time.now.to_i}"
+            remote_path = "/tmp/dumb-vagrant-network-entry-#{Time.now.to_i}"
           end
-          Tempfile.open("vagrant-debian-configure-networks") do |f|
+          Tempfile.open("dumb-vagrant-debian-configure-networks") do |f|
             f.binmode
             f.write(content)
             f.fsync

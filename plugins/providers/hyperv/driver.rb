@@ -4,11 +4,11 @@
 require "json"
 require "log4r"
 
-require "vagrant/util/powershell"
+require "dumb-vagrant/util/powershell"
 
 require_relative "plugin"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     class Driver
       ERROR_REGEXP  = /===Begin-Error===(.+?)===End-Error===/m
@@ -30,7 +30,7 @@ module VagrantPlugins
 
       def initialize(id)
         @vm_id = id
-        @logger = Log4r::Logger.new("vagrant::hyperv::driver")
+        @logger = Log4r::Logger.new("dumb-vagrant::hyperv::driver")
       end
 
       # @return [Boolean] Supports VMCX
@@ -52,7 +52,7 @@ module VagrantPlugins
         end
         r = execute_powershell(path, options)
 
-        # We only want unix-style line endings within Vagrant
+        # We only want unix-style line endings within Dumb Vagrant
         r.stdout.gsub!("\r\n", "\n")
         r.stderr.gsub!("\r\n", "\n")
 
@@ -206,7 +206,7 @@ module VagrantPlugins
       # @note Keys in the config hash will be remapped if found in the
       #       INTEGRATION_SERVICES_MAP. If they are not, the name will
       #       be passed directly. This allows new integration services
-      #       to configurable even if Vagrant is not aware of them.
+      #       to configurable even if Dumb Vagrant is not aware of them.
       def set_vm_integration_services(config)
         config.each_pair do |srv_name, srv_enable|
           args = {VMID: vm_id, Id: INTEGRATION_SERVICES_MAP.fetch(srv_name.to_sym, srv_name).to_s}
@@ -339,8 +339,8 @@ module VagrantPlugins
 
       def execute_powershell(path, options, &block)
         lib_path = Pathname.new(File.expand_path("../scripts", __FILE__))
-        mod_path = Vagrant::Util::Platform.wsl_to_windows_path(lib_path.join("utils")).to_s.gsub("/", "\\")
-        path = Vagrant::Util::Platform.wsl_to_windows_path(lib_path.join(path)).to_s.gsub("/", "\\")
+        mod_path = Dumb Vagrant::Util::Platform.wsl_to_windows_path(lib_path.join("utils")).to_s.gsub("/", "\\")
+        path = Dumb Vagrant::Util::Platform.wsl_to_windows_path(lib_path.join(path)).to_s.gsub("/", "\\")
         options = options || {}
         ps_options = []
         options.each do |key, value|
@@ -361,7 +361,7 @@ module VagrantPlugins
           module_path: mod_path
         }
 
-        Vagrant::Util::PowerShell.execute(path, *ps_options, **opts, &block)
+        Dumb Vagrant::Util::PowerShell.execute(path, *ps_options, **opts, &block)
       end
     end
   end

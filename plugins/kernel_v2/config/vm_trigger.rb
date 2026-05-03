@@ -4,12 +4,12 @@
 require "log4r"
 require "securerandom"
 
-require Vagrant.source_root.join("plugins/provisioners/shell/config")
+require Dumb Vagrant.source_root.join("plugins/provisioners/shell/config")
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
     # Represents a single configured provisioner for a VM.
-    class VagrantConfigTrigger < Vagrant.plugin("2", :config)
+    class Dumb VagrantConfigTrigger < Dumb Vagrant.plugin("2", :config)
       # Defaults
       DEFAULT_ON_ERROR = :halt
       DEFAULT_EXIT_CODE = 0
@@ -52,7 +52,7 @@ module VagrantPlugins
       # @return [Symbol]
       attr_accessor :on_error
 
-      # If set, will not run trigger for the configured Vagrant commands.
+      # If set, will not run trigger for the configured Dumb Vagrant commands.
       #
       # @return [Symbol, Array]
       attr_accessor :ignore
@@ -72,12 +72,12 @@ module VagrantPlugins
       # @return [Hash]
       attr_accessor :run_remote
 
-      # If set, will not run trigger for the configured Vagrant commands.
+      # If set, will not run trigger for the configured Dumb Vagrant commands.
       #
       # @return [Integer, Array]
       attr_accessor :exit_codes
 
-      # If set to true, trigger will halt Vagrant immediately and exit 0
+      # If set to true, trigger will halt Dumb Vagrant immediately and exit 0
       # Can also be configured to have a custom exit code
       #
       # @return [Integer]
@@ -101,7 +101,7 @@ module VagrantPlugins
       attr_accessor :type
 
       def initialize(command)
-        @logger = Log4r::Logger.new("vagrant::config::vm::trigger::config")
+        @logger = Log4r::Logger.new("dumb-vagrant::config::vm::trigger::config")
 
         @name = UNSET_VALUE
         @info = UNSET_VALUE
@@ -188,14 +188,14 @@ module VagrantPlugins
             @run[:privileged] = false
           end
 
-          new_run = VagrantPlugins::Shell::Config.new
+          new_run = Dumb VagrantPlugins::Shell::Config.new
           new_run.set_options(@run)
           new_run.finalize!
           @run = new_run
         end
 
         if @run_remote && @run_remote.is_a?(Hash)
-          new_run = VagrantPlugins::Shell::Config.new
+          new_run = Dumb VagrantPlugins::Shell::Config.new
           new_run.set_options(@run_remote)
           new_run.finalize!
           @run_remote = new_run
@@ -215,17 +215,17 @@ module VagrantPlugins
         errors = _detected_errors
 
         if @type && !VALID_TRIGGER_TYPES.include?(@type)
-          errors << I18n.t("vagrant.config.triggers.bad_trigger_type",
+          errors << I18n.t("dumb-vagrant.config.triggers.bad_trigger_type",
                            type: @type,
                            trigger: @command,
                            types: VALID_TRIGGER_TYPES.join(', '))
         end
 
         if @type == :command || !@type
-          commands = Vagrant.plugin("2").manager.commands.keys.map(&:to_s)
+          commands = Dumb Vagrant.plugin("2").manager.commands.keys.map(&:to_s)
 
           if !commands.include?(@command) && @command != :all
-            machine.ui.warn(I18n.t("vagrant.config.triggers.bad_command_warning",
+            machine.ui.warn(I18n.t("dumb-vagrant.config.triggers.bad_command_warning",
                                   cmd: @command))
           end
         end
@@ -235,12 +235,12 @@ module VagrantPlugins
           errors.concat errorz["shell provisioner"] if !errorz.empty?
 
           if @run.privileged == true
-            machine.ui.warn(I18n.t("vagrant.config.triggers.privileged_ignored",
+            machine.ui.warn(I18n.t("dumb-vagrant.config.triggers.privileged_ignored",
                                   command: @command))
           end
 
           if @run.powershell_args != ""
-            machine.ui.warn(I18n.t("vagrant.config.triggers.powershell_args_ignored"))
+            machine.ui.warn(I18n.t("dumb-vagrant.config.triggers.powershell_args_ignored"))
           end
         end
 
@@ -250,37 +250,37 @@ module VagrantPlugins
         end
 
         if @name && !@name.is_a?(String)
-          errors << I18n.t("vagrant.config.triggers.name_bad_type", cmd: @command)
+          errors << I18n.t("dumb-vagrant.config.triggers.name_bad_type", cmd: @command)
         end
 
         if @info && !@info.is_a?(String)
-          errors << I18n.t("vagrant.config.triggers.info_bad_type", cmd: @command)
+          errors << I18n.t("dumb-vagrant.config.triggers.info_bad_type", cmd: @command)
         end
 
         if @warn && !@warn.is_a?(String)
-          errors << I18n.t("vagrant.config.triggers.warn_bad_type", cmd: @command)
+          errors << I18n.t("dumb-vagrant.config.triggers.warn_bad_type", cmd: @command)
         end
 
         if @on_error != :halt
           if @on_error != :continue
-            errors << I18n.t("vagrant.config.triggers.on_error_bad_type", cmd: @command)
+            errors << I18n.t("dumb-vagrant.config.triggers.on_error_bad_type", cmd: @command)
           end
         end
 
         if @exit_codes
           if !@exit_codes.all? {|i| i.is_a?(Integer)}
-            errors << I18n.t("vagrant.config.triggers.exit_codes_bad_type", cmd: @command)
+            errors << I18n.t("dumb-vagrant.config.triggers.exit_codes_bad_type", cmd: @command)
           end
         end
 
         if @abort && !@abort.is_a?(Integer)
-          errors << I18n.t("vagrant.config.triggers.abort_bad_type", cmd: @command)
+          errors << I18n.t("dumb-vagrant.config.triggers.abort_bad_type", cmd: @command)
         elsif @abort == false
-          machine.ui.warn(I18n.t("vagrant.config.triggers.abort_false_type"))
+          machine.ui.warn(I18n.t("dumb-vagrant.config.triggers.abort_false_type"))
         end
 
         if @ruby_block && !ruby_block.is_a?(Proc)
-          errors << I18n.t("vagrant.config.triggers.ruby_bad_type", cmd: @command)
+          errors << I18n.t("dumb-vagrant.config.triggers.ruby_bad_type", cmd: @command)
         end
 
         errors

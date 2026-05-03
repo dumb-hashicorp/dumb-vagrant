@@ -4,13 +4,13 @@
 require "log4r"
 require "digest/md5"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class ImportMaster
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::action::vm::create_master")
+          @logger = Log4r::Logger.new("dumb-vagrant::action::vm::create_master")
         end
 
         def call(env)
@@ -61,8 +61,8 @@ module VagrantPlugins
             end
           end
 
-          env[:ui].info(I18n.t("vagrant.actions.vm.clone.setup_master"))
-          env[:ui].detail(I18n.t("vagrant.actions.vm.clone.setup_master_detail"))
+          env[:ui].info(I18n.t("dumb-vagrant.actions.vm.clone.setup_master"))
+          env[:ui].detail(I18n.t("dumb-vagrant.actions.vm.clone.setup_master_detail"))
 
           # Import the virtual machine
           import_env = env[:action_runner].run(Import, env.dup.merge(skip_machine: true))

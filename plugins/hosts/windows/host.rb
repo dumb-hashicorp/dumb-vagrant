@@ -1,15 +1,15 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant"
+require "dumb-vagrant"
 
-require 'vagrant/util/platform'
+require 'dumb-vagrant/util/platform'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HostWindows
-    class Host < Vagrant.plugin("2", :host)
+    class Host < Dumb Vagrant.plugin("2", :host)
       def detect?(env)
-        Vagrant::Util::Platform.windows?
+        Dumb Vagrant::Util::Platform.windows?
       end
 
       # @return [Pathname] Path to scripts directory

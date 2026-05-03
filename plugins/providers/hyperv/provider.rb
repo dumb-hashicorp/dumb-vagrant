@@ -6,26 +6,26 @@ require "log4r"
 require_relative "driver"
 require_relative "plugin"
 
-require "vagrant/util/platform"
-require "vagrant/util/powershell"
+require "dumb-vagrant/util/platform"
+require "dumb-vagrant/util/powershell"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
-    class Provider < Vagrant.plugin("2", :provider)
+    class Provider < Dumb Vagrant.plugin("2", :provider)
       attr_reader :driver
 
       def self.usable?(raise_error=false)
-        if !Vagrant::Util::Platform.windows? &&
-            !Vagrant::Util::Platform.wsl?
+        if !Dumb Vagrant::Util::Platform.windows? &&
+            !Dumb Vagrant::Util::Platform.wsl?
           raise Errors::WindowsRequired
         end
 
-        if !Vagrant::Util::Platform.windows_admin? &&
-           !Vagrant::Util::Platform.windows_hyperv_admin?
+        if !Dumb Vagrant::Util::Platform.windows_admin? &&
+           !Dumb Vagrant::Util::Platform.windows_hyperv_admin?
             raise Errors::AdminRequired
         end
 
-        if !Vagrant::Util::PowerShell.available?
+        if !Dumb Vagrant::Util::PowerShell.available?
           raise Errors::PowerShellRequired
         end
 
@@ -41,7 +41,7 @@ module VagrantPlugins
         # This method will load in our driver, so we call it now to
         # initialize it.
         machine_id_changed
-        @logger = Log4r::Logger.new("vagrant::hyperv::provider")
+        @logger = Log4r::Logger.new("dumb-vagrant::hyperv::provider")
       end
 
       def action(name)
@@ -75,11 +75,11 @@ module VagrantPlugins
 
         # If we're not created, then specify the special ID flag
         if state_id == :not_created
-          state_id = Vagrant::MachineState::NOT_CREATED_ID
+          state_id = Dumb Vagrant::MachineState::NOT_CREATED_ID
         end
 
         # Return the MachineState object
-        Vagrant::MachineState.new(state_id, short, long)
+        Dumb Vagrant::MachineState.new(state_id, short, long)
       end
 
       def to_s

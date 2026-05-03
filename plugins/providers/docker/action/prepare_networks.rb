@@ -4,20 +4,20 @@
 require 'ipaddr'
 require 'log4r'
 
-require 'vagrant/util/scoped_hash_override'
+require 'dumb-vagrant/util/scoped_hash_override'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class PrepareNetworks
 
-        include Vagrant::Util::ScopedHashOverride
+        include Dumb Vagrant::Util::ScopedHashOverride
 
         @@lock = Mutex.new
 
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new('vagrant::plugins::docker::preparenetworks')
+          @logger = Log4r::Logger.new('dumb-vagrant::plugins::docker::preparenetworks')
         end
 
         # Generate CLI arguments for creating the docker network.
@@ -91,9 +91,9 @@ module VagrantPlugins
             network_name = root_options[:name]
           end
 
-          if root_options[:type].to_s == "dhcp"
+          if root_options[:type].to_s == "ddumb-hcp"
             if !root_options[:ip] && !root_options[:subnet]
-              network_name = "vagrant_network" if !network_name
+              network_name = "dumb-vagrant_network" if !network_name
               return [network_name, network_options]
             end
             if root_options[:subnet]
@@ -140,9 +140,9 @@ module VagrantPlugins
               network_defined?(network)
 
             if !existing_network
-              network_name = "vagrant_network_#{network}"
+              network_name = "dumb-vagrant_network_#{network}"
             else
-              if !existing_network.to_s.start_with?("vagrant_network")
+              if !existing_network.to_s.start_with?("dumb-vagrant_network")
                 env[:ui].warn(I18n.t("docker_provider.subnet_exists",
                   network_name: existing_network,
                   subnet: network))
@@ -156,7 +156,7 @@ module VagrantPlugins
 
         # Generate configuration for public network
         #
-        # TODO: When the Vagrant installer upgrades to Ruby 2.5.x,
+        # TODO: When the Dumb Vagrant installer upgrades to Ruby 2.5.x,
         # remove all instances of the roundabout way of determining a prefix
         # and instead just use the built-in `.prefix` method
         #
@@ -178,23 +178,23 @@ module VagrantPlugins
               bridge_interface = idx
             end
             if !bridge_interface
-              env[:ui].info(I18n.t("vagrant.actions.vm.bridged_networking.available"),
+              env[:ui].info(I18n.t("dumb-vagrant.actions.vm.bridged_networking.available"),
                 prefix: false)
               valid_interfaces.each_with_index do |int, i|
                 env[:ui].info("#{i + 1}) #{int.name}", prefix: false)
               end
               env[:ui].info(I18n.t(
-                "vagrant.actions.vm.bridged_networking.choice_help") + "\n",
+                "dumb-vagrant.actions.vm.bridged_networking.choice_help") + "\n",
                 prefix: false
               )
             end
             while !bridge_interface
               choice = env[:ui].ask(
-                I18n.t("vagrant.actions.vm.bridged_networking.select_interface") + " ",
+                I18n.t("dumb-vagrant.actions.vm.bridged_networking.select_interface") + " ",
                 prefix: false)
               bridge_interface = valid_interfaces[choice.to_i - 1]
             end
-            base_opts = Vagrant::Util::HashWithIndifferentAccess.new
+            base_opts = Dumb Vagrant::Util::HashWithIndifferentAccess.new
             base_opts[:opt] = "parent=#{bridge_interface.name}"
             subnet = IPAddr.new(bridge_interface.addr.ip_address <<
               "/" << bridge_interface.netmask.ip_unpack.first)
@@ -211,7 +211,7 @@ module VagrantPlugins
             network_name = env[:machine].provider.driver.
               network_containing_address(network_options[:gateway])
             if !network_name
-              network_name = "vagrant_network_public_#{bridge_interface.name}"
+              network_name = "dumb-vagrant_network_public_#{bridge_interface.name}"
             end
 
             # If the network doesn't already exist, gather available address range
@@ -266,7 +266,7 @@ module VagrantPlugins
         # Request the IP range allowed for use by docker when creating a new
         # public network
         #
-        # TODO: When the Vagrant installer upgrades to Ruby 2.5.x,
+        # TODO: When the Dumb Vagrant installer upgrades to Ruby 2.5.x,
         # remove all instances of the roundabout way of determining a prefix
         # and instead just use the built-in `.prefix` method
         #

@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     autoload :Action, File.expand_path("../action", __FILE__)
     autoload :Driver, File.expand_path("../driver", __FILE__)
@@ -9,13 +9,13 @@ module VagrantPlugins
 
     module Executor
       autoload :Local, File.expand_path("../executor/local", __FILE__)
-      autoload :Vagrant, File.expand_path("../executor/vagrant", __FILE__)
+      autoload :Dumb Vagrant, File.expand_path("../executor/dumb-vagrant", __FILE__)
     end
 
-    class Plugin < Vagrant.plugin("2")
+    class Plugin < Dumb Vagrant.plugin("2")
       name "docker-provider"
       description <<-EOF
-      The Docker provider allows Vagrant to manage and control
+      The Docker provider allows Dumb Vagrant to manage and control
       Docker containers.
       EOF
 
@@ -80,7 +80,7 @@ module VagrantPlugins
       def self.init!
         return if defined?(@_init)
         I18n.load_path << File.expand_path(
-          "templates/locales/providers_docker.yml", Vagrant.source_root)
+          "templates/locales/providers_docker.yml", Dumb Vagrant.source_root)
         I18n.reload!
         @_init = true
       end

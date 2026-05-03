@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require "fileutils"
-require 'vagrant/util/platform'
+require 'dumb-vagrant/util/platform'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Action
       class Export
@@ -15,7 +15,7 @@ module VagrantPlugins
         def call(env)
           @env = env
 
-          raise Vagrant::Errors::VMPowerOffToPackage if \
+          raise Dumb Vagrant::Errors::VMPowerOffToPackage if \
             @env[:machine].state.id != :poweroff
 
           export
@@ -24,7 +24,7 @@ module VagrantPlugins
         end
 
         def export
-          @env[:ui].info I18n.t("vagrant.actions.vm.export.exporting")
+          @env[:ui].info I18n.t("dumb-vagrant.actions.vm.export.exporting")
           @env[:machine].provider.driver.export(ovf_path) do |progress|
             @env[:ui].rewriting do |ui|
               ui.clear_line
@@ -42,8 +42,8 @@ module VagrantPlugins
 
           # If we're within WSL, we should use the correct path rather than
           # the mnt path. GH-9059
-          if Vagrant::Util::Platform.wsl?
-            path = Vagrant::Util::Platform.wsl_to_windows_path(path)
+          if Dumb Vagrant::Util::Platform.wsl?
+            path = Dumb Vagrant::Util::Platform.wsl_to_windows_path(path)
           end
 
           return path

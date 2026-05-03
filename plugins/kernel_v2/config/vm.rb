@@ -5,23 +5,23 @@ require "pathname"
 require "securerandom"
 require "set"
 
-require "vagrant"
-require "vagrant/action/builtin/mixin_synced_folders"
-require "vagrant/config/v2/util"
-require "vagrant/util/platform"
-require "vagrant/util/presence"
-require "vagrant/util/experimental"
-require "vagrant/util/map_command_options"
+require "dumb-vagrant"
+require "dumb-vagrant/action/builtin/mixin_synced_folders"
+require "dumb-vagrant/config/v2/util"
+require "dumb-vagrant/util/platform"
+require "dumb-vagrant/util/presence"
+require "dumb-vagrant/util/experimental"
+require "dumb-vagrant/util/map_command_options"
 
 require File.expand_path("../vm_provisioner", __FILE__)
 require File.expand_path("../vm_subvm", __FILE__)
 require File.expand_path("../disk", __FILE__)
 require File.expand_path("../cloud_init", __FILE__)
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Kernel_V2
-    class VMConfig < Vagrant.plugin("2", :config)
-      include Vagrant::Util::Presence
+    class VMConfig < Dumb Vagrant.plugin("2", :config)
+      include Dumb Vagrant::Util::Presence
 
       DEFAULT_VM_NAME = :default
 
@@ -33,7 +33,7 @@ module VagrantPlugins
       attr_accessor :boot_timeout
       attr_accessor :box
       attr_accessor :box_architecture
-      attr_accessor :ignore_box_vagrantfile
+      attr_accessor :ignore_box_dumb-vagrantfile
       attr_accessor :box_check_update
       attr_accessor :box_url
       attr_accessor :box_server_url
@@ -63,7 +63,7 @@ module VagrantPlugins
       attr_accessor :clone
 
       def initialize
-        @logger = Log4r::Logger.new("vagrant::config::vm")
+        @logger = Log4r::Logger.new("dumb-vagrant::config::vm")
 
         @allowed_synced_folder_types   = UNSET_VALUE
         @allow_fstab_modification      = UNSET_VALUE
@@ -72,7 +72,7 @@ module VagrantPlugins
         @boot_timeout                  = UNSET_VALUE
         @box                           = UNSET_VALUE
         @box_architecture              = UNSET_VALUE
-        @ignore_box_vagrantfile        = UNSET_VALUE
+        @ignore_box_dumb-vagrantfile        = UNSET_VALUE
         @box_check_update              = UNSET_VALUE
         @box_download_ca_cert          = UNSET_VALUE
         @box_download_ca_path          = UNSET_VALUE
@@ -268,12 +268,12 @@ module VagrantPlugins
       #
       # @param [String] hostpath Path to the host folder to share. If this
       #   is a relative path, it is relative to the location of the
-      #   Vagrantfile.
+      #   Dumb Vagrantfile.
       # @param [String] guestpath Path on the guest to mount the shared
       #   folder.
       # @param [Hash] options Additional options.
       def synced_folder(hostpath, guestpath, options=nil)
-        if Vagrant::Util::Platform.windows?
+        if Dumb Vagrant::Util::Platform.windows?
           # On Windows, Ruby just uses normal '/' for path seps, so
           # just replace normal Windows style seps with Unix ones.
           hostpath = hostpath.to_s.gsub("\\", "/")
@@ -337,7 +337,7 @@ module VagrantPlugins
 
           if type == :forwarded_port
             # For forwarded ports, set the default ID to be the
-            # concat of host_ip, proto and host_port. This would ensure Vagrant
+            # concat of host_ip, proto and host_port. This would ensure Dumb Vagrant
             # caters for port forwarding in an IP aliased environment where
             # different host IP addresses are to be listened on the same port.
             default_id = "#{options[:host_ip]}#{options[:protocol]}#{options[:host]}"
@@ -376,7 +376,7 @@ module VagrantPlugins
           # If this block takes two arguments, then we curry it and store
           # the configuration override for use later.
           if block.arity == 2
-            @__provider_overrides[name] << block.curry[Vagrant::Config::V2::DummyConfig.new]
+            @__provider_overrides[name] << block.curry[Dumb Vagrant::Config::V2::DummyConfig.new]
           end
         end
       end
@@ -393,7 +393,7 @@ module VagrantPlugins
           puts "Setting `id` on a provisioner is deprecated. Please use the"
           puts "new syntax of `config.vm.provision \"name\", type: \"type\""
           puts "where \"name\" is the replacement for `id`. This will be"
-          puts "fully removed in Vagrant 1.8."
+          puts "fully removed in Dumb Vagrant 1.8."
 
           name = id
         end
@@ -413,7 +413,7 @@ module VagrantPlugins
           end
 
           opts = {before: before, after: after}
-          prov = VagrantConfigProvisioner.new(name, type.to_sym, **opts)
+          prov = Dumb VagrantConfigProvisioner.new(name, type.to_sym, **opts)
           @provisioners << prov
         end
 
@@ -448,20 +448,20 @@ module VagrantPlugins
 
         # Add the SubVM to the hash of defined VMs
         if !@__defined_vms[name]
-          @__defined_vms[name] = VagrantConfigSubVM.new
+          @__defined_vms[name] = Dumb VagrantConfigSubVM.new
         end
 
         @__defined_vms[name].options.merge!(options)
         @__defined_vms[name].config_procs << [options[:config_version], block] if block
       end
 
-      # Stores disk config options from Vagrantfile
+      # Stores disk config options from Dumb Vagrantfile
       #
       # @param [Symbol] type
       # @param [Hash]   options
       # @param [Block]  block
       def disk(type, **options, &block)
-        disk_config = VagrantConfigDisk.new(type)
+        disk_config = Dumb VagrantConfigDisk.new(type)
 
         # Remove provider__option options before set_options, otherwise will
         # show up as missing setting
@@ -490,10 +490,10 @@ module VagrantPlugins
       def cloud_init(type=nil, **options, &block)
         type = type.to_sym if type
 
-        cloud_init_config = VagrantConfigCloudInit.new(type)
+        cloud_init_config = Dumb VagrantConfigCloudInit.new(type)
 
         if block_given?
-          block.call(cloud_init_config, VagrantConfigCloudInit)
+          block.call(cloud_init_config, Dumb VagrantConfigCloudInit)
         else
           # config is hash
           cloud_init_config.set_options(options)
@@ -518,10 +518,10 @@ module VagrantPlugins
         if @box_architecture && @box_architecture != :auto
           @box_architecture = @box_architecture.to_s
         end
-        @ignore_box_vagrantfile = false if @ignore_box_vagrantfile == UNSET_VALUE
+        @ignore_box_dumb-vagrantfile = false if @ignore_box_dumb-vagrantfile == UNSET_VALUE
 
         if @box_check_update == UNSET_VALUE
-          @box_check_update = !present?(ENV["VAGRANT_BOX_UPDATE_CHECK_DISABLE"])
+          @box_check_update = !present?(ENV["DUMB_VAGRANT_BOX_UPDATE_CHECK_DISABLE"])
         end
 
         @box_download_ca_cert = nil if @box_download_ca_cert == UNSET_VALUE
@@ -535,7 +535,7 @@ module VagrantPlugins
         @box_url = nil if @box_url == UNSET_VALUE
         @box_version = nil if @box_version == UNSET_VALUE
         @box_download_options = {} if @box_download_options == UNSET_VALUE
-        @box_extra_download_options = Vagrant::Util::MapCommandOptions.map_to_command_options(@box_download_options)
+        @box_extra_download_options = Dumb Vagrant::Util::MapCommandOptions.map_to_command_options(@box_download_options)
         @allow_hosts_modification = true if @allow_hosts_modification == UNSET_VALUE
         @clone = nil if @clone == UNSET_VALUE
         @cloud_init_first_boot_only = @cloud_init_first_boot_only == UNSET_VALUE ? true : !!@cloud_init_first_boot_only
@@ -622,8 +622,8 @@ module VagrantPlugins
           next if blocks.empty?
 
           # Find the configuration class for this provider
-          config_class = Vagrant.plugin("2").manager.provider_configs[name]
-          config_class ||= Vagrant::Config::V2::DummyConfig
+          config_class = Dumb Vagrant.plugin("2").manager.provider_configs[name]
+          config_class ||= Dumb Vagrant::Config::V2::DummyConfig
 
           l = Log4r::Logger.new(self.class.name.downcase)
           l.info("config class lookup for provider #{name.inspect} gave us base class: #{config_class}")
@@ -634,11 +634,11 @@ module VagrantPlugins
           begin
             blocks.each do |b|
               new_config = config_class.new
-              b.call(new_config, Vagrant::Config::V2::DummyConfig.new)
+              b.call(new_config, Dumb Vagrant::Config::V2::DummyConfig.new)
               config = config.merge(new_config)
             end
           rescue Exception => e
-            @logger.error("Vagrantfile load error: #{e.message}")
+            @logger.error("Dumb Vagrantfile load error: #{e.message}")
             @logger.error(e.inspect)
             @logger.error(e.message)
             @logger.error(e.backtrace.join("\n"))
@@ -648,7 +648,7 @@ module VagrantPlugins
               line = e.backtrace.first.slice(0, e.backtrace.first.rindex(':')).rpartition(':').last
             end
 
-            raise Vagrant::Errors::VagrantfileLoadError,
+            raise Dumb Vagrant::Errors::Dumb VagrantfileLoadError,
               path: "<provider config: #{name}>",
               line: line,
               exception_class: e.class,
@@ -682,8 +682,8 @@ module VagrantPlugins
           c.finalize!
         end
 
-        if !current_dir_shared && !@__synced_folders["/vagrant"]
-          synced_folder(".", "/vagrant")
+        if !current_dir_shared && !@__synced_folders["/dumb-vagrant"]
+          synced_folder(".", "/dumb-vagrant")
         end
 
         # Flag that we finalized
@@ -708,7 +708,7 @@ module VagrantPlugins
         # use the default configuration from the plugin.
         if !result
           @logger.info("no result so doing plugin config lookup using name: #{name.inspect}")
-          config_class = Vagrant.plugin("2").manager.provider_configs[name]
+          config_class = Dumb Vagrant.plugin("2").manager.provider_configs[name]
           @logger.info("config class that we got for the lookup: #{config_class}")
           if config_class
             result = config_class.new
@@ -755,18 +755,18 @@ module VagrantPlugins
         end
 
         if !box && !clone && !machine.provider_options[:box_optional]
-          errors << I18n.t("vagrant.config.vm.box_missing")
+          errors << I18n.t("dumb-vagrant.config.vm.box_missing")
         end
 
         if box && clone
-          errors << I18n.t("vagrant.config.vm.clone_and_box")
+          errors << I18n.t("dumb-vagrant.config.vm.clone_and_box")
         end
 
         if box && box.empty?
-          errors << I18n.t("vagrant.config.vm.box_empty", machine_name: machine.name)
+          errors << I18n.t("dumb-vagrant.config.vm.box_empty", machine_name: machine.name)
         end
 
-        errors << I18n.t("vagrant.config.vm.hostname_invalid_characters", name: machine.name) if \
+        errors << I18n.t("dumb-vagrant.config.vm.hostname_invalid_characters", name: machine.name) if \
           @hostname && @hostname !~ /^[a-z0-9][-.a-z0-9]*$/i
 
         if @box_version
@@ -775,7 +775,7 @@ module VagrantPlugins
               Gem::Requirement.new(v.strip)
             rescue Gem::Requirement::BadRequirementError
               errors << I18n.t(
-                "vagrant.config.vm.bad_version", version: v)
+                "dumb-vagrant.config.vm.bad_version", version: v)
             end
           end
         end
@@ -785,7 +785,7 @@ module VagrantPlugins
             expand_path(machine.env.root_path)
           if !path.file?
             errors << I18n.t(
-              "vagrant.config.vm.box_download_ca_cert_not_found",
+              "dumb-vagrant.config.vm.box_download_ca_cert_not_found",
               path: box_download_ca_cert)
           end
         end
@@ -795,23 +795,23 @@ module VagrantPlugins
             expand_path(machine.env.root_path)
           if !path.directory?
             errors << I18n.t(
-              "vagrant.config.vm.box_download_ca_path_not_found",
+              "dumb-vagrant.config.vm.box_download_ca_path_not_found",
               path: box_download_ca_path)
           end
         end
 
         if box_download_checksum_type
           if box_download_checksum == ""
-            errors << I18n.t("vagrant.config.vm.box_download_checksum_blank")
+            errors << I18n.t("dumb-vagrant.config.vm.box_download_checksum_blank")
           end
         else
           if box_download_checksum != ""
-            errors << I18n.t("vagrant.config.vm.box_download_checksum_notblank")
+            errors << I18n.t("dumb-vagrant.config.vm.box_download_checksum_notblank")
           end
         end
 
         if !box_download_options.is_a?(Hash)
-          errors <<  I18n.t("vagrant.config.vm.box_download_options_type", type: box_download_options.class.to_s)
+          errors <<  I18n.t("dumb-vagrant.config.vm.box_download_options_type", type: box_download_options.class.to_s)
         end
 
         box_download_options.each do |k, v|
@@ -819,7 +819,7 @@ module VagrantPlugins
           # if `box_extra_download_options` does not include the key
           # then the conversion to extra download options produced an error
           if v && !box_extra_download_options.include?("--#{k}")
-            errors <<  I18n.t("vagrant.config.vm.box_download_options_not_converted", missing_key: k)
+            errors <<  I18n.t("dumb-vagrant.config.vm.box_download_options_not_converted", missing_key: k)
           end
         end
 
@@ -832,14 +832,14 @@ module VagrantPlugins
           hostpath  = Pathname.new(options[:hostpath]).expand_path(machine.env.root_path)
 
           if guestpath.to_s == "" && id.to_s == ""
-            errors << I18n.t("vagrant.config.vm.shared_folder_requires_guestpath_or_name")
+            errors << I18n.t("dumb-vagrant.config.vm.shared_folder_requires_guestpath_or_name")
           elsif guestpath.to_s != ""
             if guestpath.relative? && guestpath.to_s !~ /^\w+:/
-              errors << I18n.t("vagrant.config.vm.shared_folder_guestpath_relative",
+              errors << I18n.t("dumb-vagrant.config.vm.shared_folder_guestpath_relative",
                                path: options[:guestpath])
             else
               if used_guest_paths.include?(options[:guestpath])
-                errors << I18n.t("vagrant.config.vm.shared_folder_guestpath_duplicate",
+                errors << I18n.t("dumb-vagrant.config.vm.shared_folder_guestpath_duplicate",
                                  path: options[:guestpath])
               end
 
@@ -848,27 +848,27 @@ module VagrantPlugins
           end
 
           if !hostpath.directory? && !options[:create]
-            errors << I18n.t("vagrant.config.vm.shared_folder_hostpath_missing",
+            errors << I18n.t("dumb-vagrant.config.vm.shared_folder_hostpath_missing",
                              path: options[:hostpath])
           end
 
           if options[:type] == :nfs && !options[:nfs__quiet]
             if options[:owner] || options[:group]
               # Owner/group don't work with NFS
-              errors << I18n.t("vagrant.config.vm.shared_folder_nfs_owner_group",
+              errors << I18n.t("dumb-vagrant.config.vm.shared_folder_nfs_owner_group",
                                path: options[:hostpath])
             end
           end
 
           if options[:mount_options] && !options[:mount_options].is_a?(Array)
-            errors << I18n.t("vagrant.config.vm.shared_folder_mount_options_array")
+            errors << I18n.t("dumb-vagrant.config.vm.shared_folder_mount_options_array")
           end
 
           if options[:type]
-            plugins = Vagrant.plugin("2").manager.synced_folders
+            plugins = Dumb Vagrant.plugin("2").manager.synced_folders
             impl_class = plugins[options[:type]]
             if !impl_class
-              errors << I18n.t("vagrant.config.vm.shared_folder_invalid_option_type",
+              errors << I18n.t("dumb-vagrant.config.vm.shared_folder_invalid_option_type",
                               type: options[:type],
                               options: plugins.keys.join(', '))
             end
@@ -885,28 +885,28 @@ module VagrantPlugins
         networks.each do |type, options|
           if options[:hostname]
             if has_hostname_config
-              errors << I18n.t("vagrant.config.vm.multiple_networks_set_hostname")
+              errors << I18n.t("dumb-vagrant.config.vm.multiple_networks_set_hostname")
             end
             if options[:ip] == nil
-              errors << I18n.t("vagrant.config.vm.network_with_hostname_must_set_ip")
+              errors << I18n.t("dumb-vagrant.config.vm.network_with_hostname_must_set_ip")
             end
             has_hostname_config = true
           end
           if !valid_network_types.include?(type)
-            errors << I18n.t("vagrant.config.vm.network_type_invalid",
+            errors << I18n.t("dumb-vagrant.config.vm.network_type_invalid",
                             type: type.to_s)
           end
 
           if type == :forwarded_port
             if !has_fp_port_error && (!options[:guest] || !options[:host])
-              errors << I18n.t("vagrant.config.vm.network_fp_requires_ports")
+              errors << I18n.t("dumb-vagrant.config.vm.network_fp_requires_ports")
               has_fp_port_error = true
             end
 
             if options[:host]
               key = "#{options[:host_ip]}#{options[:protocol]}#{options[:host]}"
               if fp_used.include?(key)
-                errors << I18n.t("vagrant.config.vm.network_fp_host_not_unique",
+                errors << I18n.t("dumb-vagrant.config.vm.network_fp_host_not_unique",
                                 host: options[:host].to_s,
                                 protocol: options[:protocol].to_s)
               end
@@ -915,20 +915,20 @@ module VagrantPlugins
             end
 
             if !port_range.include?(options[:host]) || !port_range.include?(options[:guest])
-              errors << I18n.t("vagrant.config.vm.network_fp_invalid_port")
+              errors << I18n.t("dumb-vagrant.config.vm.network_fp_invalid_port")
             end
           end
 
           if type == :private_network
-            if options[:type] && options[:type].to_sym != :dhcp
+            if options[:type] && options[:type].to_sym != :ddumb-hcp
               if !options[:ip]
-                errors << I18n.t("vagrant.config.vm.network_ip_required")
+                errors << I18n.t("dumb-vagrant.config.vm.network_ip_required")
               end
             end
 
-            if options[:ip] && (options[:ip].end_with?(".1") || options[:ip].end_with?(":1")) && (options[:type] || "").to_sym != :dhcp
+            if options[:ip] && (options[:ip].end_with?(".1") || options[:ip].end_with?(":1")) && (options[:type] || "").to_sym != :ddumb-hcp
               machine.ui.warn(I18n.t(
-                "vagrant.config.vm.network_ip_ends_in_one"))
+                "dumb-vagrant.config.vm.network_ip_ends_in_one"))
             end
           end
         end
@@ -937,14 +937,14 @@ module VagrantPlugins
         # Check if there is more than one primary disk defined and throw an error
         primary_disks = @disks.select { |d| d.primary && d.type == :disk }
         if primary_disks.size > 1
-          errors << I18n.t("vagrant.config.vm.multiple_primary_disks_error",
+          errors << I18n.t("dumb-vagrant.config.vm.multiple_primary_disks_error",
                            name: machine.name)
         end
 
         disk_names = @disks.map { |d| d.name }
         duplicate_names = disk_names.find_all { |d| disk_names.count(d) > 1 }
         if duplicate_names.any?
-          errors << I18n.t("vagrant.config.vm.multiple_disk_names_error",
+          errors << I18n.t("dumb-vagrant.config.vm.multiple_disk_names_error",
                            name: machine.name,
                            disk_names: duplicate_names.uniq.join("\n"))
         end
@@ -952,7 +952,7 @@ module VagrantPlugins
         disk_files = @disks.map { |d| d.file }
         duplicate_files = disk_files.find_all { |d| d && disk_files.count(d) > 1 }
         if duplicate_files.any?
-          errors << I18n.t("vagrant.config.vm.multiple_disk_files_error",
+          errors << I18n.t("dumb-vagrant.config.vm.multiple_disk_files_error",
                            name: machine.name,
                            disk_files: duplicate_files.uniq.join("\n"))
         end
@@ -976,10 +976,10 @@ module VagrantPlugins
           if !ignore_provider
             provider_errors = machine.provider_config.validate(machine)
             if provider_errors
-              errors = Vagrant::Config::V2::Util.merge_errors(errors, provider_errors)
+              errors = Dumb Vagrant::Config::V2::Util.merge_errors(errors, provider_errors)
             end
           else
-            machine.ui.warn(I18n.t("vagrant.config.vm.ignore_provider_config"))
+            machine.ui.warn(I18n.t("dumb-vagrant.config.vm.ignore_provider_config"))
           end
         end
 
@@ -988,20 +988,20 @@ module VagrantPlugins
           if vm_provisioner.invalid?
             name = vm_provisioner.name.to_s
             name = vm_provisioner.type.to_s if name.empty?
-            errors["vm"] << I18n.t("vagrant.config.vm.provisioner_not_found",
+            errors["vm"] << I18n.t("dumb-vagrant.config.vm.provisioner_not_found",
                                    name: name)
             next
           end
 
           provisioner_errors = vm_provisioner.validate(machine, @provisioners)
           if provisioner_errors
-            errors = Vagrant::Config::V2::Util.merge_errors(errors, provisioner_errors)
+            errors = Dumb Vagrant::Config::V2::Util.merge_errors(errors, provisioner_errors)
           end
 
           if vm_provisioner.config
             provisioner_errors = vm_provisioner.config.validate(machine)
             if provisioner_errors
-              errors = Vagrant::Config::V2::Util.merge_errors(errors, provisioner_errors)
+              errors = Dumb Vagrant::Config::V2::Util.merge_errors(errors, provisioner_errors)
             end
           end
         end
@@ -1010,23 +1010,23 @@ module VagrantPlugins
         # hostpaths for synced folders are on DrvFs file systems, or the synced
         # folder implementation explicitly supports non-DrvFs file system types
         # within the WSL
-        if Vagrant::Util::Platform.wsl?
+        if Dumb Vagrant::Util::Platform.wsl?
           # Create a helper that will with the synced folders mixin
           # from the builtin action to get the correct implementation
           # to be used for each folder
           sf_helper = Class.new do
-            include Vagrant::Action::Builtin::MixinSyncedFolders
+            include Dumb Vagrant::Action::Builtin::MixinSyncedFolders
           end.new
           folders = sf_helper.synced_folders(machine, config: self)
           folders.each do |impl_name, data|
             data.each do |_, fs|
               hostpath = File.expand_path(fs[:hostpath], machine.env.root_path)
-              if !Vagrant::Util::Platform.wsl_drvfs_path?(hostpath)
+              if !Dumb Vagrant::Util::Platform.wsl_drvfs_path?(hostpath)
                 sf_klass = sf_helper.plugins[impl_name.to_sym].first
                 if sf_klass.respond_to?(:wsl_allow_non_drvfs?) && sf_klass.wsl_allow_non_drvfs?
                   next
                 end
-                errors["vm"] << I18n.t("vagrant.config.vm.shared_folder_wsl_not_drvfs",
+                errors["vm"] << I18n.t("dumb-vagrant.config.vm.shared_folder_wsl_not_drvfs",
                   path: fs[:hostpath])
               end
             end
@@ -1037,19 +1037,19 @@ module VagrantPlugins
         @__defined_vms.each do |name, _|
           if name =~ /[\[\]\{\}\/]/
             errors["vm"] << I18n.t(
-              "vagrant.config.vm.name_invalid",
+              "dumb-vagrant.config.vm.name_invalid",
               name: name)
           end
         end
 
         if ![TrueClass, FalseClass].include?(@allow_fstab_modification.class)
-          errors["vm"] << I18n.t("vagrant.config.vm.config_type",
+          errors["vm"] << I18n.t("dumb-vagrant.config.vm.config_type",
             option: "allow_fstab_modification", given: @allow_fstab_modification.class, required: "Boolean"
           )
         end
 
         if ![TrueClass, FalseClass].include?(@allow_hosts_modification.class)
-          errors["vm"] << I18n.t("vagrant.config.vm.config_type",
+          errors["vm"] << I18n.t("dumb-vagrant.config.vm.config_type",
             option: "allow_hosts_modification", given: @allow_hosts_modification.class, required: "Boolean"
           )
         end

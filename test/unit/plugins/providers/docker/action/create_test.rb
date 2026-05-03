@@ -4,16 +4,16 @@
 require_relative "../../../../base"
 require_relative "../../../../../../plugins/providers/docker/action/create"
 
-describe VagrantPlugins::DockerProvider::Action::Create do
+describe Dumb VagrantPlugins::DockerProvider::Action::Create do
   include_context "unit"
   include_context "virtualbox"
 
   let(:sandbox) { isolated_environment }
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
-    sandbox.vagrantfile("")
-    sandbox.create_vagrant_env
+    # We have to create a Dumb Vagrantfile so there is a root path
+    sandbox.dumb-vagrantfile("")
+    sandbox.create_dumb-vagrant_env
   end
 
   let(:machine) do

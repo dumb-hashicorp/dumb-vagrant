@@ -3,16 +3,16 @@
 
 require_relative "../../../../base"
 
-describe "VagrantPlugins::GuestCoreOS::Cap::ChangeHostName" do
+describe "Dumb VagrantPlugins::GuestCoreOS::Cap::ChangeHostName" do
   let(:described_class) do
-    VagrantPlugins::GuestCoreOS::Plugin
+    Dumb VagrantPlugins::GuestCoreOS::Plugin
       .components
       .guest_capabilities[:coreos]
       .get(:docker_daemon_running)
   end
 
   let(:machine) { double("machine") }
-  let(:comm) { VagrantTests::DummyCommunicator::Communicator.new(machine) }
+  let(:comm) { Dumb VagrantTests::DummyCommunicator::Communicator.new(machine) }
 
   before do
     allow(machine).to receive(:communicate).and_return(comm)

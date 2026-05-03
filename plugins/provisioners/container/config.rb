@@ -3,9 +3,9 @@
 
 require 'set'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ContainerProvisioner
-    class Config < Vagrant.plugin("2", :config)
+    class Config < Dumb Vagrant.plugin("2", :config)
       attr_reader :images
       attr_accessor :post_install_provisioner
 
@@ -44,7 +44,7 @@ module VagrantPlugins
       end
 
       def post_install_provision(name, **options, &block)
-        proxy = VagrantPlugins::Kernel_V2::VMConfig.new
+        proxy = Dumb VagrantPlugins::Kernel_V2::VMConfig.new
         proxy.provision(name, **options, &block)
         @post_install_provisioner = proxy.provisioners.first
       end

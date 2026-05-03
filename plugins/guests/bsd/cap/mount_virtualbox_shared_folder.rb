@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestBSD
     module Cap
       class MountVirtualBoxSharedFolder
@@ -11,7 +11,7 @@ module VagrantPlugins
         # linking to sources on the Internet where the problem is
         # better-described.
         def self.mount_virtualbox_shared_folder(machine, name, guestpath, options)
-          raise Vagrant::Errors::VirtualBoxMountNotSupportedBSD
+          raise Dumb Vagrant::Errors::VirtualBoxMountNotSupportedBSD
         end
       end
     end

@@ -1,11 +1,11 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandDestroy
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
-        "stops and deletes all traces of the vagrant machine"
+        "stops and deletes all traces of the dumb-vagrant machine"
       end
 
       def execute
@@ -14,7 +14,7 @@ module VagrantPlugins
         options[:force_halt] = true
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant destroy [options] [name|id]"
+          o.banner = "Usage: dumb-vagrant destroy [options] [name|id]"
           o.separator ""
           o.separator "Options:"
           o.separator ""
@@ -38,7 +38,7 @@ module VagrantPlugins
         return if !argv
 
         if options[:parallel] && !options[:force]
-          @env.ui.warn(I18n.t("vagrant.commands.destroy.warning"))
+          @env.ui.warn(I18n.t("dumb-vagrant.commands.destroy.warning"))
           sleep(5)
           options[:force] = true
         end

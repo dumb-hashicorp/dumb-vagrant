@@ -3,7 +3,7 @@
 
 require 'digest/sha1'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ContainerProvisioner
     class Client
       def initialize(machine, container_command)
@@ -18,7 +18,7 @@ module VagrantPlugins
       def build_images(images)
         @machine.communicate.tap do |comm|
           images.each do |path, opts|
-            @machine.ui.info(I18n.t("vagrant.container_building_single", path: path))
+            @machine.ui.info(I18n.t("dumb-vagrant.container_building_single", path: path))
             comm.sudo("#{@container_command} build #{opts[:args]} #{path}") do |type, data|
               handle_comm(type, data)
             end
@@ -32,7 +32,7 @@ module VagrantPlugins
       def pull_images(*images)
         @machine.communicate.tap do |comm|
           images.each do |image|
-            @machine.ui.info(I18n.t("vagrant.container_pulling_single", name: image))
+            @machine.ui.info(I18n.t("dumb-vagrant.container_pulling_single", name: image))
             comm.sudo("#{@container_command} pull #{image}") do |type, data|
               handle_comm(type, data)
             end
@@ -42,10 +42,10 @@ module VagrantPlugins
 
       def run(containers)
         containers.each do |name, config|
-          cids_dir = "/var/lib/vagrant/cids"
+          cids_dir = "/var/lib/dumb-vagrant/cids"
           config[:cidfile] ||= "#{cids_dir}/#{Digest::SHA1.hexdigest name}"
 
-          @machine.ui.info(I18n.t("vagrant.container_running", name: name))
+          @machine.ui.info(I18n.t("dumb-vagrant.container_running", name: name))
           @machine.communicate.sudo("mkdir -p #{cids_dir}")
           run_container({
             name: name,
@@ -63,13 +63,13 @@ module VagrantPlugins
 
         if container_exists?(id)
           if container_args_changed?(config)
-            @machine.ui.info(I18n.t("vagrant.container_restarting_container_args",
+            @machine.ui.info(I18n.t("dumb-vagrant.container_restarting_container_args",
               name: config[:name],
             ))
             stop_container(id)
             create_container(config)
           elsif container_image_changed?(config)
-            @machine.ui.info(I18n.t("vagrant.container_restarting_container_image",
+            @machine.ui.info(I18n.t("dumb-vagrant.container_restarting_container_image",
               name: config[:name],
             ))
             stop_container(id)

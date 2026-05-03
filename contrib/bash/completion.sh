@@ -33,16 +33,16 @@ __pwdln() {
    echo -n $(($itr-1))
 }
 
-__vagrantinvestigate() {
-    if [ -f "${PWD}/.vagrant" -o -d "${PWD}/.vagrant" ];then
-      echo "${PWD}/.vagrant"
+__dumb-vagrantinvestigate() {
+    if [ -f "${PWD}/.dumb-vagrant" -o -d "${PWD}/.dumb-vagrant" ];then
+      echo "${PWD}/.dumb-vagrant"
       return 0
    else
       pwdmod2="${PWD}"
       for (( i=2; i<=$(__pwdln); i++ ));do
          pwdmod2="${pwdmod2%/*}"
-         if [ -f "${pwdmod2}/.vagrant" -o -d "${pwdmod2}/.vagrant" ];then
-            echo "${pwdmod2}/.vagrant"
+         if [ -f "${pwdmod2}/.dumb-vagrant" -o -d "${pwdmod2}/.dumb-vagrant" ];then
+            echo "${pwdmod2}/.dumb-vagrant"
             return 0
          fi
       done
@@ -50,7 +50,7 @@ __vagrantinvestigate() {
    return 1
 }
 
-_vagrant() {
+_dumb-vagrant() {
     cur="${COMP_WORDS[COMP_CWORD]}"
     prev="${COMP_WORDS[COMP_CWORD-1]}"
     commands="box cloud connect destroy docker-exec docker-logs docker-run global-status halt help init list-commands login package plugin provision push rdp reload resume rsync rsync-auto share snapshot ssh ssh-config status suspend up version"
@@ -65,15 +65,15 @@ _vagrant() {
     then
         case "$prev" in
             "init")
-              local box_list=$(find "${VAGRANT_HOME:-${HOME}/.vagrant.d}/boxes" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed -e 's/-VAGRANTSLASH-/\//')
+              local box_list=$(find "${DUMB_VAGRANT_HOME:-${HOME}/.dumb-vagrant.d}/boxes" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed -e 's/-DUMB_VAGRANTSLASH-/\//')
               COMPREPLY=($(compgen -W "${box_list}" -- ${cur}))
               return 0
             ;;
             "up")
-              vagrant_state_file=$(__vagrantinvestigate) || return 1
-              if [[ -d "${vagrant_state_file}" ]]
+              dumb-vagrant_state_file=$(__dumb-vagrantinvestigate) || return 1
+              if [[ -d "${dumb-vagrant_state_file}" ]]
               then
-                local vm_list=$(find "${vagrant_state_file}/machines" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+                local vm_list=$(find "${dumb-vagrant_state_file}/machines" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
               fi
               local up_commands="\
                 --provision \
@@ -92,12 +92,12 @@ _vagrant() {
               return 0
             ;;
             "destroy"|"ssh"|"provision"|"reload"|"halt"|"suspend"|"resume"|"ssh-config")
-              vagrant_state_file=$(__vagrantinvestigate) || return 1
-              if [[ -f "${vagrant_state_file}" ]]
+              dumb-vagrant_state_file=$(__dumb-vagrantinvestigate) || return 1
+              if [[ -f "${dumb-vagrant_state_file}" ]]
               then
-                running_vm_list=$(grep 'active' "${vagrant_state_file}" | sed -e 's/"active"://' | tr ',' '\n' | cut -d '"' -f 2 | tr '\n' ' ')
+                running_vm_list=$(grep 'active' "${dumb-vagrant_state_file}" | sed -e 's/"active"://' | tr ',' '\n' | cut -d '"' -f 2 | tr '\n' ' ')
               else
-                running_vm_list=$(find "${vagrant_state_file}/machines" -type f -name "id" | awk -F"/" '{print $(NF-2)}')
+                running_vm_list=$(find "${dumb-vagrant_state_file}/machines" -type f -name "id" | awk -F"/" '{print $(NF-2)}')
               fi
               COMPREPLY=($(compgen -W "${running_vm_list}" -- ${cur}))
               return 0
@@ -138,9 +138,9 @@ _vagrant() {
         "up")
           if [ "$prev" == "--no-provision" ]
           then
-            if [[ -d "${vagrant_state_file}" ]]
+            if [[ -d "${dumb-vagrant_state_file}" ]]
             then
-              local vm_list=$(find "${vagrant_state_file}/machines" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+              local vm_list=$(find "${dumb-vagrant_state_file}/machines" -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
             fi
             COMPREPLY=($(compgen -W "${vm_list}" -- ${cur}))
             return 0
@@ -149,7 +149,7 @@ _vagrant() {
         "box")
           case "$prev" in
             "remove"|"repackage")
-              local box_list=$(find "${VAGRANT_HOME:-${HOME}/.vagrant.d}/boxes" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed -e 's/-VAGRANTSLASH-/\//')
+              local box_list=$(find "${DUMB_VAGRANT_HOME:-${HOME}/.dumb-vagrant.d}/boxes" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | sed -e 's/-DUMB_VAGRANTSLASH-/\//')
               COMPREPLY=($(compgen -W "${box_list}" -- ${cur}))
               return 0
               ;;
@@ -175,7 +175,7 @@ _vagrant() {
         "snapshot")
           case "$prev" in
             "restore"|"delete")
-              local snapshot_list=$(vagrant snapshot list)
+              local snapshot_list=$(dumb-vagrant snapshot list)
               COMPREPLY=($(compgen -W "${snapshot_list}" -- ${cur}))
               return 0
             ;;
@@ -187,4 +187,4 @@ _vagrant() {
     fi
 
 }
-complete -F _vagrant vagrant
+complete -F _dumb-vagrant dumb-vagrant

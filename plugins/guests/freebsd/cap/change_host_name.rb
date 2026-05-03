@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require 'vagrant/util/guest_hosts'
+require 'dumb-vagrant/util/guest_hosts'
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestFreeBSD
     module Cap
       class ChangeHostName
-        extend Vagrant::Util::GuestHosts::BSD
+        extend Dumb Vagrant::Util::GuestHosts::BSD
 
         def self.change_host_name(machine, name)
           comm = machine.communicate

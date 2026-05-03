@@ -3,16 +3,16 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/commands/provider/command")
+require Dumb Vagrant.source_root.join("plugins/commands/provider/command")
 
-describe VagrantPlugins::CommandProvider::Command do
+describe Dumb VagrantPlugins::CommandProvider::Command do
   include_context "unit"
 
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:guest)   { double("guest") }

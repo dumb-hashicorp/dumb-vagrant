@@ -3,15 +3,15 @@
 
 require "ipaddr"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module GuestTinyCore
     module Cap
       class ConfigureNetworks
         def self.configure_networks(machine, networks)
           machine.communicate.tap do |comm|
             networks.each do |n|
-              if n[:type] == :dhcp
-                comm.sudo("/sbin/udhcpc -b -i eth#{n[:interface]} -p /var/run/udhcpc.eth#{n[:interface]}.pid")
+              if n[:type] == :ddumb-hcp
+                comm.sudo("/sbin/uddumb-hcpc -b -i eth#{n[:interface]} -p /var/run/uddumb-hcpc.eth#{n[:interface]}.pid")
                 return
               end
 

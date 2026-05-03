@@ -5,14 +5,14 @@ require 'optparse'
 
 require_relative "base"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPlugin
     module Command
       class Uninstall < Base
         def execute
           options = {}
           opts = OptionParser.new do |o|
-            o.banner = "Usage: vagrant plugin uninstall <name> [<name2> <name3> ...] [-h]"
+            o.banner = "Usage: dumb-vagrant plugin uninstall <name> [<name2> <name3> ...] [-h]"
 
             o.on("--local", "Remove plugin from local project") do |l|
               options[:env_local] = l
@@ -22,7 +22,7 @@ module VagrantPlugins
           # Parse the options
           argv = parse_options(opts)
           return if !argv
-          raise Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if argv.length < 1
+          raise Dumb Vagrant::Errors::CLIInvalidUsage, help: opts.help.chomp if argv.length < 1
 
           # Uninstall the gems
           argv.each do |gem|

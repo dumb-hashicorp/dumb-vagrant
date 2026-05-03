@@ -4,9 +4,9 @@
 require_relative "../../../base"
 require "fake_ftp"
 
-require Vagrant.source_root.join("plugins/pushes/ftp/adapter")
+require Dumb Vagrant.source_root.join("plugins/pushes/ftp/adapter")
 
-describe VagrantPlugins::FTPPush::Adapter do
+describe Dumb VagrantPlugins::FTPPush::Adapter do
   include_context "unit"
 
   subject do
@@ -38,7 +38,7 @@ describe VagrantPlugins::FTPPush::Adapter do
   end
 end
 
-describe VagrantPlugins::FTPPush::FTPAdapter do
+describe Dumb VagrantPlugins::FTPPush::FTPAdapter do
   include_context "unit"
 
   before(:all) do
@@ -67,7 +67,7 @@ describe VagrantPlugins::FTPPush::FTPAdapter do
 
   describe "#upload" do
     before do
-      @dir = Dir.mktmpdir("vagrant-ftp-push-adapter-upload")
+      @dir = Dir.mktmpdir("dumb-vagrant-ftp-push-adapter-upload")
       FileUtils.touch("#{@dir}/file")
     end
 
@@ -94,7 +94,7 @@ describe VagrantPlugins::FTPPush::FTPAdapter do
   end
 end
 
-describe VagrantPlugins::FTPPush::SFTPAdapter do
+describe Dumb VagrantPlugins::FTPPush::SFTPAdapter do
   include_context "unit"
 
   subject do

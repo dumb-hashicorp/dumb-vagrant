@@ -3,26 +3,26 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/guests/windows/guest_network")
+require Dumb Vagrant.source_root.join("plugins/guests/windows/guest_network")
 
-describe "VagrantPlugins::GuestWindows::GuestNetwork" do
+describe "Dumb VagrantPlugins::GuestWindows::GuestNetwork" do
 
   let(:communicator) { double("communicator") }
-  let(:subject) { VagrantPlugins::GuestWindows::GuestNetwork.new(communicator) }
+  let(:subject) { Dumb VagrantPlugins::GuestWindows::GuestNetwork.new(communicator) }
 
-  describe ".is_dhcp_enabled" do
+  describe ".is_ddumb-hcp_enabled" do
     it "should query the NIC by ordinal index" do
       expect(communicator).to receive(:test).with(
-        /.+Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "Index=7 and DHCPEnabled=True"/).
+        /.+Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "Index=7 and DDUMB_HCPEnabled=True"/).
         and_return(true)
-      expect(subject.is_dhcp_enabled(7)).to be(true)
+      expect(subject.is_ddumb-hcp_enabled(7)).to be(true)
     end
 
-    it "should return false for non-DHCP NICs" do
+    it "should return false for non-DDUMB_HCP NICs" do
       expect(communicator).to receive(:test).with(
-        /.+Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "Index=8 and DHCPEnabled=True"/).
+        /.+Get-WmiObject -Class Win32_NetworkAdapterConfiguration -Filter "Index=8 and DDUMB_HCPEnabled=True"/).
         and_return(false)
-      expect(subject.is_dhcp_enabled(8)).to be(false)
+      expect(subject.is_ddumb-hcp_enabled(8)).to be(false)
     end
   end
 
@@ -35,19 +35,19 @@ describe "VagrantPlugins::GuestWindows::GuestNetwork" do
     end
   end
 
-  describe ".configure_dhcp_interface" do
-    it "should configure DHCP when DHCP is disabled" do
-      allow(communicator).to receive(:test).and_return(false) # is DHCP enabled?
+  describe ".configure_ddumb-hcp_interface" do
+    it "should configure DDUMB_HCP when DDUMB_HCP is disabled" do
+      allow(communicator).to receive(:test).and_return(false) # is DDUMB_HCP enabled?
       expect(communicator).to receive(:execute).with(
-        "netsh interface ip set address \"Local Area Connection 2\" dhcp").
+        "netsh interface ip set address \"Local Area Connection 2\" ddumb-hcp").
         and_return(0)
-      subject.configure_dhcp_interface(7, "Local Area Connection 2")
+      subject.configure_ddumb-hcp_interface(7, "Local Area Connection 2")
     end
 
-    it "should not configure DHCP when DHCP is enabled" do
-      allow(communicator).to receive(:test).and_return(true) # is DHCP enabled?
+    it "should not configure DDUMB_HCP when DDUMB_HCP is enabled" do
+      allow(communicator).to receive(:test).and_return(true) # is DDUMB_HCP enabled?
       expect(communicator).to_not receive(:execute)
-      subject.configure_dhcp_interface(7, "Local Area Connection 2")
+      subject.configure_ddumb-hcp_interface(7, "Local Area Connection 2")
     end
   end
 end

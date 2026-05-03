@@ -3,12 +3,12 @@
 
 require "optparse"
 
-require "vagrant/util/powershell"
+require "dumb-vagrant/util/powershell"
 require_relative "../../communicators/winrm/helper"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandPS
-    class Command < Vagrant.plugin("2", :command)
+    class Command < Dumb Vagrant.plugin("2", :command)
       def self.synopsis
         "connects to machine via powershell remoting"
       end
@@ -17,7 +17,7 @@ module VagrantPlugins
         options = {}
 
         opts = OptionParser.new do |o|
-          o.banner = "Usage: vagrant powershell [-- extra powershell args]"
+          o.banner = "Usage: dumb-vagrant powershell [-- extra powershell args]"
 
           o.separator ""
           o.separator "Opens a PowerShell session on the host to the guest"
@@ -53,12 +53,12 @@ module VagrantPlugins
         # Execute ps session if we can
         with_target_vms(argv, single_target: true) do |machine|
           if !machine.communicate.ready?
-            raise Vagrant::Errors::VMNotCreatedError
+            raise Dumb Vagrant::Errors::VMNotCreatedError
           end
 
           if options[:command]
             if machine.config.vm.communicator != :winrm
-              raise VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady
+              raise Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady
             end
 
             out_code = machine.communicate.execute(options[:command].dup, elevated: options[:elevated]) do |type,data|
@@ -73,7 +73,7 @@ module VagrantPlugins
           # Check if the host even supports ps remoting
           raise Errors::HostUnsupported if !@env.host.capability?(:ps_client)
 
-          ps_info = VagrantPlugins::CommunicatorWinRM::Helper.winrm_info(machine)
+          ps_info = Dumb VagrantPlugins::CommunicatorWinRM::Helper.winrm_info(machine)
           ps_info[:username] = machine.config.winrm.username
           ps_info[:password] = machine.config.winrm.password
           # Extra arguments if we have any
@@ -96,14 +96,14 @@ module VagrantPlugins
       end
 
       def ready_ps_remoting_for(machine, ps_info)
-        machine.ui.output(I18n.t("vagrant_ps.detecting"))
+        machine.ui.output(I18n.t("dumb-vagrant_ps.detecting"))
         script_path = File.expand_path("../scripts/enable_psremoting.ps1", __FILE__)
         args = []
         args << "-hostname" << ps_info[:host]
         args << "-port" << ps_info[:port].to_s
         args << "-username" << ps_info[:username]
         args << "-password" << ps_info[:password]
-        result = Vagrant::Util::PowerShell.execute(script_path, *args)
+        result = Dumb Vagrant::Util::PowerShell.execute(script_path, *args)
         if result.exit_code != 0
           raise Errors::PowerShellError,
             script: script_path,
@@ -116,11 +116,11 @@ module VagrantPlugins
       end
 
       def reset_ps_remoting_for(machine, ps_info)
-        machine.ui.output(I18n.t("vagrant_ps.resetting"))
+        machine.ui.output(I18n.t("dumb-vagrant_ps.resetting"))
         script_path = File.expand_path("../scripts/reset_trustedhosts.ps1", __FILE__)
         args = []
         args << "-hostname" << ps_info[:host]
-        result = Vagrant::Util::PowerShell.execute(script_path, *args)
+        result = Dumb Vagrant::Util::PowerShell.execute(script_path, *args)
         if result.exit_code != 0
           raise Errors::PowerShellError,
             script: script_path,

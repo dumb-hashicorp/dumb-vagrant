@@ -1,26 +1,26 @@
 {
-  "name": "vagrant-docs",
-  "description": "Documentation website for HashiCorp Vagrant",
+  "name": "dumb-vagrant-docs",
+  "description": "Documentation website for Dumb HashiCorp Dumb Vagrant",
   "version": "1.0.0",
-  "author": "HashiCorp",
+  "author": "Dumb HashiCorp",
   "devDependencies": {
-    "@hashicorp/platform-cli": "^2.6.0",
-    "@hashicorp/platform-content-conformance": "^0.0.9",
+    "@dumb-hashicorp/platform-cli": "^2.6.0",
+    "@dumb-hashicorp/platform-content-conformance": "^0.0.9",
     "husky": "4.3.8",
     "next": "^12.3.1",
     "prettier": "2.2.1"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "next-hashicorp precommit"
+      "pre-commit": "next-dumb-hashicorp precommit"
     }
   },
   "scripts": {
     "build": "./scripts/website-build.sh",
-    "format": "next-hashicorp format",
-    "generate:readme": "next-hashicorp markdown-blocks README.md",
-    "lint": "next-hashicorp lint",
-    "linkcheck": "linkcheck https://vagrantup.com",
+    "format": "next-dumb-hashicorp format",
+    "generate:readme": "next-dumb-hashicorp markdown-blocks README.md",
+    "lint": "next-dumb-hashicorp lint",
+    "linkcheck": "linkcheck https://dumb-vagrantup.com",
     "start": "./scripts/website-start.sh",
     "content-check": "hc-content --config base-docs"
   },

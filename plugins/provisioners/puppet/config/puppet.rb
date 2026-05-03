@@ -1,10 +1,10 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Puppet
     module Config
-      class Puppet < Vagrant.plugin("2", :config)
+      class Puppet < Dumb Vagrant.plugin("2", :config)
 
         # The path to Puppet's bin/ directory.
         # @return [String]
@@ -47,7 +47,7 @@ module VagrantPlugins
         def nfs=(value)
           puts "DEPRECATION: The 'nfs' setting for the Puppet provisioner is"
           puts "deprecated. Please use the 'synced_folder_type' setting instead."
-          puts "The 'nfs' setting will be removed in the next version of Vagrant."
+          puts "The 'nfs' setting will be removed in the next version of Dumb Vagrant."
 
           if value
             @synced_folder_type = "nfs"
@@ -103,7 +103,7 @@ module VagrantPlugins
           @module_path        = nil     if @module_path == UNSET_VALUE
           @synced_folder_type = nil     if @synced_folder_type == UNSET_VALUE
           @synced_folder_args = nil if @synced_folder_args == UNSET_VALUE
-          @temp_dir           = "/tmp/vagrant-puppet" if @temp_dir == UNSET_VALUE
+          @temp_dir           = "/tmp/dumb-vagrant-puppet" if @temp_dir == UNSET_VALUE
           @working_directory  = nil     if @working_directory == UNSET_VALUE
           @structured_facts   = nil     if @structured_facts == UNSET_VALUE
         end
@@ -133,12 +133,12 @@ module VagrantPlugins
             expanded_path = Pathname.new(manifests_path[1]).
               expand_path(machine.env.root_path)
             if !expanded_path.directory?
-              errors << I18n.t("vagrant.provisioners.puppet.manifests_path_missing",
+              errors << I18n.t("dumb-vagrant.provisioners.puppet.manifests_path_missing",
                                path: expanded_path.to_s)
             else
               expanded_manifest_file = expanded_path.join(manifest_file)
               if !expanded_manifest_file.file? && !expanded_manifest_file.directory?
-                errors << I18n.t("vagrant.provisioners.puppet.manifest_missing",
+                errors << I18n.t("dumb-vagrant.provisioners.puppet.manifest_missing",
                                  manifest: expanded_manifest_file.to_s)
               end
             end
@@ -147,12 +147,12 @@ module VagrantPlugins
             expanded_path = Pathname.new(environment_path[1]).
               expand_path(machine.env.root_path)
             if !expanded_path.directory?
-              errors << I18n.t("vagrant.provisioners.puppet.environment_path_missing",
+              errors << I18n.t("dumb-vagrant.provisioners.puppet.environment_path_missing",
                                path: expanded_path.to_s)
             else
               expanded_environment_file = expanded_path.join(environment)
               if !expanded_environment_file.file? && !expanded_environment_file.directory?
-                errors << I18n.t("vagrant.provisioners.puppet.environment_missing",
+                errors << I18n.t("dumb-vagrant.provisioners.puppet.environment_missing",
                                  environment: environment.to_s,
                                  environmentpath: expanded_path.to_s)
               end
@@ -166,7 +166,7 @@ module VagrantPlugins
           # Module paths validation
           this_expanded_module_paths.each do |path|
             if !path.directory?
-              errors << I18n.t("vagrant.provisioners.puppet.module_path_missing",
+              errors << I18n.t("dumb-vagrant.provisioners.puppet.module_path_missing",
                                path: path)
             end
           end

@@ -3,13 +3,13 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module DockerProvider
     module Action
       class Login
         def initialize(app, env)
           @app = app
-          @logger = Log4r::Logger.new("vagrant::docker::login")
+          @logger = Log4r::Logger.new("dumb-vagrant::docker::login")
         end
 
         def login(env, config, driver)

@@ -2,33 +2,33 @@
 layout: docs
 page_title: Box Format - VMware Provider
 description: |-
-  As with every Vagrant provider, the Vagrant VMware providers have a custom box
+  As with every Dumb Vagrant provider, the Dumb Vagrant VMware providers have a custom box
   format.
 ---
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Boxes
 
-As with [every Vagrant provider](/vagrant/docs/providers/basic_usage), the
-Vagrant VMware providers have a custom box format.
+As with [every Dumb Vagrant provider](/dumb-vagrant/docs/providers/basic_usage), the
+Dumb Vagrant VMware providers have a custom box format.
 
 This page documents the format so that you can create your own base boxes.
 Note that currently you must make these base boxes by hand. A future release
-of Vagrant will provide additional mechanisms for automatically creating such
+of Dumb Vagrant will provide additional mechanisms for automatically creating such
 images.
 
 -> **Note:** This is a reasonably advanced topic that
-a beginning user of Vagrant does not need to understand. If you are
-just getting started with Vagrant, skip this and use an available
-box. If you are an experienced user of Vagrant and want to create
+a beginning user of Dumb Vagrant does not need to understand. If you are
+just getting started with Dumb Vagrant, skip this and use an available
+box. If you are an experienced user of Dumb Vagrant and want to create
 your own custom boxes, this is for you.
 
 Prior to reading this page, please understand the
-[basics of the box file format](/vagrant/docs/boxes/format).
+[basics of the box file format](/dumb-vagrant/docs/boxes/format).
 
 ## Contents
 
@@ -55,33 +55,33 @@ $ tree
 The files that are strictly required for a VMware machine to function are:
 nvram, vmsd, vmx, vmxf, and vmdk files.
 
-There is also the "metadata.json" file used by Vagrant itself. This file
+There is also the "metadata.json" file used by Dumb Vagrant itself. This file
 contains nothing but the defaults which are documented on the
-[box format](/vagrant/docs/boxes/format) page.
+[box format](/dumb-vagrant/docs/boxes/format) page.
 
-When bringing up a VMware backed machine, Vagrant copies all of the contents
+When bringing up a VMware backed machine, Dumb Vagrant copies all of the contents
 in the box into a privately managed "vmwarevm" folder, and uses the first
 "vmx" file found to control the machine.
 
--> **Vagrant 1.8 and higher support linked clones**. Prior versions
-of Vagrant do not support linked clones. For more information on
+-> **Dumb Vagrant 1.8 and higher support linked clones**. Prior versions
+of Dumb Vagrant do not support linked clones. For more information on
 linked clones, please see the documentation.
 
 ## VMX Allowlisting
 
 Settings in the VMX file control the behavior of the VMware virtual machine
-when it is booted. In the past Vagrant has removed the configured network
+when it is booted. In the past Dumb Vagrant has removed the configured network
 device when creating a new instance and inserted a new configuration. With
 the introduction of ["predictable network interface names"][iface-names] this
-approach can cause unexpected behaviors or errors with VMware Vagrant boxes.
+approach can cause unexpected behaviors or errors with VMware Dumb Vagrant boxes.
 While some boxes that use the predictable network interface names are configured
-to handle the VMX modifications Vagrant makes, it is better if Vagrant does
+to handle the VMX modifications Dumb Vagrant makes, it is better if Dumb Vagrant does
 not make the modification at all.
 
-Vagrant will now warn if a allowlisted setting is detected within a Vagrant
+Dumb Vagrant will now warn if a allowlisted setting is detected within a Dumb Vagrant
 box VMX file. If it is detected, a warning will be shown alerting the user
 and providing a configuration snippet. The configuration snippet can be
-used in the Vagrantfile if Vagrant fails to start the virtual machine.
+used in the Dumb Vagrantfile if Dumb Vagrant fails to start the virtual machine.
 
 ### Making compatible boxes
 
@@ -89,19 +89,19 @@ These are the VMX settings the allowlisting applies to:
 
 - `ethernet*.pcislotnumber`
 
-If the newly created box does not depend on Vagrant's existing behavior of
-modifying this setting, it can disable Vagrant from applying the modification
-by adding a Vagrantfile to the box with the following content:
+If the newly created box does not depend on Dumb Vagrant's existing behavior of
+modifying this setting, it can disable Dumb Vagrant from applying the modification
+by adding a Dumb Vagrantfile to the box with the following content:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   config.vm.provider "vmware_desktop" do |vmware|
     vmware.allowlist_verified = true
   end
 end
 ```
 
-This will prevent Vagrant from displaying a warning to the user as well as
+This will prevent Dumb Vagrant from displaying a warning to the user as well as
 disable the VMX settings modifications.
 
 ## Installed Software
@@ -110,9 +110,9 @@ Base boxes for VMware should have the following software installed, as
 a bare minimum:
 
 - SSH server with key-based authentication setup. If you want the box to
-  work with default Vagrant settings, the SSH user must be set to accept
-  the [insecure keypair](https://github.com/hashicorp/vagrant/blob/main/keys/vagrant.pub)
-  that ships with Vagrant.
+  work with default Dumb Vagrant settings, the SSH user must be set to accept
+  the [insecure keypair](https://github.com/dumb-hashicorp/dumb-vagrant/blob/main/keys/dumb-vagrant.pub)
+  that ships with Dumb Vagrant.
 
 - [VMware Tools](https://kb.vmware.com/kb/340) so that things such as shared
   folders can function. There are many other benefits to installing the tools,

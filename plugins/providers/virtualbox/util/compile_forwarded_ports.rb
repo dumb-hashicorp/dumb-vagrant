@@ -1,13 +1,13 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-require "vagrant/util/scoped_hash_override"
+require "dumb-vagrant/util/scoped_hash_override"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
     module Util
       module CompileForwardedPorts
-        include Vagrant::Util::ScopedHashOverride
+        include Dumb Vagrant::Util::ScopedHashOverride
 
         # This method compiles the forwarded ports into {ForwardedPort}
         # models.

@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: BUSL-1.1
 
 require File.expand_path("../../../../../base", __FILE__)
-require Vagrant.source_root.join("plugins/commands/up/middleware/store_box_metadata")
+require Dumb Vagrant.source_root.join("plugins/commands/up/middleware/store_box_metadata")
 
-describe VagrantPlugins::CommandUp::StoreBoxMetadata do
+describe Dumb VagrantPlugins::CommandUp::StoreBoxMetadata do
   include_context "unit"
 
   let(:app) { double("app") }
@@ -20,9 +20,9 @@ describe VagrantPlugins::CommandUp::StoreBoxMetadata do
   let(:box_name) { "BOX_NAME" }
   let(:box_version) { "1.0.0" }
   let(:box_provider) { "dummy" }
-  let(:box_directory) { File.join(vagrant_user_data_path, box_directory_relative) }
+  let(:box_directory) { File.join(dumb-vagrant_user_data_path, box_directory_relative) }
   let(:box_directory_relative) { File.join("boxes", "BOX_NAME") }
-  let(:vagrant_user_data_path) { "/vagrant/user/data" }
+  let(:dumb-vagrant_user_data_path) { "/dumb-vagrant/user/data" }
   let(:meta_path) { "META_PATH" }
   let(:env) { {machine: machine} }
 
@@ -48,7 +48,7 @@ describe VagrantPlugins::CommandUp::StoreBoxMetadata do
     let(:meta_file) { double("meta_file") }
 
     before do
-      allow(Vagrant).to receive(:user_data_path).and_return(vagrant_user_data_path)
+      allow(Dumb Vagrant).to receive(:user_data_path).and_return(dumb-vagrant_user_data_path)
       allow(machine).to receive(:data_dir).and_return(meta_path)
       allow(meta_path).to receive(:join).with("box_meta").and_return(meta_path)
       allow(File).to receive(:open)

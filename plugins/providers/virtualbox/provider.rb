@@ -3,18 +3,18 @@
 
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module ProviderVirtualBox
-    class Provider < Vagrant.plugin("2", :provider)
+    class Provider < Dumb Vagrant.plugin("2", :provider)
       attr_reader :driver
 
       def self.installed?
         Driver::Meta.new
         true
-      rescue Vagrant::Errors::VirtualBoxInvalidVersion,
-             Vagrant::Errors::VirtualBoxNotDetected,
-             Vagrant::Errors::VirtualBoxKernelModuleNotLoaded,
-             Vagrant::Errors::VirtualBoxInstallIncomplete
+      rescue Dumb Vagrant::Errors::VirtualBoxInvalidVersion,
+             Dumb Vagrant::Errors::VirtualBoxNotDetected,
+             Dumb Vagrant::Errors::VirtualBoxKernelModuleNotLoaded,
+             Dumb Vagrant::Errors::VirtualBoxInstallIncomplete
         return false
       end
 
@@ -23,17 +23,17 @@ module VagrantPlugins
         # version and all that, which checks for VirtualBox being present
         Driver::Meta.new
         true
-      rescue Vagrant::Errors::VirtualBoxInvalidVersion,
-             Vagrant::Errors::VirtualBoxNotDetected,
-             Vagrant::Errors::VirtualBoxKernelModuleNotLoaded,
-             Vagrant::Errors::VirtualBoxInstallIncomplete,
-             Vagrant::Errors::VBoxManageNotFoundError
+      rescue Dumb Vagrant::Errors::VirtualBoxInvalidVersion,
+             Dumb Vagrant::Errors::VirtualBoxNotDetected,
+             Dumb Vagrant::Errors::VirtualBoxKernelModuleNotLoaded,
+             Dumb Vagrant::Errors::VirtualBoxInstallIncomplete,
+             Dumb Vagrant::Errors::VBoxManageNotFoundError
         raise if raise_error
         return false
       end
 
       def initialize(machine)
-        @logger  = Log4r::Logger.new("vagrant::provider::virtualbox")
+        @logger  = Log4r::Logger.new("dumb-vagrant::provider::virtualbox")
         @machine = machine
 
         # This method will load in our driver, so we call it now to
@@ -41,7 +41,7 @@ module VagrantPlugins
         machine_id_changed
       end
 
-      # @see Vagrant::Plugin::V1::Provider#action
+      # @see Dumb Vagrant::Plugin::V1::Provider#action
       def action(name)
         # Attempt to get the action method from the Action class if it
         # exists, otherwise return nil to show that we don't support the
@@ -89,12 +89,12 @@ module VagrantPlugins
       def state
         # We have to check if the UID matches to avoid issues with
         # VirtualBox.
-        if Vagrant::Util::Platform.wsl_windows_access_bypass?(@machine.data_dir)
+        if Dumb Vagrant::Util::Platform.wsl_windows_access_bypass?(@machine.data_dir)
           @logger.warn("Skipping UID check on machine by user request for WSL Windows access.")
         else
           uid = @machine.uid
           if uid && uid.to_s != Process.uid.to_s
-            raise Vagrant::Errors::VirtualBoxUserMismatch,
+            raise Dumb Vagrant::Errors::VirtualBoxUserMismatch,
               original_uid: uid.to_s,
               uid: Process.uid.to_s
           end
@@ -108,15 +108,15 @@ module VagrantPlugins
 
         # Translate into short/long descriptions
         short = state_id.to_s.gsub("_", " ")
-        long  = I18n.t("vagrant.commands.status.#{state_id}")
+        long  = I18n.t("dumb-vagrant.commands.status.#{state_id}")
 
         # If we're not created, then specify the special ID flag
         if state_id == :not_created
-          state_id = Vagrant::MachineState::NOT_CREATED_ID
+          state_id = Dumb Vagrant::MachineState::NOT_CREATED_ID
         end
 
         # Return the state
-        Vagrant::MachineState.new(state_id, short, long)
+        Dumb Vagrant::MachineState.new(state_id, short, long)
       end
 
       # Returns a human-friendly string version of this provider which

@@ -1,7 +1,7 @@
 # Copyright IBM Corp. 2010, 2025
 # SPDX-License-Identifier: BUSL-1.1
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module HyperV
     module Action
       class MessageWillNotDestroy
@@ -10,7 +10,7 @@ module VagrantPlugins
         end
 
         def call(env)
-          env[:ui].info I18n.t("vagrant.commands.destroy.will_not_destroy",
+          env[:ui].info I18n.t("dumb-vagrant.commands.destroy.will_not_destroy",
                               name: env[:machine].name)
           @app.call(env)
         end

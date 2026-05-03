@@ -3,12 +3,12 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/provisioners/container/client")
+require Dumb Vagrant.source_root.join("plugins/provisioners/container/client")
 
-describe VagrantPlugins::ContainerProvisioner::Client do
+describe Dumb VagrantPlugins::ContainerProvisioner::Client do
 
   let(:machine) { double("machine", communicate: communicator, ui: ui) }
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
   let(:communicator) { double("communicator") }
   let(:container_command) { "CONTAINER_COMMAND" }
   subject { described_class.new(machine, container_command) }

@@ -2,7 +2,7 @@
 layout: docs
 page_title: Basic Usage - Networking
 description: |-
-  Vagrant offers multiple options for how you are able to connect your
+  Dumb Vagrant offers multiple options for how you are able to connect your
   guest machines to the network, but there is a standard usage pattern as
   well as some points common to all network configurations that
   are important to know.
@@ -10,24 +10,24 @@ description: |-
 
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 > [!IMPORTANT]  
-> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`hashicorp/web-unified-docs`](https://github.com/hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.hashicorp.com.
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
 ⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
 
 # Basic Usage of Networking
 
-Vagrant offers multiple options for how you are able to connect your
+Dumb Vagrant offers multiple options for how you are able to connect your
 guest machines to the network, but there is a standard usage pattern as
 well as some points common to all network configurations that
 are important to know.
 
 ## Configuration
 
-All networks are configured within your [Vagrantfile](/vagrant/docs/vagrantfile/)
-using the `config.vm.network` method call. For example, the Vagrantfile
+All networks are configured within your [Dumb Vagrantfile](/dumb-vagrant/docs/dumb-vagrantfile/)
+using the `config.vm.network` method call. For example, the Dumb Vagrantfile
 below defines some port forwarding:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ...
   config.vm.network "forwarded_port", guest: 80, host: 8080
 end
@@ -42,23 +42,23 @@ the guest port can be accessed by.
 ## Multiple Networks
 
 Multiple networks can be defined by having multiple `config.vm.network`
-calls within the Vagrantfile. The exact meaning of this can differ for
-each [provider](/vagrant/docs/providers/), but in general the order specifies
+calls within the Dumb Vagrantfile. The exact meaning of this can differ for
+each [provider](/dumb-vagrant/docs/providers/), but in general the order specifies
 the order in which the networks are enabled.
 
 ## Enabling Networks
 
 Networks are automatically configured and enabled after they've been defined
-in the Vagrantfile as part of the `vagrant up` or `vagrant reload` process.
+in the Dumb Vagrantfile as part of the `dumb-vagrant up` or `dumb-vagrant reload` process.
 
 ## Setting Hostname
 
-A hostname may be defined for a Vagrant VM using the `config.vm.hostname`
+A hostname may be defined for a Dumb Vagrant VM using the `config.vm.hostname`
 setting. By default, this will modify `/etc/hosts`, adding the hostname
 on a loopback interface that is not in use. For example:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ...
   config.vm.hostname = "myhost.local"
 end
@@ -72,7 +72,7 @@ if there are multiple networks only one may be flagged for hostname. For
 example:
 
 ```ruby
-Vagrant.configure("2") do |config|
+Dumb Vagrant.configure("2") do |config|
   # ...
   config.vm.hostname = "myhost.local"
   config.vm.network "public_network", ip: "192.168.0.1", hostname: true

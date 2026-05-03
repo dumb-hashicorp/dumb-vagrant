@@ -3,17 +3,17 @@
 
 require "json"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module CommandUp
     # Stores metadata information about the box used
-    # for the current guest. This allows Vagrant to
+    # for the current guest. This allows Dumb Vagrant to
     # determine the box currently in use when the
-    # Vagrantfile is modified with a new box name or
+    # Dumb Vagrantfile is modified with a new box name or
     # version while the guest still exists.
     class StoreBoxMetadata
       def initialize(app, env)
         @app = app
-        @logger = Log4r::Logger.new("vagrant::up::storeboxmetadata")
+        @logger = Log4r::Logger.new("dumb-vagrant::up::storeboxmetadata")
       end
 
       def call(env)
@@ -23,7 +23,7 @@ module VagrantPlugins
             name: box.name,
             version: box.version,
             provider: box.provider,
-            directory: box.directory.sub(Vagrant.user_data_path.to_s + "/", "")
+            directory: box.directory.sub(Dumb Vagrant.user_data_path.to_s + "/", "")
           }
           meta_file = env[:machine].data_dir.join("box_meta")
           @logger.debug("Writing box metadata file to #{meta_file}")

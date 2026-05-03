@@ -3,9 +3,9 @@
 
 require_relative "../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/driver")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/driver")
 
-describe VagrantPlugins::HyperV::Driver do
+describe Dumb VagrantPlugins::HyperV::Driver do
   def generate_result(obj)
     "===Begin-Output===\n" +
       JSON.dump(obj) +
@@ -17,7 +17,7 @@ describe VagrantPlugins::HyperV::Driver do
   end
 
   let(:result){
-    Vagrant::Util::Subprocess::Result.new(
+    Dumb Vagrant::Util::Subprocess::Result.new(
       result_exit, result_stdout, result_stderr) }
   let(:subject){ described_class.new(vm_id) }
   let(:vm_id){ 1 }
@@ -45,7 +45,7 @@ describe VagrantPlugins::HyperV::Driver do
         let(:result_exit){ 1 }
 
         it "should raise an error" do
-          expect{ subject.execute(:thing) }.to raise_error(VagrantPlugins::HyperV::Errors::PowerShellError)
+          expect{ subject.execute(:thing) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::PowerShellError)
         end
       end
 
@@ -53,7 +53,7 @@ describe VagrantPlugins::HyperV::Driver do
         let(:result_stdout){ generate_error("Error Message") }
 
         it "should raise an error" do
-          expect{ subject.execute(:thing) }.to raise_error(VagrantPlugins::HyperV::Errors::PowerShellError)
+          expect{ subject.execute(:thing) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::PowerShellError)
         end
       end
 
@@ -94,7 +94,7 @@ describe VagrantPlugins::HyperV::Driver do
     describe "#set_vm_integration_services" do
       it "should map known integration services names automatically" do
         expect(subject).to receive(:execute) do |name, args|
-          expect(args[:Id]).to eq(VagrantPlugins::HyperV::Driver::INTEGRATION_SERVICES_MAP[:shutdown])
+          expect(args[:Id]).to eq(Dumb VagrantPlugins::HyperV::Driver::INTEGRATION_SERVICES_MAP[:shutdown])
         end
         subject.set_vm_integration_services(shutdown: true)
       end
@@ -123,21 +123,21 @@ describe VagrantPlugins::HyperV::Driver do
   end
 
   describe "#execute_powershell" do
-    before{ allow(Vagrant::Util::PowerShell).to receive(:execute) }
+    before{ allow(Dumb Vagrant::Util::PowerShell).to receive(:execute) }
 
     it "should call the PowerShell module to execute" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute)
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute)
       subject.send(:execute_powershell, "path", {})
     end
 
     it "should modify the path separators" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute)
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute)
         .with("\\path\\to\\script.ps1", any_args)
       subject.send(:execute_powershell, "/path/to/script.ps1", {})
     end
 
     it "should include ErrorAction option as Stop" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
         expect(args).to include("-ErrorAction")
         expect(args).to include("Stop")
       end
@@ -145,7 +145,7 @@ describe VagrantPlugins::HyperV::Driver do
     end
 
     it "should automatically include module path" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
         opts = args.detect{|i| i.is_a?(Hash)}
         expect(opts[:module_path]).not_to be_nil
       end
@@ -153,7 +153,7 @@ describe VagrantPlugins::HyperV::Driver do
     end
 
     it "should covert hash options into arguments" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
         expect(args).to include("-Custom")
         expect(args).to include("'Value'")
       end
@@ -161,7 +161,7 @@ describe VagrantPlugins::HyperV::Driver do
     end
 
     it "should treat keys with `true` value as switches" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
         expect(args).to include("-Custom")
         expect(args).not_to include("'true'")
       end
@@ -169,7 +169,7 @@ describe VagrantPlugins::HyperV::Driver do
     end
 
     it "should not include keys with `false` value" do
-      expect(Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
+      expect(Dumb Vagrant::Util::PowerShell).to receive(:execute) do |path, *args|
         expect(args).not_to include("-Custom")
       end
       subject.send(:execute_powershell, "path", "Custom" => false)

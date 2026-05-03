@@ -4,18 +4,18 @@
 require "digest/md5"
 require "log4r"
 
-module VagrantPlugins
+module Dumb VagrantPlugins
   module Puppet
     module Provisioner
-      class PuppetError < Vagrant::Errors::VagrantError
-        error_namespace("vagrant.provisioners.puppet")
+      class PuppetError < Dumb Vagrant::Errors::Dumb VagrantError
+        error_namespace("dumb-vagrant.provisioners.puppet")
       end
 
-      class Puppet < Vagrant.plugin("2", :provisioner)
+      class Puppet < Dumb Vagrant.plugin("2", :provisioner)
         def initialize(machine, config)
           super
 
-          @logger = Log4r::Logger.new("vagrant::provisioners::puppet")
+          @logger = Log4r::Logger.new("dumb-vagrant::provisioners::puppet")
         end
 
         def configure(root_config)
@@ -137,16 +137,16 @@ module VagrantPlugins
           # Build up the structured custom facts if we have any
           # With structured facts on, we assume the config.facter is yaml.
           if config.structured_facts && !config.facter.empty?
-            @facter_config_path = "/etc/puppetlabs/facter/facts.d/vagrant_facts.yaml"
+            @facter_config_path = "/etc/puppetlabs/facter/facts.d/dumb-vagrant_facts.yaml"
             if windows?
-              @facter_config_path = "/ProgramData/PuppetLabs/facter/facts.d/vagrant_facts.yaml"
+              @facter_config_path = "/ProgramData/PuppetLabs/facter/facts.d/dumb-vagrant_facts.yaml"
             end
-            t = Tempfile.new("vagrant_facts.yaml")
+            t = Tempfile.new("dumb-vagrant_facts.yaml")
             t.write(config.facter.to_yaml)
             t.close()
             @machine.communicate.tap do |comm|
-              comm.upload(t.path, File.join(@config.temp_dir, "vagrant_facts.yaml"))
-              comm.sudo("cp #{config.temp_dir}/vagrant_facts.yaml #{@facter_config_path}")
+              comm.upload(t.path, File.join(@config.temp_dir, "dumb-vagrant_facts.yaml"))
+              comm.sudo("cp #{config.temp_dir}/dumb-vagrant_facts.yaml #{@facter_config_path}")
             end
            end
 
@@ -285,17 +285,17 @@ module VagrantPlugins
 
           if config.environment_path
             @machine.ui.info(I18n.t(
-              "vagrant.provisioners.puppet.running_puppet_env",
+              "dumb-vagrant.provisioners.puppet.running_puppet_env",
               environment: config.environment))
           else
             @machine.ui.info(I18n.t(
-              "vagrant.provisioners.puppet.running_puppet",
+              "dumb-vagrant.provisioners.puppet.running_puppet",
               manifest: config.manifest_file))
           end
 
           opts = {
             elevated: true,
-            error_class: Vagrant::Errors::VagrantError,
+            error_class: Dumb Vagrant::Errors::Dumb VagrantError,
             error_key: :ssh_bad_exit_status_muted,
             good_exit: [0,2],
           }

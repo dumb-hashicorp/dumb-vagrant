@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/action/check_enabled")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/action/check_enabled")
 
-describe VagrantPlugins::HyperV::Action::CheckEnabled do
+describe Dumb VagrantPlugins::HyperV::Action::CheckEnabled do
   let(:app){ double("app") }
   let(:env){ {ui: ui, machine: machine} }
-  let(:ui){ Vagrant::UI::Silent.new }
+  let(:ui){ Dumb Vagrant::UI::Silent.new }
   let(:provider){ double("provider", driver: driver) }
   let(:driver){ double("driver") }
   let(:machine){ double("machine", provider: provider) }
@@ -23,6 +23,6 @@ describe VagrantPlugins::HyperV::Action::CheckEnabled do
   it "should raise error when Hyper-V is not enabled" do
     expect(driver).to receive(:execute).and_return("result" => false)
     expect(app).not_to receive(:call)
-    expect{ subject.call(env) }.to raise_error(VagrantPlugins::HyperV::Errors::PowerShellFeaturesDisabled)
+    expect{ subject.call(env) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::PowerShellFeaturesDisabled)
   end
 end

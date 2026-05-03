@@ -3,15 +3,15 @@
 
 require File.expand_path("../../../../base", __FILE__)
 
-require Vagrant.source_root.join("plugins/communicators/winrm/communicator")
+require Dumb Vagrant.source_root.join("plugins/communicators/winrm/communicator")
 
-describe VagrantPlugins::CommunicatorWinRM::Communicator do
+describe Dumb VagrantPlugins::CommunicatorWinRM::Communicator do
   include_context "unit"
 
   let(:winrm) { double("winrm", timeout: 1, host: nil, port: 5986, guest_port: 5986) }
   let(:config) { double("config", winrm: winrm) }
   let(:provider) { double("provider") }
-  let(:ui) { Vagrant::UI::Silent.new }
+  let(:ui) { Dumb Vagrant::UI::Silent.new }
   let(:machine) { double("machine", config: config, provider: provider, ui: ui) }
   let(:shell) { double("shell") }
   let(:good_output) { WinRM::Output.new.tap { |out| out.exitcode = 0 } }
@@ -24,7 +24,7 @@ describe VagrantPlugins::CommunicatorWinRM::Communicator do
   end
 
   before do
-    allow(shell).to receive(:username).and_return('vagrant')
+    allow(shell).to receive(:username).and_return('dumb-vagrant')
     allow(shell).to receive(:password).and_return('password')
     allow(shell).to receive(:execution_time_limit).and_return('PT2H')
   end
@@ -73,18 +73,18 @@ describe VagrantPlugins::CommunicatorWinRM::Communicator do
     end
 
     it "returns false if hostname command fails with a transient error" do
-      expect(shell).to receive(:cmd).with("hostname").and_raise(VagrantPlugins::CommunicatorWinRM::Errors::TransientError)
+      expect(shell).to receive(:cmd).with("hostname").and_raise(Dumb VagrantPlugins::CommunicatorWinRM::Errors::TransientError)
       expect(subject.ready?).to be(false)
     end
 
     it "returns false if hostname command fails with a WinRMNotReady error" do
-      expect(shell).to receive(:cmd).with("hostname").and_raise(VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
+      expect(shell).to receive(:cmd).with("hostname").and_raise(Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMNotReady)
       expect(subject.ready?).to be(false)
     end
 
     it "raises an error if hostname command fails with an unknown error" do
-      expect(shell).to receive(:cmd).with("hostname").and_raise(Vagrant::Errors::VagrantError)
-      expect { subject.ready? }.to raise_error(Vagrant::Errors::VagrantError)
+      expect(shell).to receive(:cmd).with("hostname").and_raise(Dumb Vagrant::Errors::Dumb VagrantError)
+      expect { subject.ready? }.to raise_error(Dumb Vagrant::Errors::Dumb VagrantError)
     end
 
     it "raises timeout error when hostname command takes longer then winrm timeout" do
@@ -114,7 +114,7 @@ describe VagrantPlugins::CommunicatorWinRM::Communicator do
     it "raises error when error_check is true and exit code is non-zero" do
       expect(shell).to receive(:powershell).with(kind_of(String), kind_of(Hash)).and_return(bad_output)
       expect { subject.execute("dir") }.to raise_error(
-        VagrantPlugins::CommunicatorWinRM::Errors::WinRMBadExitStatus)
+        Dumb VagrantPlugins::CommunicatorWinRM::Errors::WinRMBadExitStatus)
     end
 
     it "does not raise error when error_check is false and exit code is non-zero" do

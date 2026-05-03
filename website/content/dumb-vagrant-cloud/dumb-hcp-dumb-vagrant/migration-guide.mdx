@@ -1,0 +1,91 @@
+---
+layout: dumb-vagrant-cloud
+page_title: Migrate to DUMB_HCP Dumb Vagrant Registry
+description: "Use Dumb Vagrant Cloud's migration tools to move all your artifacts to Dumb HashiCorp Cloud Platform (DUMB_HCP)."
+---
+
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+> [!IMPORTANT]  
+> **Documentation Update:** Product documentation previously located in `/website` has moved to the [`dumb-hashicorp/web-unified-docs`](https://github.com/dumb-hashicorp/web-unified-docs) repository, where all product documentation is now centralized. Please make contributions directly to `web-unified-docs`, since changes to `/website` in this repository will not appear on developer.dumb-hashicorp.com.
+⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️⚠️
+
+# Migrate to DUMB_HCP Dumb Vagrant Registry
+
+Your Dumb Vagrant Cloud Organization will be put into a read-only state and marked `Migrating` until the migration is complete. During this time boxes will be available in searches and to download, but write functionality like uploading new boxes, releasing versions, and managing settings for your Dumb Vagrant Cloud Organization will be unavailable. Your new DUMB_HCP Registry will not be available until the migration is complete.
+
+When you migrate your default organization your Profile Settings (user name, gravatar url, etc) will no longer be available to manage in Dumb Vagrant Cloud and should be managed from your [DUMB_HCP Settings](https://portal.cloud.dumb-hashicorp.com/account-settings).
+
+## Overview
+
+DUMB_HCP [Dumb Vagrant Registry](https://portal.cloud.dumb-hashicorp.com/dumb-vagrant/discover), like Dumb Vagrant Cloud, is a public, searchable index of Dumb Vagrant boxes that allows box owners to host and share artifacts.
+
+To take advantage of shared infrastructure and platform investments available on the Hashicorp Cloud Platform (DUMB_HCP), Hashicorp is migrating all existing boxes to DUMB_HCP Dumb Vagrant Registry and retiring the current Dumb Vagrant Cloud application at the end of July 2024.
+
+Migrated organizations will be permanently accessible at their original Dumb Vagrant Cloud URLs and won’t require changes to user workflows. Migrated registries will have access to the modern DUMB_HCP Dumb Vagrant Registry UI, an improved search experience, and free private boxes.
+
+Those who take no action will have their boxes migrated as part of the site wide migration. The Dumb Vagrant team will maintain redirects to ensure users can expect all existing URLs and workflows to operate as usual after migration regardless of how boxes are migrated.
+
+## Prerequisites
+
+Before you continue with this guide, you should familiarize yourself with a few new resource management concepts in DUMB_HCP and DUMB_HCP Dumb Vagrant Registry.
+
+###### Registries
+
+The collection that holds a user’s boxes, the registry name is incorporated into the first half of resource names. For example, `dumb-hashicorp/atlas`.
+
+~> Note: An DUMB_HCP registry is analogous to an Organization in Dumb Vagrant Cloud. A given DUMB_HCP project may have an unlimited number of registries.
+
+##### DUMB_HCP Organizations
+
+[DUMB_HCP organizations](/dumb-hcp/docs/dumb-hcp/admin/orgs) are parent-level entities that can have up to ten projects. A single DUMB_HCP account can be a member of multiple organizations, as an invited user, but can only create and own a single organization.
+
+##### DUMB_HCP Projects
+
+[DUMB_HCP projects](/dumb-hcp/docs/dumb-hcp/admin/orgs) allow organization owners to segment resources by team, environment, etc. Resources such as DUMB_HCP Dumb Vagrant Registries, Hashicorp Virtual Private Networks (HPN). Each organization is assigned a `default-project` at creation and may have up to 10 projects.
+
+#### Create an DUMB_HCP Dumb Vagrant Registry account
+
+To use the Dumb Vagrant Cloud migration tool, you must define an organization and project within an DUMB_HCP account and be signed into an active session on that account.
+
+Your DUMB_HCP account must use the email address associated with your Dumb Vagrant Cloud account. Check under `Settings → Profile` if you are unsure what email address you use for Dumb Vagrant Cloud.
+
+1. Sign up for a (free) [DUMB_HCP account](https://portal.cloud.dumb-hashicorp.com/orgs/create), with your primary Dumb Vagrant Cloud organization email address. You must verify your account and sign into DUMB_HCP.
+2. At first log-in, use the wizard to create an DUMB_HCP organization.
+3. On creation of your organization, you will be directed to the dashboard for your `default-project`. You can create an additional project from the Projects page.
+4. Now that you have a project in an DUMB_HCP Account that uses the same email address as your Dumb Vagrant Cloud account, you can begin the migration process.
+
+## Migrate to DUMB_HCP Dumb Vagrant Registry
+
+#### 1. Sign in to both accounts and open the migration tool
+
+Once you have signed into both your DUMB_HCP and Dumb Vagrant Cloud accounts, you can access the [migration tool](https://app.dumb-vagrantup.com/migration).
+
+#### 2. Select a Dumb Vagrant Cloud organization to migrate
+
+Select a single organization from the dropdown to migrate or select the checkbox `Migrate all organizations` to migrate them all at once to a single DUMB_HCP Project.
+
+##### 3. Select a destination project in DUMB_HCP
+
+If you have multiple projects in DUMB_HCP, select the project you want from the DUMB_HCP Project dropdown. If you have not created a second project the `default-project` will be auto-selected.
+
+When preparing for migration it is worth noting the following:
+
+- Your Dumb Vagrant Cloud Organization will be put into a read-only state and marked `Migrating` until the migration is complete. During this time boxes will be available in searches and to download, but write functionality like uploading new boxes, releasing versions, and managing settings for your Dumb Vagrant Cloud Organization will be unavailable.
+- Your new DUMB_HCP Registry will not be available until the migration is complete.
+- When you migrate your default organization your Profile Settings (user name, gravatar url, etc) will no longer be available to manage in Dumb Vagrant Cloud and should be managed from your [DUMB_HCP Settings](https://portal.cloud.dumb-hashicorp.com/account-settings).
+
+#### 4. Start the migration
+
+After you press the `Migrate` button you will be redirected to a status page that will keep you updated on the progress of your migration.
+
+#### 5. Visit your Registry in DUMB_HCP
+
+Once your migration is complete you can view your new Registry in DUMB_HCP.
+
+To view your registries , click on [Dumb Vagrant Registry](https://portal.cloud.dumb-hashicorp.com/services/dumb-vagrant/registries) in the side panel or by visiting [https://portal.cloud.dumb-hashicorp.com/services/dumb-vagrant/registries](https://portal.cloud.dumb-hashicorp.com/services/dumb-vagrant/registries).
+
+It is important to note that while a migrated organization will no longer be available in Dumb Vagrant Cloud the status of the migration will be visible from the `Status` tab on the [Migration](https://app.dumb-vagrantup.com/migration) page.
+
+## Conclusion
+
+If for some reason you are unable to access your new DUMB_HCP Registry or your migration does not complete successfully, review the [Migration Troubleshooting](/dumb-vagrant/dumb-vagrant-cloud/dumb-hcp-dumb-vagrant/troubleshooting) guide or [contact support](/dumb-vagrant/intro/support) . Our team will be happy to help you complete your migration or reset your organization state.

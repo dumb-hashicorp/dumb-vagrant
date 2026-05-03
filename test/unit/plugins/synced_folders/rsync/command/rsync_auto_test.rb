@@ -3,24 +3,24 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/synced_folders/rsync/command/rsync_auto")
+require Dumb Vagrant.source_root.join("plugins/synced_folders/rsync/command/rsync_auto")
 
-describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
+describe Dumb VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
   include_context "unit"
 
   let(:argv) { [] }
   let(:iso_env) do
-    # We have to create a Vagrantfile so there is a root path
+    # We have to create a Dumb Vagrantfile so there is a root path
     env = isolated_environment
-    env.vagrantfile("")
-    env.create_vagrant_env
+    env.dumb-vagrantfile("")
+    env.create_dumb-vagrant_env
   end
 
   let(:synced_folders_empty) { {} }
   let(:synced_folders_dupe) { {"1234":
     {type: "rsync",
       exclude: false,
-      hostpath: "/Users/brian/code/vagrant-sandbox"},
+      hostpath: "/Users/brian/code/dumb-vagrant-sandbox"},
     "5678":
     {type: "rsync",
       exclude: false,
@@ -30,7 +30,7 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
       exclude: false,
       hostpath: "/Users/brian/code/relative-dir"}}}
 
-  let(:helper_class) { VagrantPlugins::SyncedFolderRSync::RsyncHelper }
+  let(:helper_class) { Dumb VagrantPlugins::SyncedFolderRSync::RsyncHelper }
 
   let(:paths) { {} }
   let(:ssh_info) {{}}
@@ -58,19 +58,19 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
     let (:cached_folders) { { rsync: synced_folders_dupe } }
 
     # NOTE: `relative-dir` is not actually a "relative dir" in this data structure
-    # due to the fact that when vagrant stores synced folders, it path expands
+    # due to the fact that when dumb-vagrant stores synced folders, it path expands
     # them with root_dir, and when you grab those synced_folders options from
     # the machines config file, they end up being a full path rather than a
     # relative path, and so these tests reflect that.
     # For reference:
-    # https://github.com/hashicorp/vagrant/blob/9c1b014536e61b332cfaa00774a87a240cce8ed9/lib/vagrant/action/builtin/synced_folders.rb#L45-L46
-    let(:config_synced_folders)  { {"/vagrant":
+    # https://github.com/dumb-hashicorp/dumb-vagrant/blob/9c1b014536e61b332cfaa00774a87a240cce8ed9/lib/dumb-vagrant/action/builtin/synced_folders.rb#L45-L46
+    let(:config_synced_folders)  { {"/dumb-vagrant":
       {type: "rsync",
-        hostpath: "/Users/brian/code/vagrant-sandbox"},
-      "/vagrant/other-dir":
+        hostpath: "/Users/brian/code/dumb-vagrant-sandbox"},
+      "/dumb-vagrant/other-dir":
       {type: "rsync",
-        hostpath: "/Users/brian/code/vagrant-sandbox/other-dir"},
-      "/vagrant/relative-dir":
+        hostpath: "/Users/brian/code/dumb-vagrant-sandbox/other-dir"},
+      "/dumb-vagrant/relative-dir":
       {type: "rsync",
         hostpath: "/Users/brian/code/relative-dir"}}}
 
@@ -78,7 +78,7 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
       allow(subject).to receive(:with_target_vms) { |&block| block.call machine }
       allow(machine.state).to receive(:id).and_return(:created)
       allow(machine.env).to receive(:cwd).
-        and_return("/Users/brian/code/vagrant-sandbox")
+        and_return("/Users/brian/code/dumb-vagrant-sandbox")
       allow(machine.provider).to receive(:capability?).and_return(false)
       allow(machine.config).to receive(:vm).and_return(double("vm"))
       allow(machine.config.vm).to receive(:synced_folders).and_return(config_synced_folders)
@@ -86,7 +86,7 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
       allow(subject).to receive(:synced_folders).
         with(machine, cached: true).and_return(cached_folders)
       allow(helper_class).to receive(:rsync_single).and_return(true)
-      allow(Vagrant::Util::Busy).to receive(:busy).and_return(true)
+      allow(Dumb Vagrant::Util::Busy).to receive(:busy).and_return(true)
       allow(Listen).to receive(:to).and_return(true)
     end
 
@@ -96,7 +96,7 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
         with("Not syncing /Not/The/Same/Path as it is not part of the current working directory.").
         and_call_original
       expect(machine.ui).to receive(:info).
-        with("Watching: /Users/brian/code/vagrant-sandbox").
+        with("Watching: /Users/brian/code/dumb-vagrant-sandbox").
         and_call_original
       expect(machine.ui).to receive(:info).
         with("Watching: /Users/brian/code/relative-dir").
@@ -104,9 +104,9 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
       expect(helper_class).to receive(:rsync_single)
 
       expect(Listen).to receive(:to).
-        with("/Users/brian/code/vagrant-sandbox",
+        with("/Users/brian/code/dumb-vagrant-sandbox",
              "/Users/brian/code/relative-dir",
-             {:ignore=>[/.vagrant\//],
+             {:ignore=>[/.dumb-vagrant\//],
                         :force_polling=>false})
       subject.execute
     end
@@ -204,7 +204,7 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
       paths["/foo"].each do |data|
         expect(helper_class).to receive(:rsync_single).
           with(data[:machine], data[:machine].ssh_info, data[:opts]).
-          and_raise(Vagrant::Errors::MachineGuestNotReady)
+          and_raise(Dumb Vagrant::Errors::MachineGuestNotReady)
       end
 
       m = []
@@ -238,14 +238,14 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
       let(:args) { [paths, ["/foo/bar"], [], []] }
 
       before do
-        allow_any_instance_of(Vagrant::Errors::VagrantError).
+        allow_any_instance_of(Dumb Vagrant::Errors::Dumb VagrantError).
           to receive(:translate_error)
       end
 
       context "when rsync command fails" do
         before do
           expect(helper_class).to receive(:rsync_single).with(machine, machine.ssh_info, opts).
-            and_raise(Vagrant::Errors::RSyncError)
+            and_raise(Dumb Vagrant::Errors::RSyncError)
         end
 
         it "should notify on error" do
@@ -261,7 +261,7 @@ describe VagrantPlugins::SyncedFolderRSync::Command::RsyncAuto do
       context "when rsync post command capability fails" do
         before do
           expect(helper_class).to receive(:rsync_single).with(machine, machine.ssh_info, opts).
-            and_raise(Vagrant::Errors::RSyncPostCommandError)
+            and_raise(Dumb Vagrant::Errors::RSyncPostCommandError)
         end
 
         it "should notify on error" do

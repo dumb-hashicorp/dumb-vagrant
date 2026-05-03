@@ -3,12 +3,12 @@
 
 require_relative "../../../../base"
 
-require Vagrant.source_root.join("plugins/providers/hyperv/action/configure")
+require Dumb Vagrant.source_root.join("plugins/providers/hyperv/action/configure")
 
-describe VagrantPlugins::HyperV::Action::Configure do
+describe Dumb VagrantPlugins::HyperV::Action::Configure do
   let(:app){ double("app") }
   let(:env){ {ui: ui, machine: machine} }
-  let(:ui){ Vagrant::UI::Silent.new }
+  let(:ui){ Dumb Vagrant::UI::Silent.new }
   let(:provider){ double("provider", driver: driver) }
   let(:driver){ double("driver") }
   let(:machine){ double("machine", provider: provider, config: config, provider_config: provider_config, data_dir: data_dir, id: "machineID") }
@@ -140,7 +140,7 @@ describe VagrantPlugins::HyperV::Action::Configure do
     let(:switches){ [] }
 
     it "should raise an error" do
-      expect{ subject.call(env) }.to raise_error(VagrantPlugins::HyperV::Errors::NoSwitches)
+      expect{ subject.call(env) }.to raise_error(Dumb VagrantPlugins::HyperV::Errors::NoSwitches)
     end
   end
 end
